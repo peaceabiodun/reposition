@@ -3,7 +3,7 @@ import Footer from '@/components/footer/page';
 import Header from '@/components/header/page';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import Modal from 'react-modal';
 import Typewriter from 'typewriter-effect';
 
 const Home = () => {

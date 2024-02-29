@@ -2,12 +2,14 @@
 import Header from '@/components/header/page';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const ProductDetails = () => {
   const sizeChart = ['SM', 'MD', 'LG', 'XL', '2XL', '3XL'];
   const [selectedSize, setSelectedSize] = useState('');
+  const router = useRouter();
   return (
     <div className='w-full min-h-screen bg-[#ece8e3] p-3 xs:p-4'>
       <Header />
@@ -25,7 +27,7 @@ const ProductDetails = () => {
           />
         </div>
 
-        <div className=' mt-3 md:mt-0 flex flex-col items-center text-sm'>
+        <div className=' mt-3 md:mt-0 flex flex-col items-center md:justify-center text-sm'>
           <h1 className='uppercase font-medium'>
             Reposition White Jacket [white]
           </h1>
@@ -43,7 +45,10 @@ const ProductDetails = () => {
               </span>
             ))}
           </div>
-          <button className='text-sm p-1 w-full border border-[#3d3e3f] mt-5'>
+          <button
+            onClick={() => router.push('/basket')}
+            className='text-sm p-1 w-full border border-[#3d3e3f] mt-5'
+          >
             Buy Item
           </button>
         </div>
