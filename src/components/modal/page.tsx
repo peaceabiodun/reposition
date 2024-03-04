@@ -23,8 +23,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    borderRadius: '10px',
-    backgroundColor: '#fff',
+
+    backgroundColor: '#ece8e3',
     border: 'none',
     padding: '0px',
     overflow: 'unset',
@@ -63,7 +63,7 @@ const LocalModal = ({
 
               <MdClose
                 size={18}
-                className='md:absolute right-[-40px] top-[-8px]'
+                className='sm:absolute mr-2 right-[-40px] top-[-8px]'
                 role='button'
                 onClick={modalProps.onRequestClose}
               />
@@ -74,7 +74,8 @@ const LocalModal = ({
                 role='button'
                 onClick={onBackButton}
               >
-                <MdOutlineArrowBackIosNew size={18} /> <span>Back</span>
+                <MdOutlineArrowBackIosNew size={18} className='' />{' '}
+                <span>Back</span>
               </div>
             )}
 

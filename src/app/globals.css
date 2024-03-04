@@ -24,7 +24,7 @@ body {
   flex-direction: column;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__content {
     width: 85vw;
     max-width: 520px;
@@ -37,7 +37,7 @@ body {
   overflow-y: auto;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__body {
     padding: 0 1.75rem 2rem;
   }
@@ -47,7 +47,7 @@ body {
   padding: 1rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__footer {
     padding: 1.5rem 1.75rem;
   }
@@ -59,13 +59,13 @@ body {
   top: 1rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__icons {
     position: unset;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.75rem; /* Assuming the duplicate margin-bottom was a mistake, kept the larger value */
+    margin-bottom: 0.75rem;
   }
 }
 
@@ -73,7 +73,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem; /* Assuming the duplicate margin-bottom was a mistake, kept the larger value */
+  margin-bottom: 0.75rem;
 }
 
 .l-modal__title {
@@ -86,7 +86,7 @@ body {
   gap: 0.5rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__title {
     font-size: 24px;
     margin-top: 0.75rem;
@@ -128,7 +128,7 @@ body {
   display: none;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__icon--wrapper {
     width: 40px;
     height: 40px;
@@ -144,26 +144,6 @@ body {
   height: 100%;
 }
 
-.l-modal__icon--danger {
-  background-color: #fee4e2;
-  box-shadow: 0px 0px 0px 8px #fef3f2;
-}
-
-.l-modal__icon--info {
-  background-color: #e1f3ff;
-  box-shadow: 0px 0px 0px 8px #f0f9ff;
-}
-
-.l-modal__icon--success {
-  background-color: #d6f0d1;
-  box-shadow: 0px 0px 0px 8px #eaf8e7;
-}
-
-.l-modal__icon--gray {
-  background-color: #ecedee;
-  box-shadow: 0px 0px 0px 8px #f4f5f5;
-}
-
 .l-modal__back {
   font-size: 14px;
   font-weight: 500;
@@ -176,7 +156,7 @@ body {
   color: #e60a2b;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
   .l-modal__back {
     margin-top: 1rem;
   }
