@@ -48,7 +48,12 @@ const LocalModal = ({
 }: LocalModalProps) => {
   return (
     <div>
-      <Modal style={customStyles} ariaHideApp={false} {...modalProps}>
+      <Modal
+        style={customStyles}
+        ariaHideApp={false}
+        {...modalProps}
+        appElement={document.getElementById('__next') as HTMLElement}
+      >
         <div className={`l-modal__content relative ${contentClassName}`}>
           <div className=''>
             <div

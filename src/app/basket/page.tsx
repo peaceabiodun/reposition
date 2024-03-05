@@ -11,13 +11,13 @@ import CheckoutModal from '@/components/checkout-modal/page';
 
 const Basket = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    'card' | 'transfer'
+  >('card');
   return (
     <div className='w-full min-h-screen bg-[#ece8e3] p-3 xs:p-4'>
       <Header />
-      <Link
-        href='product/{index}'
-        className='mt-4 gap-1 flex text-sm items-center'
-      >
+      <Link href='/' className='mt-4 gap-1 flex text-sm items-center'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>
@@ -82,7 +82,10 @@ const Basket = () => {
 
             <div className='border border-[#3d3e3f] w-full p-2 space-y-2'>
               <h2>Payment Options:</h2>
-              <div className='flex gap-3 justify-between p-2'>
+              <div
+                onClick={() => setSelectedPaymentMethod('card')}
+                className='flex gap-3 justify-between p-2'
+              >
                 <div className=' flex gap-2'>
                   <Image
                     alt='paystack'
@@ -92,27 +95,33 @@ const Basket = () => {
                   />
                   <p>Pay with Paystack</p>
                 </div>
-                <span className='border-2 border-[#3d3e3f] w-3 h-3 rounded-full' />
+                {selectedPaymentMethod === 'card' && (
+                  <span className='border-2 border-[#3d3e3f] w-3 h-3 rounded-full' />
+                )}
               </div>
-              <div className='flex gap-3 justify-between p-2'>
+              <div
+                onClick={() => setSelectedPaymentMethod('transfer')}
+                className='flex gap-3 justify-between p-2'
+              >
                 <div className=' flex gap-2'>
                   <GiTakeMyMoney size={20} />
                   <p> Pay Via Transfer</p>
                 </div>
-                <span className='border-2 border-[#3d3e3f] w-3 h-3 rounded-full' />
+                {selectedPaymentMethod === 'transfer' && (
+                  <span className='border-2 border-[#3d3e3f] w-3 h-3 rounded-full' />
+                )}
               </div>
             </div>
           </div>
         </div>
-
-        <div className='flex justify-center'>
-          <button
-            onClick={() => setShowCheckoutModal(true)}
-            className='border border-[#3d3e3f] w-full sm:w-[300px] p-2 text-xs md:text-sm'
-          >
-            Complete Order
-          </button>
-        </div>
+      </div>
+      <div className='flex justify-center mt-6'>
+        <button
+          onClick={() => setShowCheckoutModal(true)}
+          className='border border-[#3d3e3f] w-full sm:w-[300px] p-2 text-xs md:text-sm'
+        >
+          Complete Order
+        </button>
       </div>
       <CheckoutModal
         show={showCheckoutModal}

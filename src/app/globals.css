@@ -161,3 +161,141 @@ body {
     margin-top: 1rem;
   }
 }
+
+/* table styles */
+.table {
+  width: 100%;
+  border: #3d3e3f;
+}
+
+.table.lg-and-above {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .table.lg-and-above {
+    display: table;
+    border: #3d3e3f;
+  }
+
+  .table__mobile {
+    display: none;
+  }
+}
+
+.table__head__row {
+  color: #3d3e3f;
+  border: #3d3e3f;
+}
+
+.table__head__row__text {
+  font-weight: 300;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.table__data_checkbox {
+  display: inline-flex !important;
+  margin-left: 0.5rem;
+  --tw-translate-y: 2px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+    rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.table__loading {
+  text-align: center;
+  padding: 1rem;
+}
+
+.table__data_cell {
+  padding: 1.5rem 0.5rem;
+  text-align: left;
+}
+
+.table__row {
+  text-align: left;
+  font-weight: 500;
+  border-bottom: 0.8px solid rgb(227 230 232);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.table__row__data {
+  text-align: center;
+}
+
+.pagination_container {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+.pagination {
+  text-align: center;
+  margin: 16px 0px 8px 0px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.pagination li {
+  height: 100%;
+  background-color: #f7f7f7;
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px 0 3px;
+  color: #c4c4c4;
+  font-weight: bold;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.pagination li a {
+  font-size: 12px;
+  padding: 0.35rem 0.65rem;
+}
+
+.pagination ul {
+  display: flex;
+  background-color: #fcb6c0;
+}
+
+.pagination_container .pagination_container {
+  display: inline-flex;
+  text-align: center;
+  margin: 0.5rem 0 0 auto;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.pagination .previous,
+.pagination .next {
+  border: 1px solid #f0f0f0;
+  font-weight: bold;
+  color: #e60a2b;
+}
+
+.pagination .previous a,
+.pagination .next a {
+  padding: 2px;
+}
+
+.pagination .previous.pagination__link--disabled,
+.pagination .next.pagination__link--disabled {
+  background-color: rgba(87, 94, 100, 0.3);
+  cursor: not-allowed;
+}
+
+.pagination .previous.pagination__link--disabled svg path,
+.pagination .next.pagination__link--disabled svg path {
+  fill: #e1e6ea;
+}
+
+.pagination .pagination__link--active {
+  color: #e60a2b !important;
+  border: 1px solid #fcb6c0 !important;
+}

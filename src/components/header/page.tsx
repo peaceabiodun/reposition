@@ -1,9 +1,12 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { GoPerson } from 'react-icons/go';
 import Typewriter from 'typewriter-effect';
+import { TbShirt } from 'react-icons/tb';
 
 const Header = () => {
+  const router = useRouter();
   return (
     <div className='flex justify-between gap-4 items-center'>
       <h3 className='font-bold text-sm sm:text-lg flex gap-1'>
@@ -19,8 +22,9 @@ const Header = () => {
         </span>
       </h3>
       <div className='flex gap-3'>
-        <GoPerson size={22} />
-        <AiOutlineShopping size={23} />
+        <TbShirt size={22} onClick={() => router.push('/manage-products')} />
+        <GoPerson size={22} onClick={() => router.push('/login')} />
+        <AiOutlineShopping size={23} onClick={() => router.push('/basket')} />
       </div>
     </div>
   );
