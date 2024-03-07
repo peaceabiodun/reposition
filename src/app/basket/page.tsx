@@ -2,12 +2,12 @@
 
 import Header from '@/components/header/page';
 import Image from 'next/image';
-import Link from 'next/link';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiTrash } from 'react-icons/ci';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { useState } from 'react';
 import CheckoutModal from '@/components/checkout-modal/page';
+import Link from 'next/link';
 
 const Basket = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);

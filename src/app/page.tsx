@@ -5,24 +5,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Typewriter from 'typewriter-effect';
 
+export const products = [
+  {
+    img: '/img1.jpg',
+    product_name: 'Reposition White Jacket',
+    price: '$75',
+  },
+  {
+    img: '/img2.jpg',
+    product_name: 'Reposition White Jacket',
+    price: '$100',
+  },
+  {
+    img: '/img3.jpg',
+    product_name: 'Reposition White Jacket',
+    price: '$75',
+  },
+];
 const Home = () => {
-  const products = [
-    {
-      img: '/img1.jpg',
-      product_name: 'Reposition White Jacket',
-      price: '$75',
-    },
-    {
-      img: '/img2.jpg',
-      product_name: 'Reposition White Jacket',
-      price: '$100',
-    },
-    {
-      img: '/img3.jpg',
-      product_name: 'Reposition White Jacket',
-      price: '$75',
-    },
-  ];
   return (
     <main className='w-full min-h-screen bg-[#ece8e3] p-3 xs:p-4'>
       <Header />
@@ -46,7 +46,7 @@ const Home = () => {
               alt='product_image'
               width='172'
               height='179'
-              className='product_image'
+              className='product_image object-cover'
             />
             <p className='my-1 font-medium'>{item.product_name}</p>
             <p>{item.price}</p>
