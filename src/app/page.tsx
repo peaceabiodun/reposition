@@ -24,7 +24,7 @@ export const products = [
 ];
 const Home = () => {
   return (
-    <main className='w-full min-h-screen bg-[#ece8e3] p-3 xs:p-4'>
+    <main className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <Header />
       <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh]'>
         <h2 className='text-4xl font-semibold'>

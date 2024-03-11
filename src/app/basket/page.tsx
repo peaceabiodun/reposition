@@ -15,7 +15,7 @@ const Basket = () => {
     'card' | 'transfer'
   >('card');
   return (
-    <div className='w-full min-h-screen bg-[#ece8e3] p-3 xs:p-4'>
+    <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <Header />
       <Link href='/' className='mt-4 gap-1 flex text-sm items-center'>
         <MdOutlineArrowBackIosNew size={20} />
