@@ -22,9 +22,21 @@ const Header = () => {
         </span>
       </h3>
       <div className='flex gap-3'>
-        <TbShirt size={22} onClick={() => router.push('/manage-products')} />
-        <GoPerson size={22} onClick={() => router.push('/login')} />
-        <AiOutlineShopping size={23} onClick={() => router.push('/basket')} />
+        <TbShirt
+          size={22}
+          onClick={() => router.push('/manage-products')}
+          className='cursor-pointer'
+        />
+        <GoPerson
+          size={22}
+          onClick={() => router.push('/login')}
+          className='cursor-pointer'
+        />
+        <AiOutlineShopping
+          size={23}
+          onClick={() => router.push('/basket')}
+          className='cursor-pointer'
+        />
       </div>
     </div>
   );

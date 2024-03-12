@@ -85,11 +85,11 @@ const ManageProducts = () => {
                 <CiMenuKebab size={20} />
               </div>
               {selectedProduct && selectedProduct === item && (
-                <div className='bg-[#ffffff] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
                   {dropDownLinks.map((item, index) => (
                     <p
                       key={index}
-                      className='hover:font-medium hover:bg-gray-100 p-1 cursor-pointer'
+                      className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
                     >
                       {item.text}
                     </p>
