@@ -9,19 +9,17 @@ import { useState } from 'react';
 import { products } from '../page';
 import { ProductType } from '@/utils/types';
 import { useRouter } from 'next/navigation';
+import DeleteModal from '@/components/delete-modal/page';
+import EditProductModal from '@/components/edit-product-modal/page';
 
 const ManageProducts = () => {
   const dropDownLinks = [
     {
-      text: 'Out of stock',
-      link: '',
+      text: 'Edit Product',
+      link: () => setShowEditModal(true),
     },
     {
-      text: 'Edit',
-      link: '',
-    },
-    {
-      text: 'Delete',
+      text: 'Delete Product',
       link: () => setShowDeleteModal(true),
     },
   ];
@@ -30,6 +28,7 @@ const ManageProducts = () => {
     null
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const handleSelectProduct = (product: ProductType) => {
     setSelectedProduct(product === selectedProduct ? null : product);
   };
@@ -90,6 +89,7 @@ const ManageProducts = () => {
                     <p
                       key={index}
                       className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
+                      onClick={item.link}
                     >
                       {item.text}
                     </p>
@@ -100,6 +100,16 @@ const ManageProducts = () => {
           ))}
         </div>
       </div>
+
+      <DeleteModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+      />
+
+      <EditProductModal
+        show={showEditModal}
+        onClose={() => setShowEditModal(false)}
+      />
     </div>
   );
 };

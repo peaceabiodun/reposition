@@ -46,6 +46,8 @@ const LocalModal = ({
   contentClassName,
   ...modalProps
 }: LocalModalProps) => {
+  if (typeof window === 'undefined') return null;
+
   return (
     <div>
       <Modal

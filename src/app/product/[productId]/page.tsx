@@ -45,6 +45,20 @@ const ProductDetails = () => {
               </span>
             ))}
           </div>
+          <p>Available in : </p>
+          <div className='flex gap-1'>
+            {sizeChart.map((item, index) => (
+              <span
+                key={index}
+                onClick={() => setSelectedSize(item)}
+                className={`${
+                  selectedSize === item ? 'bg-gray-300 font-medium' : ''
+                } p-1`}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
           <button
             onClick={() => router.push('/basket')}
             className='text-sm p-1 w-full border border-[#3d3e3f] mt-5'

@@ -17,6 +17,7 @@ body {
   }
 }
 
+/* modal styles */
 .l-modal__content {
   width: 95vw;
   max-height: 95vh;
@@ -57,23 +58,6 @@ body {
   position: absolute;
   right: 1rem;
   top: 1rem;
-}
-
-@media screen and (min-width: 640px) {
-  .l-modal__icons {
-    position: unset;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-  }
-}
-
-.l-modal__no_icons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
 }
 
 .l-modal__title {
@@ -533,4 +517,29 @@ body {
     display: flex;
     align-items: center;
   }
+}
+
+/* Side modal styles */
+
+.sidemodal {
+  position: relative;
+  height: 95%;
+}
+
+.sidemodal__close {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  stroke-width: 1px;
+  stroke: #eaeaeb;
+  filter: drop-shadow(0px 2px 4px rgba(69, 75, 84, 0.1));
+  top: 0px;
+  left: -6px;
+  z-index: 9999999999;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
