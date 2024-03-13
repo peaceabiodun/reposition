@@ -506,12 +506,13 @@ body {
   border-radius: 6px;
   border: 1px solid #ededee;
   text-align: center;
+  width: 100%;
 }
 
 @media screen and (min-width: 568px) {
-  .file-uploader_multiple {
+  /* .file-uploader_multiple {
     flex-direction: row;
-  }
+  } */
 
   .file-uploader_multiple .multiple_wrapper {
     display: flex;

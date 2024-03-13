@@ -281,7 +281,7 @@ export function FileUploader({
                 )}
               </div>
               {files?.length > 1 && (
-                <Fragment>
+                <div className=' flex flex-col md:flex-row w-full gap-3'>
                   <div className='multiple_wrapper'>
                     + {files?.length - 1} more
                   </div>
@@ -294,7 +294,7 @@ export function FileUploader({
                       <AiOutlineDelete />
                     </div>
                   </div>
-                </Fragment>
+                </div>
               )}
             </div>
           ) : (
