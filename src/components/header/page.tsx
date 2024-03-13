@@ -8,7 +8,7 @@ import { TbShirt } from 'react-icons/tb';
 const Header = () => {
   const router = useRouter();
   return (
-    <div className='flex justify-between gap-4 items-center'>
+    <div className='flex justify-between gap-4 items-center h-[28px]'>
       <h3 className='font-bold text-sm sm:text-lg flex gap-1'>
         REPOSITION{' '}
         <span className='md:hidden'>

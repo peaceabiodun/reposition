@@ -30,7 +30,7 @@ const Basket = () => {
             alt='product_image'
             width='80'
             height='90'
-            className='h-[90px]'
+            className='h-[90px] object-cover'
           />
           <div className='flex flex-col gap-2 '>
             <p className=''>Reposition White Jacket [white]</p>
@@ -92,6 +92,7 @@ const Basket = () => {
                     src='/paystack-icon.svg'
                     width={18}
                     height={18}
+                    className='object-cover'
                   />
                   <p>Pay with Paystack</p>
                 </div>

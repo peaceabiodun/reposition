@@ -53,7 +53,7 @@ const ManageProducts = () => {
       </h3>
 
       <div className='flex items-center justify-center'>
-        <div className='border border-[#3d3e3f] p-2 text-sm w-full md:max-w-[85vw] '>
+        <div className='border border-[#3d3e3f] p-3 text-sm w-full md:max-w-[85vw] '>
           {products.map((item, index) => (
             <div
               key={index}
@@ -61,8 +61,7 @@ const ManageProducts = () => {
                 index === products.length - 1 ? '' : 'border-b border-gray-400'
               }  py-2`}
             >
-              <div className='flex gap-3'>
-                <input type='checkbox' />
+              <div className=''>
                 <Image
                   src={item.img}
                   alt='product_image'

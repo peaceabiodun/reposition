@@ -4,6 +4,7 @@ import { FileUploader } from '@/components/file-uploader/page';
 import Link from 'next/link';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const AddNewProduct = () => {
   return (
@@ -60,37 +61,58 @@ const AddNewProduct = () => {
         />
       </div>
       <div className='w-full text-sm mb-2'>
-        <label>Product Sizes</label>
-        <div className=' border border-[#3d3e3f] w-full h-[160px] p-2 mt-2 '>
-          <div className='flex items-center gap-3'>
-            <p className=''>+ Add Sizes</p>
+        <p>Product Sizes</p>
+        <div className=' border border-[#3d3e3f] w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
+          <p className=''>+ Add Sizes</p>
+          <div className='flex items-center  gap-3'>
             <input
               type='text'
-              className='border border-[#3d3e3f] p-2 mt-1 outline-none bg-transparent  '
+              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent '
+              placeholder='e.g Medium'
             />
             <FaCheck className='cursor-pointer' />
           </div>
-          <div className='mt-6 text-sm flex gap-2'>
-            <span className='bg-[#a3a7a7] p-2 rounded-sm'>XL</span>
-            <span className='bg-[#a3a7a7] p-2 rounded-sm'>small</span>
+          <div className='mt-6 text-sm space-y-3'>
+            <div className='flex gap-3 items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+                Small
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
+            <div className='flex gap-3 items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+                XL
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
           </div>
         </div>
       </div>
 
       <div className='w-full text-sm my-4'>
-        <label>Product Colors</label>
-        <div className=' border border-[#3d3e3f] w-full h-[160px] p-2 mt-2 '>
-          <div className='flex items-center gap-3'>
-            <p className=''>+ Add Colors</p>
+        <p>Product Colors</p>
+        <div className=' border border-[#3d3e3f] w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
+          <p className=''>+ Add Colors</p>
+          <div className='flex items-center  gap-3'>
             <input
               type='text'
-              className='border border-[#3d3e3f] p-2 mt-1 outline-none bg-transparent  '
+              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent  '
             />
             <FaCheck className='cursor-pointer' />
           </div>
-          <div className='mt-6 text-sm flex gap-2'>
-            <span className='bg-[#a3a7a7] p-2 rounded-sm'>White</span>
-            <span className='bg-[#a3a7a7] p-2 rounded-sm'>Red</span>
+          <div className='mt-6 text-sm space-y-3'>
+            <div className='flex gap-3 items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+                Red
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
+            <div className='flex gap-3 items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+                blue
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
           </div>
         </div>
       </div>

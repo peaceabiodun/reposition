@@ -24,6 +24,7 @@ const ProductDetails = () => {
             alt='product_image'
             width='250'
             height='250'
+            className='object-cover'
           />
         </div>
 

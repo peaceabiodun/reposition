@@ -1,5 +1,7 @@
+import { FaCheck } from 'react-icons/fa';
 import { FileUploader } from '../file-uploader/page';
 import LocalSideModal from '../side-modal/page';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 type EditModalProps = {
   show: boolean;
@@ -33,14 +35,80 @@ const EditProductModal = ({ show, onClose }: EditModalProps) => {
           placeholder='Describe your product'
         />
 
-        <label className=''>Product Image(s)</label>
+        <p className=''>Product Image(s)</p>
         <FileUploader
           fileUrls={[]}
           setFileUrls={() => []}
           token=''
-          className='w-full text-sm'
+          className='w-full text-sm '
           isMultiple
         />
+
+        <div className='flex mb-2 gap-4'>
+          <p className='font-semibold'>Out Of Stock</p>
+          <input type='checkbox' className='accent-[#d3d3d3] cursor-pointer' />
+        </div>
+        <p>Product Sizes</p>
+        <div className='border border-[#3d3e3f] w-full p-3 my-2 h-[160px] overflow-y-scroll'>
+          <p className=''>+ Add Sizes</p>
+          <div className='flex items-center justify-between gap-3'>
+            <input
+              type='text'
+              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent  '
+            />
+            <FaCheck className='cursor-pointer' />
+          </div>
+
+          <div className='mt-6 text-sm space-y-3'>
+            <div className='flex justify-between items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 gap-3 rounded-sm w-[240px] '>
+                XL
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
+
+            <div className='flex justify-between items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 gap-3 rounded-sm w-[240px] '>
+                Medium
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
+          </div>
+        </div>
+
+        <p>Product Colors</p>
+        <div className='border border-[#3d3e3f] w-full p-3 my-2 h-[160px] overflow-y-scroll'>
+          <p className=''>+ Add Colors</p>
+          <div className='flex items-center justify-between gap-3'>
+            <input
+              type='text'
+              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent  '
+            />
+            <FaCheck className='cursor-pointer' />
+          </div>
+
+          <div className='mt-6 text-sm space-y-3'>
+            <div className='flex justify-between gap-3 items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+                Red
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
+
+            <div className='flex justify-between gap-3 items-center'>
+              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+                Yellow
+              </span>
+              <AiOutlineDelete className='cursor-pointer' size={20} />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button className='border border-[#3d3e3f] p-2 my-6 text-sm w-full h-[40px] hover:bg-[#d3d3d3] '>
+            Confirm
+          </button>
+        </div>
       </div>
     </LocalSideModal>
   );
