@@ -1,40 +1,40 @@
 'use client';
+
 import ErrorModal from '@/components/error-modal/page';
+import SuccessModal from '@/components/success-modal/page';
 import { supabase } from '@/lib/supabase';
-import { STORAGE_KEYS } from '@/utils/constants';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
+const ResetPassword = () => {
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const disableButton = !email || !password;
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const disableButton = !password || !confirmPassword;
   const router = useRouter();
 
-  const login = async () => {
-    setLoading(true);
+  const updatePassword = async () => {
+    if (password !== confirmPassword) {
+      setShowErrorMessage(true);
+    }
+
     try {
-      let { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
+      setLoading(true);
+      const { data, error } = await supabase.auth.updateUser({
         password: password,
       });
-      if (data.session !== null) {
-        console.log(data);
-        localStorage.setItem(
-          STORAGE_KEYS.AUTH_TOKEN,
-          data.session.access_token
-        );
-        localStorage.setItem(STORAGE_KEYS.USER_EMAIL, data.user.email ?? '');
+      if (data.user?.role === 'authenticated') {
+        setShowSuccessModal(true);
         router.push('/');
       } else {
         setShowErrorMessage(true);
       }
     } catch (err: any) {
-      setShowErrorMessage(true);
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -47,20 +47,23 @@ const Login = () => {
       </Link>
       <div className='flex justify-center'>
         <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-4 flex flex-col items-center justify-center'>
-          <h3 className='font-semibold'>Login</h3>
-          <p className='text-xs'> Are you the owner of this apllication ?</p>
+          <h3 className='font-semibold'>Reset Password</h3>
+          <p className='text-xs'>
+            {' '}
+            Are you sure you want to reset your password ?
+          </p>
           <input
-            type='text'
-            placeholder='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f] '
+            type='password'
+            placeholder='New Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
           />
           <input
             type='password'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder='Confirm Password'
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
           />
           {disableButton && (
@@ -68,8 +71,8 @@ const Login = () => {
           )}
           <button
             disabled={disableButton}
-            onClick={login}
             className={`border border-[#3d3e3f] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
+            onClick={updatePassword}
           >
             {loading ? 'Loading...' : 'Confirm'}
           </button>
@@ -79,11 +82,18 @@ const Login = () => {
         <ErrorModal
           show={showErrorMessage}
           onClose={() => setShowErrorMessage(false)}
-          description='Make sure you input the correct email and password'
+          description='Your passwords are incorrect'
+        />
+      )}
+      {showSuccessModal && (
+        <SuccessModal
+          show={showSuccessModal}
+          onClose={() => setShowSuccessModal(false)}
+          title='Password updated Successfully'
         />
       )}
     </div>
   );
 };
 
-export default Login;
+export default ResetPassword;

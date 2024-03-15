@@ -70,7 +70,7 @@ const LocalModal = ({
 
               <MdClose
                 size={18}
-                className='sm:absolute mr-2 right-[-40px] top-[-8px]'
+                className='sm:absolute ml-2 right-[-40px] top-[-8px]'
                 role='button'
                 onClick={modalProps.onRequestClose}
               />

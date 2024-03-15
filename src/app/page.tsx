@@ -1,8 +1,11 @@
 'use client';
 import Footer from '@/components/footer/page';
 import Header from '@/components/header/page';
+import { supabase } from '@/lib/supabase';
+import { STORAGE_KEYS } from '@/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 
 export const products = [
@@ -23,6 +26,31 @@ export const products = [
   },
 ];
 const Home = () => {
+  const getSession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session !== null) {
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, session.access_token);
+      localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user.email ?? '');
+    }
+  };
+
+  const refreshSession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.refreshSession();
+
+    if (session !== null) {
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, session.access_token);
+      localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user?.email ?? '');
+    }
+  };
+
+  useEffect(() => {
+    getSession();
+    refreshSession();
+  }, []);
   return (
     <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] p-3 xs:p-4'>
       <Header />
