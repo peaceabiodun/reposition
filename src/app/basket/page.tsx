@@ -23,7 +23,7 @@ const Basket = () => {
       </Link>
       <h2 className='text-sm font-medium text-center my-4'>Shopping Basket</h2>
 
-      <div className='my-4 space-y-4'>
+      <div className='my-4 space-y-6'>
         <div className='border border-[#3d3e3f] w-full p-2 flex text-xs md:text-sm gap-3 justify-between items-center'>
           <Image
             src={'/img1.jpg'}
@@ -63,7 +63,7 @@ const Basket = () => {
               className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent'
             />
           </div>
-          <div className='border border-[#3d3e3f] w-full p-2 text-xs md:text-sm space-y-2'>
+          <div className='border border-[#3d3e3f] w-full p-2 text-xs md:text-sm space-y-3 mt-3'>
             <h2>Order Summary:</h2>
             <div className='space-y-1'>
               <div className='flex gap-3 justify-between'>

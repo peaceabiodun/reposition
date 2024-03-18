@@ -47,7 +47,7 @@ const Home = () => {
         </h2>
         <p className='mt-2 text-sm'>Exodus Collection is here</p>
       </div>
-      <div className='w-full min-h-[85vh] md:min-h-full  mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3'>
+      <div className='w-full min-h-[85vh] md:min-h-full  mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
         {products.map((item, index) => (
           <Link href='product/{index}' key={index}>
             <Image
@@ -59,7 +59,7 @@ const Home = () => {
             />
             <p className='my-1 font-medium'>{item.product_name}</p>
             <p>{item.price}</p>
-            <p className='font-semibold'>Out of Stock</p>
+            <p className='font-semibold mt-1'>Out of Stock</p>
           </Link>
         ))}
       </div>

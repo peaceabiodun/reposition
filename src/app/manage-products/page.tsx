@@ -58,7 +58,9 @@ const ManageProducts = () => {
             <div
               key={index}
               className={`relative flex gap-3 justify-between items-center ${
-                index === products.length - 1 ? '' : 'border-b border-gray-400'
+                index === products.length - 1
+                  ? ''
+                  : 'border-b border-[#b9b9b96c]'
               }  py-2`}
             >
               <div className=''>

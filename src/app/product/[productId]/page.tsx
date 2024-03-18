@@ -8,6 +8,7 @@ import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const ProductDetails = () => {
   const sizeChart = ['SM', 'MD', 'LG', 'XL', '2XL', '3XL'];
+  const colorChart = ['Red', 'White', 'Grey'];
   const [selectedSize, setSelectedSize] = useState('');
   const router = useRouter();
   return (
@@ -48,7 +49,7 @@ const ProductDetails = () => {
           </div>
           <p>Available in : </p>
           <div className='flex gap-1'>
-            {sizeChart.map((item, index) => (
+            {colorChart.map((item, index) => (
               <span
                 key={index}
                 onClick={() => setSelectedSize(item)}

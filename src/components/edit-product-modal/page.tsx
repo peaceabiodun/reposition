@@ -60,8 +60,8 @@ const EditProductModal = ({ show, onClose }: EditModalProps) => {
           </div>
 
           <div className='mt-6 text-sm space-y-3'>
-            <div className='flex justify-between items-center'>
-              <span className='bg-[#d3d3d37c] shadow-sm p-2 gap-3 rounded-sm w-[240px] '>
+            <div className='flex justify-between items-center gap-3'>
+              <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
                 XL
               </span>
               <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
@@ -69,8 +69,8 @@ const EditProductModal = ({ show, onClose }: EditModalProps) => {
               </div>
             </div>
 
-            <div className='flex justify-between items-center'>
-              <span className='bg-[#d3d3d37c] shadow-sm p-2 gap-3 rounded-sm w-[240px] '>
+            <div className='flex justify-between items-center gap-3'>
+              <span className='bg-[#d3d3d37c] shadow-sm p-2  rounded-sm w-[240px] '>
                 Medium
               </span>
               <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
@@ -112,11 +112,9 @@ const EditProductModal = ({ show, onClose }: EditModalProps) => {
           </div>
         </div>
 
-        <div>
-          <button className='border border-[#3d3e3f] p-2 my-6 text-sm w-full h-[40px] hover:bg-[#d3d3d3] '>
-            Confirm
-          </button>
-        </div>
+        <button className='border border-[#3d3e3f] p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#d3d3d3] '>
+          Confirm
+        </button>
       </div>
     </LocalSideModal>
   );

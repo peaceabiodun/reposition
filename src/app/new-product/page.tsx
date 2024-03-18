@@ -74,16 +74,20 @@ const AddNewProduct = () => {
           </div>
           <div className='mt-6 text-sm space-y-3'>
             <div className='flex gap-3 items-center'>
-              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+              <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
                 Small
               </span>
-              <AiOutlineDelete className='cursor-pointer' size={20} />
+              <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
+                <AiOutlineDelete className='cursor-pointer' />
+              </div>
             </div>
             <div className='flex gap-3 items-center'>
-              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
-                XL
+              <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                Medium
               </span>
-              <AiOutlineDelete className='cursor-pointer' size={20} />
+              <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
+                <AiOutlineDelete className='cursor-pointer' />
+              </div>
             </div>
           </div>
         </div>
@@ -102,16 +106,20 @@ const AddNewProduct = () => {
           </div>
           <div className='mt-6 text-sm space-y-3'>
             <div className='flex gap-3 items-center'>
-              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
+              <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
                 Red
               </span>
-              <AiOutlineDelete className='cursor-pointer' size={20} />
+              <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
+                <AiOutlineDelete className='cursor-pointer' />
+              </div>
             </div>
             <div className='flex gap-3 items-center'>
-              <span className='bg-[#d3d3d3] shadow-sm p-2 rounded-sm w-[240px] '>
-                blue
+              <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                Blue
               </span>
-              <AiOutlineDelete className='cursor-pointer' size={20} />
+              <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
+                <AiOutlineDelete className='cursor-pointer' />
+              </div>
             </div>
           </div>
         </div>

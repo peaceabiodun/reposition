@@ -6,7 +6,7 @@ export const products = [
   },
   {
     img: '/img2.jpg',
-    product_name: 'Reposition White Jacket',
+    product_name: 'Reposition Top Hat',
     price: '$100',
   },
   {

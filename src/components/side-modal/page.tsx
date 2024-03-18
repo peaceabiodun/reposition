@@ -12,14 +12,14 @@ type LocalSideModalProps = Props & {
 };
 const customStyles = {
   content: {
-    top: '80px',
+    top: '70px',
     left: 'auto',
     right: '0%',
     bottom: 'auto',
     backgroundColor: '#ece8e3',
     border: 'none',
     padding: '0px',
-    height: 'calc(100vh - 80px)',
+    height: 'calc(100vh - 70px)',
     boxShadow: '0px 1px 20px 0px rgba(69, 75, 84, 0.20)',
     overflow: 'none',
   },
@@ -44,7 +44,7 @@ const LocalSideModal = ({
       shouldCloseOnOverlayClick
       {...modalProps}
     >
-      <div className='w-[98vw] sm:w-[450px] pt-7 px-[30px] sidemodal'>
+      <div className='w-[98vw] sm:w-[450px] pt-5 pl-[30px] sidemodal'>
         <div className='sidemodal__close' onClick={onRequestClose}>
           <MdClose />
         </div>
