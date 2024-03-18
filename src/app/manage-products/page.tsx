@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiMenuKebab } from 'react-icons/ci';
 import { useState } from 'react';
-import { products } from '../page';
 import { ProductType } from '@/utils/types';
 import { useRouter } from 'next/navigation';
 import DeleteModal from '@/components/delete-modal/page';
 import EditProductModal from '@/components/edit-product-modal/page';
+import { products } from '@/utils/data';
 
 const ManageProducts = () => {
   const dropDownLinks = [
