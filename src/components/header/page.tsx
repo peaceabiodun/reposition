@@ -18,7 +18,14 @@ const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+  const [scroll, setScroll] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      setScroll(window.scrollY > 30);
+    });
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -66,7 +73,14 @@ const Header = () => {
   };
   return (
     <Fragment>
-      <div className='flex justify-between gap-4 items-center h-[28px]'>
+      <div
+        id={`${scroll ? 'sticky' : ''}`}
+        className={`flex justify-between gap-4 items-center h-[40px] p-3 xs:p-4 ${
+          scroll
+            ? 'fixed top-0 w-full border-b border-[#a1a1a19c] h-[45px] bg-[#dbd9d2]'
+            : ''
+        }`}
+      >
         <h3 className='font-bold text-sm sm:text-lg flex gap-1'>
           REPOSITION{' '}
           <span className='md:hidden'>
@@ -100,9 +114,12 @@ const Header = () => {
           />
           <AiOutlineShopping
             size={23}
-            onClick={() => router.push('/basket')}
+            onClick={() => router.push('/bag')}
             className='cursor-pointer'
           />
+          <span className='text-[10px] absolute top-[6px] right-[10px] bg-[#000000] rounded-full p-2 w-4 h-4 text-[#ffffff] flex items-center justify-center'>
+            2
+          </span>
         </div>
       </div>
       {showDropdown && (
