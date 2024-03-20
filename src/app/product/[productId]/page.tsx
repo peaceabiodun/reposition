@@ -3,7 +3,7 @@ import Header from '@/components/header/page';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { MdOutlineArrowBackIosNew, MdKeyboardArrowDown } from 'react-icons/md';
+import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import {
   Accordion,
   AccordionContent,
@@ -50,10 +50,10 @@ const ProductDetails = () => {
                   white jacket made of cotton and fine fabric with ... There are
                   many variations of passages of Lorem Ipsum available, but the
                   majority have suffered alteration in some form, by injected
-                  humour, or randomised words which don't look even slightly
+                  humour, or randomised words which dont look even slightly
                   believable. If you are going to use a passage of Lorem Ipsum,
-                  you need to be sure there isn't anything embarrassing hidden
-                  in the middle of text
+                  you need to be sure there isnt anything embarrassing hidden in
+                  the middle of text
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
