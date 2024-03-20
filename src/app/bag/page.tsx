@@ -14,6 +14,7 @@ const Bag = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     'card' | 'transfer'
   >('card');
+
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
       <Header />
@@ -45,12 +46,11 @@ const Bag = () => {
             <p>Size: XL</p>
           </div>
           <div className='flex flex-col gap-3 '>
-            <div className='flex gap-1 items-center'>
+            <div className='flex gap-2 items-center'>
               <h2>Qty</h2>
               <input
-                type='number'
-                className=' outline-none border border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
-                defaultValue={1}
+                type='text'
+                className=' outline-none border-b border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
               />
             </div>
             <p>$100</p>
@@ -59,53 +59,94 @@ const Bag = () => {
             <CiTrash size={20} />
           </div>
         </div>
-        <div className='flex flex-col md:flex-row gap-4 md:gap-8 '>
+        <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
           <div className=' w-full text-xs md:text-sm '>
             <h2 className='border-b border-[#a1a1a19c]  w-full py-3 text-sm'>
               Delivery Details
             </h2>
             <input
               type='text'
-              placeholder='Country'
+              placeholder='First Name'
               className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent mt-5'
             />
             <input
               type='text'
+              placeholder='Last Name'
+              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
+            />
+            <input
+              type='email'
+              placeholder='Email'
+              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent '
+            />
+            <input
+              type='text'
+              placeholder='Country'
+              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
+            />
+            <input
+              type='text'
               placeholder='City'
-              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-3'
+              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent '
             />
             <input
               type='text'
               placeholder='Delivery Address'
-              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent mb-3'
+              className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
             />
             <input
               type='text'
               placeholder='Phone number'
               className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent'
             />
+            <div className='text-xs text-red-500 mt-2'>
+              * All details are required{' '}
+            </div>
           </div>
-          <div className=' w-full text-xs md:text-sm space-y-3'>
-            <h2 className='border-b border-[#a1a1a19c]  w-full py-3 text-sm'>
+
+          <div className=' w-full text-xs md:text-sm '>
+            <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+              Shipping Method
+            </h2>
+            <div className='flex gap-2 items-start mt-5'>
+              <input type='checkbox' checked className='accent-black mt-1' />
+              <div>
+                <h3 className='font-medium'>Standard Courier</h3>
+                <div>$20</div>
+                <p>
+                  Delivery takes up to 7 business days. Estimated delivery time
+                  once the order has shipped.
+                </p>
+              </div>
+            </div>
+            <h2 className='border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm'>
               Billing Summary
             </h2>
-            <div className='space-y-1'>
+            <div className='space-y-3 mt-3'>
               <div className='flex gap-3 justify-between'>
-                <p>Subtotal</p>
+                <p>Item total</p>
                 <p>$100</p>
               </div>
               <div className='flex gap-3 justify-between'>
-                <p>Delivery Fee</p>
-                <p>$10</p>
+                <p>Shipping fee</p>
+                <p>$20</p>
               </div>
               <div className='flex gap-3 justify-between'>
                 <p>Discount Fee</p>
                 <p>--</p>
               </div>
+              <div className='flex gap-3 justify-between'>
+                <p>Duties, taxes & fees</p>
+                <p>--</p>
+              </div>
+              <div className='flex gap-3 justify-between font-bold'>
+                <p className=''>Total</p>
+                <p>$120</p>
+              </div>
             </div>
 
             <div className=' w-full'>
-              <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+              <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
                 Payment Options
               </h2>
               <div

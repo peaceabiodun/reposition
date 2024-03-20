@@ -382,7 +382,8 @@ body {
   overflow: auto;
   padding: 1rem 1.5rem 0.5rem;
   border: 1px solid #3d3e3f;
-  margin: 1.25rem 0;
+  margin-top: 8px;
+  min-height: 160px;
 }
 
 .file-uploader_body {

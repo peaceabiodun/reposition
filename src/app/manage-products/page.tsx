@@ -48,12 +48,12 @@ const ManageProducts = () => {
         </button>
       </div>
 
-      <h3 className='text-sm font-semibold text-center my-4'>
+      <h3 className='text-sm font-semibold text-center my-8'>
         Manage Your Products
       </h3>
 
       <div className='flex items-center justify-center'>
-        <div className='border border-[#3d3e3f] p-3 text-sm w-full md:max-w-[85vw] '>
+        <div className=' text-sm w-full md:max-w-[85vw] '>
           {products.map((item, index) => (
             <div
               key={index}
