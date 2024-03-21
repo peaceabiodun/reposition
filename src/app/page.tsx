@@ -6,10 +6,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Typewriter from 'typewriter-effect';
 import { ThreeCircles } from 'react-loader-spinner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.from('products').select();
+      console.log(data, 'a');
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   // const getSession = async () => {
   //   const {
   //     data: { session },

@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { LuUploadCloud } from 'react-icons/lu';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { supabase } from '@/lib/supabase';
 
 type ActionType = 'create' | 'edit';
 export type FileUploaderProps = {
@@ -104,40 +105,67 @@ export function FileUploader({
   };
   const fileUploadRef = useRef<HTMLInputElement | null>(null);
 
-  const uploadSingleFile = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const numberOfFiles = filesToUpload?.length ?? 1;
-      const formData = new FormData();
-      formData.append('file', file);
+  // const uploadSingleFile = async (file: File): Promise<string> => {
+  //   return new Promise((resolve, reject) => {
+  //     const numberOfFiles = filesToUpload?.length ?? 1;
+  //     const formData = new FormData();
+  //     formData.append('file', file);
 
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '');
-      xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+  //     const xhr = new XMLHttpRequest();
 
-      // TODO :: refactor progress
-      xhr.upload.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const progress = Math.round(
-            (event.loaded * (100 / numberOfFiles)) / event.total
-          );
-          setPercent(progress);
-        }
-      };
+  //     xhr.open(
+  //       'POST',
+  //       `${supabase.storage.from('product-images').upload(file.name, file, {
+  //         contentType: 'image/jpeg',
+  //       })}`
+  //     );
+  //     // xhr.open('POST', '');
+  //     // xhr.setRequestHeader('Authorization', `Bearer ${token}`);
 
-      xhr.onload = async () => {
-        const data = JSON.parse(xhr.responseText);
-        if (data) {
-          resolve(data.url);
-        }
-      };
+  //     // TODO :: refactor progress
+  //     xhr.upload.onprogress = (event) => {
+  //       if (event.lengthComputable) {
+  //         const progress = Math.round(
+  //           (event.loaded * (100 / numberOfFiles)) / event.total
+  //         );
+  //         setPercent(progress);
+  //       }
+  //     };
 
-      xhr.onerror = () => {
-        reject(Error('Problem uploading image. Contact tech support'));
-      };
+  //     // xhr.onload = async () => {
+  //     //   const data = JSON.parse(xhr.responseText);
+  //     //   if (data) {
+  //     //     resolve(data.url);
+  //     //   }
+  //     // };
 
-      xhr.send(formData);
-    });
+  //     xhr.onerror = () => {
+  //       reject(Error('Problem uploading image'));
+  //     };
+
+  //     xhr.send(formData);
+  //   });
+  // };
+
+  const uploadSingleFile = async (file: File): Promise<string> => {
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(file.name, file, {
+        contentType: 'image/jpeg',
+      });
+
+    if (error) {
+      console.error('Error uploading file:', error.message);
+      throw error;
+    }
+
+    const { data: UrlData } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(data?.path);
+
+    return UrlData.publicUrl;
   };
+
   const uploadImg = async () => {
     setUploading(true);
     if (filesToUpload) {
@@ -194,7 +222,7 @@ export function FileUploader({
           {label}
           <div
             className={`file-uploader_body ${
-              (uploading || loading) && 'file-uploader_body_not_uploading '
+              (uploading ?? loading) && 'file-uploader_body_not_uploading '
             }`}
             onDrop={handleFileDrop}
             onDragOver={handleDragOver}

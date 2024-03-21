@@ -8,8 +8,12 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { useState } from 'react';
 import { ProductFormDataType } from '@/utils/types';
 import { supabase } from '@/lib/supabase';
+import ErrorModal from '@/components/error-modal/page';
+import { useRouter } from 'next/navigation';
+import SuccessModal from '@/components/success-modal/page';
 
 const AddNewProduct = () => {
+  const router = useRouter();
   const [productFormData, setProductFormData] = useState<ProductFormDataType>({
     name: '',
     price: '',
@@ -23,6 +27,8 @@ const AddNewProduct = () => {
   const [color, setColor] = useState('');
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const addSize = () => {
     if (!size) return;
     const sizes = [...productFormData.sizes, size];
@@ -55,14 +61,34 @@ const AddNewProduct = () => {
     };
     setLoading(true);
     try {
-      const res = await supabase.from('products').insert(payload);
-      console.log(res);
+      const { data, error } = await supabase.from('products').insert(payload);
+      if (error !== null) {
+        setShowErrorMessage(true);
+      } else {
+        setShowSuccessMessage(true);
+        setProductFormData({
+          name: '',
+          price: '',
+          description: '',
+          images: [],
+          sizes: [],
+          colors: [],
+        });
+      }
     } catch (err: any) {
       setShowErrorMessage(true);
     } finally {
       setLoading(false);
     }
   };
+  const disableButton =
+    !productFormData.name ??
+    !productFormData.price ??
+    !productFormData.description ??
+    productFormData.images.length <= 0 ??
+    productFormData.colors.length <= 0 ??
+    productFormData.sizes.length <= 0;
+
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <Link href='/manage-products' className='flex gap-1 mt-4 text-sm'>
@@ -124,11 +150,13 @@ const AddNewProduct = () => {
       <div className='w-full text-sm mb-4'>
         <label className=''>Product Image(s)</label>
         <FileUploader
-          fileUrls={[]}
-          setFileUrls={() => []}
-          token=''
+          fileUrls={productFormData.images}
+          setFileUrls={(img) =>
+            setProductFormData({ ...productFormData, images: img })
+          }
           className='w-full text-sm'
           isMultiple
+          token=''
         />
       </div>
 
@@ -201,14 +229,38 @@ const AddNewProduct = () => {
           </div>
         </div>
       </div>
+      {disableButton && (
+        <div className='text-xs text-red-500'>
+          * All fields are required and must be inputted
+        </div>
+      )}
       <div className='flex items-center justify-center my-6'>
         <button
           onClick={createProduct}
-          className='border border-[#3d3e3f] p-2 text-sm w-full sm:w-[300px] h-[40px] hover:bg-[#729696] '
+          disabled={disableButton}
+          className='border border-[#3d3e3f] p-2 text-sm w-full sm:w-[300px] h-[40px]'
         >
           {loading ? 'Loading...' : ' Confirm'}
         </button>
       </div>
+      {showErrorMessage && (
+        <ErrorModal
+          show={showErrorMessage}
+          onClose={() => setShowErrorMessage(false)}
+          description='An error occured while trying to create a new product'
+        />
+      )}
+
+      {showSuccessMessage && (
+        <SuccessModal
+          show={showSuccessMessage}
+          onClose={() => setShowSuccessMessage(false)}
+          title='Product Created'
+          description='You have successfully created a product '
+          buttonText='Back to product'
+          buttonClick={() => router.push('/')}
+        />
+      )}
     </div>
   );
 };

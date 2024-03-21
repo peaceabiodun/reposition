@@ -14,7 +14,7 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const disableButton = !password || !confirmPassword;
+  const disableButton = !password ?? !confirmPassword;
   const router = useRouter();
 
   const updatePassword = async () => {
