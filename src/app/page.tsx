@@ -1,22 +1,24 @@
 'use client';
 import Footer from '@/components/footer/page';
 import Header from '@/components/header/page';
-import { products } from '@/utils/data';
 import Image from 'next/image';
 import Link from 'next/link';
 import Typewriter from 'typewriter-effect';
 import { ThreeCircles } from 'react-loader-spinner';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { ProductDetailType } from '@/utils/types';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState<ProductDetailType[]>([]);
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.from('products').select();
       console.log(data, 'a');
+      setProducts(data ?? []);
     } catch (err: any) {
       console.log(err);
     } finally {
@@ -79,20 +81,25 @@ const Home = () => {
             wrapperClass='my-4'
           />
         </div>
+      ) : products.length === 0 ? (
+        <div className='w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-3 xs:p-4 text-sm'>
+          {' '}
+          No Products Available
+        </div>
       ) : (
         <div className='w-full min-h-[85vh] md:min-h-full mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 p-3 xs:p-4'>
-          {products.map((item, index) => (
-            <Link href='product/{index}' key={index}>
+          {products.map((item) => (
+            <Link href='product/{index}' key={item.id}>
               <Image
-                src={item.img}
+                src={item.images[0]}
                 alt='product_image'
-                width='172'
-                height='179'
+                width='200'
+                height='240'
                 className='product_image object-cover'
               />
-              <p className='my-1 font-medium'>{item.product_name}</p>
+              <p className='my-1 font-medium'>{item.name}</p>
               <p>{item.price}</p>
-              <p className='font-semibold mt-1'>Sold Out</p>
+              {item.sold_out && <p className='font-semibold mt-1'>Sold Out</p>}
             </Link>
           ))}
         </div>

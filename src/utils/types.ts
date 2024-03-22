@@ -12,3 +12,16 @@ export type ProductFormDataType = {
   sizes: string[];
   colors: string[];
 };
+
+export type ProductDetailType = {
+  id: string;
+  created_at: string;
+  name: string;
+  price: string;
+  description: string;
+  images: string[];
+  sizes: string[];
+  colors: string[];
+  user_id: string;
+  sold_out?: boolean;
+};
