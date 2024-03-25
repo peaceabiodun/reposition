@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo } from 'next/font/google';
 import './globals.css';
+import { ProductProvider } from '@/context/product-context';
 
 const archivo = Archivo({ subsets: ['latin'] });
 
@@ -15,8 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={archivo.className}>{children}</body>
-    </html>
+    <ProductProvider>
+      <html lang='en'>
+        <body className={archivo.className}>{children}</body>
+      </html>
+    </ProductProvider>
   );
 }
