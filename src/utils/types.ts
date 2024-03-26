@@ -1,8 +1,8 @@
-export type ProductType = {
-  img: string;
-  product_name: string;
-  price: string;
-};
+// export type ProductType = {
+//   img: string;
+//   product_name: string;
+//   price: string;
+// };
 
 export type ProductFormDataType = {
   name: string;
@@ -24,4 +24,14 @@ export type ProductDetailType = {
   colors: string[];
   user_id: string;
   sold_out?: boolean;
+};
+
+export type ShoppingBagType = {
+  id: string;
+  created_at: string;
+  name: string;
+  price: string;
+  image: string;
+  color: string;
+  size: string;
 };

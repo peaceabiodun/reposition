@@ -5,15 +5,46 @@ import Image from 'next/image';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiTrash } from 'react-icons/ci';
 import { GiTakeMyMoney } from 'react-icons/gi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CheckoutModal from '@/components/checkout-modal/page';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
+import ErrorModal from '@/components/error-modal/page';
+import { ShoppingBagType } from '@/utils/types';
+import { STORAGE_KEYS } from '@/utils/constants';
 
 const Bag = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [bagItems, setBagItems] = useState<ShoppingBagType[]>([]);
+  const [quantity, setQuantity] = useState('1');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     'card' | 'transfer'
   >('card');
+
+  const getBagItems = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.from('shopping-bag').select();
+      setBagItems(data ?? []);
+      localStorage.setItem(
+        STORAGE_KEYS.CART_LENGTH,
+        (data?.length ?? 0).toString()
+      );
+      if (error) {
+        setShowErrorModal(true);
+      }
+    } catch {
+      setShowErrorModal(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBagItems();
+  }, []);
 
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
@@ -26,39 +57,47 @@ const Bag = () => {
         Back
       </Link>
       <h2 className='text-sm font-medium text-center my-4 px-3 xs:px-4'>
-        Shopping Bag (2)
+        Shopping Bag ({bagItems.length})
       </h2>
 
       <div className='my-4 space-y-6 px-3 xs:px-4'>
         <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
           Order Summary
         </h2>
-        <div className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'>
-          <Image
-            src={'/img1.jpg'}
-            alt='product_image'
-            width='80'
-            height='90'
-            className='h-[90px] object-cover'
-          />
-          <div className='flex flex-col gap-3 '>
-            <p className=''>Reposition White Jacket [white]</p>
-            <p>Size: XL</p>
-          </div>
-          <div className='flex flex-col gap-3 '>
-            <div className='flex gap-2 items-center'>
-              <h2>Qty</h2>
-              <input
-                type='text'
-                className=' outline-none border-b border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
-              />
+        {bagItems.map((item) => (
+          <div
+            key={item.id}
+            className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
+          >
+            <Image
+              src={item.image}
+              alt='product_image'
+              width='80'
+              height='90'
+              className='h-[90px] object-cover'
+            />
+            <div className='flex flex-col gap-3 '>
+              <p className=''>
+                {item.name} [{item.color}]
+              </p>
+              <p>Size: {item.size}</p>
             </div>
-            <p>$100</p>
+            <div className='flex flex-col gap-3 '>
+              <div className='flex gap-2 items-center'>
+                <h2>Qty</h2>
+                <input
+                  type='text'
+                  value={quantity}
+                  className=' outline-none border-b border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
+                />
+              </div>
+              <p>{item.price}</p>
+            </div>
+            <div>
+              <CiTrash size={20} />
+            </div>
           </div>
-          <div>
-            <CiTrash size={20} />
-          </div>
-        </div>
+        ))}
         <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
           <div className=' w-full text-xs md:text-sm '>
             <h2 className='border-b border-[#a1a1a19c]  w-full py-3 text-sm'>
@@ -195,6 +234,13 @@ const Bag = () => {
         show={showCheckoutModal}
         onClose={() => setShowCheckoutModal(false)}
       />
+      {showErrorModal && (
+        <ErrorModal
+          show={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          description='Sorry an error occured while loading the products'
+        />
+      )}
     </div>
   );
 };

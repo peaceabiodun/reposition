@@ -83,12 +83,12 @@ body {
   color: #3d3e3f;
 }
 
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
   .product_image {
     width: 200px;
     height: 240px;
   }
-}
+} */
 
 /* header styles */
 

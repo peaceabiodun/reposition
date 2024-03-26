@@ -19,6 +19,7 @@ const Header = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const [scroll, setScroll] = useState(false);
+  const bagLength = localStorage.getItem(STORAGE_KEYS.CART_LENGTH);
   const router = useRouter();
 
   useEffect(() => {
@@ -118,7 +119,7 @@ const Header = () => {
             className='cursor-pointer'
           />
           <span className='text-[10px] absolute top-[6px] right-[10px] bg-[#000000] rounded-full p-2 w-4 h-4 text-[#ffffff] flex items-center justify-center'>
-            2
+            {bagLength}
           </span>
         </div>
       </div>

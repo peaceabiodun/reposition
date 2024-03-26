@@ -7,7 +7,6 @@ import Typewriter from 'typewriter-effect';
 import { ThreeCircles } from 'react-loader-spinner';
 import { Fragment, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { ProductDetailType } from '@/utils/types';
 import ErrorModal from '@/components/error-modal/page';
 import { useProductContext } from '@/context/product-context';
 
@@ -26,7 +25,7 @@ const Home = () => {
         setShowErrorModal(true);
       }
     } catch (err: any) {
-      console.log(err);
+      setShowErrorModal(true);
     } finally {
       setLoading(false);
     }
@@ -101,8 +100,8 @@ const Home = () => {
                   src={item.images[0]}
                   alt='product_image'
                   width='200'
-                  height='240'
-                  className='product_image object-cover'
+                  height='300'
+                  className='sm:min-h-[300px] object-cover'
                 />
                 <p className='my-1 font-medium'>{item.name}</p>
                 <p>{item.price}</p>
