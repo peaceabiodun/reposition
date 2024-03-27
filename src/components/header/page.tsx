@@ -19,7 +19,7 @@ const Header = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const [scroll, setScroll] = useState(false);
-  const bagLength = localStorage.getItem(STORAGE_KEYS.CART_LENGTH);
+  const [bagLength, setBaglength] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +27,13 @@ const Header = () => {
       setScroll(window.scrollY > 20);
     });
   });
+
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      const bagLength = localStorage.getItem(STORAGE_KEYS.CART_LENGTH);
+      setBaglength(bagLength ?? '');
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
