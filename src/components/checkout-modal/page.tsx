@@ -15,7 +15,7 @@ const CheckoutModal = ({ show, onClose }: Props) => {
         <h3 className='font-semibold text-green-400'>
           Thanks for shopping with us
         </h3>
-        <p>Your order will be delivered within 7-10 days</p>
+        <div>Your order will be delivered within 7-10 days</div>
       </div>
       <button
         className='text-sm p-1 w-full border border-[#3d3e3f] mt-5'

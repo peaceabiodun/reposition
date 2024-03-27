@@ -117,7 +117,11 @@ const ProductDetails = () => {
             <div className='flex flex-col items-center space-y-3 '>
               <h1 className='uppercase font-medium'>{productDetails?.name}</h1>
               <h3 className='font-semibold'>{productDetails?.price}</h3>
-              <Accordion type='single' collapsible className='w-[290px]'>
+              <Accordion
+                type='single'
+                collapsible
+                className='w-[270px] sm:w-[290px] '
+              >
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -131,7 +135,11 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion type='single' collapsible className=' w-[290px]'>
+              <Accordion
+                type='single'
+                collapsible
+                className='w-[270px] sm:w-[290px] '
+              >
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -163,7 +171,11 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion type='single' collapsible className=' w-[290px]'>
+              <Accordion
+                type='single'
+                collapsible
+                className=' w-[270px] sm:w-[290px] '
+              >
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -195,7 +207,11 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion type='single' collapsible className=' w-[290px]'>
+              <Accordion
+                type='single'
+                collapsible
+                className='w-[270px] sm:w-[290px] '
+              >
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -236,7 +252,7 @@ const ProductDetails = () => {
             <button
               disabled={disableBtn}
               onClick={addToBag}
-              className='text-sm text-[#f0efef] p-2 border bg-[#a3a3a37c] mt-7 w-[290px] h-[40px]'
+              className='text-xs text-[#f0efef] p-2 border bg-[#7973737c] mt-7 w-[290px] h-[40px]'
             >
               {addToBagloading ? 'Loading...' : 'ADD TO BAG'}
             </button>
@@ -258,7 +274,7 @@ const ProductDetails = () => {
         <ErrorModal
           show={showErrorModal}
           onClose={() => setShowErrorModal(false)}
-          description='Please check your connection and try again.'
+          description='Please check your connection or this item is already in your shopping bag.'
         />
       )}
     </div>

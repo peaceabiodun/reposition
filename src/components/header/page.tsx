@@ -31,9 +31,9 @@ const Header = () => {
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
       const bagLength = localStorage.getItem(STORAGE_KEYS.CART_LENGTH);
-      setBaglength(bagLength ?? '');
+      setBaglength(bagLength ?? '0');
     }
-  }, []);
+  }, [STORAGE_KEYS.CART_LENGTH]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
