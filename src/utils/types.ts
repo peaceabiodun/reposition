@@ -1,8 +1,8 @@
-// export type ProductType = {
-//   img: string;
-//   product_name: string;
-//   price: string;
-// };
+export type ProductType = {
+  img: string;
+  product_name: string;
+  price: string;
+};
 
 export type ProductFormDataType = {
   name: string;
