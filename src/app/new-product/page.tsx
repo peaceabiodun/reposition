@@ -18,6 +18,7 @@ const AddNewProduct = () => {
     name: '',
     price: '',
     description: '',
+    weight: 0,
     images: [],
     sizes: [],
     colors: [],
@@ -58,6 +59,7 @@ const AddNewProduct = () => {
       images: productFormData.images,
       sizes: productFormData.sizes,
       colors: productFormData.colors,
+      weight: productFormData.weight,
     };
     setLoading(true);
     try {
@@ -70,6 +72,7 @@ const AddNewProduct = () => {
           name: '',
           price: '',
           description: '',
+          weight: 0,
           images: [],
           sizes: [],
           colors: [],
@@ -146,7 +149,33 @@ const AddNewProduct = () => {
           }
         />
       </div>
-
+      <div className='w-full'>
+        <label className=''>Product Weight</label>
+        <div className='flex w-full items-center'>
+          <input
+            type='tel'
+            className='border-y border-l border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
+            placeholder='weight in kg'
+            value={productFormData.weight ?? 0}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const parsedValue = parseInt(inputValue);
+              if (!isNaN(parsedValue)) {
+                setProductFormData({
+                  ...productFormData,
+                  weight: parsedValue,
+                });
+              } else {
+                setProductFormData({
+                  ...productFormData,
+                  weight: 0,
+                });
+              }
+            }}
+          />
+          <div className='border-y border-r border-[#3d3e3f] p-2 mt-2'>Kg</div>
+        </div>
+      </div>
       <div className='w-full text-sm mb-4'>
         <label className=''>Product Image(s)</label>
         <FileUploader

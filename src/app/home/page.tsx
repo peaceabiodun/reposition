@@ -104,7 +104,7 @@ const Home = () => {
                   className='sm:min-h-[300px] object-cover'
                 />
                 <p className='my-1 font-medium'>{item.name}</p>
-                <p>{item.price}</p>
+                <p>${item.price}</p>
                 {item.sold_out && (
                   <p className='font-semibold mt-1'>Sold Out</p>
                 )}

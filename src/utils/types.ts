@@ -8,6 +8,7 @@ export type ProductFormDataType = {
   name: string;
   price: string;
   description: string;
+  weight: number | null;
   images: string[];
   sizes: string[];
   colors: string[];
@@ -24,6 +25,7 @@ export type ProductDetailType = {
   colors: string[];
   user_id: string;
   sold_out?: boolean;
+  weight: number;
 };
 
 export type ShoppingBagType = {
@@ -34,6 +36,7 @@ export type ShoppingBagType = {
   image: string;
   color: string;
   size: string;
+  weight: number;
 };
 
 export type CheckoutDetailsType = {

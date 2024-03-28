@@ -10,31 +10,34 @@ import SuccessModal from '@/components/success-modal/page';
 
 const SignUpNewUsers = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const disableButton = !email ?? !password;
+  const disableButton = !email;
   const router = useRouter();
 
   const signUp = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signInWithOtp({
         email: email,
-        password: password,
+
         options: {
           data: {
             user_role: 'CUSTOMER',
+            shouldCreateUser: false,
+            emailRedirectTo: 'https://reposition-psi.vercel.app/home',
           },
         },
       });
-
-      if (data.user?.role === 'authenticated') {
-        setShowSuccessModal(true);
-      } else {
-        setShowErrorMessage(true);
-      }
+      setShowSuccessModal(true);
+      setEmail('');
+      // if (data.user?.role === 'authenticated') {
+      //   setShowSuccessModal(true);
+      // } else {
+      //   setShowErrorMessage(true);
+      // }
     } catch (err: any) {
       setShowErrorMessage(true);
     } finally {
@@ -44,7 +47,7 @@ const SignUpNewUsers = () => {
   return (
     <div className='w-full bg-[#dbd9d2] p-3 xs:p-4 text-sm relative min-h-[100vh]  '>
       <div className='flex justify-center'>
-        <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-4 flex flex-col items-center justify-center'>
+        <div className='w-full min-h-[88vh] sm:max-w-[450px] space-y-4 flex flex-col items-center justify-center'>
           <h2 className='text-2xl font-semibold'>
             <Typewriter
               options={{
@@ -55,56 +58,51 @@ const SignUpNewUsers = () => {
             />
           </h2>
           <p className='text-xs text-center'>
-            Be one of the top 100 to get exclusive access to our latest
-            collection and shop with unlimited offers
+            Enter your email for early access - top members only.
           </p>
-          <input
-            type='text'
-            placeholder='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f] '
-          />
-          <input
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
-          />
+          <div className='flex w-full items-center'>
+            <input
+              type='text'
+              placeholder='Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className='border-y border-l border-[#3d3e3f] w-full h-[40px] p-2 outline-none bg-transparent placeholder:text-[#3d3e3f] '
+            />
+            <button
+              disabled={disableButton}
+              onClick={signUp}
+              className={`border border-[#3d3e3f] h-[40px] p-2 w-[100px] cursor-pointer`}
+            >
+              {loading ? 'Loading...' : 'Submit'}
+            </button>
+          </div>
+
+          {disableButton && (
+            <p className='text-xs text-red-500'>
+              Please input a valid email address
+            </p>
+          )}
           <div className='flex text-xs'>
             <p>Already have an account ?</p>
             <Link href={'/login'} className='font-bold cursor-pointer'>
               Login here
             </Link>
           </div>
-          {disableButton && (
-            <p className='text-xs text-red-500'>Please fill in all details</p>
-          )}
-          <button
-            disabled={disableButton}
-            onClick={signUp}
-            className={`border border-[#3d3e3f] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
-          >
-            {loading ? 'Loading...' : 'Confirm'}
-          </button>
         </div>
       </div>
       {showErrorMessage && (
         <ErrorModal
           show={showErrorMessage}
           onClose={() => setShowErrorMessage(false)}
-          description='Make sure you input the correct email and password'
+          description='Make sure you input a correct email address'
         />
       )}
       {showSuccessModal && (
         <SuccessModal
           show={showSuccessModal}
           onClose={() => setShowSuccessModal(false)}
-          title='You have successfully Created an account with us'
-          description='Please proceed to login with your details'
-          buttonText='Login'
-          buttonClick={() => router.push('/login')}
+          title='You have successfully submitted your email'
+          description='check your email to proceed'
         />
       )}
     </div>
