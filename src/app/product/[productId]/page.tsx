@@ -84,7 +84,7 @@ const ProductDetails = () => {
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] '>
       <Header />
       <Link
-        href='/'
+        href='/home'
         className='pt-3 gap-1 flex text-sm items-center p-3 xs:p-4'
       >
         <MdOutlineArrowBackIosNew size={20} />
@@ -252,7 +252,7 @@ const ProductDetails = () => {
             <button
               disabled={disableBtn}
               onClick={addToBag}
-              className='text-xs text-[#f0efef] p-2 border bg-[#7973737c] mt-7 w-[290px] h-[40px]'
+              className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer'
             >
               {addToBagloading ? 'Loading...' : 'ADD TO BAG'}
             </button>

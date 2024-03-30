@@ -107,7 +107,7 @@ const AddNewProduct = () => {
           <label className=''>Product Name</label>
           <input
             type='text'
-            className='border border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
             placeholder='e.g Utility Jacket'
             value={productFormData.name}
             onChange={(e) =>
@@ -122,7 +122,7 @@ const AddNewProduct = () => {
           <label className=''>Product Price</label>
           <input
             type='text'
-            className='border border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
             placeholder='$100'
             value={productFormData.price}
             onChange={(e) =>
@@ -138,7 +138,7 @@ const AddNewProduct = () => {
       <div className='w-full text-sm my-4'>
         <label className=''>Product Description</label>
         <textarea
-          className='border border-[#3d3e3f] w-full h-[160px] mt-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+          className='border border-[#3d3e3f] rounded-sm w-full h-[160px] mt-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
           placeholder='Describe your product'
           value={productFormData.description}
           onChange={(e) =>
@@ -154,7 +154,7 @@ const AddNewProduct = () => {
         <div className='flex w-full items-center'>
           <input
             type='tel'
-            className='border-y border-l border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
+            className='border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
             placeholder='weight in kg'
             value={productFormData.weight ?? 0}
             onChange={(e) => {
@@ -173,10 +173,12 @@ const AddNewProduct = () => {
               }
             }}
           />
-          <div className='border-y border-r border-[#3d3e3f] p-2 mt-2'>Kg</div>
+          <div className='border-y border-r rounded-r-sm rounded-l-none border-[#3d3e3f] p-2 mt-2'>
+            Kg
+          </div>
         </div>
       </div>
-      <div className='w-full text-sm mb-4'>
+      <div className='w-full text-sm my-4'>
         <label className=''>Product Image(s)</label>
         <FileUploader
           fileUrls={productFormData.images}
@@ -192,12 +194,12 @@ const AddNewProduct = () => {
       <div className='my-4 text-sm w-full flex flex-col sm:flex-row gap-4 sm:gap-6'>
         <div className='w-full text-sm '>
           <p>Product Sizes</p>
-          <div className=' border border-[#3d3e3f] w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
+          <div className=' border border-[#3d3e3f] rounded-sm w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
             <p className=''>+ Add Sizes</p>
             <div className='flex items-center  gap-3'>
               <input
                 type='text'
-                className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent '
+                className='border border-[#3d3e3f] rounded-sm w-[240px] p-2 mt-1 outline-none bg-transparent '
                 placeholder='e.g Medium'
                 value={size}
                 onChange={(e) => setSize(e.target.value)}
@@ -226,12 +228,12 @@ const AddNewProduct = () => {
 
         <div className='w-full text-sm '>
           <p>Product Colors</p>
-          <div className=' border border-[#3d3e3f] w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
+          <div className=' border border-[#3d3e3f] rounded-sm w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
             <p className=''>+ Add Colors</p>
             <div className='flex items-center  gap-3'>
               <input
                 type='text'
-                className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent '
+                className='border border-[#3d3e3f] rounded-sm w-[240px] p-2 mt-1 outline-none bg-transparent '
                 placeholder='e.g White'
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
@@ -267,7 +269,7 @@ const AddNewProduct = () => {
         <button
           onClick={createProduct}
           disabled={disableButton}
-          className='border border-[#3d3e3f] p-2 text-sm w-full sm:w-[300px] h-[40px]'
+          className='border border-[#3d3e3f] rounded-sm p-2 text-sm w-full sm:w-[300px] h-[40px]'
         >
           {loading ? 'Loading...' : ' Confirm'}
         </button>

@@ -384,6 +384,7 @@ body {
   border: 1px solid #3d3e3f;
   margin-top: 8px;
   min-height: 160px;
+  border-radius: 4px;
 }
 
 .file-uploader_body {

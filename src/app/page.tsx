@@ -66,7 +66,7 @@ const SignUpNewUsers = () => {
               placeholder='Email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className='border-y border-l border-[#3d3e3f] w-full h-[40px] p-2 outline-none bg-transparent placeholder:text-[#3d3e3f] '
+              className='border-y border-l border-[#3d3e3f] rounded-none w-full h-[40px] p-2 outline-none bg-transparent placeholder:text-[#3d3e3f] '
             />
             <button
               disabled={disableButton}

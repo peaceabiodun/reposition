@@ -5,12 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiMenuKebab } from 'react-icons/ci';
-import { useState } from 'react';
-import { ProductType } from '@/utils/types';
+import { useEffect, useState } from 'react';
+import { ProductDetailType } from '@/utils/types';
 import { useRouter } from 'next/navigation';
 import DeleteModal from '@/components/delete-modal/page';
 import EditProductModal from '@/components/edit-product-modal/page';
-import { products } from '@/utils/data';
+import { supabase } from '@/lib/supabase';
+import ErrorModal from '@/components/error-modal/page';
+import { ThreeCircles } from 'react-loader-spinner';
 
 const ManageProducts = () => {
   const dropDownLinks = [
@@ -23,20 +25,41 @@ const ManageProducts = () => {
       link: () => setShowDeleteModal(true),
     },
   ];
+  const [loading, setLoading] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [products, setProducts] = useState<ProductDetailType[]>([]);
 
-  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
-    null
-  );
+  const [selectedProduct, setSelectedProduct] =
+    useState<ProductDetailType | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const handleSelectProduct = (product: ProductType) => {
+  const handleSelectProduct = (product: ProductDetailType) => {
     setSelectedProduct(product === selectedProduct ? null : product);
   };
   const router = useRouter();
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.from('products').select();
+      setProducts(data ?? []);
+      if (error) {
+        setShowErrorModal(true);
+      }
+    } catch (err: any) {
+      setShowErrorModal(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
-        <Link href='/' className='flex gap-1'>
+        <Link href='/home' className='flex gap-1'>
           <MdOutlineArrowBackIosNew size={20} />
           Back
         </Link>
@@ -51,56 +74,68 @@ const ManageProducts = () => {
       <h3 className='text-sm font-semibold text-center my-8'>
         Manage Your Products
       </h3>
-
-      <div className='flex items-center justify-center'>
-        <div className=' text-sm w-full md:max-w-[85vw] '>
-          {products.map((item, index) => (
-            <div
-              key={index}
-              className={`relative flex gap-3 justify-between items-center ${
-                index === products.length - 1
-                  ? ''
-                  : 'border-b border-[#b9b9b96c]'
-              }  py-2`}
-            >
-              <div className=''>
-                <Image
-                  src={item.img}
-                  alt='product_image'
-                  width='70'
-                  height='70'
-                  className='h-[70px] object-cover'
-                />
-              </div>
-              <p className='sm:hidden'>
-                {truncateString(`${item.product_name}`, 3)}{' '}
-              </p>
-              <p className='hidden sm:flex'>
-                {truncateString(`${item.product_name}`, 6)}{' '}
-              </p>
-              <div
-                className='cursor-pointer '
-                onClick={() => handleSelectProduct(item)}
-              >
-                <CiMenuKebab size={20} />
-              </div>
-              {selectedProduct && selectedProduct === item && (
-                <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
-                  {dropDownLinks.map((item, index) => (
-                    <p
-                      key={index}
-                      className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
-                      onClick={item.link}
-                    >
-                      {item.text}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+      {loading ? (
+        <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-3 xs:p-4'>
+          <ThreeCircles
+            visible={true}
+            height={50}
+            width={50}
+            color='#b4b4b4ad'
+            ariaLabel='three-circles-loading'
+            wrapperClass='my-4'
+          />
         </div>
-      </div>
+      ) : (
+        <div className='flex items-center justify-center'>
+          <div className=' text-sm w-full md:max-w-[85vw] '>
+            {products.map((item, index) => (
+              <div
+                key={item.id}
+                className={`relative flex gap-3 justify-between items-center ${
+                  index === products.length - 1
+                    ? ''
+                    : 'border-b border-[#b9b9b96c]'
+                }  py-2`}
+              >
+                <div className=''>
+                  <Image
+                    src={item.images[0]}
+                    alt='product_image'
+                    width='70'
+                    height='70'
+                    className='h-[70px] object-cover'
+                  />
+                </div>
+                <p className='sm:hidden'>
+                  {truncateString(`${item.name}`, 3)}{' '}
+                </p>
+                <p className='hidden sm:flex'>
+                  {truncateString(`${item.name}`, 6)}{' '}
+                </p>
+                <div
+                  className='cursor-pointer '
+                  onClick={() => handleSelectProduct(item)}
+                >
+                  <CiMenuKebab size={20} />
+                </div>
+                {selectedProduct && selectedProduct === item && (
+                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                    {dropDownLinks.map((item, index) => (
+                      <p
+                        key={index}
+                        className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
+                        onClick={item.link}
+                      >
+                        {item.text}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <DeleteModal
         show={showDeleteModal}
@@ -110,7 +145,15 @@ const ManageProducts = () => {
       <EditProductModal
         show={showEditModal}
         onClose={() => setShowEditModal(false)}
+        selectedProduct={selectedProduct}
       />
+      {showErrorModal && (
+        <ErrorModal
+          show={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          description='Sorry an error occured while loading the products'
+        />
+      )}
     </div>
   );
 };

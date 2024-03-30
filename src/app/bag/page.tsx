@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import { DeliveryDetailsType, ShoppingBagType } from '@/utils/types';
-import { STORAGE_KEYS } from '@/utils/constants';
 import { ThreeCircles } from 'react-loader-spinner';
 import SuccessModal from '@/components/success-modal/page';
 import { useRouter } from 'next/navigation';
@@ -93,6 +92,8 @@ const Bag = () => {
     const newItem = { ...newItems[index], quantity };
     newItems[index] = newItem;
     setBagItems(newItems);
+    calculateTotalPrice();
+    calculateShippingFee();
   };
 
   const calculateTotalPrice = () => {
@@ -113,9 +114,6 @@ const Bag = () => {
     if (totalWeight <= 0) {
       // No items in the bag, shipping fee is 0
       shippingFee = 0;
-    } else if (totalWeight === 1) {
-      // If total weight is 1kg, shipping fee is $4
-      shippingFee = 4;
     } else {
       // For each additional kilogram, add $4 to the shipping fee
       shippingFee = 4 * totalWeight;
@@ -147,12 +145,11 @@ const Bag = () => {
 
   const initializePayment = usePaystackPayment(config);
 
-  //implement epmty state
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
       <Header />
       <Link
-        href='/'
+        href='/home'
         className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
       >
         <MdOutlineArrowBackIosNew size={20} />
@@ -165,63 +162,61 @@ const Bag = () => {
         <div className='flex justify-center items-center p-3 my-6 text-sm h-full'>
           No item in your shopping bag
         </div>
+      ) : loading ? (
+        <div className='flex justify-center items-center p-3 '>
+          <ThreeCircles
+            visible={true}
+            height={50}
+            width={50}
+            color='#b4b4b4ad'
+            ariaLabel='three-circles-loading'
+            wrapperClass='my-4'
+          />
+        </div>
       ) : (
         <div className='my-4 space-y-6 px-3 xs:px-4'>
           <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
             Order Summary
           </h2>
 
-          {loading ? (
-            <div className='flex justify-center items-center p-3 '>
-              <ThreeCircles
-                visible={true}
-                height={50}
-                width={50}
-                color='#b4b4b4ad'
-                ariaLabel='three-circles-loading'
-                wrapperClass='my-4'
+          {bagItems.map((item, index) => (
+            <div
+              key={item.id}
+              className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
+            >
+              <Image
+                src={item.image}
+                alt='product_image'
+                width='80'
+                height='90'
+                className='h-[90px] object-cover'
               />
-            </div>
-          ) : (
-            bagItems.map((item, index) => (
-              <div
-                key={item.id}
-                className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
-              >
-                <Image
-                  src={item.image}
-                  alt='product_image'
-                  width='80'
-                  height='90'
-                  className='h-[90px] object-cover'
-                />
-                <div className='flex flex-col gap-3 '>
-                  <p className=''>
-                    {item.name} [{item.color}]
-                  </p>
-                  <p>Size: {item.size}</p>
-                </div>
-                <div className='flex flex-col gap-3 '>
-                  <div className='flex gap-2 items-center'>
-                    <h2>Qty</h2>
-                    <input
-                      type='text'
-                      value={item.quantity}
-                      onChange={(e) => updateQuantity(e.target.value, index)}
-                      className='outline-none border-b border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
-                    />
-                  </div>
-                  <p>${item.price}</p>
-                </div>
-                <div
-                  onClick={() => removeItemFromBag(item.id)}
-                  className='cursor-pointer'
-                >
-                  <CiTrash size={20} />
-                </div>
+              <div className='flex flex-col gap-3 '>
+                <p className=''>
+                  {item.name} [{item.color}]
+                </p>
+                <p>Size: {item.size}</p>
               </div>
-            ))
-          )}
+              <div className='flex flex-col gap-3 '>
+                <div className='flex gap-2 items-center'>
+                  <h2>Qty</h2>
+                  <input
+                    type='text'
+                    value={item.quantity}
+                    onChange={(e) => updateQuantity(e.target.value, index)}
+                    className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
+                  />
+                </div>
+                <p>${item.price}</p>
+              </div>
+              <div
+                onClick={() => removeItemFromBag(item.id)}
+                className='cursor-pointer'
+              >
+                <CiTrash size={20} />
+              </div>
+            </div>
+          ))}
           <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
             <div className=' w-full text-xs md:text-sm '>
               <h2 className='border-b border-[#a1a1a19c]  w-full py-3 text-sm'>
@@ -237,7 +232,7 @@ const Bag = () => {
                     first_name: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent mt-5'
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-5'
               />
               <input
                 type='text'
@@ -249,7 +244,7 @@ const Bag = () => {
                     last_name: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent my-5'
               />
               <input
                 type='email'
@@ -261,7 +256,7 @@ const Bag = () => {
                     email: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent '
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent '
               />
 
               <input
@@ -274,13 +269,13 @@ const Bag = () => {
                     city: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent my-5'
               />
               <div
                 onClick={() => setShowDropdown(!showDropdown)}
                 className={`${
                   selectedCountry !== '' ? 'text-[#000]' : 'text-gray-400'
-                } border border-[#3d3e3f] w-full p-2 flex gap-3 justify-between text-gray-400 items-center cursor-pointer relative`}
+                } border border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between text-gray-400 items-center cursor-pointer relative`}
               >
                 <p>{selectedCountry ? selectedCountry : 'Country'}</p>
                 <MdOutlineKeyboardArrowDown
@@ -315,7 +310,7 @@ const Bag = () => {
                     address: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent my-5'
               />
               <input
                 type='text'
@@ -327,7 +322,7 @@ const Bag = () => {
                     zip_code: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent '
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent '
               />
               <input
                 type='text'
@@ -339,7 +334,7 @@ const Bag = () => {
                     phone_number: e.target.value,
                   })
                 }
-                className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent my-5'
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent my-5'
               />
               <div className='text-xs text-red-500 mt-2'>
                 * All details are required{' '}
