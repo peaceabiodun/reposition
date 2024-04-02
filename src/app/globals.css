@@ -108,7 +108,27 @@ body {
   animation-name: fadeInDown;
   animation-timing-function: ease-out;
 }
+/* landing page bg */
 
+.landing_bg {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: linear-gradient(
+      to left,
+      rgba(255, 0, 0, 0),
+      rgb(37, 36, 36)
+    ),
+    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG');
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+}
+
+.blur-bg {
+  -webkit-backdrop-filter: blur(4px);
+
+  backdrop-filter: blur(4px);
+}
 /* modal styles */
 .l-modal__content {
   width: 95vw;

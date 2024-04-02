@@ -220,23 +220,42 @@ const ProductDetails = () => {
                     Delivery and Returns
                   </AccordionTrigger>
                   <AccordionContent>
-                    All domestic orders are shipped via UPS and all
-                    international orders are shipped via DHL. Order processing
-                    may take up to 7 days. An email containing the tracking
-                    number will be sent to you when the order ships. All
-                    packages are insured and trackable. Please note, our
-                    standard delivery & return policies do not apply to
-                    made-to-order products or items marked as Final Sale.
-                    Shipping surcharges may be applied on orders requiring
-                    multiple deliveries. If we anticipate longer delivery times
-                    for a specific product, that information will be listed
-                    above as well as in checkout and in the order confirmation
-                    email. For more information, call 00000000000
-                    <div className='my-2 text-sm text-blue-800'>
+                    All domestic orders are shipped via all local courier
+                    partners and all international orders are shipped via DHL.
+                    Order processing may take up to 7 days. An email containing
+                    the tracking number will be sent to you when the order
+                    ships. All packages are trackable. Please note, our standard
+                    delivery & return policies do not apply to made-to-order
+                    products or items marked as Final Sale. You may be required
+                    to pay duties at point of collection depending on your
+                    country of residence policy. Shipping subcharges may be
+                    applied on orders requiring multiple deliveries. If we
+                    anticipate longer delivery times for a specific product,
+                    that information will be listed above as well as in checkout
+                    and in the order confirmation email. For more information,
+                    email:
+                    <a
+                      href='mailto:nowreposition@gmail.com'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-800 underline'
+                    >
+                      nowreposition@gmail.com
+                    </a>{' '}
+                    or{' '}
+                    <a
+                      href='mailto:help@re-position.co'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-800 underline'
+                    >
+                      help@re-position.co
+                    </a>
+                    <div className='my-2 text-sm'>
                       For orders above $600 delivery is free for US, UK and
                       Canada.{' '}
                     </div>
-                    <div className=' text-sm text-blue-800'>
+                    <div className=' text-sm '>
                       For orders above $300 within Nigeria, delivery is also
                       free.{' '}
                     </div>
