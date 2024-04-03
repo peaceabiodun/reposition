@@ -28,7 +28,6 @@ const SignUpNewUsers = () => {
         options: {
           data: {
             user_role: 'CUSTOMER',
-            shouldCreateUser: false,
             emailRedirectTo: 'https://reposition-psi.vercel.app/home',
           },
         },
