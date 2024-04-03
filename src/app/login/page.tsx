@@ -73,7 +73,7 @@ const Login = () => {
             <button
               disabled={disableButton}
               onClick={login}
-              className={`border border-[#909192] bg-[#523f3fab] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
+              className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
             >
               {loading ? 'Loading...' : 'Confirm'}
             </button>
