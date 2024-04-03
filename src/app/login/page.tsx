@@ -40,39 +40,44 @@ const Login = () => {
     }
   };
   return (
-    <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4 text-sm  '>
-      <Link href='/' className='mt-4 gap-1 flex text-sm items-center'>
-        <MdOutlineArrowBackIosNew size={20} />
-        Back
-      </Link>
-      <div className='flex justify-center'>
-        <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-4 flex flex-col items-center justify-center'>
-          <h3 className='font-semibold'>Login</h3>
-          {/* <p className='text-xs'> Are you the owner of this apllication ?</p> */}
-          <input
-            type='text'
-            placeholder='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f] '
-          />
-          <input
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
-          />
-          {disableButton && (
-            <p className='text-xs text-red-500'>Please fill in all details</p>
-          )}
-          <button
-            disabled={disableButton}
-            onClick={login}
-            className={`border border-[#3d3e3f] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
-          >
-            {loading ? 'Loading...' : 'Confirm'}
-          </button>
+    <div className='w-full min-h-screen login_bg bg-[#dbd9d2] text-sm'>
+      <div className='blur-bg p-3 xs:p-4 text-[#e4e0e0] '>
+        <Link
+          href='/'
+          className='mt-4 gap-1 flex text-sm items-center text-[#e4e0e0] '
+        >
+          <MdOutlineArrowBackIosNew size={20} />
+          Back
+        </Link>
+        <div className='flex justify-center'>
+          <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center'>
+            <h3 className='font-semibold'>Login</h3>
+            {/* <p className='text-xs'> Are you the owner of this apllication ?</p> */}
+            <input
+              type='text'
+              placeholder='Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
+            />
+            <input
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0]'
+            />
+            {disableButton && (
+              <p className='text-xs '>Please fill in all details</p>
+            )}
+            <button
+              disabled={disableButton}
+              onClick={login}
+              className={`border border-[#909192] bg-[#523f3fab] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
+            >
+              {loading ? 'Loading...' : 'Confirm'}
+            </button>
+          </div>
         </div>
       </div>
       {showErrorMessage && (

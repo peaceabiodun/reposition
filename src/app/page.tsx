@@ -48,7 +48,7 @@ const SignUpNewUsers = () => {
   };
   return (
     <div className='w-full landing_bg bg-[#dbd9d2] text-sm relative min-h-[100vh]'>
-      <div className='blur-bg flex justify-center  p-3 xs:p-4'>
+      <div className='blur-bg flex justify-center p-3 xs:p-4'>
         <div className=' w-full min-h-[88vh] sm:max-w-[450px] text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
           <h2 className='text-2xl font-semibold'>
             <Typewriter
@@ -59,7 +59,7 @@ const SignUpNewUsers = () => {
               }}
             />
           </h2>
-          <p className='text-xs text-center'>
+          <p className='text-sm text-center'>
             Enter your email for early access - top members only.
           </p>
           <div className='flex w-full items-center'>
@@ -85,7 +85,7 @@ const SignUpNewUsers = () => {
               Please input a valid email address
             </p>
           )}
-          <div className='flex text-xs '>
+          <div className='flex text-xs font-semibold '>
             <p>Already have an account ?</p>
             <Link href={'/login'} className=' cursor-pointer text-[#ffe7ba]'>
               Login here

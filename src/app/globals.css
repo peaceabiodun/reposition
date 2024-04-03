@@ -129,6 +129,19 @@ body {
 
   backdrop-filter: blur(4px);
 }
+
+.login_bg {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: linear-gradient(
+      to left,
+      rgba(255, 0, 0, 0),
+      rgb(37, 36, 36)
+    ),
+    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg');
+}
+
 /* modal styles */
 .l-modal__content {
   width: 95vw;

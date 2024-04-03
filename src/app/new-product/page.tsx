@@ -42,11 +42,11 @@ const AddNewProduct = () => {
     setProductFormData((data) => ({ ...data, colors }));
     setColor('');
   };
-  const HandleRemoveSize = (index: number) => {
+  const handleRemoveSize = (index: number) => {
     const sizes = productFormData.sizes.filter((_, i) => i !== index);
     setProductFormData((data) => ({ ...data, sizes }));
   };
-  const HandleRemoveColor = (index: number) => {
+  const handleRemoveColor = (index: number) => {
     const colors = productFormData.colors.filter((_, i) => i !== index);
     setProductFormData((data) => ({ ...data, colors }));
   };
@@ -216,7 +216,7 @@ const AddNewProduct = () => {
                   </span>
                   <div
                     className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
-                    onClick={() => HandleRemoveSize(index)}
+                    onClick={() => handleRemoveSize(index)}
                   >
                     <AiOutlineDelete className='cursor-pointer' />
                   </div>
@@ -250,7 +250,7 @@ const AddNewProduct = () => {
                   </span>
                   <div
                     className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
-                    onClick={() => HandleRemoveColor(index)}
+                    onClick={() => handleRemoveColor(index)}
                   >
                     <AiOutlineDelete className='cursor-pointer' />
                   </div>

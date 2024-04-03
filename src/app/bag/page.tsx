@@ -390,7 +390,7 @@ const Bag = () => {
                 <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
                   Payment Options
                 </h2>
-                <div className='my-3 flex items-center gap-2'>
+                <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
                   <Image
                     alt='master-card'
                     src={'/master-card-icon.svg'}
@@ -427,7 +427,7 @@ const Bag = () => {
             onClick={() => {
               initializePayment({ onSuccess, onClose });
             }}
-            className='border border-[#3d3e3f] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
+            className='border border-[#909192] bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
           >
             Complete Order
           </button>

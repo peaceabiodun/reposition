@@ -4,6 +4,7 @@ import LocalSideModal from '../side-modal/page';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { ProductDetailType } from '@/utils/types';
 import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 
 type EditModalProps = {
   show: boolean;
@@ -16,7 +17,7 @@ type EditFormDataType = {
   price: string;
   description: string;
   weight: number | null;
-  image: string;
+  images: string[];
   sizes: string[];
   colors: string[];
   sold_out?: boolean;
@@ -42,15 +43,60 @@ const EditProductModal = ({
         price: selectedProduct?.price,
         description: selectedProduct?.description,
         weight: selectedProduct?.weight,
-        image: selectedProduct?.images[0],
+        images: selectedProduct?.images,
         sizes: selectedProduct?.sizes,
         colors: selectedProduct?.colors,
         sold_out: selectedProduct?.sold_out,
       });
     }
   }, [selectedProduct]);
-  const editProductDetails = () => {
+
+  const addSize = () => {
+    if (!size) return;
+    const sizes = [...formData.sizes, size];
+    setFormData((data) => ({ ...data, sizes }));
+    setSize('');
+  };
+  const addColor = () => {
+    if (!color) return;
+    const colors = [...formData.colors, color];
+    setFormData((data) => ({ ...data, colors }));
+    setColor('');
+  };
+
+  const handleRemoveSize = (index: number) => {
+    const sizes = formData.sizes.filter((_, i) => i !== index);
+    setFormData((data) => ({ ...data, sizes }));
+  };
+
+  const handleRemoveColor = (index: number) => {
+    const colors = formData.colors.filter((_, i) => i !== index);
+    setFormData((data) => ({ ...data, colors }));
+  };
+
+  const editProductDetails = async () => {
     setLoading(true);
+    const payload = {
+      name: formData?.name,
+      price: formData?.price,
+      description: formData?.description,
+      weight: formData?.weight,
+      images: formData?.images[0],
+      sizes: formData?.sizes,
+      colors: formData?.colors,
+      sold_out: formData?.sold_out,
+    };
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .update(payload)
+        .eq('id', selectedProduct?.id);
+      console.log(data);
+    } catch {
+      setShowErrorMessage(true);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <LocalSideModal
@@ -93,10 +139,16 @@ const EditProductModal = ({
               type='tel'
               className='border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
               placeholder='weight in kg'
-              value={formData?.weight ?? 0}
-              onChange={(e) =>
-                setFormData({ ...formData, weight: parseInt(e.target.value) })
-              }
+              value={formData?.weight ?? ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value) || value === '') {
+                  setFormData({
+                    ...formData,
+                    weight: value === '' ? null : parseInt(value),
+                  });
+                }
+              }}
             />
             <div className='border-y border-r rounded-r-sm rounded-l-none border-[#3d3e3f] p-2 my-2'>
               Kg
@@ -105,8 +157,8 @@ const EditProductModal = ({
         </div>
         <p className='mb-2'>Product Image</p>
         <FileUploader
-          fileUrls={[formData?.image] ?? []}
-          setFileUrls={(url) => setFormData({ ...formData, image: url[0] })}
+          fileUrls={formData?.images}
+          setFileUrls={(url) => setFormData({ ...formData, images: url })}
           token=''
           className='w-full text-sm'
         />
@@ -132,7 +184,9 @@ const EditProductModal = ({
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />
-            <FaCheck className='cursor-pointer' />
+            {size && !formData.sizes.find((s) => s === size) ? (
+              <FaCheck className='cursor-pointer' onClick={addSize} />
+            ) : null}
           </div>
 
           <div className='mt-6 text-sm space-y-3'>
@@ -144,7 +198,10 @@ const EditProductModal = ({
                 <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
                   {item}
                 </span>
-                <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
+                <div
+                  onClick={() => handleRemoveSize(index)}
+                  className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
+                >
                   <AiOutlineDelete className='cursor-pointer' />
                 </div>
               </div>
@@ -162,7 +219,9 @@ const EditProductModal = ({
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />
-            <FaCheck className='cursor-pointer' />
+            {color && !formData.colors.find((c) => c === color) ? (
+              <FaCheck className='cursor-pointer' onClick={addColor} />
+            ) : null}
           </div>
 
           <div className='mt-6 text-sm space-y-3'>
@@ -174,7 +233,10 @@ const EditProductModal = ({
                 <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
                   {item}
                 </span>
-                <div className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'>
+                <div
+                  onClick={() => handleRemoveColor(index)}
+                  className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
+                >
                   <AiOutlineDelete className='cursor-pointer' />
                 </div>
               </div>
@@ -182,7 +244,10 @@ const EditProductModal = ({
           </div>
         </div>
 
-        <button className='border border-[#3d3e3f] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#d3d3d3] '>
+        <button
+          onClick={editProductDetails}
+          className='border border-[#909192] bg-[#523f3f9c] text-[#e4e0e0] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#d3d3d3] hover:text-black '
+        >
           {loading ? 'Loading...' : 'Confirm'}
         </button>
       </div>
