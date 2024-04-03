@@ -28,13 +28,12 @@ const ManageProducts = () => {
   const [loading, setLoading] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [products, setProducts] = useState<ProductDetailType[]>([]);
-
-  const [selectedProduct, setSelectedProduct] =
-    useState<ProductDetailType | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductDetailType>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
   const handleSelectProduct = (product: ProductDetailType) => {
-    setSelectedProduct(product === selectedProduct ? null : product);
+    setSelectedProduct(product);
   };
   const router = useRouter();
 

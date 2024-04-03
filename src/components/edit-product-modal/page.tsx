@@ -3,12 +3,12 @@ import { FileUploader } from '../file-uploader/page';
 import LocalSideModal from '../side-modal/page';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { ProductDetailType } from '@/utils/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type EditModalProps = {
   show: boolean;
   onClose: () => void;
-  selectedProduct: ProductDetailType;
+  selectedProduct: ProductDetailType | undefined;
 };
 
 type EditFormDataType = {
@@ -33,17 +33,22 @@ const EditProductModal = ({
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
 
-  const [formData, setFormData] = useState<EditFormDataType>({
-    name: selectedProduct?.name,
-    price: selectedProduct?.price,
-    description: selectedProduct?.description,
-    weight: selectedProduct?.weight,
-    image: selectedProduct?.images[0],
-    sizes: selectedProduct?.sizes,
-    colors: selectedProduct?.colors,
-    sold_out: selectedProduct?.sold_out,
-  });
+  const [formData, setFormData] = useState({} as EditFormDataType);
 
+  useEffect(() => {
+    if (selectedProduct) {
+      setFormData({
+        name: selectedProduct?.name,
+        price: selectedProduct?.price,
+        description: selectedProduct?.description,
+        weight: selectedProduct?.weight,
+        image: selectedProduct?.images[0],
+        sizes: selectedProduct?.sizes,
+        colors: selectedProduct?.colors,
+        sold_out: selectedProduct?.sold_out,
+      });
+    }
+  }, [selectedProduct]);
   const editProductDetails = () => {
     setLoading(true);
   };
@@ -59,7 +64,7 @@ const EditProductModal = ({
           type='text'
           className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
           placeholder='e.g Utility Jacket'
-          value={formData.name}
+          value={formData?.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
 
