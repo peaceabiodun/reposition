@@ -16,6 +16,7 @@ import { supabase } from '@/lib/supabase';
 import { ThreeCircles } from 'react-loader-spinner';
 import SuccessModal from '@/components/success-modal/page';
 import ErrorModal from '@/components/error-modal/page';
+import Slider from 'react-slick';
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,17 @@ const ProductDetails = () => {
   const disableBtn = !selectedSize || !selectedColor;
 
   // const productData = products?.find((item) => item?.id == params.productId);
-
+  const settings = {
+    dots: true,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
   const getProductDetails = async () => {
     setLoading(true);
     try {
@@ -103,17 +114,22 @@ const ProductDetails = () => {
         </div>
       ) : (
         <div className='py-6 grid grid-cols-1 md:grid-cols-2 p-3 xs:p-4 '>
-          <div className='flex items-center justify-center'>
-            <Image
-              src={productDetails?.images[0] ?? '/placeholder.png'}
-              alt='product_image'
-              width='290'
-              height='290'
-              className='object-cover'
-            />
+          <div className='flex items-center justify-center '>
+            <Slider {...settings} className='w-[290px] h-full md:h-[70vh]'>
+              {productDetails?.images.map((item, index) => (
+                <Image
+                  key={index}
+                  src={item ? item : '/placeholder.png'}
+                  alt='product_image'
+                  width='290'
+                  height='290'
+                  className='object-cover'
+                />
+              ))}
+            </Slider>
           </div>
 
-          <div className=' mt-3 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[70vh]'>
+          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[70vh]'>
             <div className='flex flex-col items-center space-y-3 '>
               <h1 className='uppercase font-medium'>{productDetails?.name}</h1>
               <h3 className='font-semibold'>${productDetails?.price}</h3>

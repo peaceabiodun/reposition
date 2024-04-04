@@ -94,10 +94,10 @@ const Home = () => {
           </div>
         ) : (
           <div className='w-full min-h-[85vh] md:min-h-full mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 p-3 xs:p-4'>
-            {products.map((item) => (
+            {products?.map((item) => (
               <Link href={`product/${item.id}`} key={item.id}>
                 <Image
-                  src={item.images[0]}
+                  src={item?.images[0] ?? '/placeholder.png'}
                   alt='product_image'
                   width='200'
                   height='300'

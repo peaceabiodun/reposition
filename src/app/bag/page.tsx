@@ -55,6 +55,7 @@ const Bag = () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.from('shopping-bag').select();
+
       setBagItems(data?.map((item) => ({ ...item, quantity: '1' })) ?? []);
 
       if (error) {
@@ -109,7 +110,10 @@ const Bag = () => {
   }, [bagItems]);
 
   const calculateShippingFee = () => {
-    const totalWeight = bagItems.reduce((acc, item) => acc + item.weight, 0);
+    const totalWeight = bagItems.reduce(
+      (acc, item) => acc + item.weight * Number(item.quantity),
+      0
+    );
     let shippingFee = 0;
     if (totalWeight <= 0) {
       // No items in the bag, shipping fee is 0
@@ -124,6 +128,7 @@ const Bag = () => {
   useEffect(() => {
     calculateShippingFee();
   }, [bagItems]);
+
   const config = {
     reference: new Date().getTime().toString(),
     email: 'abiodunpeace8@gmail.com',
@@ -179,13 +184,13 @@ const Bag = () => {
             Order Summary
           </h2>
 
-          {bagItems.map((item, index) => (
+          {bagItems?.map((item, index) => (
             <div
               key={item.id}
               className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
             >
               <Image
-                src={item.image}
+                src={item?.image ?? '/placeholder.png'}
                 alt='product_image'
                 width='80'
                 height='90'
@@ -355,8 +360,9 @@ const Bag = () => {
                   <h3 className='font-medium'>Standard Courier</h3>
                   <div>$20</div>
                   <p>
-                    Delivery takes up to 7 business days. Estimated delivery
-                    time once the order has shipped.
+                    Delivery takes up to 10-16 business days for products marked
+                    "made-to-order" or "pre-order". Estimated delivery time once
+                    the order has shipped.
                   </p>
                 </div>
               </div>

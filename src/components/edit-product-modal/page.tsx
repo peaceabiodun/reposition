@@ -81,7 +81,7 @@ const EditProductModal = ({
       price: formData?.price,
       description: formData?.description,
       weight: formData?.weight,
-      images: formData?.images[0],
+      images: formData?.images,
       sizes: formData?.sizes,
       colors: formData?.colors,
       sold_out: formData?.sold_out,
@@ -98,6 +98,7 @@ const EditProductModal = ({
       setLoading(false);
     }
   };
+
   return (
     <LocalSideModal
       isOpen={show}

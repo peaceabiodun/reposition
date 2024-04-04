@@ -89,6 +89,7 @@ export function FileUploader({
           const newFiles = Array.from(inputFiles);
           const allFiles = files ? [...files, ...newFiles] : newFiles;
           setFiles(allFiles);
+          setFilesToUpload(allFiles);
         } else {
           if (inputFiles.length > 1) {
             alert('Only the first file was uploaded!');
@@ -159,29 +160,29 @@ export function FileUploader({
       throw error;
     }
 
-    const { data: UrlData } = supabase.storage
+    const { data: UrlData } = await supabase.storage
       .from('product-images')
       .getPublicUrl(data?.path);
 
-    return UrlData.publicUrl;
+    return UrlData?.publicUrl;
   };
 
   const uploadImg = async () => {
+    if (!filesToUpload) return;
     setUploading(true);
+    setPercent(0);
     if (filesToUpload) {
       let uploadedFiles: string[] = [];
       try {
         const requests = filesToUpload.map((f) => uploadSingleFile(f));
         uploadedFiles = await Promise.all(requests);
         setHasUploaded(true);
+        setFileUrls([...(fileUrls ?? []), ...uploadedFiles]);
         setPercent(100);
       } catch (error: any) {
         setFiles([]);
         uploadedFiles = [];
         alert(error);
-      } finally {
-        setFileUrls(uploadedFiles);
-        setFilesToUpload([]);
       }
     }
   };
@@ -198,6 +199,8 @@ export function FileUploader({
   const removeImage = () => {
     setFiles([]);
     setFileUrls([]);
+    setHasUploaded(false);
+    setUploading(false);
   };
 
   useEffect(() => {
