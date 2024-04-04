@@ -361,8 +361,8 @@ const Bag = () => {
                   <div>$20</div>
                   <p>
                     Delivery takes up to 10-16 business days for products marked
-                    "made-to-order" or "pre-order". Estimated delivery time once
-                    the order has shipped.
+                    &apos;made-to-order&apos; or &apos;pre-order&apos;.
+                    Estimated delivery time once the order has shipped.
                   </p>
                 </div>
               </div>
