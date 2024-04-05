@@ -73,6 +73,7 @@ const ProductDetails = () => {
       image: productDetails?.images[0],
       color: selectedColor,
       size: selectedSize,
+      weight: productDetails?.weight,
     };
     setAddToBagLoading(true);
     try {
@@ -92,7 +93,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] '>
+    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] overflow-x-scroll '>
       <Header />
       <Link
         href='/home'
@@ -115,7 +116,10 @@ const ProductDetails = () => {
       ) : (
         <div className='py-6 grid grid-cols-1 md:grid-cols-2 p-3 xs:p-4 '>
           <div className='flex items-center justify-center '>
-            <Slider {...settings} className='w-[290px] h-full md:h-[70vh]'>
+            <Slider
+              {...settings}
+              className='w-[270px] sm:w-[290px] h-full md:h-[70vh]'
+            >
               {productDetails?.images.map((item, index) => (
                 <Image
                   key={index}
@@ -124,6 +128,7 @@ const ProductDetails = () => {
                   width='290'
                   height='290'
                   className='object-cover'
+                  loading='lazy'
                 />
               ))}
             </Slider>
@@ -136,7 +141,7 @@ const ProductDetails = () => {
               <Accordion
                 type='single'
                 collapsible
-                className='w-[270px] sm:w-[290px] '
+                className='w-[280px] sm:w-[290px] '
               >
                 <AccordionItem
                   value='product-details'

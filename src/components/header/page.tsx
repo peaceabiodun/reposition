@@ -97,7 +97,7 @@ const Header = () => {
         id={`${scroll ? 'sticky' : ''}`}
         className={`flex justify-between gap-4 items-center h-[45px] p-3 xs:p-4 ${
           scroll
-            ? 'fixed top-0 w-full border-b border-[#a1a1a19c] h-[45px] bg-[#dbd9d2]'
+            ? 'fixed top-0 w-full border-b border-[#a1a1a19c] h-[45px] bg-[#dbd9d2] z-[999]'
             : ''
         }`}
       >

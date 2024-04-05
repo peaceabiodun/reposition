@@ -168,6 +168,7 @@ const ManageProducts = () => {
         show={showEditModal}
         onClose={() => setShowEditModal(false)}
         selectedProduct={selectedProduct}
+        refresh={fetchProducts}
       />
       {showErrorModal && (
         <ErrorModal

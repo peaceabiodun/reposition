@@ -10,6 +10,7 @@ type EditModalProps = {
   show: boolean;
   onClose: () => void;
   selectedProduct: ProductDetailType | undefined;
+  refresh?: () => void;
 };
 
 type EditFormDataType = {
@@ -27,6 +28,7 @@ const EditProductModal = ({
   show,
   onClose,
   selectedProduct,
+  refresh,
 }: EditModalProps) => {
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -92,6 +94,8 @@ const EditProductModal = ({
         .update(payload)
         .eq('id', selectedProduct?.id);
       console.log(data);
+      onClose();
+      refresh?.();
     } catch {
       setShowErrorMessage(true);
     } finally {

@@ -39,7 +39,21 @@ export type ShoppingBagType = {
   weight: number;
 };
 
-export type CheckoutDetailsType = {
+export type DeliveryDetailsType = {
+  id?: string;
+  detail_id?: string;
+  created_at?: string;
+  user_email: string;
+  first_name: string;
+  last_name: string;
+  country: string;
+  city: string;
+  address: string;
+  zip_code: string;
+  phone_number: string;
+};
+
+export type PlacedOrderDetailsType = {
   order_details: {
     id: string;
     name: string;
@@ -48,23 +62,12 @@ export type CheckoutDetailsType = {
     color: string;
     quantity: string;
   };
-
+  delivery_details: DeliveryDetailsType;
   billing_details: {
-    total_amount: string;
+    total_amount_paid: string;
     shipping_fee: string;
     taxes: string;
-    total_paid: string;
+    discount?: string;
+    shipping: 'standard' | 'free';
   };
-};
-
-export type DeliveryDetailsType = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  country: string;
-  city: string;
-  address: string;
-  zip_code: string;
-  phone_number: string;
-  shipping: 'standard' | 'free';
 };

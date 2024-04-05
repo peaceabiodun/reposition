@@ -63,7 +63,7 @@ const Home = () => {
     <Fragment>
       <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
         <Header />
-        <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-3 xs:p-4'>
+        <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-4'>
           <h2 className='text-4xl font-semibold'>
             <Typewriter
               options={{
@@ -77,7 +77,7 @@ const Home = () => {
         </div>
 
         {loading ? (
-          <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-3 xs:p-4'>
+          <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4'>
             <ThreeCircles
               visible={true}
               height={50}
@@ -88,12 +88,12 @@ const Home = () => {
             />
           </div>
         ) : products.length === 0 ? (
-          <div className='w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-3 xs:p-4 text-sm'>
+          <div className='w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4 text-sm'>
             {' '}
             No Products Available
           </div>
         ) : (
-          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-3 sm:p-4'>
+          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4'>
             {products?.map((item) => (
               <Link href={`product/${item.id}`} key={item.id}>
                 <Image
@@ -103,10 +103,10 @@ const Home = () => {
                   height='300'
                   className='min-h-[300px] home_img object-cover '
                 />
-                <p className='my-1 font-medium'>{item.name}</p>
-                <p>${item.price}</p>
+                <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
+                <p className='text-sm'>${item.price}</p>
                 {item.sold_out && (
-                  <p className='font-semibold mt-1'>Sold Out</p>
+                  <p className='font-semibold mt-1 text-sm'>Sold Out</p>
                 )}
               </Link>
             ))}
