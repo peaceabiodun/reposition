@@ -27,6 +27,7 @@ const ManageProducts = () => {
   ];
   const [loading, setLoading] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showDeleteErrorModal, setShowDeleteErrorModal] = useState(false);
   const [products, setProducts] = useState<ProductDetailType[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductDetailType>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -55,6 +56,25 @@ const ManageProducts = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  const deleteProduct = async () => {
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', selectedProduct?.id);
+      if (error) {
+        setShowDeleteErrorModal(true);
+      }
+      setShowDeleteModal(false);
+      fetchProducts();
+    } catch {
+      setShowDeleteErrorModal(true);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
@@ -139,6 +159,9 @@ const ManageProducts = () => {
       <DeleteModal
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
+        selectedProduct={selectedProduct}
+        onButtonClick={deleteProduct}
+        loading={loading}
       />
 
       <EditProductModal
@@ -151,6 +174,13 @@ const ManageProducts = () => {
           show={showErrorModal}
           onClose={() => setShowErrorModal(false)}
           description='Sorry an error occured while loading the products'
+        />
+      )}
+      {showDeleteErrorModal && (
+        <ErrorModal
+          show={showDeleteErrorModal}
+          onClose={() => setShowDeleteErrorModal(false)}
+          description='Sorry an error occured while deleting this product'
         />
       )}
     </div>

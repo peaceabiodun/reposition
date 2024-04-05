@@ -92,7 +92,6 @@ const AddNewProduct = () => {
     productFormData.colors.length <= 0 ??
     productFormData.sizes.length <= 0;
 
-  console.log(productFormData.images, 'gg');
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <Link href='/manage-products' className='flex gap-1 mt-4 text-sm'>

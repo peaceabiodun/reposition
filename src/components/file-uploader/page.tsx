@@ -11,6 +11,7 @@ import React, {
 import { LuUploadCloud } from 'react-icons/lu';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { supabase } from '@/lib/supabase';
+import ErrorModal from '../error-modal/page';
 
 type ActionType = 'create' | 'edit';
 export type FileUploaderProps = {
@@ -56,6 +57,7 @@ export function FileUploader({
   const [files, setFiles] = useState<File[] | null>(null);
   const [filesToUpload, setFilesToUpload] = useState<File[] | null>(null);
   const [type, setType] = useState<ActionType>('create');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     if (!loading && fileUrls?.length) {
@@ -157,10 +159,11 @@ export function FileUploader({
 
     if (error) {
       console.error('Error uploading file:', error.message);
+      setShowErrorMessage(true);
       throw error;
     }
 
-    const { data: UrlData } = await supabase.storage
+    const { data: UrlData } = supabase.storage
       .from('product-images')
       .getPublicUrl(data?.path);
 
@@ -219,7 +222,7 @@ export function FileUploader({
   }, [percent, uploading]);
 
   return (
-    <>
+    <Fragment>
       {type !== 'edit' ? (
         <div className={`${className} file-uploader`}>
           {label}
@@ -370,6 +373,13 @@ export function FileUploader({
         onChange={onFileChange}
         disabled={disabled}
       />
-    </>
+      {showErrorMessage && (
+        <ErrorModal
+          show={showErrorMessage}
+          onClose={() => setShowErrorMessage(false)}
+          description='Error uploading file:The image already exists'
+        />
+      )}
+    </Fragment>
   );
 }

@@ -247,7 +247,7 @@ const EditProductModal = ({
 
         <button
           onClick={editProductDetails}
-          className='border border-[#909192] bg-[#523f3f9c] text-[#e4e0e0] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#d3d3d3] hover:text-black '
+          className='border border-[#909192] bg-[#523f3f9c] text-[#e4e0e0] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#7e5d5dab]'
         >
           {loading ? 'Loading...' : 'Confirm'}
         </button>

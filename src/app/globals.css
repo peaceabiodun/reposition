@@ -92,6 +92,17 @@ body {
     height: 240px;
   }
 } */
+/* home grid layout  */
+@media screen and (max-width: 390px) {
+  .product_grid {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+  }
+  .home_img {
+    width: 100%;
+  }
+}
 
 /* header styles */
 

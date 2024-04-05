@@ -73,7 +73,7 @@ const Home = () => {
               }}
             />
           </h2>
-          <p className='mt-2 text-sm'>Exodus Collection is here</p>
+          <p className='mt-2 text-sm'>Exodus 1 Collection is here</p>
         </div>
 
         {loading ? (
@@ -93,7 +93,7 @@ const Home = () => {
             No Products Available
           </div>
         ) : (
-          <div className='w-full min-h-[85vh] md:min-h-full mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 p-3 xs:p-4'>
+          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 text-xs lg:text-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-3 sm:p-4'>
             {products?.map((item) => (
               <Link href={`product/${item.id}`} key={item.id}>
                 <Image
@@ -101,7 +101,7 @@ const Home = () => {
                   alt='product_image'
                   width='200'
                   height='300'
-                  className='sm:min-h-[300px] object-cover'
+                  className='min-h-[300px] home_img object-cover '
                 />
                 <p className='my-1 font-medium'>{item.name}</p>
                 <p>${item.price}</p>
