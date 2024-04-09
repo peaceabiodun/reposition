@@ -14,7 +14,7 @@ const SignUpNewUsers = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const validateEmail = (email: string) => {
-    const regex = /^[a-zA-Z0–9._-]+@[a-zA-Z0–9.-]+\.[a-zA-Z]{2,4}$/;
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return regex.test(email);
   };
   const router = useRouter();
@@ -32,6 +32,7 @@ const SignUpNewUsers = () => {
           },
         },
       });
+
       setShowSuccessModal(true);
       setEmail('');
       // if (data.user?.role === 'authenticated') {

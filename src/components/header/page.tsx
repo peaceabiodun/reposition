@@ -43,6 +43,10 @@ const Header = () => {
     }
   }, []);
 
+  const userRole =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_ROLE)
+      : '';
   const logout = async () => {
     setLoading(true);
     try {
@@ -114,7 +118,7 @@ const Header = () => {
           </span>
         </h3>
         <div className='flex gap-3'>
-          {token && (
+          {userRole === 'CUSTOMER' && (
             <TbShirt
               size={22}
               onClick={() => router.push('/manage-products')}

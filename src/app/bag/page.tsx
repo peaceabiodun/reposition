@@ -198,8 +198,8 @@ const Bag = () => {
   };
   const config = {
     reference: new Date().getTime().toString(),
-    email: 'abiodunpeace8@gmail.com',
-    amount: 20000, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    email: userEmail ?? '',
+    amount: totalPrice + shippingFee, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
   };
 
@@ -471,10 +471,10 @@ const Bag = () => {
 
                 <div
                   onClick={() => setAddDeliveryDetail(true)}
-                  className='mt-3 font-bold '
+                  className='mt-3 font-bold cursor-pointer '
                 >
                   {' '}
-                  + Add new delivery detail
+                  + Add new delivery details
                 </div>
               </div>
             )}
@@ -594,13 +594,13 @@ const Bag = () => {
         <div className='flex justify-center py-6 px-3 xs:px-4'>
           <button
             disabled={!isDeliveryDetailsComplete()}
-            // onClick={() => {
-            //   initializePayment({ onSuccess, onClose });
-            // }}
             onClick={() => {
-              updateDeliveryDetails();
+              initializePayment({ onSuccess, onClose });
             }}
-            className='border border-[#909192] bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
+            // onClick={() => {
+            //   updateDeliveryDetails();
+            // }}
+            className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
           >
             Complete Order
           </button>
