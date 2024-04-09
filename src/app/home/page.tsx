@@ -40,12 +40,14 @@ const Home = () => {
     const {
       data: { session },
     } = await supabase.auth.getSession();
+
     if (session !== null) {
       localStorage.setItem(
         STORAGE_KEYS.AUTH_TOKEN,
         session?.access_token ?? ''
       );
       localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session?.user.email ?? '');
+      localStorage.setItem(STORAGE_KEYS.USER_ID, session?.user.id ?? '');
       localStorage.setItem(
         STORAGE_KEYS.USER_ROLE,
         session?.user.user_metadata.user_role ?? ''

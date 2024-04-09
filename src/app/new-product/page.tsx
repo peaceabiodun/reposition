@@ -187,7 +187,6 @@ const AddNewProduct = () => {
           }
           className='w-full text-sm'
           isMultiple
-          token=''
         />
       </div>
 

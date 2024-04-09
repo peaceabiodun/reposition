@@ -164,7 +164,6 @@ const EditProductModal = ({
         <FileUploader
           fileUrls={formData?.images}
           setFileUrls={(url) => setFormData({ ...formData, images: url })}
-          token=''
           className='w-full text-sm'
         />
 

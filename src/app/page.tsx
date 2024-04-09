@@ -24,11 +24,10 @@ const SignUpNewUsers = () => {
     try {
       const { data, error } = await supabase.auth.signInWithOtp({
         email: email,
-
         options: {
           data: {
-            user_role: 'CUSTOMER',
-            emailRedirectTo: 'https://reposition-psi.vercel.app/home',
+            user_role: 'ADMIN',
+            emailRedirectTo: 'https://www.re-position.co/home',
           },
         },
       });

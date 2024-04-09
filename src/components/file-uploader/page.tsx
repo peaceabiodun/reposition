@@ -20,7 +20,6 @@ export type FileUploaderProps = {
   fileUrls: string[];
   fileType?: 'image' | 'document';
   disabled?: boolean;
-  token: string;
   isMultiple?: boolean;
   className?: string;
   loading?: boolean;
@@ -45,7 +44,7 @@ export function FileUploader({
   label,
   setFileUrls,
   disabled,
-  token,
+
   isMultiple,
   className = '',
   loading,
@@ -199,11 +198,23 @@ export function FileUploader({
     return '';
   }, [files]);
 
-  const removeImage = () => {
-    setFiles([]);
-    setFileUrls([]);
-    setHasUploaded(false);
-    setUploading(false);
+  const fileNames = files?.map((file) => file.name);
+
+  const removeImage = async () => {
+    try {
+      const { data, error } = await supabase.storage
+        .from('product-images')
+        .remove(fileNames ?? []);
+      setFiles([]);
+      setFileUrls([]);
+      setHasUploaded(false);
+      setUploading(false);
+      if (error) {
+        throw new Error(error.message);
+      }
+    } catch {
+      setShowErrorMessage(true);
+    }
   };
 
   useEffect(() => {

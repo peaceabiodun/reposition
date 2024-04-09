@@ -37,6 +37,8 @@ export type ShoppingBagType = {
   color: string;
   size: string;
   weight: number;
+  user_email: string;
+  user_id: string;
 };
 
 export type DeliveryDetailsType = {

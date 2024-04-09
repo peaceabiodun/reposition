@@ -65,11 +65,19 @@ const Bag = () => {
     'Canada',
     'Uk',
   ];
+  const userId =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_ID)
+      : '';
 
+  //i should be fetching cart items based on user id or email :todo
   const getBagItems = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from('shopping-bag').select();
+      const { data, error } = await supabase
+        .from('shopping-bag')
+        .select('*')
+        .eq('user_id', userId);
 
       setBagItems(data?.map((item) => ({ ...item, quantity: '1' })) ?? []);
 
@@ -109,7 +117,7 @@ const Bag = () => {
       const { data, error } = await supabase
         .from('delivery-details')
         .select('*')
-        .eq('user_email', userEmail);
+        .eq('user_id', userId);
       setSavedDeliveryDetails(data ?? []);
 
       if (error) {

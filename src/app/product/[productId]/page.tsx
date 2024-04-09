@@ -17,6 +17,7 @@ import { ThreeCircles } from 'react-loader-spinner';
 import SuccessModal from '@/components/success-modal/page';
 import ErrorModal from '@/components/error-modal/page';
 import Slider from 'react-slick';
+import { STORAGE_KEYS } from '@/utils/constants';
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,15 @@ const ProductDetails = () => {
   const router = useRouter();
   const params = useParams();
   const disableBtn = !selectedSize || !selectedColor;
+  const userEmail =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
+      : '';
+
+  const userId =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_ID)
+      : '';
 
   // const productData = products?.find((item) => item?.id == params.productId);
   const settings = {
@@ -74,6 +84,8 @@ const ProductDetails = () => {
       color: selectedColor,
       size: selectedSize,
       weight: productDetails?.weight,
+      user_id: userId,
+      user_email: userEmail,
     };
     setAddToBagLoading(true);
     try {

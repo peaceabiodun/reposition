@@ -118,7 +118,7 @@ const Header = () => {
           </span>
         </h3>
         <div className='flex gap-3'>
-          {userRole === 'CUSTOMER' && (
+          {userRole === 'ADMIN' && (
             <TbShirt
               size={22}
               onClick={() => router.push('/manage-products')}
