@@ -111,7 +111,7 @@ const Home = () => {
                   alt='product_image'
                   width='200'
                   height='300'
-                  className='min-h-[300px] home_img object-cover '
+                  className='min-h-[300px] home_img object-cover border border-solid border-[#3f2a16] shadow-md '
                 />
                 <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
                 <p className='text-sm'>${item.price}</p>

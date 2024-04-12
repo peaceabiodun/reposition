@@ -43,6 +43,7 @@ const ProductDetails = () => {
   // const productData = products?.find((item) => item?.id == params.productId);
   const settings = {
     dots: true,
+    arrows: false,
     fade: true,
     infinite: true,
     speed: 500,
@@ -130,7 +131,7 @@ const ProductDetails = () => {
           <div className='flex items-center justify-center '>
             <Slider
               {...settings}
-              className='w-[270px] sm:w-[290px] h-full md:h-[70vh]'
+              className='w-[270px] sm:w-[290px] h-full md:h-[70vh] box bounce-1 '
             >
               {productDetails?.images.map((item, index) => (
                 <Image
@@ -139,7 +140,7 @@ const ProductDetails = () => {
                   alt='product_image'
                   width='290'
                   height='290'
-                  className='object-cover'
+                  className='object-cover border border-[#3f2a16]  '
                   loading='lazy'
                 />
               ))}

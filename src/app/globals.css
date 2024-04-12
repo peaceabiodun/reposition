@@ -125,15 +125,11 @@ body {
 /* landing page bg */
 
 .landing_bg {
-  background-size: cover;
+  /* background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
-  background-image: linear-gradient(
-      to left,
-      rgba(255, 0, 0, 0),
-      rgb(37, 36, 36)
-    ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG');
+  background-position: center; */
+  background: linear-gradient(to left, rgba(255, 0, 0, 0), rgb(37, 36, 36));
+  /* url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG'); */
   /* filter: blur(8px);
   -webkit-filter: blur(8px); */
 }
@@ -156,6 +152,28 @@ body {
     url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg');
 }
 
+.box {
+  align-self: flex-end;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+
+  transform-origin: bottom;
+}
+.bounce-1 {
+  animation-name: bounce-1;
+  animation-timing-function: linear;
+}
+@keyframes bounce-1 {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 /* modal styles */
 .l-modal__content {
   width: 95vw;

@@ -6,10 +6,11 @@ import Typewriter from 'typewriter-effect';
 import { useState } from 'react';
 import Link from 'next/link';
 import SuccessModal from '@/components/success-modal/page';
+import Slider from 'react-slick';
+import Image from 'next/image';
 
 const SignUpNewUsers = () => {
   const [email, setEmail] = useState('');
-
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -18,7 +19,22 @@ const SignUpNewUsers = () => {
     return regex.test(email);
   };
   const router = useRouter();
-
+  const bgArray = [
+    'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG',
+    'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg',
+  ];
+  const settings = {
+    dots: false,
+    arrows: false,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
   const signUp = async () => {
     setLoading(true);
     try {
@@ -34,21 +50,26 @@ const SignUpNewUsers = () => {
 
       setShowSuccessModal(true);
       setEmail('');
-      // if (data.user?.role === 'authenticated') {
-      //   setShowSuccessModal(true);
-      // } else {
-      //   setShowErrorMessage(true);
-      // }
     } catch (err: any) {
       setShowErrorMessage(true);
     } finally {
       setLoading(false);
     }
-  };
+  }; //landing_bg
   return (
-    <div className='w-full landing_bg bg-[#dbd9d2] text-sm relative min-h-[100vh]'>
-      <div className='blur-bg flex justify-center p-3 xs:p-4'>
-        <div className=' w-full min-h-[88vh] sm:max-w-[450px] text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
+    <div className='w-full text-sm relative bg-[#dbd9d2] h-[100vh]'>
+      <Slider {...settings} className='relative w-full h-full  '>
+        {bgArray.map((item, index) => (
+          <img
+            key={index}
+            alt='bg-images'
+            src={item}
+            className='w-full h-auto object-cover'
+          />
+        ))}
+      </Slider>
+      <div className='blur-bg flex justify-center p-3 xs:p-4 absolute inset-0 landing_bg'>
+        <div className=' w-full  sm:max-w-[450px]  text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
           <h2 className='text-2xl font-semibold'>
             <Typewriter
               options={{

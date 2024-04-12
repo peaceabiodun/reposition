@@ -10,6 +10,8 @@ import LocalModal from '../modal/page';
 import { supabase } from '@/lib/supabase';
 import SuccessModal from '../success-modal/page';
 import { ShoppingBagType } from '@/utils/types';
+import { MdMenuOpen } from 'react-icons/md';
+import MobileMenu from '../mobile-menu/page';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -19,6 +21,7 @@ const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [bagItems, setBagItems] = useState<ShoppingBagType[]>([]);
   const router = useRouter();
@@ -47,6 +50,11 @@ const Header = () => {
     typeof window !== 'undefined'
       ? localStorage.getItem(STORAGE_KEYS.USER_ROLE)
       : '';
+  const userId =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_ID)
+      : '';
+
   const logout = async () => {
     setLoading(true);
     try {
@@ -66,7 +74,7 @@ const Header = () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.href}reset-password`,
+        redirectTo: 'https://www.re-position.co/reset-password',
       });
       setShowUpdatePasswordModal(false);
       setShowDropdown(false);
@@ -80,7 +88,10 @@ const Header = () => {
 
   const getBagItems = async () => {
     try {
-      const { data, error } = await supabase.from('shopping-bag').select();
+      const { data, error } = await supabase
+        .from('shopping-bag')
+        .select('*')
+        .eq('user_id', userId);
       setBagItems(data ?? []);
       localStorage.setItem(
         STORAGE_KEYS.CART_LENGTH,
@@ -136,19 +147,26 @@ const Header = () => {
             }}
             className='cursor-pointer'
           />
-          <AiOutlineShopping
+          <div className='relative'>
+            <AiOutlineShopping
+              size={24}
+              onClick={() => router.push('/bag')}
+              className='cursor-pointer'
+            />
+            <span
+              onClick={() => router.push('/bag')}
+              className={`text-[10px] absolute ${
+                scroll ? 'top-[6px] ' : 'top-[7px]'
+              }  right-[4px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-semibold cursor-pointer`}
+            >
+              {bagItems.length ?? '0'}
+            </span>
+          </div>
+          <MdMenuOpen
             size={24}
-            onClick={() => router.push('/bag')}
-            className='cursor-pointer'
+            className='cursor-pointer md:hidden'
+            onClick={() => setShowMobileMenu(true)}
           />
-          <span
-            onClick={() => router.push('/bag')}
-            className={`text-[10px] absolute ${
-              scroll ? 'top-[16px] ' : 'top-[17px]'
-            }  right-[16px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-semibold`}
-          >
-            {bagItems.length ?? '0'}
-          </span>
         </div>
       </div>
       {showDropdown && (
@@ -215,6 +233,12 @@ const Header = () => {
           onClose={() => setShowSuccessModal(false)}
           title='Email sent!'
           description='Check your email for the reset link'
+        />
+      )}
+      {showMobileMenu && (
+        <MobileMenu
+          show={showMobileMenu}
+          onClose={() => setShowMobileMenu(false)}
         />
       )}
     </Fragment>

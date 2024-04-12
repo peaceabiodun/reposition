@@ -14,7 +14,8 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const disableButton = !password ?? !confirmPassword;
+  const disableButton =
+    !password || !confirmPassword || password !== confirmPassword;
   const router = useRouter();
 
   const updatePassword = async () => {
@@ -29,7 +30,7 @@ const ResetPassword = () => {
       });
       if (data.user?.role === 'authenticated') {
         setShowSuccessModal(true);
-        router.push('/');
+        router.push('/home');
       } else {
         setShowErrorMessage(true);
       }
@@ -41,7 +42,7 @@ const ResetPassword = () => {
   };
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4 text-sm  '>
-      <Link href='/' className='mt-4 gap-1 flex text-sm items-center'>
+      <Link href='/home' className='mt-4 gap-1 flex text-sm items-center'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>

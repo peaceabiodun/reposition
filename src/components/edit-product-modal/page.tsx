@@ -161,13 +161,22 @@ const EditProductModal = ({
           </div>
         </div>
         <p className='mb-2'>Product Image</p>
-        <FileUploader
-          fileUrls={formData?.images}
-          setFileUrls={(url) => setFormData({ ...formData, images: url })}
-          className='w-full text-sm'
-        />
+        <div className='flex flex-col gap-3'>
+          {formData?.images.map((item, index) => (
+            <FileUploader
+              key={index}
+              fileUrls={[item]}
+              setFileUrls={(url) => {
+                const updatedImages = [...formData.images];
+                updatedImages[index] = url[0];
+                setFormData({ ...formData, images: updatedImages });
+              }}
+              className='w-full text-sm'
+            />
+          ))}
+        </div>
 
-        <div className='flex my-2 gap-4'>
+        <div className='flex my-3 gap-4'>
           <p className='font-semibold '>Out Of Stock</p>
           <input
             type='checkbox'
