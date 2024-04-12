@@ -132,7 +132,7 @@ const EditProductModal = ({
         <textarea
           className='border border-[#3d3e3f] rounded-sm w-full h-[160px] my-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
           placeholder='Describe your product'
-          value={formData.description}
+          value={formData?.description}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }

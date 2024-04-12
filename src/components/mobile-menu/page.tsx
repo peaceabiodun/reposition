@@ -10,19 +10,19 @@ type ModalProps = {
 const menuInfo = [
   {
     title: 'About Us',
-    onClick: () => [],
+    onClick: '',
   },
   {
     title: 'Manage Products',
-    onClick: () => [],
+    onClick: '',
   },
   {
     title: 'Update Password',
-    onClick: () => [],
+    onClick: '',
   },
   {
     title: 'Logout',
-    onClick: () => [],
+    onClick: '',
   },
 ];
 
@@ -30,9 +30,9 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
   return (
     <LocalSideModal isOpen={show} onRequestClose={onClose} className=''>
       <div className='flex flex-col '>
-        {menuInfo.map((item, index) => (
+        {menuInfo?.map((item, index) => (
           <div key={index} className='p-2'>
-            {item.title}
+            {item?.title}
           </div>
         ))}
       </div>

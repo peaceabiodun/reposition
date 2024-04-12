@@ -143,7 +143,7 @@ const ManageProducts = () => {
                       <p
                         key={index}
                         className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
-                        onClick={item.link}
+                        onClick={item?.link}
                       >
                         {item.text}
                       </p>
