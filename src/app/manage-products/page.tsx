@@ -107,11 +107,11 @@ const ManageProducts = () => {
       ) : (
         <div className='flex items-center justify-center'>
           <div className=' text-sm w-full md:max-w-[85vw] '>
-            {products.map((item, index) => (
+            {products?.map((item, index) => (
               <div
                 key={item.id}
                 className={`relative flex gap-3 justify-between items-center ${
-                  index === products.length - 1
+                  index === products?.length - 1
                     ? ''
                     : 'border-b border-[#b9b9b96c]'
                 }  py-2`}
@@ -126,10 +126,10 @@ const ManageProducts = () => {
                   />
                 </div>
                 <p className='sm:hidden'>
-                  {truncateString(`${item.name}`, 3)}{' '}
+                  {truncateString(`${item?.name}`, 3)}{' '}
                 </p>
                 <p className='hidden sm:flex'>
-                  {truncateString(`${item.name}`, 6)}{' '}
+                  {truncateString(`${item?.name}`, 6)}{' '}
                 </p>
                 <div
                   className='cursor-pointer '
@@ -139,7 +139,7 @@ const ManageProducts = () => {
                 </div>
                 {selectedProduct && selectedProduct === item && (
                   <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
-                    {dropDownLinks.map((item, index) => (
+                    {dropDownLinks?.map((item, index) => (
                       <p
                         key={index}
                         className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
