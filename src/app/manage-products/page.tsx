@@ -109,7 +109,7 @@ const ManageProducts = () => {
           <div className=' text-sm w-full md:max-w-[85vw] '>
             {products?.map((item, index) => (
               <div
-                key={item.id}
+                key={item?.id}
                 className={`relative flex gap-3 justify-between items-center ${
                   index === products?.length - 1
                     ? ''
@@ -118,7 +118,7 @@ const ManageProducts = () => {
               >
                 <div className=''>
                   <Image
-                    src={item.images[0]}
+                    src={item?.images[0]}
                     alt='product_image'
                     width='70'
                     height='70'
@@ -145,7 +145,7 @@ const ManageProducts = () => {
                         className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
                         onClick={item?.link}
                       >
-                        {item.text}
+                        {item?.text}
                       </p>
                     ))}
                   </div>
