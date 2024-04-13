@@ -24,7 +24,7 @@ export type ProductDetailType = {
   sizes: string[];
   colors: string[];
   user_id: string;
-  sold_out?: boolean;
+  sold_out: boolean;
   weight: number;
 };
 
