@@ -162,12 +162,12 @@ const EditProductModal = ({
         </div>
         <p className='mb-2'>Product Image</p>
         <div className='flex flex-col gap-3'>
-          {formData?.images.map((item, index) => (
+          {formData?.images?.map((item, index) => (
             <FileUploader
               key={index}
               fileUrls={[item]}
               setFileUrls={(url) => {
-                const updatedImages = [...formData.images];
+                const updatedImages = [...formData?.images];
                 updatedImages[index] = url[0];
                 setFormData({ ...formData, images: updatedImages });
               }}
@@ -197,7 +197,7 @@ const EditProductModal = ({
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />
-            {size && !formData.sizes.find((s) => s === size) ? (
+            {size && !formData?.sizes.find((s) => s === size) ? (
               <FaCheck className='cursor-pointer' onClick={addSize} />
             ) : null}
           </div>
@@ -232,7 +232,7 @@ const EditProductModal = ({
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />
-            {color && !formData.colors.find((c) => c === color) ? (
+            {color && !formData?.colors.find((c) => c === color) ? (
               <FaCheck className='cursor-pointer' onClick={addColor} />
             ) : null}
           </div>
