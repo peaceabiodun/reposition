@@ -12,6 +12,7 @@ import SuccessModal from '../success-modal/page';
 import { ShoppingBagType } from '@/utils/types';
 import { MdMenuOpen } from 'react-icons/md';
 import MobileMenu from '../mobile-menu/page';
+import UpdatePasswordModal from '../update-password-modal/page';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -70,22 +71,6 @@ const Header = () => {
     }
   };
 
-  const getPasswordUpdateLink = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'https://www.re-position.co/reset-password',
-      });
-      setShowUpdatePasswordModal(false);
-      setShowDropdown(false);
-      setShowSuccessModal(true);
-    } catch (err: any) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const getBagItems = async () => {
     try {
       const { data, error } = await supabase
@@ -133,7 +118,7 @@ const Header = () => {
             <TbShirt
               size={22}
               onClick={() => router.push('/manage-products')}
-              className='cursor-pointer'
+              className='cursor-pointer hidden sm:flex'
             />
           )}
           <GoPerson
@@ -145,13 +130,13 @@ const Header = () => {
                 router.push('/login');
               }
             }}
-            className='cursor-pointer'
+            className='cursor-pointer hidden sm:flex'
           />
           <div className='relative'>
             <AiOutlineShopping
               size={24}
               onClick={() => router.push('/bag')}
-              className='cursor-pointer'
+              className='cursor-pointer '
             />
             <span
               onClick={() => router.push('/bag')}
@@ -163,8 +148,8 @@ const Header = () => {
             </span>
           </div>
           <MdMenuOpen
-            size={24}
-            className='cursor-pointer md:hidden'
+            size={26}
+            className='cursor-pointer sm:hidden'
             onClick={() => setShowMobileMenu(true)}
           />
         </div>
@@ -187,44 +172,21 @@ const Header = () => {
         </div>
       )}
       {showUpdatePasswordModal && (
-        <LocalModal
-          isOpen={showUpdatePasswordModal}
-          onRequestClose={() => setShowUpdatePasswordModal(false)}
-        >
-          <div className='flex flex-col items-center justify-center space-y-4 text-sm'>
-            <h2>Update your password</h2>
-            <input
-              type='email'
-              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent '
-              placeholder='email address'
-              value={email}
-              readOnly
-            />
-            <button
-              className='border border-[#3d3e3f] p-2  w-[240px] cursor-pointer'
-              onClick={getPasswordUpdateLink}
-            >
-              {loading ? 'Loading...' : 'Confirm'}
-            </button>
-          </div>
-        </LocalModal>
+        <UpdatePasswordModal
+          show={showUpdatePasswordModal}
+          onClose={() => setShowUpdatePasswordModal(false)}
+          email={email}
+        />
       )}
 
       {showLogoutModal && (
-        <LocalModal
-          isOpen={showLogoutModal}
-          onRequestClose={() => setShowLogoutModal(false)}
-        >
-          <div className='flex flex-col space-y-3 text-sm items-center justify-center'>
-            <h3 className='font-semibold'>Are you sure you want to Logout ?</h3>
-            <button
-              onClick={logout}
-              className='border border-[#3d3e3f] p-2 w-full sm:max-w-[350px] cursor-pointer'
-            >
-              {loading ? 'Loading...' : 'Logout'}
-            </button>
-          </div>
-        </LocalModal>
+        <SuccessModal
+          show={showLogoutModal}
+          onClose={() => setShowLogoutModal(false)}
+          title='Are you sure you want to Logout ?'
+          buttonText='Logout'
+          buttonClick={logout}
+        />
       )}
 
       {showSuccessModal && (

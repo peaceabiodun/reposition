@@ -207,9 +207,12 @@ const Bag = () => {
   const config = {
     reference: new Date().getTime().toString(),
     email: userEmail ?? '',
-    amount: totalPrice + shippingFee, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    amount: 30000, //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-  };
+    metadata: {
+      products: '1',
+    },
+  } as any;
 
   // you can call this function anything
   const onSuccess = (reference: string) => {
@@ -223,7 +226,7 @@ const Bag = () => {
     console.log('closed');
   };
 
-  const initializePayment = usePaystackPayment(config);
+  const initializePayment: any = usePaystackPayment(config);
 
   const isDeliveryDetailsComplete = () => {
     return Object.values(deliveryDetails).every((value) => value.trim() !== '');
@@ -603,6 +606,7 @@ const Bag = () => {
           <button
             disabled={!isDeliveryDetailsComplete()}
             onClick={() => {
+              updateDeliveryDetails();
               initializePayment({ onSuccess, onClose });
             }}
             // onClick={() => {
