@@ -7,7 +7,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import SuccessModal from '@/components/success-modal/page';
 import Slider from 'react-slick';
-import Image from 'next/image';
 
 const SignUpNewUsers = () => {
   const [email, setEmail] = useState('');
@@ -57,17 +56,20 @@ const SignUpNewUsers = () => {
     }
   }; //landing_bg
   return (
-    <div className='w-full text-sm relative bg-[#dbd9d2] h-[100vh]'>
-      <Slider {...settings} className='relative w-full h-full  '>
-        {bgArray.map((item, index) => (
-          <img
-            key={index}
-            alt='bg-images'
-            src={item}
-            className='w-full h-auto object-cover'
-          />
-        ))}
-      </Slider>
+    <div className=' text-sm '>
+      <div className='relative'>
+        <Slider {...settings} className=' '>
+          {bgArray.map((item, index) => (
+            <img
+              key={index}
+              alt='bg-images'
+              src={item}
+              className='w-full h-[100vh] object-cover'
+            />
+          ))}
+        </Slider>
+      </div>
+
       <div className='blur-bg flex justify-center p-3 xs:p-4 absolute inset-0 landing_bg'>
         <div className=' w-full  sm:max-w-[450px]  text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
           <h2 className='text-2xl font-semibold'>
