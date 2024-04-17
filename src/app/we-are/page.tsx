@@ -24,8 +24,8 @@ const WeAre = () => {
         <div className='sm:max-w-[450px] text-[#e4e3e0] border-[2px] border-[#4d3c1da2] p-2 bg-[#f7f3e548]'>
           <h3>
             We are people with love for elevated streetwear and contemporary
-            classics; as it maintains it's appeal through time, our symbol of
-            sustained style, designed to last.{' '}
+            classics; as it maintains it&apos;s appeal through time, our symbol
+            of sustained style, designed to last.{' '}
           </h3>
           <h3 className='mt-4'>
             <Typewriter
