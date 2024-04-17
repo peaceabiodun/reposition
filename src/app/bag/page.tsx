@@ -315,7 +315,7 @@ const Bag = () => {
 
                   <input
                     type='text'
-                    placeholder='E.g Mark'
+                    placeholder='E.g Walter'
                     value={deliveryDetails.first_name}
                     onChange={(e) =>
                       setDeliveryDetails({
@@ -330,7 +330,7 @@ const Bag = () => {
                   <label>Last Name</label>
                   <input
                     type='text'
-                    placeholder='E.g Ajayi'
+                    placeholder='E.g White'
                     value={deliveryDetails.last_name}
                     onChange={(e) =>
                       setDeliveryDetails({
@@ -345,7 +345,7 @@ const Bag = () => {
                   <label>Email</label>
                   <input
                     type='email'
-                    placeholder='E.g mark@gmail.com'
+                    placeholder='E.g white@gmail.com'
                     value={deliveryDetails.user_email}
                     readOnly
                     className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
@@ -355,7 +355,7 @@ const Bag = () => {
                   <label> City</label>
                   <input
                     type='text'
-                    placeholder='E.g Lagos'
+                    placeholder='E.g Los Angeles'
                     value={deliveryDetails.city}
                     onChange={(e) =>
                       setDeliveryDetails({
@@ -378,7 +378,7 @@ const Bag = () => {
                         : ' text-gray-400'
                     } `}
                   >
-                    {selectedCountry ? selectedCountry : 'E.g Nigeria'}
+                    {selectedCountry ? selectedCountry : 'E.g United States'}
                   </p>
                   <MdOutlineKeyboardArrowDown
                     size={18}
@@ -409,7 +409,7 @@ const Bag = () => {
                   <label>Address</label>
                   <input
                     type='text'
-                    placeholder='E.g No 1, Gana Street, Maitama, Abuja'
+                    placeholder='E.g No 5, Centinela Avenue, Los Angeles, USA'
                     value={deliveryDetails.address}
                     onChange={(e) =>
                       setDeliveryDetails({
@@ -425,7 +425,7 @@ const Bag = () => {
 
                   <input
                     type='text'
-                    placeholder='E.g 990100'
+                    placeholder='E.g 90004'
                     value={deliveryDetails.zip_code}
                     onChange={(e) =>
                       setDeliveryDetails({
@@ -440,7 +440,7 @@ const Bag = () => {
                   <label>Phone Number</label>
                   <input
                     type='text'
-                    placeholder='E.g +23490445678'
+                    placeholder='E.g +213 90445678'
                     value={deliveryDetails.phone_number}
                     onChange={(e) =>
                       setDeliveryDetails({

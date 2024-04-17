@@ -64,8 +64,8 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
 
   const menuInfo = [
     {
-      title: 'About Us',
-      onClick: () => router.push('/home'),
+      title: 'We Are',
+      onClick: () => router.push('/we-are'),
     },
     ...(token && userRole === 'ADMIN'
       ? [
@@ -106,7 +106,11 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
   };
 
   return (
-    <LocalSideModal isOpen={show} onRequestClose={onClose} title='[ ]'>
+    <LocalSideModal isOpen={show} onRequestClose={onClose}>
+      <div className='text-center font-semibold'>
+        <h3 className='text-xl '>Reposition</h3>
+        <h3 className='text-sm mt-1'>[Wears]</h3>
+      </div>
       <div className='flex flex-col gap-2 w-full h-full  justify-center '>
         {menuInfo?.map((item, index) => (
           <div

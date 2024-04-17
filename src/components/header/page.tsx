@@ -113,6 +113,12 @@ const Header = () => {
             />
           </span>
         </h3>
+        <div
+          className='text-[16px] font-semibold cursor-pointer'
+          onClick={() => router.push('/we-are')}
+        >
+          We Are
+        </div>
         <div className='flex gap-3'>
           {userRole === 'ADMIN' && (
             <TbShirt
