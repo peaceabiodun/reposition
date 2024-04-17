@@ -109,7 +109,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
     <LocalSideModal isOpen={show} onRequestClose={onClose}>
       <div className='text-center font-semibold'>
         <h3 className='text-xl '>Reposition</h3>
-        <h3 className='text-sm mt-1'>[Wears]</h3>
+        <h3 className='text-sm mt-1'>[New In]</h3>
       </div>
       <div className='flex flex-col gap-2 w-full h-full  justify-center '>
         {menuInfo?.map((item, index) => (

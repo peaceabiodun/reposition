@@ -25,6 +25,7 @@ const Bag = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+
   const [bagItems, setBagItems] = useState<FormDataType[]>([]);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -32,9 +33,6 @@ const Bag = () => {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [shippingFee, SetShippingFee] = useState<number>(0);
-  const [shippingMethod, setShippingMethod] = useState<'standard' | 'free'>(
-    'standard'
-  );
   const [selectedDeliveryDetail, setSelectedDeliveryDetail] =
     useState<DeliveryDetailsType>();
   const [savedDeliveryDetails, setSavedDeliveryDetails] = useState<
@@ -307,9 +305,17 @@ const Bag = () => {
           <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
             {savedDeliveryDetails.length <= 0 || addDeliveryDetail ? (
               <div className=' w-full text-xs md:text-sm '>
-                <h2 className='border-b border-[#a1a1a19c]  w-full py-3 text-sm'>
-                  Delivery Details
-                </h2>
+                <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
+                  <h2>Delivery Details</h2>
+                  {savedDeliveryDetails.length > 0 && (
+                    <h2
+                      onClick={() => setAddDeliveryDetail(false)}
+                      className='font-semibold cursor-pointer'
+                    >
+                      Use saved delivery details
+                    </h2>
+                  )}
+                </div>
                 <div className='w-full mt-5'>
                   <label>First Name</label>
 
@@ -515,7 +521,7 @@ const Bag = () => {
                 <div className='flex gap-2 items-start mt-5'>
                   <input
                     type='checkbox'
-                    checked={shippingMethod === 'standard'}
+                    checked
                     className='accent-black mt-1'
                     readOnly
                     // onChange={(e) =>
@@ -604,7 +610,7 @@ const Bag = () => {
       {bagItems.length <= 0 ? null : (
         <div className='flex justify-center py-6 px-3 xs:px-4'>
           <button
-            disabled={!isDeliveryDetailsComplete()}
+            disabled={!isDeliveryDetailsComplete() || !selectedDeliveryDetail}
             onClick={() => {
               updateDeliveryDetails();
               initializePayment({ onSuccess, onClose });
@@ -622,6 +628,7 @@ const Bag = () => {
         show={showCheckoutModal}
         onClose={() => setShowCheckoutModal(false)}
       />
+
       {showErrorModal && (
         <ErrorModal
           show={showErrorModal}
