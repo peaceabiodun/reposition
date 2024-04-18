@@ -29,8 +29,10 @@ const Bag = () => {
   const [bagItems, setBagItems] = useState<FormDataType[]>([]);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const router = useRouter();
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState('');
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [shippingFee, SetShippingFee] = useState<number>(0);
   const [selectedDeliveryDetail, setSelectedDeliveryDetail] =
@@ -392,7 +394,7 @@ const Bag = () => {
                   />
                 </div>
                 {showDropdown && (
-                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute  shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50'>
+                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50'>
                     {countryList.map((item, index) => (
                       <div
                         key={index}
@@ -570,6 +572,39 @@ const Bag = () => {
                   <p className=''>Total</p>
                   <p>${(totalPrice + shippingFee).toFixed(2)}</p>
                 </div>
+              </div>
+
+              <div className=' w-full'>
+                <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
+                  Currency Converter
+                </h2>
+                <div className='border-b border-[#a1a1a19c] p-3'>
+                  <div
+                    onClick={() =>
+                      setShowCurrencyDropdown(!showCurrencyDropdown)
+                    }
+                    className='flex justify-between cursor-pointer'
+                  >
+                    <div className='gap-6 flex'>
+                      <p>USD</p>
+                      <p className='font-semibold'>
+                        ${(totalPrice + shippingFee).toFixed(2)}
+                      </p>
+                    </div>
+                    <MdOutlineKeyboardArrowDown
+                      size={18}
+                      className='text-gray-400 cursor-pointer '
+                    />
+                  </div>
+                </div>
+                {showCurrencyDropdown && (
+                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 '>
+                    <div className='flex gap-6 hover:bg-gray-100 hover:cursor-pointer p-2'>
+                      <p>Naira</p>
+                      <p>350,000</p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className=' w-full'>
