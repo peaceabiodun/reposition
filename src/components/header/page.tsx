@@ -114,7 +114,7 @@ const Header = () => {
           </span>
         </h3>
         <div
-          className='text-[16px] font-semibold cursor-pointer'
+          className='text-[16px] font-semibold cursor-pointer hidden sm:flex'
           onClick={() => router.push('/we-are')}
         >
           We Are

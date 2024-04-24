@@ -8,7 +8,7 @@ import Typewriter from 'typewriter-effect';
 
 const WeAre = () => {
   return (
-    <div className='w-full h-screen we_are_bg overflow-hidden '>
+    <div className='w-full h-screen we_are_bg overflow-y-hidden '>
       <div className='bg-[#dbd9d283]'>
         <Header />
       </div>

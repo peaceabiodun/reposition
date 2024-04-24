@@ -9,7 +9,11 @@ import CheckoutModal from '@/components/checkout-modal/page';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
-import { DeliveryDetailsType, ShoppingBagType } from '@/utils/types';
+import {
+  ConversionRateType,
+  DeliveryDetailsType,
+  ShoppingBagType,
+} from '@/utils/types';
 import { ThreeCircles } from 'react-loader-spinner';
 import SuccessModal from '@/components/success-modal/page';
 import { useRouter } from 'next/navigation';
@@ -17,6 +21,7 @@ import { usePaystackPayment } from 'react-paystack';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { CiLocationOn } from 'react-icons/ci';
+import axios from 'axios';
 
 type FormDataType = {
   quantity: string;
@@ -25,7 +30,6 @@ const Bag = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
-
   const [bagItems, setBagItems] = useState<FormDataType[]>([]);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -33,6 +37,8 @@ const Bag = () => {
   const router = useRouter();
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [Currencies, setCurrencies] = useState<ConversionRateType>();
+  const [loadingCurrency, setLoadingCurrency] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [shippingFee, SetShippingFee] = useState<number>(0);
   const [selectedDeliveryDetail, setSelectedDeliveryDetail] =
@@ -41,6 +47,7 @@ const Bag = () => {
     DeliveryDetailsType[]
   >([]);
   const [addDeliveryDetail, setAddDeliveryDetail] = useState(false);
+  const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
   const userEmail =
     typeof window !== 'undefined'
       ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
@@ -204,6 +211,25 @@ const Bag = () => {
       console.log(err);
     }
   };
+
+  const getConversionRate = async () => {
+    setLoadingCurrency(true);
+    try {
+      const res = await axios.get(
+        `https://v6.exchangerate-api.com/v6/${exchangeRateApiKey}/latest/USD`
+      );
+      console.log(res, 'res');
+      setCurrencies(res?.data?.conversion_rates);
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setLoadingCurrency(false);
+    }
+  };
+
+  useEffect(() => {
+    getConversionRate();
+  }, []);
   const config = {
     reference: new Date().getTime().toString(),
     email: userEmail ?? '',
