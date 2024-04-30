@@ -5,6 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { ProductDetailType } from '@/utils/types';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { STORAGE_KEYS } from '@/utils/constants';
 
 type EditModalProps = {
   show: boolean;
@@ -37,6 +38,10 @@ const EditProductModal = ({
   const [color, setColor] = useState('');
 
   const [formData, setFormData] = useState({} as EditFormDataType);
+  const userEmail =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
+      : '';
 
   useEffect(() => {
     if (selectedProduct) {
@@ -87,6 +92,7 @@ const EditProductModal = ({
       sizes: formData?.sizes,
       colors: formData?.colors,
       sold_out: formData?.sold_out,
+      user_email: userEmail,
     };
     try {
       const { data, error } = await supabase

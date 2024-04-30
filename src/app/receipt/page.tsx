@@ -1,23 +1,16 @@
 'use client';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-const Receipt = () => {
-  const styles = StyleSheet.create({
-    page: {
-      flexDirection: 'row',
-      backgroundColor: '#E4E4E4',
-    },
-    section: {
-      margin: 10,
-      padding: 10,
-      flexGrow: 1,
-    },
-  });
-  return (
-    <Document>
-      <Page size='A4' style={styles.page}></Page>
-    </Document>
-  );
+const DynamicReceiptViewer = dynamic(() => import('./view-receipt'), {
+  ssr: false,
+});
+
+const View = () => {
+  const [client, setClient] = useState(false);
+  useEffect(() => {
+    setClient(true);
+  }, []);
+  return <DynamicReceiptViewer />;
 };
-
-export default Receipt;
+export default View;

@@ -67,6 +67,8 @@ const Bag = () => {
   const countryList = [
     'Nigeria',
     'Ghana',
+    'Kenya',
+    'Rwanda',
     'South Africa',
     'United State of America',
     'Canada',
@@ -218,7 +220,7 @@ const Bag = () => {
       const res = await axios.get(
         `https://v6.exchangerate-api.com/v6/${exchangeRateApiKey}/latest/USD`
       );
-      console.log(res, 'res');
+
       setCurrencies(res?.data?.conversion_rates);
     } catch (err: any) {
       console.log(err);
@@ -230,20 +232,50 @@ const Bag = () => {
   useEffect(() => {
     getConversionRate();
   }, []);
+
+  const orderConfirmationDetails = async () => {
+    const payload = {
+      customer_email: userEmail ?? '',
+      customer_phone_number:
+        deliveryDetails.phone_number || selectedDeliveryDetail?.phone_number,
+      user_id: userId,
+      product_details: bagItems.map((itm) => ({
+        name: itm.name,
+        size: itm.size,
+        quantity: itm.quantity,
+      })),
+      amount_paid:
+        (totalPrice + shippingFee) * parseInt(Currencies?.NGN ?? '') * 100,
+      shipping_fee: shippingFee,
+      country: selectedCountry || selectedDeliveryDetail?.country,
+      city: deliveryDetails.city || selectedDeliveryDetail?.city,
+      address: deliveryDetails.address || selectedDeliveryDetail?.address,
+    };
+    try {
+      const { data, error } = await supabase.from('orders').insert(payload);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
   const config = {
     reference: new Date().getTime().toString(),
     email: userEmail ?? '',
-    amount: 30000, //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    amount: (totalPrice + shippingFee) * parseInt(Currencies?.NGN ?? '') * 100, //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+    Currency: 'NGN',
     metadata: {
       products: '1',
     },
   } as any;
 
   // you can call this function anything
-  const onSuccess = (reference: string) => {
+  const onSuccess = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+
+    if (reference.message === 'Approved') {
+      orderConfirmationDetails();
+      router.push('/receipt');
+    }
   };
 
   // you can call this function anything
@@ -600,7 +632,7 @@ const Bag = () => {
                 </div>
               </div>
 
-              <div className=' w-full'>
+              {/* <div className=' w-full'>
                 <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
                   Currency Converter
                 </h2>
@@ -631,7 +663,7 @@ const Bag = () => {
                     </div>
                   </div>
                 )}
-              </div>
+              </div> */}
 
               <div className=' w-full'>
                 <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
