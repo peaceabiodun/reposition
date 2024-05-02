@@ -1,12 +1,10 @@
 'use client';
 import ErrorModal from '@/components/error-modal/page';
 import { supabase } from '@/lib/supabase';
-import { useRouter } from 'next/navigation';
 import Typewriter from 'typewriter-effect';
 import { useState } from 'react';
 import Link from 'next/link';
 import SuccessModal from '@/components/success-modal/page';
-import Slider from 'react-slick';
 
 const SignUpNewUsers = () => {
   const [email, setEmail] = useState('');
@@ -17,11 +15,10 @@ const SignUpNewUsers = () => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return regex.test(email);
   };
-  const router = useRouter();
-  const bgArray = [
-    'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG',
-    'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg',
-  ];
+  // const bgArray = [
+  //   'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG',
+  //   'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg',
+  // ];
   const settings = {
     dots: false,
     arrows: false,
@@ -56,8 +53,8 @@ const SignUpNewUsers = () => {
     }
   }; //landing_bg
   return (
-    <div className=' text-sm '>
-      <div className='relative'>
+    <div className=' text-sm w-full min-h-screen landing_bg bg-[#dbd9d2] '>
+      {/* <div className='relative'>
         <Slider {...settings} className=' '>
           {bgArray.map((item, index) => (
             <img
@@ -68,10 +65,10 @@ const SignUpNewUsers = () => {
             />
           ))}
         </Slider>
-      </div>
+      </div> */}
 
-      <div className='blur-bg flex justify-center p-3 xs:p-4 absolute inset-0 landing_bg'>
-        <div className=' w-full  sm:max-w-[450px]  text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
+      <div className='blur-bg flex justify-center p-3 xs:p-4 h-[100vh]'>
+        <div className=' w-full sm:max-w-[450px] text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
           <h2 className='text-2xl font-semibold'>
             <Typewriter
               options={{
