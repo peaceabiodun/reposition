@@ -1,75 +1,76 @@
 'use client';
-import ErrorModal from '@/components/error-modal/page';
-import { supabase } from '@/lib/supabase';
-import Typewriter from 'typewriter-effect';
-import { useState } from 'react';
+import Footer from '@/components/footer/page';
+import Header from '@/components/header/page';
+import Image from 'next/image';
 import Link from 'next/link';
-import SuccessModal from '@/components/success-modal/page';
+import Typewriter from 'typewriter-effect';
+import { ThreeCircles } from 'react-loader-spinner';
+import { Fragment, useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import ErrorModal from '@/components/error-modal/page';
+import { useProductContext } from '@/context/product-context';
 
-const SignUpNewUsers = () => {
-  const [email, setEmail] = useState('');
+const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const validateEmail = (email: string) => {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return regex.test(email);
-  };
-  // const bgArray = [
-  //   'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG',
-  //   'https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg',
-  // ];
-  const settings = {
-    dots: false,
-    arrows: false,
-    fade: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    waitForAnimate: false,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
-  const signUp = async () => {
+  const { products, setProducts } = useProductContext();
+  // const [products, setProducts] = useState<ProductDetailType[]>([]);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  const fetchProducts = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email: email,
-        options: {
-          data: {
-            user_role: 'ADMIN',
-            emailRedirectTo: 'https://www.re-position.co/home',
-          },
-        },
-      });
-
-      setShowSuccessModal(true);
-      setEmail('');
+      const { data, error } = await supabase.from('products').select();
+      setProducts(data ?? []);
+      if (error) {
+        setShowErrorModal(true);
+      }
     } catch (err: any) {
-      setShowErrorMessage(true);
+      setShowErrorModal(true);
     } finally {
       setLoading(false);
     }
-  }; //landing_bg
-  return (
-    <div className=' text-sm w-full min-h-screen landing_bg bg-[#dbd9d2] '>
-      {/* <div className='relative'>
-        <Slider {...settings} className=' '>
-          {bgArray.map((item, index) => (
-            <img
-              key={index}
-              alt='bg-images'
-              src={item}
-              className='w-full h-[100vh] object-cover'
-            />
-          ))}
-        </Slider>
-      </div> */}
+  };
 
-      <div className='blur-bg flex justify-center p-3 xs:p-4 h-[100vh]'>
-        <div className=' w-full sm:max-w-[450px] text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
-          <h2 className='text-2xl font-semibold'>
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  //   const getSession = async () => {
+  //     const {
+  //       data: { session },
+  //     } = await supabase.auth.getSession();
+
+  //     if (session !== null) {
+  //       localStorage.setItem(
+  //         STORAGE_KEYS.AUTH_TOKEN,
+  //         session?.access_token ?? ''
+  //       );
+  //       localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session?.user.email ?? '');
+  //       localStorage.setItem(STORAGE_KEYS.USER_ID, session?.user.id ?? '');
+  //       localStorage.setItem(
+  //         STORAGE_KEYS.USER_ROLE,
+  //         session?.user.user_metadata.user_role ?? ''
+  //       );
+  //     }
+  //   };
+
+  // const refreshSession = async () => {
+  //   const {
+  //     data: { session },
+  //   } = await supabase.auth.refreshSession();
+
+  //   if (session !== null) {
+  //     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, session.access_token);
+  //     localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user?.email ?? '');
+  //   }
+  // };
+
+  return (
+    <Fragment>
+      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
+        <Header />
+        <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-4'>
+          <h2 className='text-4xl font-semibold'>
             <Typewriter
               options={{
                 strings: ['REPOSITION [ ]', 'REPOSITION [ ]'],
@@ -78,57 +79,56 @@ const SignUpNewUsers = () => {
               }}
             />
           </h2>
-          <p className='text-sm text-center'>
-            Enter your email for early access - top members only.
-          </p>
-          <div className='flex w-full items-center'>
-            <input
-              type='text'
-              placeholder='Email'
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className='border-y border-l border-[#909192] rounded-none w-full h-[40px] p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
-            />
-            <button
-              disabled={!validateEmail(email)}
-              onClick={signUp}
-              className={`border border-[#909192] bg-[#523f3fab] h-[40px] font-normal p-2 w-[100px] cursor-pointer`}
-            >
-              {loading ? 'Loading...' : 'Welcome'}
-            </button>
-          </div>
-
-          {!validateEmail(email) && email !== '' && (
-            <p className='text-[10px] text-red-500'>
-              Please input a valid email address
-            </p>
-          )}
-          <div className='flex text-xs font-semibold '>
-            <p>Already have an account ?</p>
-            <Link href={'/login'} className=' cursor-pointer text-[#ffe7ba]'>
-              Login here
-            </Link>
-          </div>
+          <p className='mt-2 text-sm'>Exodus 1 Collection is here</p>
         </div>
+
+        {loading ? (
+          <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4'>
+            <ThreeCircles
+              visible={true}
+              height={50}
+              width={50}
+              color='#b4b4b4ad'
+              ariaLabel='three-circles-loading'
+              wrapperClass='my-4'
+            />
+          </div>
+        ) : products.length === 0 ? (
+          <div className='w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4 text-sm'>
+            {' '}
+            No Products Available
+          </div>
+        ) : (
+          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4'>
+            {products?.map((item) => (
+              <Link href={`product/${item.id}`} key={item.id}>
+                <Image
+                  src={item?.images[0] ?? '/placeholder.png'}
+                  alt='product_image'
+                  width='200'
+                  height='300'
+                  className='min-h-[300px] home_img object-cover border border-solid border-[#3f2a16] shadow-md '
+                />
+                <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
+                <p className='text-sm'>${item.price}</p>
+                {item.sold_out && (
+                  <p className='font-semibold mt-1 text-sm'>Sold Out</p>
+                )}
+              </Link>
+            ))}
+          </div>
+        )}
+        <Footer />
       </div>
-      {showErrorMessage && (
+      {showErrorModal && (
         <ErrorModal
-          show={showErrorMessage}
-          onClose={() => setShowErrorMessage(false)}
-          description='Make sure you input a correct email address'
+          show={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          description='Sorry an error occured while loading the products'
         />
       )}
-      {showSuccessModal && (
-        <SuccessModal
-          show={showSuccessModal}
-          onClose={() => setShowSuccessModal(false)}
-          title='You have successfully submitted your email'
-          description='check your email to proceed'
-        />
-      )}
-    </div>
+    </Fragment>
   );
 };
 
-export default SignUpNewUsers;
+export default Home;
