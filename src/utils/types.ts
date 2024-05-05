@@ -23,7 +23,6 @@ export type ProductDetailType = {
   images: string[];
   sizes: string[];
   colors: string[];
-  user_id: string;
   sold_out: boolean;
   weight: number;
 };

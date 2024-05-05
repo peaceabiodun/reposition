@@ -29,7 +29,7 @@ const Login = () => {
           data.session.access_token
         );
         localStorage.setItem(STORAGE_KEYS.USER_EMAIL, data.user.email ?? '');
-        router.push('/home');
+        router.push('/manage-products');
       } else {
         setShowErrorMessage(true);
       }
@@ -52,7 +52,7 @@ const Login = () => {
         <div className='flex justify-center'>
           <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center'>
             <h3 className='font-semibold'>Login</h3>
-            {/* <p className='text-xs'> Are you the owner of this apllication ?</p> */}
+            <p className='text-xs'> Are you the owner of this apllication ?</p>
             <input
               type='text'
               placeholder='Email'

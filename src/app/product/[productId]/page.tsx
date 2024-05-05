@@ -21,7 +21,7 @@ import { STORAGE_KEYS } from '@/utils/constants';
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
-  const [addToBagloading, setAddToBagLoading] = useState(false);
+  // const [addToBagloading, setAddToBagLoading] = useState(false);
   const [productDetails, setProductDetails] = useState<ProductDetailType>();
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [selectedSize, setSelectedSize] = useState('');
@@ -30,15 +30,15 @@ const ProductDetails = () => {
   const router = useRouter();
   const params = useParams();
   const disableBtn = !selectedSize || !selectedColor;
-  const userEmail =
-    typeof window !== 'undefined'
-      ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
-      : '';
+  // const userEmail =
+  //   typeof window !== 'undefined'
+  //     ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
+  //     : '';
 
-  const userId =
-    typeof window !== 'undefined'
-      ? localStorage.getItem(STORAGE_KEYS.USER_ID)
-      : '';
+  // const userId =
+  //   typeof window !== 'undefined'
+  //     ? localStorage.getItem(STORAGE_KEYS.USER_ID)
+  //     : '';
 
   // const productData = products?.find((item) => item?.id == params.productId);
   const settings = {
@@ -76,7 +76,34 @@ const ProductDetails = () => {
     getProductDetails();
   }, [params.productId]);
 
-  const addToBag = async () => {
+  // const addToBag = async () => {
+  //   const payload = {
+  //     id: productDetails?.id,
+  //     name: productDetails?.name,
+  //     price: productDetails?.price,
+  //     image: productDetails?.images[0],
+  //     color: selectedColor,
+  //     size: selectedSize,
+  //     weight: productDetails?.weight,
+  //   };
+  //   setAddToBagLoading(true);
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('shopping-bag')
+  //       .insert(payload);
+  //     if (error !== null) {
+  //       setShowErrorModal(true);
+  //     } else {
+  //       setShowSuccessMessage(true);
+  //     }
+  //   } catch {
+  //     setShowErrorModal(true);
+  //   } finally {
+  //     setAddToBagLoading(false);
+  //   }
+  // };
+
+  const addToBag = () => {
     const payload = {
       id: productDetails?.id,
       name: productDetails?.name,
@@ -85,31 +112,22 @@ const ProductDetails = () => {
       color: selectedColor,
       size: selectedSize,
       weight: productDetails?.weight,
-      user_id: userId,
-      user_email: userEmail,
     };
-    setAddToBagLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('shopping-bag')
-        .insert(payload);
-      if (error !== null) {
-        setShowErrorModal(true);
-      } else {
-        setShowSuccessMessage(true);
-      }
-    } catch {
-      setShowErrorModal(true);
-    } finally {
-      setAddToBagLoading(false);
+    const existingBagItemsJSON = localStorage.getItem(STORAGE_KEYS.BAG_ITEMS);
+    let existingBagItems = [];
+    if (existingBagItemsJSON) {
+      existingBagItems = JSON.parse(existingBagItemsJSON);
     }
+    existingBagItems.push(payload);
+    const updatedBagItemsJSON = JSON.stringify(existingBagItems);
+    localStorage.setItem(STORAGE_KEYS.BAG_ITEMS, updatedBagItemsJSON);
+    setShowSuccessMessage(true);
   };
-
   return (
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] overflow-x-scroll '>
       <Header />
       <Link
-        href='/home'
+        href='/'
         className='pt-3 gap-1 flex text-sm items-center p-3 xs:p-4'
       >
         <MdOutlineArrowBackIosNew size={20} />
@@ -307,7 +325,7 @@ const ProductDetails = () => {
               onClick={addToBag}
               className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer'
             >
-              {addToBagloading ? 'Loading...' : 'ADD TO BAG'}
+              ADD TO BAG
             </button>
           </div>
         </div>

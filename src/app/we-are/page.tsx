@@ -13,7 +13,7 @@ const WeAre = () => {
         <Header />
       </div>
 
-      <Link href='/home' className='flex gap-1 mt-4 px-4 text-[#e4e3e0]'>
+      <Link href='/' className='flex gap-1 mt-4 px-4 text-[#e4e3e0]'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>

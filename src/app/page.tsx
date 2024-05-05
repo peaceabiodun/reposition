@@ -9,6 +9,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import { useProductContext } from '@/context/product-context';
+import { STORAGE_KEYS } from '@/utils/constants';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -35,24 +36,24 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  //   const getSession = async () => {
-  //     const {
-  //       data: { session },
-  //     } = await supabase.auth.getSession();
+  const getSession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-  //     if (session !== null) {
-  //       localStorage.setItem(
-  //         STORAGE_KEYS.AUTH_TOKEN,
-  //         session?.access_token ?? ''
-  //       );
-  //       localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session?.user.email ?? '');
-  //       localStorage.setItem(STORAGE_KEYS.USER_ID, session?.user.id ?? '');
-  //       localStorage.setItem(
-  //         STORAGE_KEYS.USER_ROLE,
-  //         session?.user.user_metadata.user_role ?? ''
-  //       );
-  //     }
-  //   };
+    if (session !== null) {
+      localStorage.setItem(
+        STORAGE_KEYS.AUTH_TOKEN,
+        session?.access_token ?? ''
+      );
+      localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session?.user.email ?? '');
+      localStorage.setItem(STORAGE_KEYS.USER_ID, session?.user.id ?? '');
+      localStorage.setItem(
+        STORAGE_KEYS.USER_ROLE,
+        session?.user.user_metadata.user_role ?? ''
+      );
+    }
+  };
 
   // const refreshSession = async () => {
   //   const {

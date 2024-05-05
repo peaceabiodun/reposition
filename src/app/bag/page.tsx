@@ -294,7 +294,7 @@ const Bag = () => {
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
       <Header />
       <Link
-        href='/home'
+        href='/'
         className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
       >
         <MdOutlineArrowBackIosNew size={20} />
@@ -735,7 +735,7 @@ const Bag = () => {
           onClose={() => setShowDeleteSuccessModal(false)}
           title='Product removed from Cart'
           buttonText='Go back to shopping'
-          buttonClick={() => router.push('/home')}
+          buttonClick={() => router.push('/')}
         />
       )}
     </div>

@@ -4,4 +4,5 @@ export const STORAGE_KEYS = {
   CART_LENGTH: 'cart_length',
   USER_ROLE: 'user_role',
   USER_ID: 'user_id',
+  BAG_ITEMS: 'bag_items',
 };
