@@ -104,6 +104,7 @@ const ProductDetails = () => {
   // };
 
   const addToBag = () => {
+    if (productDetails?.sold_out) return;
     const payload = {
       id: productDetails?.id,
       name: productDetails?.name,
@@ -152,15 +153,26 @@ const ProductDetails = () => {
               className='w-[270px] sm:w-[290px] h-full md:h-[70vh] box bounce-1 '
             >
               {productDetails?.images.map((item, index) => (
-                <Image
-                  key={index}
-                  src={item ? item : '/placeholder.png'}
-                  alt='product_image'
-                  width='290'
-                  height='290'
-                  className='object-cover border border-[#3f2a16]  '
-                  loading='lazy'
-                />
+                <div>
+                  <Image
+                    key={index}
+                    src={item ? item : '/placeholder.png'}
+                    alt='product_image'
+                    width='290'
+                    height='290'
+                    className={`object-cover border border-[#3f2a16] ${
+                      productDetails?.sold_out ? 'brightness-50' : ''
+                    }`}
+                    loading='lazy'
+                  />
+                  {productDetails?.sold_out && (
+                    <span className=' absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
+                      <p className=' text-sm text-gray-400 font-medium'>
+                        Sold out
+                      </p>
+                    </span>
+                  )}
+                </div>
               ))}
             </Slider>
           </div>

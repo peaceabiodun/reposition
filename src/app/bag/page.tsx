@@ -79,48 +79,68 @@ const Bag = () => {
       ? localStorage.getItem(STORAGE_KEYS.USER_ID)
       : '';
 
-  //i should be fetching cart items based on user id or email :todo
-  const getBagItems = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('shopping-bag')
-        .select('*')
-        .eq('user_id', userId);
-
-      setBagItems(data?.map((item) => ({ ...item, quantity: '1' })) ?? []);
-
-      if (error) {
-        setShowErrorModal(true);
-      }
-    } catch {
-      setShowErrorModal(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // fetching cart items based on local storage
 
   useEffect(() => {
-    getBagItems();
+    const existingBagItemsJSON = localStorage.getItem(STORAGE_KEYS.BAG_ITEMS);
+    if (existingBagItemsJSON) {
+      const existingBagItems = JSON.parse(existingBagItemsJSON);
+      setBagItems(
+        existingBagItems?.map((item: any) => ({ ...item, quantity: '1' })) ?? []
+      );
+    }
   }, []);
 
-  const removeItemFromBag = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('shopping-bag')
-        .delete()
-        .eq('id', id);
-      if (error) {
-        console.log(error);
-      } else {
-        setShowDeleteSuccessModal(true);
-        getBagItems();
-      }
-    } catch {
-      console.log('error');
-    }
-  };
+  // const getBagItems = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('shopping-bag')
+  //       .select('*')
+  //       .eq('user_id', userId);
 
+  //     setBagItems(data?.map((item) => ({ ...item, quantity: '1' })) ?? []);
+
+  //     if (error) {
+  //       setShowErrorModal(true);
+  //     }
+  //   } catch {
+  //     setShowErrorModal(true);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getBagItems();
+  // }, []);
+
+  // const removeItemFromBag = async (id: string) => {
+  //   try {
+  //     const { error } = await supabase
+  //       .from('shopping-bag')
+  //       .delete()
+  //       .eq('id', id);
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  //       setShowDeleteSuccessModal(true);
+  //       //getBagItems();
+  //     }
+  //   } catch {
+  //     console.log('error');
+  //   }
+  // };
+
+  const removeItemFromBag = (id: string) => {
+    const updatedBagItems = bagItems.filter((item) => item.id !== id);
+    localStorage.setItem(
+      STORAGE_KEYS.BAG_ITEMS,
+      JSON.stringify(updatedBagItems)
+    );
+    setBagItems(updatedBagItems);
+    setShowDeleteSuccessModal(true);
+  };
   const getDeliveryDetails = async () => {
     try {
       const { data, error } = await supabase

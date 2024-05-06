@@ -71,25 +71,36 @@ const Header = () => {
     }
   };
 
-  const getBagItems = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('shopping-bag')
-        .select('*')
-        .eq('user_id', userId);
-      setBagItems(data ?? []);
+  useEffect(() => {
+    const existingBagItemsJSON = localStorage.getItem(STORAGE_KEYS.BAG_ITEMS);
+    if (existingBagItemsJSON) {
+      const existingBagItems = JSON.parse(existingBagItemsJSON);
+      setBagItems(existingBagItems ?? []);
       localStorage.setItem(
         STORAGE_KEYS.CART_LENGTH,
-        (data?.length ?? 0).toString()
+        (existingBagItems?.length ?? 0).toString()
       );
-    } catch (err: any) {
-      console.log(err);
     }
-  };
-
-  useEffect(() => {
-    getBagItems();
   }, []);
+  // const getBagItems = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('shopping-bag')
+  //       .select('*')
+  //       .eq('user_id', userId);
+  //     setBagItems(data ?? []);
+  //     localStorage.setItem(
+  //       STORAGE_KEYS.CART_LENGTH,
+  //       (data?.length ?? 0).toString()
+  //     );
+  //   } catch (err: any) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getBagItems();
+  // }, []);
 
   return (
     <Fragment>

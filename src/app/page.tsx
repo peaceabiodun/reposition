@@ -102,19 +102,27 @@ const Home = () => {
         ) : (
           <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4'>
             {products?.map((item) => (
-              <Link href={`product/${item.id}`} key={item.id}>
-                <Image
-                  src={item?.images[0] ?? '/placeholder.png'}
-                  alt='product_image'
-                  width='200'
-                  height='300'
-                  className='min-h-[300px] home_img object-cover border border-solid border-[#3f2a16] shadow-md '
-                />
+              <Link href={`product/${item.id}`} key={item.id} className=''>
+                <div className='relative min-h-[300px] '>
+                  <Image
+                    src={item?.images[0] ?? '/placeholder.png'}
+                    alt='product_image'
+                    width='200'
+                    height='300'
+                    className={` min-h-[300px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
+                      item.sold_out ? 'brightness-50' : ''
+                    } `}
+                  />
+                  {item.sold_out && (
+                    <span className=' absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
+                      <p className=' text-sm text-gray-400 font-medium'>
+                        Sold out
+                      </p>
+                    </span>
+                  )}
+                </div>
                 <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
                 <p className='text-sm'>${item.price}</p>
-                {item.sold_out && (
-                  <p className='font-semibold mt-1 text-sm'>Sold Out</p>
-                )}
               </Link>
             ))}
           </div>
