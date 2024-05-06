@@ -153,9 +153,8 @@ const ProductDetails = () => {
               className='w-[270px] sm:w-[290px] h-full md:h-[70vh] box bounce-1 '
             >
               {productDetails?.images.map((item, index) => (
-                <div>
+                <div key={index}>
                   <Image
-                    key={index}
                     src={item ? item : '/placeholder.png'}
                     alt='product_image'
                     width='290'
