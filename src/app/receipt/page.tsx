@@ -27,7 +27,12 @@ const customStyles = {
   },
 };
 
-const PaymentReceipt = ({ orderDetails, ...modalProps }: ReceiptModalProps) => {
+const PaymentReceipt = ({
+  orderDetails,
+  isOpen,
+  onRequestClose,
+  ...modalProps
+}: ReceiptModalProps) => {
   const currentDate = new Date().toISOString();
   const currentYear = new Date().getFullYear();
 
@@ -45,6 +50,8 @@ const PaymentReceipt = ({ orderDetails, ...modalProps }: ReceiptModalProps) => {
   return (
     <div>
       <Modal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
         style={customStyles}
         ariaHideApp={false}
         {...modalProps}
@@ -116,7 +123,7 @@ const PaymentReceipt = ({ orderDetails, ...modalProps }: ReceiptModalProps) => {
 
         <div className='my-4 gap-3 flex justify-between'>
           <button
-            onClick={modalProps.onRequestClose}
+            onClick={onRequestClose}
             className='bg-white rounded-sm text-sm p-2 h-[38px]'
           >
             <MdClose size={16} />
