@@ -17,13 +17,6 @@ export type LocalModalProps = Props & {
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-
     backgroundColor: '#ece8e3',
     border: 'none',
     padding: '0px',

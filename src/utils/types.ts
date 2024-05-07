@@ -55,22 +55,22 @@ export type DeliveryDetailsType = {
 };
 
 export type PlacedOrderDetailsType = {
-  order_details: {
-    id: string;
+  first_name: string;
+  last_name: string;
+  user_email: string;
+  country: string;
+  city: string;
+  address: string;
+  zip_code: string;
+  phone_number: string;
+  product_details: {
     name: string;
     price: string;
-    size: string;
-    color: string;
     quantity: string;
-  };
-  delivery_details: DeliveryDetailsType;
-  billing_details: {
-    total_amount_paid: string;
-    shipping_fee: string;
-    taxes: string;
-    discount?: string;
-    shipping: 'standard' | 'free';
-  };
+  }[];
+  amount_paid: number;
+  shipping_fee: number;
+  created_at?: string;
 };
 
 export type ConversionRateType = {

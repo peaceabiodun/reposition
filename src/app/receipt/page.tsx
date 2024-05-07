@@ -1,10 +1,33 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import generatePDF, { Options } from 'react-to-pdf';
+import Modal, { Props } from 'react-modal';
+import { MdClose } from 'react-icons/md';
+import { PlacedOrderDetailsType } from '@/utils/types';
+import { getSimpleDateFormat } from '@/utils/functions';
 
-const PaymentReceipt = () => {
+const customStyles = {
+  content: {
+    top: '20px',
+    left: '20px',
+    right: '20px',
+    bottom: '68px',
+    border: 'none',
+    padding: '0px',
+    overflow: 'unset',
+  },
+  overlay: {
+    background: 'rgba(0, 0, 0, 0.4)',
+    backdropFilter: 'blur(3px)',
+    zIndex: 10000,
+  },
+};
+
+export type ReceiptModalProps = Props & {
+  orderDetails: PlacedOrderDetailsType;
+};
+const PaymentReceipt = ({ orderDetails, ...modalProps }: ReceiptModalProps) => {
+  const currentDate = new Date().toISOString();
   const currentYear = new Date().getFullYear();
-  const router = useRouter();
 
   const options: Options = {
     filename: 'reposition-receipt.pdf',
@@ -15,86 +38,95 @@ const PaymentReceipt = () => {
   };
   const getTargetElement = () => document.getElementById('container');
   const downloadPdf = () => generatePDF(getTargetElement, options);
+
+  if (typeof window === 'undefined') return null;
   return (
-    <div className='bg-[#f0eeecbe] w-full min-h-[100vh] p-4 sm:p-[1cm]'>
-      <div
-        id='container'
-        className='bg-white relative border h-full min-h-[80vh] shadow-lg p-3 sm:p-6 '
+    <div>
+      <Modal
+        style={customStyles}
+        ariaHideApp={false}
+        {...modalProps}
+        appElement={document.getElementById('__next') as HTMLElement}
       >
-        <div>
-          <h2 className='text-xl sm:text-2xl font-semibold '>Reposition [ ]</h2>
-          <h2 className='my-3 fonts-bold text-sm'>
-            Thank you for being a believer!{' '}
-          </h2>
-          <h3 className='text-center text-lg font-semibold my-3'>
-            Order Summary
-          </h3>
-          <div className='text-sm mt-6'>
-            <p className='font-semibold'>Bill To : </p>
-            <p className='capitalize'>Adeola olaoluwa</p>
-            <p>No 5, Centinela Avenue, Los Angeles, USA</p>
-            <p>9001100</p>
-            <p>2nd May, 2024</p>
-          </div>
+        <div
+          id='container'
+          className='bg-white relative h-full w-full p-3 sm:p-6 overflow-y-auto scroll-smooth '
+        >
+          <div>
+            <h2 className='text-lg sm:text-xl font-semibold '>
+              Reposition [ ]
+            </h2>
+            <h2 className='my-3 fonts-bold text-xs sm:text-sm'>
+              Thank you for being a believer!{' '}
+            </h2>
+            <h3 className='text-center text-[16px] font-semibold my-3'>
+              Order Summary
+            </h3>
+            <div className='text-xs md:text-sm mt-6'>
+              <p className='font-semibold'>Bill To : </p>
+              <p className='capitalize'>
+                {orderDetails.first_name} {orderDetails.last_name}
+              </p>
+              <p>
+                {orderDetails.address}, {orderDetails.city},{' '}
+                {orderDetails.country}
+              </p>
+              <p>{orderDetails.zip_code}</p>
+              <p>{getSimpleDateFormat(currentDate)}</p>
+            </div>
 
-          <table className='w-[100%] my-4 text-sm'>
-            <tr className='border-y border-[#a1a1a19c] bg-[#dad8d89c] '>
-              <th className='py-2'>QTY</th>
-              <th>ITEMS</th>
-              <th>PRICES</th>
-            </tr>
-            <tr className='text-center mt-2'>
-              <td className='py-1'>1</td>
-              <td>Reposition Hat</td>
-              <td>$100</td>
-            </tr>
-            <tr className='text-center'>
-              <td className='py-1'>2</td>
-              <td>Reposition Shirt</td>
-              <td>$50</td>
-            </tr>
-            <tr className='text-center'>
-              <td className='py-1'>5</td>
-              <td>Reposition Jacket</td>
-              <td>$60</td>
-            </tr>
-            <tr className='text-center font-semibold'>
-              <td className='pt-3'></td>
-              <td className='pt-3'>Subtotal</td>
-              <td className='pt-3'>$210</td>
-            </tr>
-            <tr className='text-center font-semibold'>
-              <td></td>
-              <td className=''>Shipping Fee</td>
-              <td>$20</td>
-            </tr>
-            <tr className='text-center font-bold text-lg'>
-              <td></td>
-              <td className=''>TOTAL</td>
-              <td>$230</td>
-            </tr>
-          </table>
+            <table className='w-[100%] my-4'>
+              <tr className='border-y border-[#a1a1a19c] bg-[#dbb07c8f]  '>
+                <th className='py-2 text-sm'>QTY</th>
+                <th className='py-2 text-sm'>ITEMS</th>
+                <th className='py-2 text-sm'>PRICES</th>
+              </tr>
+              {orderDetails.product_details.map((itm, index) => (
+                <tr key={index} className='text-center mt-2 text-xs sm:text-sm'>
+                  <td className='py-1'>{itm.quantity}</td>
+                  <td>{itm.name}</td>
+                  <td>${itm.price}</td>
+                </tr>
+              ))}
 
-          <div className='text-[10px] mt-5 bottom-3 absolute'>
-            © {currentYear} Reposition, Inc.{' '}
+              <tr className='text-center font-medium text-xs sm:text-sm'>
+                <td className='pt-3'></td>
+                <td className='pt-3'>Subtotal</td>
+                <td className='pt-3'>$210</td>
+              </tr>
+              <tr className='text-center font-medium text-xs sm:text-sm'>
+                <td></td>
+                <td className=''>Shipping Fee</td>
+                <td>$20</td>
+              </tr>
+              <tr className='text-center font-medium text-xs sm:text-sm'>
+                <td></td>
+                <td className=''>Total</td>
+                <td>$230</td>
+              </tr>
+            </table>
+
+            <div className='text-[10px] mt-5 '>
+              © {currentYear} Reposition, Inc.{' '}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className='my-4 gap-3 flex justify-between'>
-        <button
-          onClick={() => router.push('/')}
-          className=' border shadow-lg p-2 h-[40px]'
-        >
-          Back
-        </button>
-        <button
-          onClick={downloadPdf}
-          className=' border shadow-lg p-2 h-[40px]'
-        >
-          Download Receipt
-        </button>
-      </div>
+        <div className='my-4 gap-3 flex justify-between'>
+          <button
+            onClick={modalProps.onRequestClose}
+            className='bg-white rounded-sm text-sm p-2 h-[38px]'
+          >
+            <MdClose size={16} />
+          </button>
+          <button
+            onClick={downloadPdf}
+            className=' bg-white rounded-sm text-sm p-2 h-[38px]'
+          >
+            Download
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

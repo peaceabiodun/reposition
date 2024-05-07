@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import SuccessModal from '@/components/success-modal/page';
 import { useRouter } from 'next/navigation';
+import { validateEmail } from '@/utils/functions';
 
 const SignUpNewUsers = () => {
   const [email, setEmail] = useState('');
@@ -14,10 +15,6 @@ const SignUpNewUsers = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const router = useRouter();
-  const validateEmail = (email: string) => {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return regex.test(email);
-  };
 
   const signUp = async () => {
     setLoading(true);
