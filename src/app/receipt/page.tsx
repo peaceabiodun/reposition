@@ -5,6 +5,9 @@ import { MdClose } from 'react-icons/md';
 import { getSimpleDateFormat } from '@/utils/functions';
 import { PlacedOrderDetailsType } from '@/utils/types';
 
+export type ReceiptModalProps = Props & {
+  orderDetails: PlacedOrderDetailsType;
+};
 const customStyles = {
   content: {
     top: '20px',
@@ -22,9 +25,6 @@ const customStyles = {
   },
 };
 
-export type ReceiptModalProps = Props & {
-  orderDetails: PlacedOrderDetailsType;
-};
 const PaymentReceipt = ({ orderDetails, ...modalProps }: ReceiptModalProps) => {
   const currentDate = new Date().toISOString();
   const currentYear = new Date().getFullYear();
