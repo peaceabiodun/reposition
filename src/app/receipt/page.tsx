@@ -7,6 +7,8 @@ import { PlacedOrderDetailsType } from '@/utils/types';
 
 export type ReceiptModalProps = Props & {
   orderDetails: PlacedOrderDetailsType;
+  isOpen: boolean;
+  onRequestClose: () => void;
 };
 const customStyles = {
   content: {
