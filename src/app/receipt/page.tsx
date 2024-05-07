@@ -2,8 +2,8 @@
 import generatePDF, { Options } from 'react-to-pdf';
 import Modal, { Props } from 'react-modal';
 import { MdClose } from 'react-icons/md';
-import { PlacedOrderDetailsType } from '@/utils/types';
 import { getSimpleDateFormat } from '@/utils/functions';
+import { PlacedOrderDetailsType } from '@/utils/types';
 
 const customStyles = {
   content: {
