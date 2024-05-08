@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as crypto from 'crypto';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(req: Request) {
   try {
@@ -12,8 +13,13 @@ export async function POST(req: Request) {
       .digest('hex');
     if (hash === req.headers.get('x-paystack-signature')) {
       const { data, event } = body;
+      const { reference } = data;
 
       if (event === 'charge.success') {
+        const { error } = await supabase
+          .from('products')
+          .update({ status: 'Paid' })
+          .eq('reference', reference);
       }
     }
   } catch (err: any) {

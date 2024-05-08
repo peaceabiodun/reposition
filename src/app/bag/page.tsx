@@ -44,6 +44,7 @@ const Bag = () => {
   const [shippingFee, SetShippingFee] = useState<number>(0);
   const [formError, setFormError] = useState<Partial<DeliveryDetailsType>>({});
   const [showReceipt, setShowReceipt] = useState(false);
+  const [orderReference, setOrderReference] = useState('');
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
   const userEmail =
@@ -191,9 +192,12 @@ const Bag = () => {
     if (totalWeight <= 0) {
       // No items in the bag, shipping fee is 0
       shippingFee = 0;
+    } else if (totalWeight === 1) {
+      shippingFee = 20;
+    } else if (totalWeight === 2) {
+      shippingFee = 55;
     } else {
-      // For each additional kilogram, add $4 to the shipping fee
-      shippingFee = 4 * totalWeight;
+      shippingFee = 20 * totalWeight;
     }
     SetShippingFee(shippingFee);
   };
@@ -354,6 +358,8 @@ const Bag = () => {
       (totalPrice + shippingFee) * parseInt(Currencies?.NGN ?? '') * 100,
     shipping_fee: shippingFee,
     order_id: generateOrderNumber(100000),
+    status: 'processing',
+    reference: orderReference,
   };
   const orderConfirmationDetails = async () => {
     try {
@@ -382,7 +388,7 @@ const Bag = () => {
 
   const onSuccess = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference, 'kkk');
+    setOrderReference(reference.reference);
     if (reference.message === 'Approved') {
       orderConfirmationDetails();
     }
