@@ -139,6 +139,7 @@ const Bag = () => {
     setBagItems(updatedBagItems);
     setShowDeleteSuccessModal(true);
   };
+
   // const getDeliveryDetails = async () => {
   //   try {
   //     const { data, error } = await supabase
@@ -329,6 +330,12 @@ const Bag = () => {
     getConversionRate();
   }, []);
 
+  const generateOrderNumber = (maxValue: number) => {
+    const randomNumber = Math.random();
+    const scaledNumber = Math.floor(randomNumber * maxValue) + 1;
+    return scaledNumber;
+  };
+
   const orderPayload = {
     first_name: deliveryDetails.first_name,
     last_name: deliveryDetails.last_name,
@@ -346,6 +353,7 @@ const Bag = () => {
     amount_paid:
       (totalPrice + shippingFee) * parseInt(Currencies?.NGN ?? '') * 100,
     shipping_fee: shippingFee,
+    order_id: generateOrderNumber(100000),
   };
   const orderConfirmationDetails = async () => {
     try {
@@ -353,6 +361,7 @@ const Bag = () => {
         .from('orders')
         .insert(orderPayload);
       setShowReceipt(true);
+      setBagItems([]);
     } catch (err: any) {
       console.log(err);
     }
@@ -373,7 +382,7 @@ const Bag = () => {
 
   const onSuccess = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
-
+    console.log(reference, 'kkk');
     if (reference.message === 'Approved') {
       orderConfirmationDetails();
     }
@@ -800,8 +809,9 @@ const Bag = () => {
         <div className='flex justify-center py-6 px-3 xs:px-4'>
           <button
             onClick={() => {
-              if (!formIsValid() ?? !validateEmail(deliveryDetails.user_email))
+              if (formIsValid() || !validateEmail(deliveryDetails.user_email)) {
                 return;
+              }
               initializePayment({ onSuccess, onClose });
             }}
             className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
