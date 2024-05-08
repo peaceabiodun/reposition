@@ -222,9 +222,9 @@ const ProductDetails = () => {
                           onClick={() => setSelectedSize(item)}
                           className={`${
                             selectedSize === item
-                              ? ' bg-[#a3a3a37c]'
-                              : 'bg-[#d3d3d37c]'
-                          }  shadow-sm p-2 rounded-sm`}
+                              ? ' bg-[#523f3f79]'
+                              : 'bg-[#c7c5c5a1]'
+                          }  shadow-sm p-2 rounded-sm cursor-pointer`}
                         >
                           {item}
                         </div>
@@ -258,9 +258,9 @@ const ProductDetails = () => {
                           onClick={() => setSelectedColor(item)}
                           className={`${
                             selectedColor === item
-                              ? ' bg-[#a3a3a37c]'
-                              : 'bg-[#d3d3d37c]'
-                          }   shadow-sm p-2 rounded-sm`}
+                              ? ' bg-[#523f3f79]'
+                              : 'bg-[#c7c5c5a1]'
+                          }   shadow-sm p-2 rounded-sm cursor-pointer`}
                         >
                           {item}
                         </div>

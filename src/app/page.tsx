@@ -114,11 +114,11 @@ const Home = () => {
                     } `}
                   />
                   {item.sold_out && (
-                    <span className=' absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
+                    <div className='home_img w-[200px] absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
                       <p className=' text-sm text-gray-400 font-medium'>
                         Sold out
                       </p>
-                    </span>
+                    </div>
                   )}
                 </div>
                 <p className='my-2 font-semibold text-[16px]'>{item.name}</p>

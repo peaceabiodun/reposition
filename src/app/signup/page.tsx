@@ -40,7 +40,7 @@ const SignUpNewUsers = () => {
   };
 
   return (
-    <div className=' text-sm w-full min-h-screen landing_bg bg-[#dbd9d2] '>
+    <div className='text-sm w-full min-h-screen landing_bg bg-[#dbd9d2] '>
       <div className='blur-bg flex justify-center p-3 xs:p-4 h-[100vh]'>
         <div className=' w-full sm:max-w-[450px] text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center '>
           <h2 className='text-2xl font-semibold'>
