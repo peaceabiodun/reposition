@@ -22,7 +22,7 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { CiLocationOn } from 'react-icons/ci';
 import axios from 'axios';
 import { validateEmail } from '@/utils/functions';
-import PaymentReceipt from '../receipt/page';
+import PaymentReceipt from '../../components/receipt/page';
 
 type FormDataType = {
   quantity: string;
