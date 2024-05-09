@@ -4,11 +4,17 @@ import Modal, { Props } from 'react-modal';
 import { MdClose } from 'react-icons/md';
 import { getSimpleDateFormat } from '@/utils/functions';
 import { PlacedOrderDetailsType } from '@/utils/types';
+import { STORAGE_KEYS } from '@/utils/constants';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 export type ReceiptModalProps = Props & {
   orderDetails: PlacedOrderDetailsType;
   isOpen: boolean;
   onRequestClose: () => void;
+  subTotal: string;
+  total: string;
 };
 const customStyles = {
   content: {
@@ -31,20 +37,28 @@ const PaymentReceipt = ({
   orderDetails,
   isOpen,
   onRequestClose,
+  subTotal,
+  total,
   ...modalProps
 }: ReceiptModalProps) => {
   const currentDate = new Date().toISOString();
   const currentYear = new Date().getFullYear();
+  const router = useRouter();
 
-  const options: Options = {
-    filename: 'reposition-receipt.pdf',
-    page: {
-      margin: 10,
-      format: 'letter',
-    },
-  };
-  const getTargetElement = () => document.getElementById('container');
-  const downloadPdf = () => generatePDF(getTargetElement, options);
+  const componentRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  // const options: Options = {
+  //   filename: 'reposition-receipt.pdf',
+  //   page: {
+  //     margin: 10,
+  //     format: 'letter',
+  //   },
+  // };
+  // const getTargetElement = () => document.getElementById('container');
+  // const downloadPdf = () => generatePDF(getTargetElement, options);
 
   if (typeof window === 'undefined') return null;
   return (
@@ -59,6 +73,7 @@ const PaymentReceipt = ({
       >
         <div
           id='container'
+          ref={componentRef}
           className='bg-white relative h-full w-full p-3 sm:p-6 overflow-y-auto scroll-smooth '
         >
           <div>
@@ -85,13 +100,16 @@ const PaymentReceipt = ({
             </div>
 
             <table className='w-[100%] my-4'>
-              <tr className='border-y border-[#a1a1a19c] bg-[#dbb07c8f]  '>
+              <tr className='border-y border-[#a1a1a19c] bg-[#573a16] text-[#ecf3f3] '>
                 <th className='py-2 text-sm'>QTY</th>
                 <th className='py-2 text-sm'>ITEMS</th>
                 <th className='py-2 text-sm'>PRICES</th>
               </tr>
               {orderDetails.product_details.map((itm, index) => (
-                <tr key={index} className='text-center mt-2 text-xs sm:text-sm'>
+                <tr
+                  key={index}
+                  className='text-center mt-2 text-xs sm:text-sm '
+                >
                   <td className='py-1'>{itm.quantity}</td>
                   <td>{itm.name}</td>
                   <td>${itm.price}</td>
@@ -101,17 +119,17 @@ const PaymentReceipt = ({
               <tr className='text-center font-medium text-xs sm:text-sm'>
                 <td className='pt-3'></td>
                 <td className='pt-3'>Subtotal</td>
-                <td className='pt-3'>$210</td>
+                <td className='pt-3'>${subTotal}</td>
               </tr>
               <tr className='text-center font-medium text-xs sm:text-sm'>
                 <td></td>
                 <td className=''>Shipping Fee</td>
-                <td>$20</td>
+                <td>${orderDetails.shipping_fee}</td>
               </tr>
               <tr className='text-center font-medium text-xs sm:text-sm'>
                 <td></td>
                 <td className=''>Total</td>
-                <td>$230</td>
+                <td>${total}</td>
               </tr>
             </table>
 
@@ -123,16 +141,20 @@ const PaymentReceipt = ({
 
         <div className='my-4 gap-3 flex justify-between'>
           <button
-            onClick={onRequestClose}
+            onClick={() => {
+              localStorage.setItem(STORAGE_KEYS.BAG_ITEMS, JSON.stringify([]));
+              onRequestClose();
+              router.push('/');
+            }}
             className='bg-white rounded-sm text-sm p-2 h-[38px]'
           >
             <MdClose size={16} />
           </button>
           <button
-            onClick={downloadPdf}
+            onClick={handlePrint}
             className=' bg-white rounded-sm text-sm p-2 h-[38px]'
           >
-            Download
+            Save
           </button>
         </div>
       </Modal>

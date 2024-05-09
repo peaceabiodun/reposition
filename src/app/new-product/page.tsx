@@ -11,6 +11,7 @@ import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import { useRouter } from 'next/navigation';
 import SuccessModal from '@/components/success-modal/page';
+import { STORAGE_KEYS } from '@/utils/constants';
 
 const AddNewProduct = () => {
   const router = useRouter();
@@ -30,6 +31,10 @@ const AddNewProduct = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
+  const userEmail =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
+      : '';
   const addSize = () => {
     if (!size) return;
     const sizes = [...productFormData.sizes, size];
@@ -60,6 +65,7 @@ const AddNewProduct = () => {
       sizes: productFormData.sizes,
       colors: productFormData.colors,
       weight: productFormData.weight,
+      user_email: userEmail,
     };
     setLoading(true);
     try {

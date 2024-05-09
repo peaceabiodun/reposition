@@ -47,10 +47,6 @@ const Bag = () => {
   const [orderReference, setOrderReference] = useState('');
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
-  const userEmail =
-    typeof window !== 'undefined'
-      ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
-      : '';
 
   const [deliveryDetails, setDeliveryDetails] = useState<DeliveryDetailsType>({
     first_name: '',
@@ -359,15 +355,17 @@ const Bag = () => {
     shipping_fee: shippingFee,
     order_id: generateOrderNumber(100000),
     status: 'processing',
-    reference: orderReference,
   };
-  const orderConfirmationDetails = async () => {
+  const orderConfirmationDetails = async (orderReference: string) => {
     try {
+      const updatedOrderPayload = {
+        ...orderPayload,
+        reference: orderReference,
+      };
       const { data, error } = await supabase
         .from('orders')
-        .insert(orderPayload);
+        .insert(updatedOrderPayload);
       setShowReceipt(true);
-      setBagItems([]);
     } catch (err: any) {
       console.log(err);
     }
@@ -390,7 +388,7 @@ const Bag = () => {
     // Implementation for whatever you want to do with reference and after success call.
     setOrderReference(reference.reference);
     if (reference.message === 'Approved') {
-      orderConfirmationDetails();
+      orderConfirmationDetails(reference.reference);
     }
   };
 
@@ -849,6 +847,8 @@ const Bag = () => {
           isOpen={showReceipt}
           onRequestClose={() => setShowReceipt(false)}
           orderDetails={orderPayload}
+          subTotal={totalPrice.toFixed(2)}
+          total={(totalPrice + shippingFee).toFixed(2)}
         />
       )}
     </div>
