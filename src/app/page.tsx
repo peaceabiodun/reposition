@@ -10,17 +10,35 @@ import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import { useProductContext } from '@/context/product-context';
 import { STORAGE_KEYS } from '@/utils/constants';
+import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
+import SortInput from '@/components/sort/page';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   // const [products, setProducts] = useState<ProductDetailType[]>([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [filterValue, setFilterValue] = useState<string>(
+    ENUM_PRODUCT_FILTER_LIST.ALL
+  );
 
+  const options = [
+    { name: ENUM_PRODUCT_FILTER_LIST.ALL },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHOES },
+    { name: ENUM_PRODUCT_FILTER_LIST.SUIT },
+    { name: ENUM_PRODUCT_FILTER_LIST.COAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
+  ];
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from('products').select();
+      const { data, error } = await supabase
+        .from('products')
+        .select()
+        .order('created_at', { ascending: false });
       setProducts(data ?? []);
       if (error) {
         setShowErrorModal(true);
@@ -83,6 +101,11 @@ const Home = () => {
           <p className='mt-2 text-sm'>Exodus 1 Collection is here</p>
         </div>
 
+        <SortInput
+          options={options}
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+        />
         {loading ? (
           <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4'>
             <ThreeCircles
