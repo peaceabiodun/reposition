@@ -28,7 +28,7 @@ const SortInput = ({
         <MdSort size={18} />
       </div>
       {showDropdown && (
-        <div className='bg-[#ecebeb] w-[200px] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50'>
+        <div className='bg-[#ecebeb] w-[200px] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 mt-2'>
           {options.map(({ name }: { name: string }, index) => (
             <div
               key={index}
