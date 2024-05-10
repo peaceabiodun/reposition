@@ -6,6 +6,8 @@ import { ProductDetailType } from '@/utils/types';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { STORAGE_KEYS } from '@/utils/constants';
+import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 type EditModalProps = {
   show: boolean;
@@ -23,6 +25,7 @@ type EditFormDataType = {
   sizes: string[];
   colors: string[];
   sold_out?: boolean;
+  category: string;
 };
 
 const EditProductModal = ({
@@ -36,6 +39,23 @@ const EditProductModal = ({
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const categoryOptions = [
+    { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHOES },
+    { name: ENUM_PRODUCT_FILTER_LIST.SUIT },
+    { name: ENUM_PRODUCT_FILTER_LIST.COAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
+    { name: ENUM_PRODUCT_FILTER_LIST.ACCESSORIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.TSHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.HOODIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.HAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.JACKET },
+  ];
 
   const [formData, setFormData] = useState({} as EditFormDataType);
   const userEmail =
@@ -54,6 +74,7 @@ const EditProductModal = ({
         sizes: selectedProduct?.sizes,
         colors: selectedProduct?.colors,
         sold_out: selectedProduct?.sold_out,
+        category: selectedProduct?.category,
       });
     }
   }, [selectedProduct]);
@@ -93,6 +114,7 @@ const EditProductModal = ({
       colors: formData?.colors,
       sold_out: formData?.sold_out,
       user_email: userEmail,
+      category: selectedCategory ? selectedCategory : formData.category,
     };
     try {
       const { data, error } = await supabase
@@ -143,6 +165,42 @@ const EditProductModal = ({
             setFormData({ ...formData, description: e.target.value })
           }
         />
+
+        <div className='w-full mb-2 relative '>
+          <p className=''>Product Category</p>
+          <div
+            onClick={() => {
+              console.log('hhjh');
+              setShowDropdown(!showDropdown);
+            }}
+            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex gap-3 justify-between  items-center cursor-pointer '
+          >
+            <p className='text-[#000]'>
+              {selectedCategory ? selectedCategory : formData.category}
+            </p>
+            <MdOutlineKeyboardArrowDown size={18} className='text-gray-400 ' />
+          </div>
+          {showDropdown && (
+            <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999] w-[200px] max-h-[230px] overflow-y-auto'>
+              {categoryOptions.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setSelectedCategory(item.name);
+                    setShowDropdown(false);
+                  }}
+                  className={`${
+                    selectedCategory === item.name
+                      ? ' font-medium bg-gray-100 rounded-md'
+                      : ''
+                  } hover:font-medium hover:bg-gray-100 hover:rounded-md p-2 cursor-pointer  `}
+                >
+                  {item.name}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <div className='w-full'>
           <label className=''>Product Weight</label>
           <div className='flex w-full items-center'>

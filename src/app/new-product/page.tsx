@@ -2,7 +2,10 @@
 
 import { FileUploader } from '@/components/file-uploader/page';
 import Link from 'next/link';
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineKeyboardArrowDown,
+} from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useState } from 'react';
@@ -12,6 +15,7 @@ import ErrorModal from '@/components/error-modal/page';
 import { useRouter } from 'next/navigation';
 import SuccessModal from '@/components/success-modal/page';
 import { STORAGE_KEYS } from '@/utils/constants';
+import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 
 const AddNewProduct = () => {
   const router = useRouter();
@@ -23,6 +27,7 @@ const AddNewProduct = () => {
     images: [],
     sizes: [],
     colors: [],
+    category: '',
   });
 
   const [size, setSize] = useState('');
@@ -30,6 +35,8 @@ const AddNewProduct = () => {
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const userEmail =
     typeof window !== 'undefined'
@@ -56,6 +63,21 @@ const AddNewProduct = () => {
     setProductFormData((data) => ({ ...data, colors }));
   };
 
+  const categoryOptions = [
+    { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHOES },
+    { name: ENUM_PRODUCT_FILTER_LIST.SUIT },
+    { name: ENUM_PRODUCT_FILTER_LIST.COAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
+    { name: ENUM_PRODUCT_FILTER_LIST.ACCESSORIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.TSHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.HOODIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.HAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.JACKET },
+  ];
+
   const createProduct = async () => {
     const payload = {
       name: productFormData.name,
@@ -65,6 +87,7 @@ const AddNewProduct = () => {
       sizes: productFormData.sizes,
       colors: productFormData.colors,
       weight: productFormData.weight,
+      category: selectedCategory,
       user_email: userEmail,
     };
     setLoading(true);
@@ -82,6 +105,7 @@ const AddNewProduct = () => {
           images: [],
           sizes: [],
           colors: [],
+          category: '',
         });
       }
     } catch (err: any) {
@@ -126,18 +150,23 @@ const AddNewProduct = () => {
         </div>
         <div className='w-full'>
           <label className=''>Product Price</label>
-          <input
-            type='text'
-            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-            placeholder='$100'
-            value={productFormData.price}
-            onChange={(e) =>
-              setProductFormData({
-                ...productFormData,
-                price: e.target.value,
-              })
-            }
-          />
+          <div className='flex w-full items-center'>
+            <div className='border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] p-2 mt-2'>
+              $
+            </div>
+            <input
+              type='tel'
+              className='border-y border-r rounded-l-none  border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+              placeholder='100'
+              value={productFormData.price}
+              onChange={(e) =>
+                setProductFormData({
+                  ...productFormData,
+                  price: e.target.value,
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
@@ -155,33 +184,75 @@ const AddNewProduct = () => {
           }
         />
       </div>
-      <div className='w-full'>
-        <label className=''>Product Weight</label>
-        <div className='flex w-full items-center'>
-          <input
-            type='tel'
-            className='border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
-            placeholder='weight in kg'
-            value={productFormData.weight ?? 0}
-            onChange={(e) => {
-              const inputValue = e.target.value;
-              const parsedValue = parseInt(inputValue);
-              if (!isNaN(parsedValue)) {
-                setProductFormData({
-                  ...productFormData,
-                  weight: parsedValue,
-                });
-              } else {
-                setProductFormData({
-                  ...productFormData,
-                  weight: 0,
-                });
-              }
-            }}
-          />
-          <div className='border-y border-r rounded-r-sm rounded-l-none border-[#3d3e3f] p-2 mt-2'>
-            Kg
+      <div className='my-4 text-sm w-full flex flex-col sm:flex-row gap-4 sm:gap-6'>
+        <div className='w-full'>
+          <label className=''>Product Weight</label>
+          <div className='flex w-full items-center'>
+            <input
+              type='tel'
+              className='border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
+              placeholder='weight in kg'
+              value={productFormData.weight ?? 0}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                const parsedValue = parseInt(inputValue);
+                if (!isNaN(parsedValue)) {
+                  setProductFormData({
+                    ...productFormData,
+                    weight: parsedValue,
+                  });
+                } else {
+                  setProductFormData({
+                    ...productFormData,
+                    weight: 0,
+                  });
+                }
+              }}
+            />
+            <div className='border-y border-r rounded-r-sm rounded-l-none border-[#3d3e3f] p-2 mt-2'>
+              Kg
+            </div>
           </div>
+        </div>
+
+        <div className='w-full'>
+          <p className=''>Product Category</p>
+          <div
+            onClick={() => setShowDropdown(!showDropdown)}
+            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex gap-3 justify-between  items-center cursor-pointer relative '
+          >
+            <p
+              className={`${
+                selectedCategory && selectedCategory !== ''
+                  ? 'text-[#000]'
+                  : ' text-[#9fa1a3]'
+              } `}
+            >
+              {' '}
+              {selectedCategory ? selectedCategory : 'Select a category'}
+            </p>
+            <MdOutlineKeyboardArrowDown size={18} className='text-gray-400 ' />
+          </div>
+          {showDropdown && (
+            <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 w-[200px]'>
+              {categoryOptions.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setSelectedCategory(item.name);
+                    setShowDropdown(false);
+                  }}
+                  className={`${
+                    selectedCategory === item.name
+                      ? ' font-medium bg-gray-100 rounded-md'
+                      : ''
+                  } hover:font-medium hover:bg-gray-100 hover:rounded-md p-2 cursor-pointer  `}
+                >
+                  {item.name}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className='w-full text-sm my-4'>

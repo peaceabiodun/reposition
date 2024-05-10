@@ -12,6 +12,7 @@ export type ProductFormDataType = {
   images: string[];
   sizes: string[];
   colors: string[];
+  category: string;
 };
 
 export type ProductDetailType = {
@@ -25,6 +26,7 @@ export type ProductDetailType = {
   colors: string[];
   sold_out: boolean;
   weight: number;
+  category: string;
 };
 
 export type ShoppingBagType = {
@@ -71,6 +73,7 @@ export type PlacedOrderDetailsType = {
   amount_paid: number;
   shipping_fee: number;
   created_at?: string;
+  order_id: number;
 };
 
 export type ConversionRateType = {

@@ -31,15 +31,26 @@ const Home = () => {
     { name: ENUM_PRODUCT_FILTER_LIST.COAT },
     { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
     { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
+    { name: ENUM_PRODUCT_FILTER_LIST.ACCESSORIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.TSHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.HOODIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.HAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.JACKET },
   ];
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('products')
         .select()
         .order('created_at', { ascending: false });
-      setProducts(data ?? []);
+      if (data !== null) {
+        if (filterValue !== ENUM_PRODUCT_FILTER_LIST.ALL) {
+          data = data.filter((product) => product.category === filterValue);
+        }
+        setProducts(data ?? []);
+      }
+
       if (error) {
         setShowErrorModal(true);
       }
@@ -52,7 +63,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [filterValue]);
 
   const getSession = async () => {
     const {

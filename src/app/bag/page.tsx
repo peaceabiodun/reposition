@@ -569,7 +569,7 @@ const Bag = () => {
                 />
               </div>
               {showDropdown && (
-                <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50'>
+                <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
                   {countryList.map((item, index) => (
                     <div
                       key={index}

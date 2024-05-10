@@ -83,6 +83,7 @@ const PaymentReceipt = ({
             <h2 className='my-3 fonts-bold text-xs sm:text-sm'>
               Thank you for being a believer!{' '}
             </h2>
+            <p className='my-3 text-xs'>Order Id : {orderDetails.order_id}</p>
             <h3 className='text-center text-[16px] font-semibold my-3'>
               Order Summary
             </h3>

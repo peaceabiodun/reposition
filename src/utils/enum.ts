@@ -7,4 +7,9 @@ export enum ENUM_PRODUCT_FILTER_LIST {
   COAT = 'Coat',
   PANTS = 'Pants',
   BAGS = 'Bags',
+  TSHIRTS = 'T-shirts',
+  HOODIES = 'Hoodies',
+  ACCESSORIES = 'Accessories',
+  HAT = 'Hat',
+  JACKET = 'Jacket',
 }

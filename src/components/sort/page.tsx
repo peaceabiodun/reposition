@@ -17,7 +17,7 @@ const SortInput = ({
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <div className='w-[200px] m-4'>
+    <div className='w-[200px] m-4 '>
       <div
         onClick={() => setShowDropdown(!showDropdown)}
         className='cursor-pointer flex justify-between items-center border border-[#E5E6E6] rounded-md p-2 text-[#5E6164] text-sm gap-2 h-[36px] w-full font-normal shadow-md '
@@ -28,7 +28,7 @@ const SortInput = ({
         <MdSort size={18} />
       </div>
       {showDropdown && (
-        <div className='bg-[#ecebeb] w-[200px] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 mt-2'>
+        <div className='bg-[#ecebeb] w-[200px] max-h-[235px] overflow-y-auto rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 mt-2'>
           {options.map(({ name }: { name: string }, index) => (
             <div
               key={index}
