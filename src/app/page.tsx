@@ -12,15 +12,19 @@ import { useProductContext } from '@/context/product-context';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import SortInput from '@/components/sort/page';
+import { MdClose } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   // const [products, setProducts] = useState<ProductDetailType[]>([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showCampaign, setShowCampaign] = useState(true);
   const [filterValue, setFilterValue] = useState<string>(
     ENUM_PRODUCT_FILTER_LIST.ALL
   );
+  const router = useRouter();
 
   const options = [
     { name: ENUM_PRODUCT_FILTER_LIST.ALL },
@@ -169,6 +173,30 @@ const Home = () => {
           onClose={() => setShowErrorModal(false)}
           description='Sorry an error occured while loading the products'
         />
+      )}
+      {showCampaign && (
+        <div className='campaign_modal fixed inset-0 flex flex-col items-center justify-center p-4'>
+          <h3 className='text-[#eefcff] text-sm text-center'>
+            Check out our new vintage jersey with a blend of american silhouette{' '}
+          </h3>
+          <p className='text-[#d2dadb] text-xs my-3 text-center'>
+            This is a limited edition ready in the coming week{' '}
+          </p>
+
+          <button
+            onClick={() => router.push('/campaign')}
+            className='bg-white p-2 h-[33px] w-[90px] text-xs font-semibold'
+          >
+            View
+          </button>
+
+          <button
+            onClick={() => setShowCampaign(false)}
+            className='bg-[#ebfaf7d3] rounded-full p-1 w-6 h-6 flex items-center justify-center mt-7'
+          >
+            <MdClose />
+          </button>
+        </div>
       )}
     </Fragment>
   );

@@ -165,6 +165,17 @@ body {
     url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/95fc1efd-5f77-4cdf-ab2d-442905140a5b:IMG_9021.jpg');
 }
 
+.campaign_modal {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: linear-gradient(
+      to left,
+      rgba(39, 37, 37, 0.699),
+      rgba(39, 37, 37, 0.651)
+    ),
+    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/929793bf-a0d9-446e-9a05-d2a40a8781ae:IMG_3255.JPG');
+}
 .box {
   align-self: flex-end;
   animation-duration: 2s;
