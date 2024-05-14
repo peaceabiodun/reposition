@@ -27,6 +27,8 @@ export type ProductDetailType = {
   sold_out: boolean;
   weight: number;
   category: string;
+  frequently_bought?: boolean;
+  pre_order?: boolean;
 };
 
 export type ShoppingBagType = {

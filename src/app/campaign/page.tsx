@@ -4,6 +4,8 @@ import Header from '@/components/header/page';
 import Typewriter from 'typewriter-effect';
 import Slider from 'react-slick';
 import Image from 'next/image';
+import Link from 'next/link';
+import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const CampaignPage = () => {
   const settings = {
@@ -31,6 +33,10 @@ const CampaignPage = () => {
   return (
     <div className='bg-[#f8d3c98a] h-full min-h-screen'>
       <Header />
+      <Link href='/' className=' gap-1 flex text-sm items-center p-4 '>
+        <MdOutlineArrowBackIosNew size={20} />
+        Back
+      </Link>
       <div className='p-4'>
         <h2 className='text-lg sm:text-2xl font-semibold text-center mt-6'>
           <Typewriter

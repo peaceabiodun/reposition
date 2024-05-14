@@ -11,6 +11,7 @@ import ErrorModal from '@/components/error-modal/page';
 import {
   ConversionRateType,
   DeliveryDetailsType,
+  ProductDetailType,
   ShoppingBagType,
 } from '@/utils/types';
 import { ThreeCircles } from 'react-loader-spinner';
@@ -19,10 +20,10 @@ import { useRouter } from 'next/navigation';
 import { usePaystackPayment } from 'react-paystack';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { STORAGE_KEYS } from '@/utils/constants';
-import { CiLocationOn } from 'react-icons/ci';
 import axios from 'axios';
 import { validateEmail } from '@/utils/functions';
 import PaymentReceipt from '../../components/receipt/page';
+import { useProductContext } from '@/context/product-context';
 
 type FormDataType = {
   quantity: string;
@@ -44,7 +45,7 @@ const Bag = () => {
   const [shippingFee, SetShippingFee] = useState<number>(0);
   const [formError, setFormError] = useState<Partial<DeliveryDetailsType>>({});
   const [showReceipt, setShowReceipt] = useState(false);
-  const [orderReference, setOrderReference] = useState('');
+  const { products, setProducts } = useProductContext();
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
 
@@ -69,13 +70,10 @@ const Bag = () => {
     'Canada',
     'Uk',
   ];
-  const userId =
-    typeof window !== 'undefined'
-      ? localStorage.getItem(STORAGE_KEYS.USER_ID)
-      : '';
+
+  const frequentlyBoughtItems = products.filter((itm) => itm.frequently_bought);
 
   // fetching cart items based on local storage
-
   useEffect(() => {
     const existingBagItemsJSON = localStorage.getItem(STORAGE_KEYS.BAG_ITEMS);
     if (existingBagItemsJSON) {
@@ -386,7 +384,7 @@ const Bag = () => {
 
   const onSuccess = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
-    setOrderReference(reference.reference);
+
     if (reference.message === 'Approved') {
       orderConfirmationDetails(reference.reference);
     }
@@ -396,10 +394,6 @@ const Bag = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log('closed');
   };
-
-  // const isDeliveryDetailsComplete = () => {
-  //   return Object.values(deliveryDetails).every((value) => value.trim() !== '');
-  // };
 
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
@@ -474,6 +468,32 @@ const Bag = () => {
               </div>
             </div>
           ))}
+
+          <div className='border-b border-[#a1a1a19c] w-full py-3 '>
+            <h2 className='text-sm'>Frequently Bought Items</h2>
+
+            <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar'>
+              {frequentlyBoughtItems.map((item, index) => (
+                <div key={index} className=''>
+                  <Image
+                    src={item?.images[0]}
+                    alt='product-img'
+                    width={100}
+                    height={100}
+                    className='w-[100px] h-[100px] object-cover'
+                  />
+                  <p className='mt-2 mb-1 text-center '>${item?.price}</p>
+                  <button
+                    onClick={() => router.push(`product/${item.id}`)}
+                    className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center'
+                  >
+                    View
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
             <div className=' w-full text-xs md:text-sm '>
               <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>

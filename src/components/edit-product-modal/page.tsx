@@ -25,7 +25,9 @@ type EditFormDataType = {
   sizes: string[];
   colors: string[];
   sold_out?: boolean;
+  frequently_bought?: boolean;
   category: string;
+  pre_order?: boolean;
 };
 
 const EditProductModal = ({
@@ -75,6 +77,7 @@ const EditProductModal = ({
         colors: selectedProduct?.colors,
         sold_out: selectedProduct?.sold_out,
         category: selectedProduct?.category,
+        frequently_bought: selectedProduct?.frequently_bought,
       });
     }
   }, [selectedProduct]);
@@ -115,6 +118,8 @@ const EditProductModal = ({
       sold_out: formData?.sold_out,
       user_email: userEmail,
       category: selectedCategory ? selectedCategory : formData.category,
+      frequently_bought: formData?.frequently_bought,
+      pre_order: formData?.pre_order,
     };
     try {
       const { data, error } = await supabase
@@ -241,7 +246,18 @@ const EditProductModal = ({
         </div>
 
         <div className='flex my-3 gap-4'>
-          <p className='font-semibold '>Out Of Stock</p>
+          <input
+            type='checkbox'
+            className='accent-[#d3d3d3] cursor-pointer'
+            checked={formData?.frequently_bought}
+            onChange={(e) =>
+              setFormData({ ...formData, frequently_bought: e.target.checked })
+            }
+          />
+          <p className='font-semibold '>Mark Product as Frequently Bought</p>
+        </div>
+
+        <div className='flex my-3 gap-4'>
           <input
             type='checkbox'
             className='accent-[#d3d3d3] cursor-pointer'
@@ -250,7 +266,21 @@ const EditProductModal = ({
               setFormData({ ...formData, sold_out: e.target.checked })
             }
           />
+          <p className='font-semibold '>Out Of Stock</p>
         </div>
+
+        <div className='flex my-3 gap-4'>
+          <input
+            type='checkbox'
+            className='accent-[#d3d3d3] cursor-pointer'
+            checked={formData?.pre_order}
+            onChange={(e) =>
+              setFormData({ ...formData, pre_order: e.target.checked })
+            }
+          />
+          <p className='font-semibold '>Mark Product for Pre-Order</p>
+        </div>
+
         <p>Product Sizes</p>
         <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
           <p className=''>+ Add Sizes</p>

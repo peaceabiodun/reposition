@@ -127,15 +127,12 @@ const ProductDetails = () => {
   return (
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] overflow-x-scroll '>
       <Header />
-      <Link
-        href='/'
-        className='pt-3 gap-1 flex text-sm items-center p-3 xs:p-4'
-      >
+      <Link href='/' className='pt-3 gap-1 flex text-sm items-center p-4'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>
       {loading ? (
-        <div className='grow w-full flex justify-center items-center p-3 xs:p-4'>
+        <div className='grow w-full flex justify-center items-center p-4'>
           <ThreeCircles
             visible={true}
             height={50}

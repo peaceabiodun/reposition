@@ -160,7 +160,12 @@ const Home = () => {
                   )}
                 </div>
                 <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
-                <p className='text-sm'>${item.price}</p>
+                <div className='flex gap-2'>
+                  <p className='text-sm'>${item.price}</p>
+                  {item.pre_order ? (
+                    <p className='text-sm'>[Pre-Order]</p>
+                  ) : null}
+                </div>
               </Link>
             ))}
           </div>
