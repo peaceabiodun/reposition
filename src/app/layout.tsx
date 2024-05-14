@@ -7,7 +7,7 @@ const archivo = Archivo({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Reposition',
-  description: 'Official online reposition store',
+  description: 'Official reposition store',
 };
 
 export default function RootLayout({

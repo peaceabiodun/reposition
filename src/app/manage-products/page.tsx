@@ -122,7 +122,9 @@ const ManageProducts = () => {
                     alt='product_image'
                     width='70'
                     height='70'
-                    className='h-[70px] object-cover'
+                    className={`${
+                      item.sold_out ? 'brightness-50' : ''
+                    } h-[70px] object-cover`}
                   />
                 </div>
                 <p className='sm:hidden'>

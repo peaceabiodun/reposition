@@ -364,7 +364,7 @@ export function FileUploader({
           <p>
             {uploading
               ? 'Loading...'
-              : `Update ${fileType} 
+              : ` ${fileType} 
              `}
           </p>
           {fileType !== 'image' && <span style={{ fontSize: '2rem' }}>📄</span>}
