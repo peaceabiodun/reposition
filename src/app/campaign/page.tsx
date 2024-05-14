@@ -16,37 +16,50 @@ const CampaignPage = () => {
     slidesToScroll: 1,
     waitForAnimate: false,
     autoplay: true,
+    swipeToSlide: true,
     autoplaySpeed: 3000,
   };
+
+  const campaignDetails = [
+    {
+      image: '/green2.JPG',
+    },
+    {
+      image: '/green3.JPG',
+    },
+  ];
   return (
     <div className='bg-[#f8d3c98a] h-full min-h-screen'>
       <Header />
       <div className='p-4'>
-        <h2 className='text-2xl font-semibold text-center mt-6'>
+        <h2 className='text-lg sm:text-2xl font-semibold text-center mt-6'>
           <Typewriter
             options={{
-              strings: ["NEW DROP | Summer '24", 'REPOSITION - Galatians 2:9'],
+              strings: ["NEW DROP | Summer '24", 'REPOSITION - The Fellowship'],
               autoStart: true,
               loop: true,
             }}
           />
         </h2>
 
-        {/* <div className='my-6 flex flex-col items-center justify-center w-full h-full'>
-          <div>
-            <Slider {...settings} className=' '>
-              <Image
-                src={'/green2.JPG'}
-                alt='product_image'
-                width='200'
-                height='200'
-                className='border border-black shadow-md w-full h-full'
-              />
-            </Slider>
+        <div className='my-6 w-full flex flex-col items-center justify-center '>
+          <Slider {...settings} className='w-full h-full  '>
+            {campaignDetails.map((itm, index) => (
+              <div key={index} className=''>
+                <img
+                  src={itm.image}
+                  alt='campaign-image'
+                  className=' object-contain w-full h-[400px] sm:h-[600px]'
+                />
+              </div>
+            ))}
+          </Slider>
+
+          <div className='text-[#704e21] text-sm md:text-[16px] font-semibold flex flex-col items-center gap-2 mt-3'>
+            <p>New Drop coming soon</p>
+            <p>May 2024</p>
           </div>
-          <p>New Drop</p>
-          <p>May 2024</p>
-        </div> */}
+        </div>
       </div>
     </div>
   );
