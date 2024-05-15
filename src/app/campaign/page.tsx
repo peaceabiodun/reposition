@@ -73,13 +73,15 @@ const CampaignPage = () => {
             />
           </h2>
 
-          <div className='my-6 w-full flex flex-col items-center justify-center '>
-            <div className='w-full '>
+          <div className='my-6 flex flex-col items-center justify-center '>
+            <div className='w-full sm:h-[600px] '>
               <ReactPlayer
                 width='100%'
-                height='400px'
+                height='100%'
                 url={'/video1.mp4'}
-                controls={true}
+                controls={false}
+                playing={true}
+                loop={true}
               />
             </div>
             {/* {campaignDetails.map((itm, index) => (

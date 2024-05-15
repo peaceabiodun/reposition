@@ -171,9 +171,9 @@ body {
   background-image: linear-gradient(
       to left,
       rgba(255, 0, 0, 0),
-      rgb(37, 36, 36)
+      rgba(112, 109, 109, 0.281)
     ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/95fc1efd-5f77-4cdf-ab2d-442905140a5b:IMG_9021.jpg');
+    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/30d9e9a0-80b6-482a-a5cd-bd56b547e867:IMG_4362.JPG');
 }
 
 .campaign_modal {

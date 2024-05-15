@@ -9,15 +9,35 @@ import Typewriter from 'typewriter-effect';
 const WeAre = () => {
   return (
     <div className='w-full h-screen we_are_bg overflow-y-hidden '>
-      <div className='bg-[#dbd9d283]'>
+      <div className='bg-[#8b68265e]'>
         <Header />
       </div>
 
-      <Link href='/' className='flex gap-1 mt-4 px-4 text-[#e4e3e0]'>
+      <Link href='/' className='flex gap-1 mt-4 px-4 md:p-8 text-[#4d3c1dfb]'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>
-      <div className='blur_bg w-full h-full p-4 flex flex-col justify-center items-center'>
+      <div className='w-full h-full p-4 flex flex-col items-center text-[#4d3c1d] text-sm font-semibold'>
+        <h3 className='text-center'>
+          We are a people with love for elevated streetwear and contemporary
+          classics; as it maintains it&apos;s appeal through time - our symbol
+          of sustained style, designed to last.{' '}
+        </h3>
+        <h3 className='mt-4 text-center'>
+          <Typewriter
+            options={{
+              strings: [
+                'As we help each other as much as we can to adjust our position - connect better in a personal fellowship with God, in spirit and in truth. ',
+                'As we help each other as much as we can to adjust our position - connect better in a personal fellowship with God, in spirit and in truth.',
+              ],
+              autoStart: true,
+              loop: true,
+              // delay: 1,
+            }}
+          />
+        </h3>
+      </div>
+      {/* <div className='blur_bg w-full h-full p-4 flex flex-col justify-center items-center'>
         <h2 className='text-[#e4e0e0] font-bold text-xl mb-7 mt-[-80px]'>
           We Are
         </h2>
@@ -41,7 +61,7 @@ const WeAre = () => {
             />
           </h3>
         </div>
-      </div>
+      </div> */}
       <div className='fixed bottom-0 left-0 right-0'>
         <Footer />
       </div>
