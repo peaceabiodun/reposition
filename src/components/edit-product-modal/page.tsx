@@ -8,6 +8,7 @@ import { supabase } from '@/lib/supabase';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import ErrorModal from '../error-modal/page';
 
 type EditModalProps = {
   show: boolean;
@@ -38,7 +39,7 @@ const EditProductModal = ({
 }: EditModalProps) => {
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -358,6 +359,13 @@ const EditProductModal = ({
           {loading ? 'Loading...' : 'Confirm'}
         </button>
       </div>
+      {showErrorMessage && (
+        <ErrorModal
+          show={showErrorMessage}
+          onClose={() => setShowErrorMessage(false)}
+          description='An error occured, please check your connection'
+        />
+      )}
     </LocalSideModal>
   );
 };

@@ -21,7 +21,6 @@ import { STORAGE_KEYS } from '@/utils/constants';
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
-  // const [addToBagloading, setAddToBagLoading] = useState(false);
   const [productDetails, setProductDetails] = useState<ProductDetailType>();
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [selectedSize, setSelectedSize] = useState('');
@@ -40,7 +39,6 @@ const ProductDetails = () => {
   //     ? localStorage.getItem(STORAGE_KEYS.USER_ID)
   //     : '';
 
-  // const productData = products?.find((item) => item?.id == params.productId);
   const settings = {
     dots: true,
     arrows: false,

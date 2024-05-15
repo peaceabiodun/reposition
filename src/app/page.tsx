@@ -14,6 +14,7 @@ import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import SortInput from '@/components/sort/page';
 import { MdClose } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
+import { CampaignDetailsType } from '@/utils/types';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,7 @@ const Home = () => {
     ENUM_PRODUCT_FILTER_LIST.ALL
   );
   const router = useRouter();
+  const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
 
   const options = [
     { name: ENUM_PRODUCT_FILTER_LIST.ALL },
@@ -68,6 +70,28 @@ const Home = () => {
   useEffect(() => {
     fetchProducts();
   }, [filterValue]);
+
+  const fetchCampaignDetails = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.from('campaign').select();
+      if (data) {
+        setCampaignDetails(data[0]);
+      }
+
+      if (error) {
+        setShowErrorModal(true);
+      }
+    } catch (err: any) {
+      setShowErrorModal(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCampaignDetails();
+  }, []);
 
   const getSession = async () => {
     const {
@@ -182,10 +206,10 @@ const Home = () => {
       {showCampaign && (
         <div className='campaign_modal fixed inset-0 flex flex-col items-center justify-center p-4'>
           <h3 className='text-[#eefcff] text-sm text-center'>
-            Check out our new vintage jersey with a blend of american silhouette{' '}
+            {campaignDetails?.banner_title}
           </h3>
           <p className='text-[#d2dadb] text-xs my-3 text-center'>
-            This is a limited edition ready in the coming week{' '}
+            {campaignDetails?.banner_subtext}
           </p>
 
           <button

@@ -78,6 +78,17 @@ export type PlacedOrderDetailsType = {
   order_id: number;
 };
 
+export type CampaignDetailsType = {
+  id: number;
+  created_at: string;
+  banner_title: string;
+  banner_subtext: string;
+  campaign_title: string;
+  campaign_subtext: string;
+  banner_image: string[];
+  campaign_video: string[];
+};
+
 export type ConversionRateType = {
   USD: string;
   AED: string;

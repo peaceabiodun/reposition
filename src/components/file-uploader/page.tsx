@@ -195,6 +195,22 @@ export function FileUploader({
     }
   }, [percent, uploading]);
 
+  // const updateFiles = async () => {
+  //   try {
+  //     const { data, error } = await supabase.storage.updateBucket(
+  //       'product-images',
+  //       {
+  //         public: true,
+  //         allowedMimeTypes: ['image/png'],
+  //         fileSizeLimit: 1024,
+  //       }
+  //     );
+  //   } catch {
+
+  //   }
+
+  // }
+
   return (
     <Fragment>
       {type !== 'edit' ? (
@@ -324,12 +340,12 @@ export function FileUploader({
           }}
           className={`${className} file-uploader_edit`}
         >
-          <p>
+          {/* <p>
             {uploading
               ? 'Loading...'
               : ` ${fileType} 
              `}
-          </p>
+          </p> */}
           {fileType !== 'image' && <span style={{ fontSize: '2rem' }}>📄</span>}
         </div>
       )}
