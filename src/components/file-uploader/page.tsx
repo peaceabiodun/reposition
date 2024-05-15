@@ -18,7 +18,7 @@ export type FileUploaderProps = {
   label?: ReactNode;
   setFileUrls: (files: string[]) => void;
   fileUrls: string[];
-  fileType?: 'image' | 'document';
+  fileType?: 'image' | 'document' | 'video';
   disabled?: boolean;
   isMultiple?: boolean;
   className?: string;
@@ -44,7 +44,6 @@ export function FileUploader({
   label,
   setFileUrls,
   disabled,
-
   isMultiple,
   className = '',
   loading,
@@ -107,53 +106,17 @@ export function FileUploader({
   };
   const fileUploadRef = useRef<HTMLInputElement | null>(null);
 
-  // const uploadSingleFile = async (file: File): Promise<string> => {
-  //   return new Promise((resolve, reject) => {
-  //     const numberOfFiles = filesToUpload?.length ?? 1;
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-
-  //     const xhr = new XMLHttpRequest();
-
-  //     xhr.open(
-  //       'POST',
-  //       `${supabase.storage.from('product-images').upload(file.name, file, {
-  //         contentType: 'image/jpeg',
-  //       })}`
-  //     );
-  //     // xhr.open('POST', '');
-  //     // xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-
-  //     // TODO :: refactor progress
-  //     xhr.upload.onprogress = (event) => {
-  //       if (event.lengthComputable) {
-  //         const progress = Math.round(
-  //           (event.loaded * (100 / numberOfFiles)) / event.total
-  //         );
-  //         setPercent(progress);
-  //       }
-  //     };
-
-  //     // xhr.onload = async () => {
-  //     //   const data = JSON.parse(xhr.responseText);
-  //     //   if (data) {
-  //     //     resolve(data.url);
-  //     //   }
-  //     // };
-
-  //     xhr.onerror = () => {
-  //       reject(Error('Problem uploading image'));
-  //     };
-
-  //     xhr.send(formData);
-  //   });
-  // };
-
   const uploadSingleFile = async (file: File): Promise<string> => {
+    const contentType =
+      fileType === 'image'
+        ? 'image/jpeg'
+        : fileType === 'video'
+        ? 'video/mp4'
+        : 'application/octet-stream';
     const { data, error } = await supabase.storage
       .from('product-images')
       .upload(file.name, file, {
-        contentType: 'image/jpeg',
+        contentType,
       });
 
     if (error) {
@@ -376,11 +339,14 @@ export function FileUploader({
         type='file'
         hidden
         multiple={isMultiple}
-        accept={
-          fileType === 'image'
-            ? 'image/*'
-            : 'application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
-        }
+        accept='image/*,video/mp4,video/x-m4v,video/*,application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
+        // accept={
+        //   fileType === 'image'
+        //     ? 'image/*'
+        //     : fileType === 'video'
+        //     ? 'video/*'
+        //     : 'application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
+        // }
         onChange={onFileChange}
         disabled={disabled}
       />

@@ -83,6 +83,7 @@ const CampaignPage = () => {
                 playing={true}
                 loop={true}
               />
+              {/* <video width='100%' height='500px' autoPlay src='/video1.mp4' /> */}
             </div>
             {/* {campaignDetails.map((itm, index) => (
               <div key={index} className=''>

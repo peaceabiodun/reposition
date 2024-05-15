@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FileUploader } from '../file-uploader/page';
 import LocalSideModal from '../side-modal/page';
+import { supabase } from '@/lib/supabase';
 
 type EditModalProps = {
   show: boolean;
@@ -13,11 +14,27 @@ type CampaignFormDataType = {
   banner_subtext: string;
   campaign_title: string;
   campaign_subtext: string;
-  campaign_images: string[];
+  campaign_video: string[];
 };
 const EditCampaign = ({ show, onClose }: EditModalProps) => {
   const [formData, setFormData] = useState({} as CampaignFormDataType);
   const [loading, setLoading] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+  const editCampaignDetails = async () => {
+    setLoading(true);
+    const payload = {};
+    try {
+      const { data, error } = await supabase.from('products').update(payload);
+      //.eq('id', selectedProduct?.id);
+      console.log(data);
+      onClose();
+    } catch {
+      setShowErrorMessage(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <LocalSideModal
@@ -78,18 +95,14 @@ const EditCampaign = ({ show, onClose }: EditModalProps) => {
         />
 
         <div className='mb-2'>
-          <p className='mb-2'>Campaign Images (max 6)</p>
+          <p className='mb-2'>Campaign video</p>
           <div className='flex flex-col gap-3'>
-            {formData.campaign_images.map((itm, index) => (
-              <FileUploader
-                key={index}
-                fileUrls={[itm]}
-                setFileUrls={(img) =>
-                  setFormData({ ...formData, campaign_images: img })
-                }
-                isMultiple
-              />
-            ))}
+            <FileUploader
+              fileUrls={formData.campaign_video}
+              setFileUrls={(vid) =>
+                setFormData({ ...formData, campaign_video: vid })
+              }
+            />
           </div>
         </div>
 
