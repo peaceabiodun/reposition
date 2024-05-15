@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
       if (event === 'charge.success') {
         const { error } = await supabase
-          .from('products')
+          .from('orders')
           .update({ status: 'Paid' })
           .eq('reference', reference);
       }
