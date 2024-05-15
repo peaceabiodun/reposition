@@ -79,7 +79,7 @@ const CampaignPage = () => {
                 width='100%'
                 height='100%'
                 url={'/video1.mp4'}
-                controls={false}
+                controls={true}
                 playing={true}
                 loop={true}
               />
