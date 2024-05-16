@@ -112,6 +112,9 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    getSession();
+  }, []);
   // const refreshSession = async () => {
   //   const {
   //     data: { session },
@@ -204,7 +207,20 @@ const Home = () => {
         />
       )}
       {showCampaign && (
-        <div className='campaign_modal fixed inset-0 flex flex-col items-center justify-center p-4'>
+        <div
+          style={{
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundImage: `linear-gradient(
+              to left,
+              rgba(39, 37, 37, 0.699),
+              rgba(39, 37, 37, 0.651)
+            ),
+            url('${campaignDetails?.banner_image}')`,
+          }}
+          className=' fixed inset-0 flex flex-col items-center justify-center p-4'
+        >
           <h3 className='text-[#eefcff] text-sm text-center'>
             {campaignDetails?.banner_title}
           </h3>

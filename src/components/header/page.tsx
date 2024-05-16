@@ -62,8 +62,10 @@ const Header = () => {
       await supabase.auth.signOut();
       setToken('');
       localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
       setShowLogoutModal(false);
       setShowDropdown(false);
+      router.refresh();
     } catch (err: any) {
       console.log(err);
     } finally {
