@@ -185,6 +185,12 @@ const Bag = () => {
     let shippingFee = 0;
     if (totalWeight <= 0) {
       // No items in the bag, shipping fee is 0
+
+      shippingFee = 0;
+    } else if (
+      (totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
+      (totalPrice >= 300 && selectedCountry === 'Nigeria')
+    ) {
       shippingFee = 0;
     } else if (totalWeight === 1 && selectedCountry === 'Nigeria') {
       shippingFee = 7;
@@ -202,7 +208,7 @@ const Bag = () => {
 
   useEffect(() => {
     calculateShippingFee();
-  }, [bagItems, selectedCountry]);
+  }, [bagItems, selectedCountry, totalPrice]);
 
   const formIsValid = (): boolean => {
     setFormError({});
@@ -320,6 +326,7 @@ const Bag = () => {
       name: itm.name,
       price: itm.price,
       quantity: itm.quantity,
+      size: itm.size,
     })),
     amount_paid: totalPrice + shippingFee,
     shipping_fee: shippingFee,
@@ -340,7 +347,7 @@ const Bag = () => {
       console.log(err);
     }
   };
-  //+ shippingFee
+
   const config = {
     reference: new Date().getTime().toString(),
     email: deliveryDetails.user_email,
@@ -352,6 +359,7 @@ const Bag = () => {
         name: itm.name,
         price: itm.price,
         quantity: itm.quantity,
+        size: itm.size,
       })),
       first_name: deliveryDetails.first_name,
       last_name: deliveryDetails.last_name,
@@ -478,14 +486,6 @@ const Bag = () => {
             <div className=' w-full text-xs md:text-sm '>
               <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
                 <h2>Delivery Details</h2>
-                {/* {savedDeliveryDetails.length > 0 && (
-                    <h2
-                      onClick={() => setAddDeliveryDetail(false)}
-                      className='font-semibold cursor-pointer'
-                    >
-                      Use saved delivery details
-                    </h2>
-                  )} */}
               </div>
               <div className='w-full mt-5'>
                 <label>First Name</label>
@@ -673,7 +673,8 @@ const Bag = () => {
               <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
                 Shipping Method
               </h2>
-              {totalPrice >= 600 ? (
+              {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
+              (totalPrice >= 300 && selectedCountry === 'Nigeria') ? (
                 <div className='flex gap-2 items-start mt-5'>
                   <input
                     type='checkbox'
@@ -725,9 +726,19 @@ const Bag = () => {
                   <p>${totalPrice.toFixed(2)}</p>
                 </div>
                 <div className='flex gap-3 justify-between'>
-                  <p>Shipping fee</p>
+                  <div className=''>
+                    <p>Shipping fee</p>
+                    <p className='text-[10px] text-[#644120] italic'>
+                      *Shipping fee may reduce or increase depending on
+                      destination country.
+                    </p>
+                    <p className='text-[10px] text-[#644120] italic'>
+                      *Please select a country to see correct shipping fee
+                    </p>
+                  </div>
                   <p>
-                    {totalPrice >= 600
+                    {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
+                    (totalPrice >= 300 && selectedCountry === 'Nigeria')
                       ? 'Free Delivery'
                       : `$${shippingFee.toFixed(2)}`}{' '}
                   </p>
