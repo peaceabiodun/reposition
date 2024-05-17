@@ -348,10 +348,18 @@ const Bag = () => {
     }
   };
 
+  console.log(
+    Math.round(
+      (totalPrice + shippingFee) * parseFloat(Currencies?.NGN ?? '0') * 100
+    )
+  );
   const config = {
     reference: new Date().getTime().toString(),
     email: deliveryDetails.user_email,
-    amount: totalPrice + shippingFee * parseInt(Currencies?.NGN ?? '') * 100, //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    amount: Math.round(
+      (totalPrice + shippingFee) * parseFloat(Currencies?.NGN ?? '0') * 100
+    ),
+    //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
     Currency: 'NGN',
     metadata: {
