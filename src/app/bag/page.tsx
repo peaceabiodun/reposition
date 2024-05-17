@@ -186,10 +186,14 @@ const Bag = () => {
     if (totalWeight <= 0) {
       // No items in the bag, shipping fee is 0
       shippingFee = 0;
-    } else if (totalWeight === 1) {
+    } else if (totalWeight === 1 && selectedCountry === 'Nigeria') {
+      shippingFee = 7;
+    } else if (totalWeight === 1 && selectedCountry !== 'Nigeria') {
       shippingFee = 20;
-    } else if (totalWeight === 2) {
+    } else if (totalWeight === 2 && selectedCountry !== 'Nigeria') {
       shippingFee = 55;
+    } else if (totalWeight && selectedCountry == 'Nigeria') {
+      shippingFee = 7 * totalWeight;
     } else {
       shippingFee = 20 * totalWeight;
     }
@@ -198,7 +202,7 @@ const Bag = () => {
 
   useEffect(() => {
     calculateShippingFee();
-  }, [bagItems]);
+  }, [bagItems, selectedCountry]);
 
   const formIsValid = (): boolean => {
     setFormError({});
@@ -278,37 +282,6 @@ const Bag = () => {
     setDeliveryDetails((p) => ({ ...p, [key]: value }));
   };
 
-  // const updateDeliveryDetails = async () => {
-  //   if (!formIsValid() ?? !validateEmail(deliveryDetails.user_email)) return;
-  //   const payload = {
-  //     first_name: deliveryDetails.first_name,
-  //     last_name: deliveryDetails.last_name,
-  //     user_email: deliveryDetails.user_email,
-  //     country: selectedCountry,
-  //     city: deliveryDetails.city,
-  //     address: deliveryDetails.address,
-  //     zip_code: deliveryDetails.zip_code,
-  //     phone_number: deliveryDetails.phone_number,
-  //   };
-  //   try {
-  //     const { data, error } = await supabase
-  //       .from('delivery-details')
-  //       .insert(payload);
-  //     setDeliveryDetails({
-  //       first_name: '',
-  //       last_name: '',
-  //       user_email: '',
-  //       country: '',
-  //       city: '',
-  //       address: '',
-  //       zip_code: '',
-  //       phone_number: '',
-  //     });
-  //   } catch (err: any) {
-  //     console.log(err);
-  //   }
-  // };
-
   const getConversionRate = async () => {
     setLoadingCurrency(true);
     try {
@@ -348,8 +321,7 @@ const Bag = () => {
       price: itm.price,
       quantity: itm.quantity,
     })),
-    amount_paid:
-      (totalPrice + shippingFee) * parseInt(Currencies?.NGN ?? '') * 100,
+    amount_paid: totalPrice + shippingFee,
     shipping_fee: shippingFee,
     order_id: generateOrderNumber(100000),
     status: 'processing',
@@ -372,11 +344,19 @@ const Bag = () => {
   const config = {
     reference: new Date().getTime().toString(),
     email: deliveryDetails.user_email,
-    amount: totalPrice * parseInt(Currencies?.NGN ?? '') * 100, //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    amount: totalPrice + shippingFee * parseInt(Currencies?.NGN ?? '') * 100, //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
     Currency: 'NGN',
     metadata: {
-      products: '1',
+      product_details: bagItems.map((itm) => ({
+        name: itm.name,
+        price: itm.price,
+        quantity: itm.quantity,
+      })),
+      first_name: deliveryDetails.first_name,
+      last_name: deliveryDetails.last_name,
+      user_email: deliveryDetails.user_email,
+      phone_number: deliveryDetails.phone_number,
     },
   } as any;
 
