@@ -144,7 +144,7 @@ const SizeChart = () => {
         </table>
 
         <h2 className='text-center font-semibold text-sm my-4'>
-          Men's Pants Size Chart
+          Men&apos;s Pants Size Chart
         </h2>
 
         <table className='w-full md:w-[80%]'>
