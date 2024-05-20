@@ -120,7 +120,7 @@ const SizeChart = () => {
 
       <div className='p-4 w-full flex flex-col items-center justify-center'>
         <h2 className='text-center font-semibold text-sm my-4'>
-          Men's Top Size Chart
+          Men&apos;s Top Size Chart
         </h2>
 
         <table className='w-full md:w-[80%]'>
