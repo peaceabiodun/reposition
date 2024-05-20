@@ -348,11 +348,6 @@ const Bag = () => {
     }
   };
 
-  console.log(
-    Math.round(
-      (totalPrice + shippingFee) * parseFloat(Currencies?.NGN ?? '0') * 100
-    )
-  );
   const config = {
     reference: new Date().getTime().toString(),
     email: deliveryDetails.user_email,

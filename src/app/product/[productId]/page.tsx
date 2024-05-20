@@ -125,10 +125,15 @@ const ProductDetails = () => {
   return (
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] overflow-x-scroll '>
       <Header />
-      <Link href='/' className='pt-3 gap-1 flex text-sm items-center p-4'>
-        <MdOutlineArrowBackIosNew size={20} />
-        Back
-      </Link>
+      <div className='flex w-full justify-between gap-4 p-4 mb-4'>
+        <Link href='/' className=' gap-1 flex text-sm items-center '>
+          <MdOutlineArrowBackIosNew size={20} />
+          Back
+        </Link>
+        <Link href='/size-chart' className='text-sm border p-2 border-black'>
+          Size Chart
+        </Link>
+      </div>
       {loading ? (
         <div className='grow w-full flex justify-center items-center p-4'>
           <ThreeCircles

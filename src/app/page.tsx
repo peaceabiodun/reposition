@@ -28,6 +28,13 @@ const Home = () => {
   const router = useRouter();
   const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
 
+  useEffect(() => {
+    const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
+    if (hasSeenCampaign) {
+      setShowCampaign(false);
+    }
+  }, []);
+
   const options = [
     { name: ENUM_PRODUCT_FILTER_LIST.ALL },
     { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
@@ -126,6 +133,10 @@ const Home = () => {
   //   }
   // };
 
+  const handleCloseCampaign = () => {
+    setShowCampaign(false);
+    localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, 'true');
+  };
   return (
     <Fragment>
       <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
@@ -236,7 +247,7 @@ const Home = () => {
           </button>
 
           <button
-            onClick={() => setShowCampaign(false)}
+            onClick={handleCloseCampaign}
             className='bg-[#ebfaf7d3] rounded-full p-1 w-6 h-6 flex items-center justify-center mt-7'
           >
             <MdClose />
