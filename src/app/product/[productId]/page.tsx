@@ -283,8 +283,7 @@ const ProductDetails = () => {
                     Delivery and Returns
                   </AccordionTrigger>
                   <AccordionContent>
-                    All domestic orders are shipped via all local courier
-                    partners and all international orders are shipped via DHL.
+                    All domestic and international orders are shipped via DHL.
                     Order processing may take up to 7 days. An email containing
                     the tracking number will be sent to you when the order
                     ships. All packages are trackable. Please note, our standard
