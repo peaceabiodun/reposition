@@ -19,7 +19,7 @@ const Footer = () => {
           </a>
           <p>|</p>
           <a
-            href='mailto:nowreposition@gmail.com'
+            href='mailto:welcome@re-position.co'
             target='_blank'
             rel='noopener noreferrer'
           >
