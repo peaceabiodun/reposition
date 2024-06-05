@@ -368,6 +368,8 @@ const Bag = () => {
       last_name: deliveryDetails.last_name,
       user_email: deliveryDetails.user_email,
       phone_number: deliveryDetails.phone_number,
+      country: selectedCountry,
+      address: deliveryDetails.address,
     },
   } as any;
 
