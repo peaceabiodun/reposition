@@ -46,17 +46,17 @@ const SizeChart = () => {
     {
       alpha: 'S',
       waist: '30 in',
-      hip: '29 in',
+      hip: '39 in',
     },
     {
       alpha: 'M',
       waist: '33 in',
-      hip: '43 in',
+      hip: '42 in',
     },
     {
       alpha: 'L',
       waist: '36 in',
-      hip: '46 in',
+      hip: '45 in',
     },
 
     {
@@ -67,12 +67,12 @@ const SizeChart = () => {
     {
       alpha: 'XXL',
       waist: '42 in',
-      hip: '52 in',
+      hip: '50 in',
     },
     {
       alpha: 'XXXL',
       waist: '45 in',
-      hip: '55 in',
+      hip: '52 in',
     },
   ];
   return (
@@ -157,8 +157,8 @@ const SizeChart = () => {
           {pantsCharts.map((item, index) => (
             <tr key={index} className='text-center mt-3 text-xs sm:text-sm'>
               <td className='py-2 bg-[#8575637a]'>{item.alpha}</td>
-              <td>{item.hip}</td>
               <td>{item.waist}</td>
+              <td> {item.hip}</td>
             </tr>
           ))}
         </table>
