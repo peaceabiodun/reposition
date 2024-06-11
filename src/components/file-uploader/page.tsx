@@ -4,15 +4,12 @@ import React, {
   useState,
   useEffect,
   ChangeEvent,
-  useMemo,
   ReactNode,
   Fragment,
 } from 'react';
 import { LuUploadCloud } from 'react-icons/lu';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { supabase } from '@/lib/supabase';
 import ErrorModal from '../error-modal/page';
-import { Cloudinary } from '@cloudinary/url-gen';
 
 type ActionType = 'create' | 'edit';
 export type FileUploaderProps = {
@@ -54,18 +51,9 @@ export function FileUploader({
   const [allowDrop, setAllowDrop] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState<File[] | null>(null);
-  const [filesToUpload, setFilesToUpload] = useState<File[] | null>(null);
   const [type, setType] = useState<ActionType>('create');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  const cloudinary = new Cloudinary({
-    cloud: {
-      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!,
-    },
-    url: {
-      secure: true,
-    },
-  });
   useEffect(() => {
     if (!loading && fileUrls?.length) {
       setType('edit');
@@ -80,12 +68,10 @@ export function FileUploader({
         const newFiles = Array.from(inputFiles);
         const allFiles = files ? [...files, ...newFiles] : newFiles;
         setFiles(allFiles);
-        await uploadImg(allFiles);
-        setFilesToUpload(newFiles);
+        await uploadImg(newFiles);
       } else {
         setFiles([inputFiles[0]]);
-        setFilesToUpload([inputFiles[0]]);
-        await uploadImg([inputFiles[0]]);
+        await uploadImg([inputFiles[0]]); // Uploading the single file
       }
     }
   };
@@ -100,15 +86,13 @@ export function FileUploader({
           const newFiles = Array.from(inputFiles);
           const allFiles = files ? [...files, ...newFiles] : newFiles;
           setFiles(allFiles);
-          setFilesToUpload(allFiles);
-          await uploadImg(allFiles);
+          await uploadImg(newFiles); // Uploading the new files
         } else {
           if (inputFiles.length > 1) {
             alert('Only the first file was uploaded!');
           }
           setFiles([inputFiles[0]]);
-          setFilesToUpload([inputFiles[0]]);
-          await uploadImg([inputFiles[0]]);
+          await uploadImg([inputFiles[0]]); // Uploading the single file
         }
       }
     }
@@ -152,23 +136,20 @@ export function FileUploader({
     if (!filesToUpload) return;
     setUploading(true);
     setPercent(0);
-    if (filesToUpload) {
-      let uploadedFiles: string[] = [];
-      try {
-        const requests = filesToUpload.map((f) => uploadSingleFile(f));
-        uploadedFiles = await Promise.all(requests);
-        setHasUploaded(true);
-        setFileUrls([...(fileUrls ?? []), ...uploadedFiles]);
-        setPercent(100);
-      } catch (error: any) {
-        setFiles([]);
-        uploadedFiles = [];
-        alert(error);
-      }
+
+    let uploadedFiles: string[] = [];
+    try {
+      const requests = filesToUpload.map((f) => uploadSingleFile(f));
+      uploadedFiles = await Promise.all(requests);
+      setHasUploaded(true);
+      setFileUrls([...(fileUrls ?? []), ...uploadedFiles]);
+      setPercent(100);
+    } catch (error: any) {
+      setFiles([]);
+      uploadedFiles = [];
+      alert(error);
     }
   };
-
-  const fileNames = files?.map((file) => file.name);
 
   const removeImage = async () => {
     setFiles([]);
