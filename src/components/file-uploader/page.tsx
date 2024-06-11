@@ -4,13 +4,11 @@ import React, {
   useState,
   useEffect,
   ChangeEvent,
-  useMemo,
   ReactNode,
   Fragment,
 } from 'react';
 import { LuUploadCloud } from 'react-icons/lu';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { supabase } from '@/lib/supabase';
 import ErrorModal from '../error-modal/page';
 
 type ActionType = 'create' | 'edit';
@@ -53,7 +51,6 @@ export function FileUploader({
   const [allowDrop, setAllowDrop] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState<File[] | null>(null);
-  const [filesToUpload, setFilesToUpload] = useState<File[] | null>(null);
   const [type, setType] = useState<ActionType>('create');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
@@ -63,7 +60,7 @@ export function FileUploader({
     }
   }, [loading]);
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files: inputFiles } = e.target;
     if (inputFiles?.length) {
       setHasUploaded(false);
@@ -71,15 +68,15 @@ export function FileUploader({
         const newFiles = Array.from(inputFiles);
         const allFiles = files ? [...files, ...newFiles] : newFiles;
         setFiles(allFiles);
-        setFilesToUpload(newFiles);
+        await uploadImg(newFiles);
       } else {
         setFiles([inputFiles[0]]);
-        setFilesToUpload([inputFiles[0]]);
+        await uploadImg([inputFiles[0]]); // Uploading the single file
       }
     }
   };
 
-  const handleFileDrop = (e: any) => {
+  const handleFileDrop = async (e: any) => {
     if (allowDrop && !uploading && !loading) {
       e.preventDefault();
       const inputFiles: File[] = e.dataTransfer.files;
@@ -89,13 +86,13 @@ export function FileUploader({
           const newFiles = Array.from(inputFiles);
           const allFiles = files ? [...files, ...newFiles] : newFiles;
           setFiles(allFiles);
-          setFilesToUpload(allFiles);
+          await uploadImg(newFiles); // Uploading the new files
         } else {
           if (inputFiles.length > 1) {
             alert('Only the first file was uploaded!');
           }
           setFiles([inputFiles[0]]);
-          setFilesToUpload([inputFiles[0]]);
+          await uploadImg([inputFiles[0]]); // Uploading the single file
         }
       }
     }
@@ -107,77 +104,58 @@ export function FileUploader({
   const fileUploadRef = useRef<HTMLInputElement | null>(null);
 
   const uploadSingleFile = async (file: File): Promise<string> => {
-    const contentType =
-      fileType === 'image'
-        ? 'image/jpeg'
-        : fileType === 'video'
-        ? 'video/mp4'
-        : 'application/octet-stream';
-    const { data, error } = await supabase.storage
-      .from('product-images')
-      .upload(file.name, file, {
-        contentType,
-      });
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append(
+      'upload_preset',
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+    );
 
-    if (error) {
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env
+          .NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
+      return data.secure_url;
+    } catch (error: any) {
       console.error('Error uploading file:', error.message);
       setShowErrorMessage(true);
       throw error;
     }
-
-    const { data: UrlData } = supabase.storage
-      .from('product-images')
-      .getPublicUrl(data?.path);
-
-    return UrlData?.publicUrl;
   };
 
-  const uploadImg = async () => {
+  const uploadImg = async (filesToUpload: File[]) => {
     if (!filesToUpload) return;
     setUploading(true);
     setPercent(0);
-    if (filesToUpload) {
-      let uploadedFiles: string[] = [];
-      try {
-        const requests = filesToUpload.map((f) => uploadSingleFile(f));
-        uploadedFiles = await Promise.all(requests);
-        setHasUploaded(true);
-        setFileUrls([...(fileUrls ?? []), ...uploadedFiles]);
-        setPercent(100);
-      } catch (error: any) {
-        setFiles([]);
-        uploadedFiles = [];
-        alert(error);
-      }
+
+    let uploadedFiles: string[] = [];
+    try {
+      const requests = filesToUpload.map((f) => uploadSingleFile(f));
+      uploadedFiles = await Promise.all(requests);
+      setHasUploaded(true);
+      setFileUrls([...(fileUrls ?? []), ...uploadedFiles]);
+      setPercent(100);
+    } catch (error: any) {
+      setFiles([]);
+      uploadedFiles = [];
+      alert(error);
     }
   };
 
-  const getImgSrc = useMemo(() => {
-    if (files?.length) {
-      setUploading(true);
-      uploadImg();
-      return URL.createObjectURL(files?.[0]);
-    }
-    return '';
-  }, [files]);
-
-  const fileNames = files?.map((file) => file.name);
-
   const removeImage = async () => {
-    try {
-      const { data, error } = await supabase.storage
-        .from('product-images')
-        .remove(fileNames ?? []);
-      setFiles([]);
-      setFileUrls([]);
-      setHasUploaded(false);
-      setUploading(false);
-      if (error) {
-        throw new Error(error.message);
-      }
-    } catch {
-      setShowErrorMessage(true);
-    }
+    setFiles([]);
+    setFileUrls([]);
+    setHasUploaded(false);
+    setUploading(false);
   };
 
   useEffect(() => {
@@ -194,22 +172,6 @@ export function FileUploader({
       setUploading(false);
     }
   }, [percent, uploading]);
-
-  // const updateFiles = async () => {
-  //   try {
-  //     const { data, error } = await supabase.storage.updateBucket(
-  //       'product-images',
-  //       {
-  //         public: true,
-  //         allowedMimeTypes: ['image/png'],
-  //         fileSizeLimit: 1024,
-  //       }
-  //     );
-  //   } catch {
-
-  //   }
-
-  // }
 
   return (
     <Fragment>
@@ -256,7 +218,9 @@ export function FileUploader({
                     <div
                       style={{
                         backgroundImage:
-                          fileType === 'image' ? `url(${getImgSrc})` : 'none',
+                          fileType === 'image'
+                            ? `url(${URL.createObjectURL(files[0])})`
+                            : 'none',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }}
