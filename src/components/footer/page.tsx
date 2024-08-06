@@ -11,7 +11,7 @@ const Footer = () => {
       <div className='flex flex-col items-center justify-center text-xs '>
         <div className='flex items-center gap-2'>
           <a
-            href='https://www.instagram.com/repositionn'
+            href='https://www.instagram.com/repositionglobal'
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -27,7 +27,7 @@ const Footer = () => {
           </a>
           <p>|</p>
           <a
-            href='https://www.tiktok.com/@repositionn'
+            href='https://www.tiktok.com/@repositionglobal'
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -35,7 +35,7 @@ const Footer = () => {
           </a>
           <p>|</p>
           <a
-            href='https://twitter.com/re_position'
+            href='https://twitter.com/repositionglo'
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -43,7 +43,7 @@ const Footer = () => {
           </a>
         </div>
         <span className='text-[10px] mt-1'>
-          © {currentYear} Reposition, Inc.{' '}
+          © {currentYear} Reposition global, Inc.{' '}
         </span>
       </div>
     </div>
