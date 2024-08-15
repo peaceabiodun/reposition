@@ -1,261 +1,114 @@
-'use client';
-import Footer from '@/components/footer/page';
-import Header from '@/components/header/page';
-import Image from 'next/image';
-import Link from 'next/link';
-import Typewriter from 'typewriter-effect';
-import { ThreeCircles } from 'react-loader-spinner';
-import { Fragment, useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import ErrorModal from '@/components/error-modal/page';
-import { useProductContext } from '@/context/product-context';
-import { STORAGE_KEYS } from '@/utils/constants';
-import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
-import SortInput from '@/components/sort/page';
-import { MdClose } from 'react-icons/md';
-import { useRouter } from 'next/navigation';
-import { CampaignDetailsType } from '@/utils/types';
+"use client";
+import ErrorModal from "@/components/error-modal/page";
+import { supabase } from "@/lib/supabase";
+import Typewriter from "typewriter-effect";
+import { useState } from "react";
+import Link from "next/link";
+import SuccessModal from "@/components/success-modal/page";
+import { useRouter } from "next/navigation";
+import { validateEmail } from "@/utils/functions";
 
-const Home = () => {
+const SignUpNewUsers = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { products, setProducts } = useProductContext();
-  // const [products, setProducts] = useState<ProductDetailType[]>([]);
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  const [showCampaign, setShowCampaign] = useState(true);
-  const [filterValue, setFilterValue] = useState<string>(
-    ENUM_PRODUCT_FILTER_LIST.ALL
-  );
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const router = useRouter();
-  const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
 
-  useEffect(() => {
-    const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
-    if (hasSeenCampaign) {
-      setShowCampaign(false);
-    }
-  }, []);
-
-  const options = [
-    { name: ENUM_PRODUCT_FILTER_LIST.ALL },
-    { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.SHOES },
-    { name: ENUM_PRODUCT_FILTER_LIST.SUIT },
-    { name: ENUM_PRODUCT_FILTER_LIST.COAT },
-    { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
-    { name: ENUM_PRODUCT_FILTER_LIST.ACCESSORIES },
-    { name: ENUM_PRODUCT_FILTER_LIST.TSHIRTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.HOODIES },
-    { name: ENUM_PRODUCT_FILTER_LIST.HAT },
-    { name: ENUM_PRODUCT_FILTER_LIST.JACKET },
-  ];
-  const fetchProducts = async () => {
+  const signUp = async () => {
     setLoading(true);
     try {
-      let { data, error } = await supabase
-        .from('products')
-        .select()
-        .order('created_at', { ascending: false });
-      if (data !== null) {
-        if (filterValue !== ENUM_PRODUCT_FILTER_LIST.ALL) {
-          data = data.filter((product) => product.category === filterValue);
-        }
-        setProducts(data ?? []);
-      }
-
-      if (error) {
-        setShowErrorModal(true);
-      }
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            user_role: "USER",
+          },
+        },
+      });
+      setEmail("");
+      setShowSuccessModal(true);
+      router.push("/home");
     } catch (err: any) {
-      setShowErrorModal(true);
+      setShowErrorMessage(true);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, [filterValue]);
-
-  const fetchCampaignDetails = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.from('campaign').select();
-      if (data) {
-        setCampaignDetails(data[0]);
-      }
-
-      if (error) {
-        setShowErrorModal(true);
-      }
-    } catch (err: any) {
-      setShowErrorModal(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCampaignDetails();
-  }, []);
-
-  const getSession = async () => {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    if (session !== null) {
-      localStorage.setItem(
-        STORAGE_KEYS.AUTH_TOKEN,
-        session?.access_token ?? ''
-      );
-      localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session?.user.email ?? '');
-      localStorage.setItem(STORAGE_KEYS.USER_ID, session?.user.id ?? '');
-      localStorage.setItem(
-        STORAGE_KEYS.USER_ROLE,
-        session?.user.user_metadata.user_role ?? ''
-      );
-    }
-  };
-
-  useEffect(() => {
-    getSession();
-  }, []);
-  // const refreshSession = async () => {
-  //   const {
-  //     data: { session },
-  //   } = await supabase.auth.refreshSession();
-
-  //   if (session !== null) {
-  //     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, session.access_token);
-  //     localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user?.email ?? '');
-  //   }
-  // };
-
-  const handleCloseCampaign = () => {
-    setShowCampaign(false);
-    localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, 'true');
-  };
   return (
-    <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
-        <Header />
-        <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-4'>
-          <h2 className='text-4xl font-semibold'>
+    <div className="text-sm w-full min-h-screen landing_bg bg-[#dbd9d2] ">
+      <div className="blur-bg flex justify-center p-3 xs:p-4 h-[100vh]">
+        <div className=" w-full sm:max-w-[450px] text-[#e4e0e0] space-y-6 flex flex-col items-center justify-center ">
+          <h2 className="text-2xl font-semibold">
             <Typewriter
               options={{
-                strings: ['REPOSITION [ ]', 'REPOSITION [ ]'],
+                strings: ["REPOSITION [ ]", "REPOSITION [ ]"],
                 autoStart: true,
                 loop: true,
               }}
             />
           </h2>
-          <p className='mt-2 text-sm'>Exodus 1 Collection is here</p>
-        </div>
-
-        <SortInput
-          options={options}
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-        />
-        {loading ? (
-          <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4'>
-            <ThreeCircles
-              visible={true}
-              height={50}
-              width={50}
-              color='#b4b4b4ad'
-              ariaLabel='three-circles-loading'
-              wrapperClass='my-4'
-            />
-          </div>
-        ) : products.length === 0 ? (
-          <div className='w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4 text-sm'>
-            {' '}
-            No Products Available
-          </div>
-        ) : (
-          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4'>
-            {products?.map((item) => (
-              <Link href={`product/${item.id}`} key={item.id} className=''>
-                <div className='relative min-h-[300px] '>
-                  <Image
-                    src={item?.images[0] ?? '/placeholder.png'}
-                    alt='product_image'
-                    width='200'
-                    height='300'
-                    className={` min-h-[300px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
-                      item.sold_out ? 'brightness-50' : ''
-                    } `}
-                  />
-                  {item.sold_out && (
-                    <div className='home_img w-[200px] absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
-                      <p className=' text-sm text-gray-400 font-medium'>
-                        Sold out
-                      </p>
-                    </div>
-                  )}
-                </div>
-                <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
-                <div className='flex gap-2'>
-                  <p className='text-sm'>${item.price}</p>
-                  {item.pre_order ? (
-                    <p className='text-sm'>[Pre-Order]</p>
-                  ) : null}
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-        <Footer />
-      </div>
-      {showErrorModal && (
-        <ErrorModal
-          show={showErrorModal}
-          onClose={() => setShowErrorModal(false)}
-          description='Sorry an error occured while loading the products'
-        />
-      )}
-      {showCampaign && (
-        <div
-          style={{
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundImage: `linear-gradient(
-              to left,
-              rgba(39, 37, 37, 0.699),
-              rgba(39, 37, 37, 0.651)
-            ),
-            url('${campaignDetails?.banner_image}')`,
-          }}
-          className=' fixed inset-0 flex flex-col items-center justify-center p-4'
-        >
-          <h3 className='text-[#eefcff] text-sm text-center'>
-            {campaignDetails?.banner_title}
-          </h3>
-          <p className='text-[#d2dadb] text-xs my-3 text-center'>
-            {campaignDetails?.banner_subtext}
+          <p className="text-sm text-center">
+            Enter your details for early access - top members only.
           </p>
+          <div className="flex flex-col gap-6 w-full items-center">
+            <input
+              type="text"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border border-[#909192] rounded-none w-full h-[40px] p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] "
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0]"
+            />
+            <button
+              disabled={!validateEmail(email) && !password}
+              onClick={signUp}
+              className={`border border-[#909192] bg-[#523f3fab] h-[40px] font-normal p-2 w-full cursor-pointer`}
+            >
+              {loading ? "Loading..." : "Welcome"}
+            </button>
+          </div>
 
-          <button
-            onClick={() => router.push('/campaign')}
-            className='bg-white p-2 h-[33px] w-[90px] text-xs font-semibold'
-          >
-            View
-          </button>
-
-          <button
-            onClick={handleCloseCampaign}
-            className='bg-[#ebfaf7d3] rounded-full p-1 w-6 h-6 flex items-center justify-center mt-7'
-          >
-            <MdClose />
-          </button>
+          {!validateEmail(email) && email !== "" && (
+            <p className="text-[10px] text-red-500">
+              Please input a valid email address
+            </p>
+          )}
+          <div className="flex text-xs font-semibold ">
+            <p>Already have an account ?</p>
+            <Link href={"/login"} className=" cursor-pointer text-[#ffe7ba]">
+              Login here
+            </Link>
+          </div>
         </div>
+      </div>
+      {showErrorMessage && (
+        <ErrorModal
+          show={showErrorMessage}
+          onClose={() => setShowErrorMessage(false)}
+          description="Make sure you input a correct email address"
+        />
       )}
-    </Fragment>
+      {showSuccessModal && (
+        <SuccessModal
+          show={showSuccessModal}
+          onClose={() => setShowSuccessModal(false)}
+          title="Welcome"
+          description="You have successfully created an account"
+        />
+      )}
+    </div>
   );
 };
 
-export default Home;
+export default SignUpNewUsers;
