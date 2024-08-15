@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'slick-carousel/slick/slick.css';
-@import 'slick-carousel/slick/slick-theme.css';
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 
 @layer base {
   :root {
@@ -91,7 +91,7 @@
 }
 body {
   margin: 0;
-  font-family: 'Archivo', sans-serif;
+  font-family: "Archivo", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #3d3e3f;
@@ -144,8 +144,9 @@ body {
       rgba(255, 0, 0, 0),
       rgb(37, 36, 36)
     ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG');
+    url("http://res.cloudinary.com/dggsagtrj/image/upload/v1723734831/wnf7szu3e3vgnloforog.jpg");
 }
+/*https://d3u7b9fq2opvwp.cloudfront.net/upload-service/4257e464-fad0-4fd2-9fbf-7116d0355081:IMG_3467.JPG' */
 
 .blur-bg {
   -webkit-backdrop-filter: blur(4px);
@@ -161,7 +162,7 @@ body {
       rgba(255, 0, 0, 0),
       rgb(37, 36, 36)
     ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg');
+    url("https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg");
 }
 
 .we_are_bg {
@@ -173,7 +174,7 @@ body {
       rgba(255, 0, 0, 0),
       rgba(112, 109, 109, 0.281)
     ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/30d9e9a0-80b6-482a-a5cd-bd56b547e867:IMG_4362.JPG');
+    url("https://d3u7b9fq2opvwp.cloudfront.net/upload-service/30d9e9a0-80b6-482a-a5cd-bd56b547e867:IMG_4362.JPG");
 }
 
 .campaign_modal {
@@ -185,7 +186,7 @@ body {
       rgba(39, 37, 37, 0.699),
       rgba(39, 37, 37, 0.651)
     ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/1fbc9c18-d283-4af1-9873-7b54a6debcfc:WhatsApp%20Image%202024-05-13%20at%2017.24.45.jpeg');
+    url("https://d3u7b9fq2opvwp.cloudfront.net/upload-service/1fbc9c18-d283-4af1-9873-7b54a6debcfc:WhatsApp%20Image%202024-05-13%20at%2017.24.45.jpeg");
 }
 .box {
   align-self: flex-end;
