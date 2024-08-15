@@ -65,7 +65,7 @@ const SignUpNewUsers = () => {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Create Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0]"
