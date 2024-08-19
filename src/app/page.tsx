@@ -52,7 +52,7 @@ const SignUpNewUsers = () => {
             />
           </h2>
           <p className="text-sm text-center">
-            Enter your details for early access - top members only.
+            Enter your details for early access to Jubilee [freedom] collection.
           </p>
           <div className="flex flex-col gap-6 w-full items-center">
             <input

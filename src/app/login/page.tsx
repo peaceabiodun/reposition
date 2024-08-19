@@ -52,7 +52,11 @@ const Login = () => {
         <div className="flex justify-center">
           <div className="w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center">
             <h3 className="font-semibold">Login</h3>
-            <p className="text-xs"> Are you the owner of this apllication ?</p>
+            <p className="text-xs">
+              {" "}
+              Enter your details for early access to Jubilee [freedom]
+              collection.
+            </p>
             <input
               type="text"
               placeholder="Email"
