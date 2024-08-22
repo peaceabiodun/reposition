@@ -9,6 +9,7 @@ export const useAuth = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if(typeof window !== "undefined") {
     const checkAuthStatus = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
@@ -20,6 +21,7 @@ export const useAuth = () => {
       }
     };
     checkAuthStatus();
+    }
   }, [router]);
 
   return isAuthenticated;
