@@ -140,9 +140,15 @@ const Home = () => {
     localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, "true");
   };
 
-  if (!isAuthenticated) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined" && !isAuthenticated) {
+      router.push("/"); // Redirect to signup page if not authenticated
+    }
+  }, [isAuthenticated, router]);
+
+  // if (!isAuthenticated) {
+  //   router.push("/");
+  // }
   return (
     <Fragment>
       <div className="w-full relative min-h-[100vh] bg-[#dbd9d2] ">
