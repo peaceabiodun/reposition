@@ -8,18 +8,19 @@ export const useAuth = () => {
 
 
   useEffect(() => {
-    if(typeof window !== "undefined") {
     const checkAuthStatus = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
+      if (session !== null) {
         setIsAuthenticated(true);
         
       } else {
         setIsAuthenticated(false);
       
       }
-    };
-    checkAuthStatus();
+    
+    if (typeof window !== "undefined") {
+      checkAuthStatus();
+    }
     }
   }, []);
 

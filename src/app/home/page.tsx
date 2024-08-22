@@ -15,10 +15,8 @@ import SortInput from "@/components/sort/page";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { CampaignDetailsType } from "@/utils/types";
-import { useAuth } from "@/lib/useAuth";
 
 const Home = () => {
-  const isAuthenticated = useAuth();
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   // const [products, setProducts] = useState<ProductDetailType[]>([]);
@@ -131,7 +129,7 @@ const Home = () => {
 
   //   if (session !== null) {
   //     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, session.access_token);
-  //     localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user?.email ?? '');
+  //     localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user?.email ?? "");
   //   }
   // };
 
@@ -140,15 +138,17 @@ const Home = () => {
     localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, "true");
   };
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && !isAuthenticated) {
-      router.push("/"); // Redirect to signup page if not authenticated
-    }
-  }, [isAuthenticated, router]);
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN)
+      : "";
 
-  // if (!isAuthenticated) {
-  //   router.push("/");
-  // }
+  useEffect(() => {
+    if (token === "") {
+      router.push("/");
+    }
+  }, [token, router]);
+
   return (
     <Fragment>
       <div className="w-full relative min-h-[100vh] bg-[#dbd9d2] ">
