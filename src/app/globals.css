@@ -165,6 +165,15 @@ body {
     url("http://res.cloudinary.com/dggsagtrj/image/upload/v1723734831/wnf7szu3e3vgnloforog.jpg");
 }
 
+.sidemodal-bg {
+  border-top-left-radius: 16px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("http://res.cloudinary.com/dggsagtrj/image/upload/v1723734831/wnf7szu3e3vgnloforog.jpg");
+  opacity: 30;
+}
+
 .we_are_bg {
   background-size: cover;
   background-repeat: no-repeat;

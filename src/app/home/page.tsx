@@ -15,8 +15,10 @@ import SortInput from "@/components/sort/page";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { CampaignDetailsType } from "@/utils/types";
+import { useAuth } from "@/lib/useAuth";
 
 const Home = () => {
+  const isAuthenticated = useAuth();
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   // const [products, setProducts] = useState<ProductDetailType[]>([]);
@@ -137,6 +139,10 @@ const Home = () => {
     setShowCampaign(false);
     localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, "true");
   };
+
+  if (!isAuthenticated) {
+    router.push("/");
+  }
   return (
     <Fragment>
       <div className="w-full relative min-h-[100vh] bg-[#dbd9d2] ">
@@ -151,7 +157,7 @@ const Home = () => {
               }}
             />
           </h2>
-          <p className="mt-2 text-sm">Exodus 1 Collection is here</p>
+          <p className="mt-2 text-sm">Jubilee [Freedom] is here</p>
         </div>
 
         <SortInput

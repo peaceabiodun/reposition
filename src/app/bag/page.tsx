@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import Header from '@/components/header/page';
-import Image from 'next/image';
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
-import { CiTrash } from 'react-icons/ci';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import ErrorModal from '@/components/error-modal/page';
+import Header from "@/components/header/page";
+import Image from "next/image";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import { CiTrash } from "react-icons/ci";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+import ErrorModal from "@/components/error-modal/page";
 import {
   ConversionRateType,
   DeliveryDetailsType,
   ProductDetailType,
   ShoppingBagType,
-} from '@/utils/types';
-import { ThreeCircles } from 'react-loader-spinner';
-import SuccessModal from '@/components/success-modal/page';
-import { useRouter } from 'next/navigation';
-import { usePaystackPayment } from 'react-paystack';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { STORAGE_KEYS } from '@/utils/constants';
-import axios from 'axios';
-import { validateEmail } from '@/utils/functions';
-import PaymentReceipt from '../../components/receipt/page';
-import { useProductContext } from '@/context/product-context';
+} from "@/utils/types";
+import { ThreeCircles } from "react-loader-spinner";
+import SuccessModal from "@/components/success-modal/page";
+import { useRouter } from "next/navigation";
+import { usePaystackPayment } from "react-paystack";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { STORAGE_KEYS } from "@/utils/constants";
+import axios from "axios";
+import { validateEmail } from "@/utils/functions";
+import PaymentReceipt from "../../components/receipt/page";
+import { useProductContext } from "@/context/product-context";
 
 type FormDataType = {
   quantity: string;
@@ -37,8 +37,8 @@ const Bag = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const router = useRouter();
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
   const [Currencies, setCurrencies] = useState<ConversionRateType>();
   const [loadingCurrency, setLoadingCurrency] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -50,25 +50,25 @@ const Bag = () => {
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
 
   const [deliveryDetails, setDeliveryDetails] = useState<DeliveryDetailsType>({
-    first_name: '',
-    last_name: '',
-    user_email: '',
+    first_name: "",
+    last_name: "",
+    user_email: "",
     country: selectedCountry,
-    city: '',
-    address: '',
-    zip_code: '',
-    phone_number: '',
+    city: "",
+    address: "",
+    zip_code: "",
+    phone_number: "",
   });
 
   const countryList = [
-    'Nigeria',
-    'Ghana',
-    'Kenya',
-    'Rwanda',
-    'South Africa',
-    'United State of America',
-    'Canada',
-    'Uk',
+    "Nigeria",
+    "Ghana",
+    "Kenya",
+    "Rwanda",
+    "South Africa",
+    "United State of America",
+    "Canada",
+    "Uk",
   ];
 
   const frequentlyBoughtItems = products.filter((itm) => itm.frequently_bought);
@@ -79,7 +79,7 @@ const Bag = () => {
     if (existingBagItemsJSON) {
       const existingBagItems = JSON.parse(existingBagItemsJSON);
       setBagItems(
-        existingBagItems?.map((item: any) => ({ ...item, quantity: '1' })) ?? []
+        existingBagItems?.map((item: any) => ({ ...item, quantity: "1" })) ?? []
       );
     }
   }, []);
@@ -188,17 +188,17 @@ const Bag = () => {
 
       shippingFee = 0;
     } else if (
-      (totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-      (totalPrice >= 300 && selectedCountry === 'Nigeria')
+      (totalPrice >= 600 && selectedCountry !== "Nigeria") ||
+      (totalPrice >= 300 && selectedCountry === "Nigeria")
     ) {
       shippingFee = 0;
-    } else if (totalWeight === 1 && selectedCountry === 'Nigeria') {
+    } else if (totalWeight === 1 && selectedCountry === "Nigeria") {
       shippingFee = 7;
-    } else if (totalWeight === 1 && selectedCountry !== 'Nigeria') {
+    } else if (totalWeight === 1 && selectedCountry !== "Nigeria") {
       shippingFee = 20;
-    } else if (totalWeight === 2 && selectedCountry !== 'Nigeria') {
+    } else if (totalWeight === 2 && selectedCountry !== "Nigeria") {
       shippingFee = 55;
-    } else if (totalWeight && selectedCountry == 'Nigeria') {
+    } else if (totalWeight && selectedCountry == "Nigeria") {
       shippingFee = 7 * totalWeight;
     } else {
       shippingFee = 20 * totalWeight;
@@ -226,42 +226,42 @@ const Bag = () => {
     if (!first_name) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        first_name: 'First name is required',
+        first_name: "First name is required",
       }));
       isValid = false;
     }
     if (!last_name) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        last_name: 'Last name is required',
+        last_name: "Last name is required",
       }));
       isValid = false;
     }
     if (!user_email) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        user_email: 'Valid email is required',
+        user_email: "Valid email is required",
       }));
       isValid = false;
     }
     if (!city) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        city: 'City is required',
+        city: "City is required",
       }));
       isValid = false;
     }
     if (!address) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        address: 'Address is required',
+        address: "Address is required",
       }));
       isValid = false;
     }
     if (!zip_code) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        zip_code: 'Zip code is required',
+        zip_code: "Zip code is required",
       }));
       isValid = false;
     }
@@ -269,14 +269,14 @@ const Bag = () => {
     if (!phone_number) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        phone_number: 'Valid phone number is required',
+        phone_number: "Valid phone number is required",
       }));
       isValid = false;
     }
     if (!country) {
       setFormError((prevErrors) => ({
         ...prevErrors,
-        country: 'Country is required',
+        country: "Country is required",
       }));
       isValid = false;
     }
@@ -331,7 +331,7 @@ const Bag = () => {
     amount_paid: totalPrice + shippingFee,
     shipping_fee: shippingFee,
     order_id: generateOrderNumber(100000),
-    status: 'processing',
+    status: "processing",
   };
   const orderConfirmationDetails = async (orderReference: string) => {
     try {
@@ -340,7 +340,7 @@ const Bag = () => {
         reference: orderReference,
       };
       const { data, error } = await supabase
-        .from('orders')
+        .from("orders")
         .insert(updatedOrderPayload);
       setShowReceipt(true);
     } catch (err: any) {
@@ -352,11 +352,11 @@ const Bag = () => {
     reference: new Date().getTime().toString(),
     email: deliveryDetails.user_email,
     amount: Math.round(
-      (totalPrice + shippingFee) * parseFloat(Currencies?.NGN ?? '0') * 100
+      (totalPrice + shippingFee) * parseFloat(Currencies?.NGN ?? "0") * 100
     ),
     //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-    Currency: 'NGN',
+    Currency: "NGN",
     metadata: {
       product_details: bagItems.map((itm) => ({
         name: itm.name,
@@ -378,107 +378,107 @@ const Bag = () => {
   const onSuccess = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
 
-    if (reference.message === 'Approved') {
+    if (reference.message === "Approved") {
       orderConfirmationDetails(reference.reference);
     }
   };
 
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log('closed');
+    console.log("closed");
   };
 
   return (
-    <div className='w-full min-h-screen bg-[#dbd9d2] '>
+    <div className="w-full min-h-screen bg-[#dbd9d2] ">
       <Header />
       <Link
-        href='/'
-        className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
+        href="/home"
+        className="mt-4 gap-1 flex text-sm items-center px-3 xs:px-4"
       >
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>
 
-      <h2 className='text-sm font-medium text-center my-4 px-3 xs:px-4'>
+      <h2 className="text-sm font-medium text-center my-4 px-3 xs:px-4">
         Shopping Bag ({bagItems.length})
       </h2>
       {bagItems.length <= 0 ? (
-        <div className='flex justify-center items-center p-3 my-6 text-sm h-full'>
+        <div className="flex justify-center items-center p-3 my-6 text-sm h-full">
           No item in your shopping bag
         </div>
       ) : loading ? (
-        <div className='flex justify-center items-center p-3 '>
+        <div className="flex justify-center items-center p-3 ">
           <ThreeCircles
             visible={true}
             height={50}
             width={50}
-            color='#b4b4b4ad'
-            ariaLabel='three-circles-loading'
-            wrapperClass='my-4'
+            color="#b4b4b4ad"
+            ariaLabel="three-circles-loading"
+            wrapperClass="my-4"
           />
         </div>
       ) : (
-        <div className='my-4 space-y-6 px-3 xs:px-4'>
-          <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+        <div className="my-4 space-y-6 px-3 xs:px-4">
+          <h2 className="border-b border-[#a1a1a19c] w-full py-3 text-sm">
             Order Summary
           </h2>
 
           {bagItems?.map((item, index) => (
             <div
               key={item.id}
-              className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
+              className="border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center"
             >
               <Image
-                src={item?.image ?? '/placeholder.png'}
-                alt='product_image'
-                width='80'
-                height='90'
-                className='h-[90px] object-cover'
+                src={item?.image ?? "/placeholder.png"}
+                alt="product_image"
+                width="80"
+                height="90"
+                className="h-[90px] object-cover"
               />
-              <div className='flex flex-col gap-3 '>
-                <p className=''>
+              <div className="flex flex-col gap-3 ">
+                <p className="">
                   {item.name} [{item.color}]
                 </p>
                 <p>Size: {item.size}</p>
               </div>
-              <div className='flex flex-col gap-3 '>
-                <div className='flex gap-2 items-center'>
+              <div className="flex flex-col gap-3 ">
+                <div className="flex gap-2 items-center">
                   <h2>Qty</h2>
                   <input
-                    type='text'
+                    type="text"
                     value={item.quantity}
                     onChange={(e) => updateQuantity(e.target.value, index)}
-                    className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
+                    className="outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]"
                   />
                 </div>
                 <p>${item.price}</p>
               </div>
               <div
                 onClick={() => removeItemFromBag(item.id)}
-                className='cursor-pointer'
+                className="cursor-pointer"
               >
                 <CiTrash size={20} />
               </div>
             </div>
           ))}
 
-          <div className='border-b border-[#a1a1a19c] w-full py-3 '>
-            <h2 className='text-sm'>Frequently Bought Items</h2>
+          <div className="border-b border-[#a1a1a19c] w-full py-3 ">
+            <h2 className="text-sm">Frequently Bought Items</h2>
 
-            <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar'>
+            <div className="mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar">
               {frequentlyBoughtItems.map((item, index) => (
-                <div key={index} className=''>
+                <div key={index} className="">
                   <Image
                     src={item?.images[0]}
-                    alt='product-img'
+                    alt="product-img"
                     width={100}
                     height={100}
-                    className='w-[100px] h-[100px] object-cover'
+                    className="w-[100px] h-[100px] object-cover"
                   />
-                  <p className='mt-2 mb-1 text-center '>${item?.price}</p>
+                  <p className="mt-2 mb-1 text-center ">${item?.price}</p>
                   <button
                     onClick={() => router.push(`product/${item.id}`)}
-                    className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center'
+                    className=" bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center"
                   >
                     View
                   </button>
@@ -487,38 +487,38 @@ const Bag = () => {
             </div>
           </div>
 
-          <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
-            <div className=' w-full text-xs md:text-sm '>
-              <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
+          <div className="flex flex-col md:flex-row gap-4 md:gap-12 ">
+            <div className=" w-full text-xs md:text-sm ">
+              <div className="border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm">
                 <h2>Delivery Details</h2>
               </div>
-              <div className='w-full mt-5'>
+              <div className="w-full mt-5">
                 <label>First Name</label>
 
                 <input
-                  type='text'
-                  placeholder='E.g Walter'
+                  type="text"
+                  placeholder="E.g Walter"
                   value={deliveryDetails.first_name}
-                  onChange={(e) => updateFormData('first_name', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
+                  onChange={(e) => updateFormData("first_name", e.target.value)}
+                  className="border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent "
                 />
                 {formError.first_name && (
-                  <div className='text-xs text-red-500 mt-2'>
+                  <div className="text-xs text-red-500 mt-2">
                     {formError.first_name}
                   </div>
                 )}
               </div>
-              <div className='my-5'>
+              <div className="my-5">
                 <label>Last Name</label>
                 <input
-                  type='text'
-                  placeholder='E.g White'
+                  type="text"
+                  placeholder="E.g White"
                   value={deliveryDetails.last_name}
-                  onChange={(e) => updateFormData('last_name', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
+                  onChange={(e) => updateFormData("last_name", e.target.value)}
+                  className="border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent "
                 />
                 {formError.last_name && (
-                  <div className='text-xs text-red-500 mt-2'>
+                  <div className="text-xs text-red-500 mt-2">
                     {formError.last_name}
                   </div>
                 )}
@@ -526,55 +526,55 @@ const Bag = () => {
               <div>
                 <label>Email</label>
                 <input
-                  type='email'
-                  placeholder='E.g white@gmail.com'
+                  type="email"
+                  placeholder="E.g white@gmail.com"
                   value={deliveryDetails.user_email}
-                  onChange={(e) => updateFormData('user_email', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  onChange={(e) => updateFormData("user_email", e.target.value)}
+                  className="border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 "
                 />
                 {!validateEmail(deliveryDetails.user_email) &&
                   formError.user_email && (
-                    <div className='text-[10px] text-red-500 mt-2'>
+                    <div className="text-[10px] text-red-500 mt-2">
                       {formError.user_email}
                     </div>
                   )}
               </div>
-              <div className='my-5'>
+              <div className="my-5">
                 <label> City</label>
                 <input
-                  type='text'
-                  placeholder='E.g Los Angeles'
+                  type="text"
+                  placeholder="E.g Los Angeles"
                   value={deliveryDetails.city}
-                  onChange={(e) => updateFormData('city', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  onChange={(e) => updateFormData("city", e.target.value)}
+                  className="border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 "
                 />
                 {formError.city && (
-                  <div className='text-[10px] text-red-500 mt-2'>
+                  <div className="text-[10px] text-red-500 mt-2">
                     {formError.city}
                   </div>
                 )}
               </div>
-              <p className='mb-2'>Country </p>
+              <p className="mb-2">Country </p>
               <div
                 onClick={() => setShowDropdown(!showDropdown)}
                 className={`border  text-gray-400 border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
               >
                 <p
                   className={`${
-                    selectedCountry && selectedCountry !== ''
-                      ? 'text-[#000]'
-                      : ' text-gray-400'
+                    selectedCountry && selectedCountry !== ""
+                      ? "text-[#000]"
+                      : " text-gray-400"
                   } `}
                 >
-                  {selectedCountry ? selectedCountry : 'E.g United States'}
+                  {selectedCountry ? selectedCountry : "E.g United States"}
                 </p>
                 <MdOutlineKeyboardArrowDown
                   size={18}
-                  className='text-gray-400 '
+                  className="text-gray-400 "
                 />
               </div>
               {showDropdown && (
-                <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
+                <div className="bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto">
                   {countryList.map((item, index) => (
                     <div
                       key={index}
@@ -584,8 +584,8 @@ const Bag = () => {
                       }}
                       className={`${
                         selectedCountry === item
-                          ? ' font-medium bg-gray-100'
-                          : ''
+                          ? " font-medium bg-gray-100"
+                          : ""
                       } hover:font-medium hover:bg-gray-100 p-2 cursor-pointer`}
                     >
                       {item}
@@ -593,17 +593,17 @@ const Bag = () => {
                   ))}
                 </div>
               )}
-              <div className='my-5'>
+              <div className="my-5">
                 <label>Address</label>
                 <input
-                  type='text'
-                  placeholder='E.g No 5, Centinela Avenue, Los Angeles, USA'
+                  type="text"
+                  placeholder="E.g No 5, Centinela Avenue, Los Angeles, USA"
                   value={deliveryDetails.address}
-                  onChange={(e) => updateFormData('address', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  onChange={(e) => updateFormData("address", e.target.value)}
+                  className="border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 "
                 />
                 {formError.address && (
-                  <div className='text-[10px] text-red-500 mt-2'>
+                  <div className="text-[10px] text-red-500 mt-2">
                     {formError.address}
                   </div>
                 )}
@@ -612,31 +612,31 @@ const Bag = () => {
                 <label>Zip code</label>
 
                 <input
-                  type='text'
-                  placeholder='E.g 90004'
+                  type="text"
+                  placeholder="E.g 90004"
                   value={deliveryDetails.zip_code}
-                  onChange={(e) => updateFormData('zip_code', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  onChange={(e) => updateFormData("zip_code", e.target.value)}
+                  className="border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 "
                 />
                 {formError.zip_code && (
-                  <div className='text-[10px] text-red-500 mt-2'>
+                  <div className="text-[10px] text-red-500 mt-2">
                     {formError.zip_code}
                   </div>
                 )}
               </div>
-              <div className='my-5'>
+              <div className="my-5">
                 <label>Phone Number</label>
                 <input
-                  type='text'
-                  placeholder='E.g +213 90445678'
+                  type="text"
+                  placeholder="E.g +213 90445678"
                   value={deliveryDetails.phone_number}
                   onChange={(e) =>
-                    updateFormData('phone_number', e.target.value)
+                    updateFormData("phone_number", e.target.value)
                   }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
+                  className="border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2"
                 />
                 {formError.phone_number && (
-                  <div className='text-[10px] text-red-500 mt-2'>
+                  <div className="text-[10px] text-red-500 mt-2">
                     {formError.phone_number}
                   </div>
                 )}
@@ -674,22 +674,22 @@ const Bag = () => {
                 </div>
               </div> */}
 
-            <div className=' w-full text-xs md:text-sm '>
-              <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+            <div className=" w-full text-xs md:text-sm ">
+              <h2 className="border-b border-[#a1a1a19c] w-full py-3 text-sm">
                 Shipping Method
               </h2>
-              {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-              (totalPrice >= 300 && selectedCountry === 'Nigeria') ? (
-                <div className='flex gap-2 items-start mt-5'>
+              {(totalPrice >= 600 && selectedCountry !== "Nigeria") ||
+              (totalPrice >= 300 && selectedCountry === "Nigeria") ? (
+                <div className="flex gap-2 items-start mt-5">
                   <input
-                    type='checkbox'
+                    type="checkbox"
                     checked
-                    className='accent-black mt-1'
+                    className="accent-black mt-1"
                     readOnly
                   />
                   <div>
-                    <h3 className='font-medium'>Standard Courier</h3>
-                    <div className='font-bold'>(Free delivery)</div>
+                    <h3 className="font-medium">Standard Courier</h3>
+                    <div className="font-bold">(Free delivery)</div>
                     <p>
                       Delivery takes up to 10-16 business days for products
                       marked &apos;made-to-order&apos; or &apos;pre-order&apos;.
@@ -698,11 +698,11 @@ const Bag = () => {
                   </div>
                 </div>
               ) : (
-                <div className='flex gap-2 items-start mt-5'>
+                <div className="flex gap-2 items-start mt-5">
                   <input
-                    type='checkbox'
+                    type="checkbox"
                     checked
-                    className='accent-black mt-1'
+                    className="accent-black mt-1"
                     readOnly
                     // onChange={(e) =>
                     //   setDeliveryDetails({
@@ -712,7 +712,7 @@ const Bag = () => {
                     // }
                   />
                   <div>
-                    <h3 className='font-medium'>Standard Courier</h3>
+                    <h3 className="font-medium">Standard Courier</h3>
                     <div>${shippingFee.toFixed(2)}</div>
                     <p>
                       Delivery takes up to 10-16 business days for products
@@ -722,42 +722,42 @@ const Bag = () => {
                   </div>
                 </div>
               )}
-              <h2 className='border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm'>
+              <h2 className="border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm">
                 Billing Summary
               </h2>
-              <div className='space-y-3 mt-3'>
-                <div className='flex gap-3 justify-between'>
+              <div className="space-y-3 mt-3">
+                <div className="flex gap-3 justify-between">
                   <p>Item total</p>
                   <p>${totalPrice.toFixed(2)}</p>
                 </div>
-                <div className='flex gap-3 justify-between'>
-                  <div className=''>
+                <div className="flex gap-3 justify-between">
+                  <div className="">
                     <p>Shipping fee</p>
-                    <p className='text-[10px] text-[#644120] italic'>
+                    <p className="text-[10px] text-[#644120] italic">
                       *Shipping fee may reduce or increase depending on
                       destination country.
                     </p>
-                    <p className='text-[10px] text-[#644120] italic'>
+                    <p className="text-[10px] text-[#644120] italic">
                       *Please select a country to see correct shipping fee
                     </p>
                   </div>
                   <p>
-                    {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-                    (totalPrice >= 300 && selectedCountry === 'Nigeria')
-                      ? 'Free Delivery'
-                      : `$${shippingFee.toFixed(2)}`}{' '}
+                    {(totalPrice >= 600 && selectedCountry !== "Nigeria") ||
+                    (totalPrice >= 300 && selectedCountry === "Nigeria")
+                      ? "Free Delivery"
+                      : `$${shippingFee.toFixed(2)}`}{" "}
                   </p>
                 </div>
-                <div className='flex gap-3 justify-between'>
+                <div className="flex gap-3 justify-between">
                   <p>Discount Fee</p>
                   <p>--</p>
                 </div>
-                <div className='flex gap-3 justify-between'>
+                <div className="flex gap-3 justify-between">
                   <p>Duties, taxes & fees</p>
                   <p>--</p>
                 </div>
-                <div className='flex gap-3 justify-between font-bold'>
-                  <p className=''>Total</p>
+                <div className="flex gap-3 justify-between font-bold">
+                  <p className="">Total</p>
                   <p>${(totalPrice + shippingFee).toFixed(2)}</p>
                 </div>
               </div>
@@ -795,27 +795,27 @@ const Bag = () => {
                 )}
               </div> */}
 
-              <div className=' w-full'>
-                <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
+              <div className=" w-full">
+                <h2 className="border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm">
                   Payment Options
                 </h2>
-                <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
+                <div className="my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]">
                   <Image
-                    alt='master-card'
-                    src={'/master-card-icon.svg'}
+                    alt="master-card"
+                    src={"/master-card-icon.svg"}
                     width={50}
                     height={50}
                   />
                   <Image
-                    alt='visa-card'
-                    src={'/visa-icon.svg'}
+                    alt="visa-card"
+                    src={"/visa-icon.svg"}
                     width={50}
                     height={50}
                   />
 
                   <Image
-                    alt='bank-transfer'
-                    src={'/bank-transfer-icon.svg'}
+                    alt="bank-transfer"
+                    src={"/bank-transfer-icon.svg"}
                     width={40}
                     height={40}
                   />
@@ -826,7 +826,7 @@ const Bag = () => {
         </div>
       )}
       {bagItems.length <= 0 ? null : (
-        <div className='flex justify-center py-6 px-3 xs:px-4'>
+        <div className="flex justify-center py-6 px-3 xs:px-4">
           <button
             onClick={() => {
               if (formIsValid() || !validateEmail(deliveryDetails.user_email)) {
@@ -834,7 +834,7 @@ const Bag = () => {
               }
               initializePayment({ onSuccess, onClose });
             }}
-            className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
+            className="border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3"
           >
             Complete Order
           </button>
@@ -845,16 +845,16 @@ const Bag = () => {
         <ErrorModal
           show={showErrorModal}
           onClose={() => setShowErrorModal(false)}
-          description='Sorry an error occured while loading the products'
+          description="Sorry an error occured while loading the products"
         />
       )}
       {showDeleteSuccessModal && (
         <SuccessModal
           show={showDeleteSuccessModal}
           onClose={() => setShowDeleteSuccessModal(false)}
-          title='Product removed from Cart'
-          buttonText='Go back to shopping'
-          buttonClick={() => router.push('/')}
+          title="Product removed from Cart"
+          buttonText="Go back to shopping"
+          buttonClick={() => router.push("/")}
         />
       )}
 
