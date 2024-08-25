@@ -1,14 +1,14 @@
-import { FaCheck } from 'react-icons/fa';
-import { FileUploader } from '../file-uploader/page';
-import LocalSideModal from '../side-modal/page';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { ProductDetailType } from '@/utils/types';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import { STORAGE_KEYS } from '@/utils/constants';
-import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import ErrorModal from '../error-modal/page';
+import { FaCheck } from "react-icons/fa";
+import { FileUploader } from "../file-uploader/page";
+import LocalSideModal from "../side-modal/page";
+import { AiOutlineDelete } from "react-icons/ai";
+import { ProductDetailType } from "@/utils/types";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { STORAGE_KEYS } from "@/utils/constants";
+import { ENUM_PRODUCT_FILTER_LIST } from "@/utils/enum";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import ErrorModal from "../error-modal/page";
 
 type EditModalProps = {
   show: boolean;
@@ -40,10 +40,10 @@ const EditProductModal = ({
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  const [size, setSize] = useState('');
-  const [color, setColor] = useState('');
+  const [size, setSize] = useState("");
+  const [color, setColor] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const categoryOptions = [
     { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
@@ -62,9 +62,9 @@ const EditProductModal = ({
 
   const [formData, setFormData] = useState({} as EditFormDataType);
   const userEmail =
-    typeof window !== 'undefined'
+    typeof window !== "undefined"
       ? localStorage.getItem(STORAGE_KEYS.USER_EMAIL)
-      : '';
+      : "";
 
   useEffect(() => {
     if (selectedProduct) {
@@ -87,13 +87,13 @@ const EditProductModal = ({
     if (!size) return;
     const sizes = [...formData.sizes, size];
     setFormData((data) => ({ ...data, sizes }));
-    setSize('');
+    setSize("");
   };
   const addColor = () => {
     if (!color) return;
     const colors = [...formData.colors, color];
     setFormData((data) => ({ ...data, colors }));
-    setColor('');
+    setColor("");
   };
 
   const handleRemoveSize = (index: number) => {
@@ -124,9 +124,9 @@ const EditProductModal = ({
     };
     try {
       const { data, error } = await supabase
-        .from('products')
+        .from("products")
         .update(payload)
-        .eq('id', selectedProduct?.id);
+        .eq("id", selectedProduct?.id);
       console.log(data);
       onClose();
       refresh?.();
@@ -141,53 +141,53 @@ const EditProductModal = ({
     <LocalSideModal
       isOpen={show}
       onRequestClose={onClose}
-      title='Edit Product Details'
+      title="Edit Product Details"
     >
-      <div className='text-sm mt-4'>
-        <label className=''>Product Name</label>
+      <div className="text-sm mt-4">
+        <label className="">Product Name</label>
         <input
-          type='text'
-          className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-          placeholder='e.g Utility Jacket'
+          type="text"
+          className="border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] "
+          placeholder="e.g Utility Jacket"
           value={formData?.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
 
-        <label className=''>Product Price</label>
+        <label className="">Product Price</label>
         <input
-          type='text'
-          className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-          placeholder='$100'
+          type="text"
+          className="border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] "
+          placeholder="$100"
           value={formData?.price}
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         />
 
-        <label className=''>Product Description</label>
+        <label className="">Product Description</label>
         <textarea
-          className='border border-[#3d3e3f] rounded-sm w-full h-[160px] my-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-          placeholder='Describe your product'
+          className="border border-[#3d3e3f] rounded-sm w-full h-[160px] my-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] "
+          placeholder="Describe your product"
           value={formData?.description}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
         />
 
-        <div className='w-full mb-2 relative '>
-          <p className=''>Product Category</p>
+        <div className="w-full mb-2 relative ">
+          <p className="">Product Category</p>
           <div
             onClick={() => {
-              console.log('hhjh');
+              console.log("hhjh");
               setShowDropdown(!showDropdown);
             }}
-            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex gap-3 justify-between  items-center cursor-pointer '
+            className="border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex gap-3 justify-between  items-center cursor-pointer "
           >
-            <p className='text-[#000]'>
+            <p className="text-[#000]">
               {selectedCategory ? selectedCategory : formData.category}
             </p>
-            <MdOutlineKeyboardArrowDown size={18} className='text-gray-400 ' />
+            <MdOutlineKeyboardArrowDown size={18} className="text-gray-400 " />
           </div>
           {showDropdown && (
-            <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999] w-[200px] max-h-[230px] overflow-y-auto'>
+            <div className="bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999] w-[200px] max-h-[230px] overflow-y-auto">
               {categoryOptions.map((item, index) => (
                 <div
                   key={index}
@@ -197,8 +197,8 @@ const EditProductModal = ({
                   }}
                   className={`${
                     selectedCategory === item.name
-                      ? ' font-medium bg-gray-100 rounded-md'
-                      : ''
+                      ? " font-medium bg-gray-100 rounded-md"
+                      : ""
                   } hover:font-medium hover:bg-gray-100 hover:rounded-md p-2 cursor-pointer  `}
                 >
                   {item.name}
@@ -207,31 +207,31 @@ const EditProductModal = ({
             </div>
           )}
         </div>
-        <div className='w-full'>
-          <label className=''>Product Weight</label>
-          <div className='flex w-full items-center'>
+        <div className="w-full">
+          <label className="">Product Weight</label>
+          <div className="flex w-full items-center">
             <input
-              type='tel'
-              className='border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
-              placeholder='weight in kg'
-              value={formData?.weight ?? ''}
+              type="tel"
+              className="border-y border-l rounded-l-sm rounded-r-none border-[#3d3e3f] w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3]"
+              placeholder="weight in kg"
+              value={formData?.weight ?? ""}
               onChange={(e) => {
                 const value = e.target.value;
-                if (/^\d*$/.test(value) || value === '') {
+                if (/^\d*$/.test(value) || value === "") {
                   setFormData({
                     ...formData,
-                    weight: value === '' ? null : parseInt(value),
+                    weight: value === "" ? null : parseInt(value),
                   });
                 }
               }}
             />
-            <div className='border-y border-r rounded-r-sm rounded-l-none border-[#3d3e3f] p-2 my-2'>
+            <div className="border-y border-r rounded-r-sm rounded-l-none border-[#3d3e3f] p-2 my-2">
               Kg
             </div>
           </div>
         </div>
-        <p className='mb-2'>Product Image</p>
-        <div className='flex flex-col gap-3'>
+        <p className="mb-2">Product Image</p>
+        <div className="flex flex-col gap-3">
           {formData?.images?.map((item, index) => (
             <FileUploader
               key={index}
@@ -241,76 +241,76 @@ const EditProductModal = ({
                 updatedImages[index] = url[0];
                 setFormData({ ...formData, images: updatedImages });
               }}
-              className='w-full text-sm'
+              className="w-full text-sm"
             />
           ))}
         </div>
 
-        <div className='flex my-3 gap-4'>
+        <div className="flex my-3 gap-4">
           <input
-            type='checkbox'
-            className='accent-[#d3d3d3] cursor-pointer'
+            type="checkbox"
+            className="accent-[#d3d3d3] cursor-pointer"
             checked={formData?.frequently_bought}
             onChange={(e) =>
               setFormData({ ...formData, frequently_bought: e.target.checked })
             }
           />
-          <p className='font-semibold '>Mark Product as Frequently Bought</p>
+          <p className="font-semibold ">Mark Product as Frequently Bought</p>
         </div>
 
-        <div className='flex my-3 gap-4'>
+        <div className="flex my-3 gap-4">
           <input
-            type='checkbox'
-            className='accent-[#d3d3d3] cursor-pointer'
+            type="checkbox"
+            className="accent-[#d3d3d3] cursor-pointer"
             checked={formData?.sold_out}
             onChange={(e) =>
               setFormData({ ...formData, sold_out: e.target.checked })
             }
           />
-          <p className='font-semibold '>Out Of Stock</p>
+          <p className="font-semibold ">Sold Out</p>
         </div>
 
-        <div className='flex my-3 gap-4'>
+        <div className="flex my-3 gap-4">
           <input
-            type='checkbox'
-            className='accent-[#d3d3d3] cursor-pointer'
+            type="checkbox"
+            className="accent-[#d3d3d3] cursor-pointer"
             checked={formData?.pre_order}
             onChange={(e) =>
               setFormData({ ...formData, pre_order: e.target.checked })
             }
           />
-          <p className='font-semibold '>Mark Product for Pre-Order</p>
+          <p className="font-semibold ">Pre-Order Only</p>
         </div>
 
         <p>Product Sizes</p>
-        <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
-          <p className=''>+ Add Sizes</p>
-          <div className='flex items-center justify-between gap-3'>
+        <div className="border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll">
+          <p className="">+ Add Sizes</p>
+          <div className="flex items-center justify-between gap-3">
             <input
-              type='text'
-              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent'
+              type="text"
+              className="border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent"
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />
             {size && !formData?.sizes.find((s) => s === size) ? (
-              <FaCheck className='cursor-pointer' onClick={addSize} />
+              <FaCheck className="cursor-pointer" onClick={addSize} />
             ) : null}
           </div>
 
-          <div className='mt-6 text-sm space-y-3'>
+          <div className="mt-6 text-sm space-y-3">
             {formData?.sizes?.map((item, index) => (
               <div
                 key={index}
-                className='flex justify-between items-center gap-3'
+                className="flex justify-between items-center gap-3"
               >
-                <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                <span className="bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] ">
                   {item}
                 </span>
                 <div
                   onClick={() => handleRemoveSize(index)}
-                  className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
+                  className="p-[0.75rem] rounded-lg flex bg-[#a3a3a325]"
                 >
-                  <AiOutlineDelete className='cursor-pointer' />
+                  <AiOutlineDelete className="cursor-pointer" />
                 </div>
               </div>
             ))}
@@ -318,34 +318,34 @@ const EditProductModal = ({
         </div>
 
         <p>Product Colors</p>
-        <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
-          <p className=''>+ Add Colors</p>
-          <div className='flex items-center justify-between gap-3'>
+        <div className="border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll">
+          <p className="">+ Add Colors</p>
+          <div className="flex items-center justify-between gap-3">
             <input
-              type='text'
-              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent'
+              type="text"
+              className="border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent"
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />
             {color && !formData?.colors.find((c) => c === color) ? (
-              <FaCheck className='cursor-pointer' onClick={addColor} />
+              <FaCheck className="cursor-pointer" onClick={addColor} />
             ) : null}
           </div>
 
-          <div className='mt-6 text-sm space-y-3'>
+          <div className="mt-6 text-sm space-y-3">
             {formData?.colors?.map((item, index) => (
               <div
                 key={index}
-                className='flex justify-between gap-3 items-center'
+                className="flex justify-between gap-3 items-center"
               >
-                <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                <span className="bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] ">
                   {item}
                 </span>
                 <div
                   onClick={() => handleRemoveColor(index)}
-                  className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
+                  className="p-[0.75rem] rounded-lg flex bg-[#a3a3a325]"
                 >
-                  <AiOutlineDelete className='cursor-pointer' />
+                  <AiOutlineDelete className="cursor-pointer" />
                 </div>
               </div>
             ))}
@@ -354,16 +354,16 @@ const EditProductModal = ({
 
         <button
           onClick={editProductDetails}
-          className='border border-[#909192] bg-[#523f3f9c] text-[#e4e0e0] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#7e5d5dab]'
+          className="border border-[#909192] bg-[#523f3f9c] text-[#e4e0e0] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#7e5d5dab]"
         >
-          {loading ? 'Loading...' : 'Confirm'}
+          {loading ? "Loading..." : "Confirm"}
         </button>
       </div>
       {showErrorMessage && (
         <ErrorModal
           show={showErrorMessage}
           onClose={() => setShowErrorMessage(false)}
-          description='An error occured, please check your connection'
+          description="An error occured, please check your connection"
         />
       )}
     </LocalSideModal>

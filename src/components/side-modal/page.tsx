@@ -50,7 +50,7 @@ const LocalSideModal = ({
         </div>
 
         {title ? <h3 className="text-center">{title}</h3> : <span />}
-        <div className="overflow-y-scroll h-full pr-[30px] blur-bg">
+        <div className="overflow-y-scroll h-full mr-[30px] blur-bg ">
           {children}
         </div>
       </div>
