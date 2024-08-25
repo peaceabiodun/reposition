@@ -6,8 +6,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const checkAuth = (token: string) => {
-  if (token) return true;
-  else {
-    location.href = "/login";
+  if (typeof window !== "undefined") {
+    if (token) return true;
+    else {
+      location.href = "/login";
+    }
   }
 };
