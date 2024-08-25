@@ -148,11 +148,15 @@ const Home = () => {
   //     }
   //   }
   // }, [isAuthenticated, router]);
-  const authToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) ?? "";
+
+  const authToken =
+    typeof window !== "undefined"
+      ? localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN)
+      : "";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      checkAuth(authToken);
+      checkAuth(authToken ?? "");
     }
   }, [authToken]);
 
