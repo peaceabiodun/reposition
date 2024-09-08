@@ -28,12 +28,12 @@ const Home = () => {
   const router = useRouter();
   const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
 
-  useEffect(() => {
-    const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
-    if (hasSeenCampaign) {
-      setShowCampaign(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
+  //   if (hasSeenCampaign) {
+  //     setShowCampaign(false);
+  //   }
+  // }, []);
 
   const options = [
     { name: ENUM_PRODUCT_FILTER_LIST.ALL },
