@@ -82,7 +82,7 @@ const CampaignPage = () => {
               <Typewriter
                 options={{
                   strings: [
-                    "NEW DROP | Freedom '24",
+                    'Experience Freedom',
                     `${campaignDetails?.campaign_title}`,
                   ],
                   autoStart: true,
