@@ -15,9 +15,11 @@ import SortInput from '@/components/sort/page';
 import { MdClose } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType } from '@/utils/types';
+import ReactPlayer from 'react-player';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
+  const [campaignLoading, setCampaignLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   // const [products, setProducts] = useState<ProductDetailType[]>([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -79,7 +81,7 @@ const Home = () => {
   }, [filterValue]);
 
   const fetchCampaignDetails = async () => {
-    setLoading(true);
+    setCampaignLoading(true);
     try {
       const { data, error } = await supabase.from('campaign').select();
       if (data) {
@@ -92,7 +94,7 @@ const Home = () => {
     } catch (err: any) {
       setShowErrorModal(true);
     } finally {
-      setLoading(false);
+      setCampaignLoading(false);
     }
   };
 
@@ -141,7 +143,54 @@ const Home = () => {
     <Fragment>
       <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
         <Header />
-        <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-4'>
+        <div className='flex flex-col items-center  w-full p-4'>
+          {campaignLoading ? (
+            <div className='grow w-full flex justify-center items-center p-4'>
+              <ThreeCircles
+                visible={true}
+                height={50}
+                width={50}
+                color='#b4b4b4ad'
+                ariaLabel='three-circles-loading'
+                wrapperClass='my-4'
+              />
+            </div>
+          ) : (
+            <div className=''>
+              <h2 className='text-lg sm:text-2xl font-semibold text-center mt-6'>
+                <Typewriter
+                  options={{
+                    strings: [
+                      'Experience Freedom',
+                      `${campaignDetails?.campaign_title}`,
+                    ],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </h2>
+
+              <div className=' mt-3'>
+                <div className='w-screen h-[50vh] overflow-hidden sm:h-[600px] '>
+                  <ReactPlayer
+                    width='100%'
+                    height='100%'
+                    url={campaignDetails?.campaign_video}
+                    controls={true}
+                    playing={true}
+                    loop={true}
+                  />
+                  {/* <video width='100%' height='500px' autoPlay src='/video1.mp4' /> */}
+                </div>
+
+                <div className='text-[#704e21] text-sm md:text-[16px] font-semibold flex flex-col items-center gap-2 mt-3'>
+                  <p>{campaignDetails?.campaign_subtext}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-4'>
           <h2 className='text-4xl font-semibold'>
             <Typewriter
               options={{
@@ -152,7 +201,7 @@ const Home = () => {
             />
           </h2>
           <p className='mt-2 text-sm'>Exodus 1 Collection is here</p>
-        </div>
+        </div> */}
 
         <SortInput
           options={options}
@@ -176,16 +225,15 @@ const Home = () => {
             No Products Available
           </div>
         ) : (
-          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4'>
+          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4'>
             {products?.map((item) => (
-              <Link href={`product/${item.id}`} key={item.id} className=''>
-                <div className='relative min-h-[300px] '>
+              <Link href={`product/${item.id}`} key={item.id} className='mb-4'>
+                <div className='relative min-h-[350px] w-[100%] '>
                   <Image
                     src={item?.images[0] ?? '/placeholder.png'}
                     alt='product_image'
-                    width='200'
-                    height='300'
-                    className={` min-h-[300px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
+                    fill
+                    className={` min-h-[350px] h-[350px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
                       item.sold_out ? 'brightness-50' : ''
                     } `}
                   />
@@ -217,7 +265,7 @@ const Home = () => {
           description='Sorry an error occured while loading the products'
         />
       )}
-      {showCampaign && (
+      {/* {showCampaign && (
         <div
           style={{
             backgroundSize: 'cover',
@@ -253,7 +301,7 @@ const Home = () => {
             <MdClose />
           </button>
         </div>
-      )}
+      )} */}
     </Fragment>
   );
 };
