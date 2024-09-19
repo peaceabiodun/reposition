@@ -1,6 +1,6 @@
 'use client';
 import Header from '@/components/header/page';
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
@@ -10,13 +10,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ProductDetailType } from '@/utils/types';
 import { supabase } from '@/lib/supabase';
 import { ThreeCircles } from 'react-loader-spinner';
 import SuccessModal from '@/components/success-modal/page';
 import ErrorModal from '@/components/error-modal/page';
-import Slider from 'react-slick';
 import { STORAGE_KEYS } from '@/utils/constants';
 
 const ProductDetails = () => {
@@ -26,6 +25,8 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const params = useParams();
   const disableBtn = !selectedSize || !selectedColor;
@@ -39,18 +40,6 @@ const ProductDetails = () => {
   //     ? localStorage.getItem(STORAGE_KEYS.USER_ID)
   //     : '';
 
-  const settings = {
-    dots: true,
-    arrows: false,
-    fade: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    waitForAnimate: false,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
   const getProductDetails = async () => {
     setLoading(true);
     try {
@@ -122,8 +111,63 @@ const ProductDetails = () => {
     localStorage.setItem(STORAGE_KEYS.BAG_ITEMS, updatedBagItemsJSON);
     setShowSuccessMessage(true);
   };
+
+  useEffect(() => {
+    if (!productDetails) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(
+              entry.target.getAttribute('data-index') || '0',
+              10
+            );
+            setCurrentIndex(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const carouselItems =
+      carouselRef.current?.querySelectorAll('.carousel-item');
+    carouselItems?.forEach((item) => observer.observe(item));
+
+    return () => observer.disconnect();
+  }, [productDetails]);
+
+  const handleNext = () => {
+    if (!productDetails) return;
+    setCurrentIndex(
+      (prevIndex) => (prevIndex + 1) % productDetails.images.length
+    );
+  };
+
+  const handlePrev = () => {
+    if (!productDetails) return;
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + productDetails.images.length) %
+        productDetails.images.length
+    );
+  };
+
+  const handleIndicatorClick = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({
+        left: currentIndex * carouselRef.current.offsetWidth,
+        behavior: 'smooth',
+      });
+    }
+  }, [currentIndex]);
+
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] overflow-x-scroll '>
+    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2]'>
       <Header />
       <div className='flex w-full justify-between gap-4 p-4 mb-4'>
         <Link href='/' className=' gap-1 flex text-sm items-center '>
@@ -146,20 +190,48 @@ const ProductDetails = () => {
           />
         </div>
       ) : (
-        <div className='py-6 grid grid-cols-1 md:grid-cols-2 p-3 xs:p-4 '>
-          <div className='flex items-center justify-center '>
-            <Slider
-              {...settings}
-              className='w-[270px] sm:w-[290px] h-full md:h-[70vh] box bounce-1 '
+        <div className=' grid grid-cols-1 md:grid-cols-2 p-3 xs:p-4 '>
+          <div className='flex flex-col items-center justify-center w-full '>
+            <div
+              ref={carouselRef}
+              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar border border-[#3f2a16]'
             >
               {productDetails?.images.map((item, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  className='carousel-item w-[100vw] md:w-[50vw] h-[75vh] flex-shrink-0 snap-center '
+                  data-index={index}
+                >
+                  <img
+                    src={item ? item : '/placeholder.png'}
+                    alt='product_image'
+                    className={` object-cover w-[99.5%] h-[75vh] object-center transition-all duration-300 ${
+                      productDetails?.sold_out ? 'brightness-50' : ''
+                    }`}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className='transform flex mt-4 justify-center items-center w-full'>
+              {productDetails?.images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleIndicatorClick(index)}
+                  className={`w-8 h-5 ${
+                    currentIndex === index ? 'bg-[#c7bbb0]' : 'bg-[#523f3fab] '
+                  }`}
+                />
+              ))}
+            </div>
+            {/* <Slider {...settings} className='w-full h-[70vh]  '>
+              {productDetails?.images.map((item, index) => (
+                <div key={index} className='box bounce-1'>
                   <Image
                     src={item ? item : '/placeholder.png'}
                     alt='product_image'
-                    width='290'
-                    height='290'
-                    className={`object-cover border border-[#3f2a16] ${
+                    width='300'
+                    height='300'
+                    className={`object-cover border border-[#3f2a16]  ${
                       productDetails?.sold_out ? 'brightness-50' : ''
                     }`}
                     loading='lazy'
@@ -173,7 +245,7 @@ const ProductDetails = () => {
                   )}
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
           </div>
 
           <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[70vh]'>
@@ -181,6 +253,7 @@ const ProductDetails = () => {
               <h1 className='uppercase font-medium'>{productDetails?.name}</h1>
               <h3 className='font-semibold'>${productDetails?.price}</h3>
               <Accordion
+                w-full
                 type='single'
                 collapsible
                 className='w-[280px] sm:w-[290px] '

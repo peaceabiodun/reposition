@@ -171,7 +171,7 @@ const Home = () => {
               </h2>
 
               <div className=' mt-3'>
-                <div className='w-screen h-[50vh] overflow-hidden sm:h-[600px] '>
+                <div className='w-screen h-full overflow-hidden sm:h-[600px] '>
                   <ReactPlayer
                     width='100%'
                     height='100%'
@@ -190,18 +190,6 @@ const Home = () => {
             </div>
           )}
         </div>
-        {/* <div className='hidden md:flex flex-col items-center justify-center w-full h-[85vh] p-4'>
-          <h2 className='text-4xl font-semibold'>
-            <Typewriter
-              options={{
-                strings: ['REPOSITION [ ]', 'REPOSITION [ ]'],
-                autoStart: true,
-                loop: true,
-              }}
-            />
-          </h2>
-          <p className='mt-2 text-sm'>Exodus 1 Collection is here</p>
-        </div> */}
 
         <SortInput
           options={options}
@@ -225,15 +213,15 @@ const Home = () => {
             No Products Available
           </div>
         ) : (
-          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4'>
+          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 md:grid-cols-3 p-4'>
             {products?.map((item) => (
               <Link href={`product/${item.id}`} key={item.id} className='mb-4'>
-                <div className='relative min-h-[350px] w-[100%] '>
+                <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] '>
                   <Image
                     src={item?.images[0] ?? '/placeholder.png'}
                     alt='product_image'
                     fill
-                    className={` min-h-[350px] h-[350px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
+                    className={` min-h-[400px] h-[400px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
                       item.sold_out ? 'brightness-50' : ''
                     } `}
                   />
