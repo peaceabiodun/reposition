@@ -11,7 +11,6 @@ import ErrorModal from '@/components/error-modal/page';
 import {
   ConversionRateType,
   DeliveryDetailsType,
-  ProductDetailType,
   ShoppingBagType,
 } from '@/utils/types';
 import { ThreeCircles } from 'react-loader-spinner';
@@ -35,17 +34,18 @@ const Bag = () => {
   const [bagItems, setBagItems] = useState<FormDataType[]>([]);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const router = useRouter();
   const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedCurrency, setSelectedCurrency] = useState('');
   const [Currencies, setCurrencies] = useState<ConversionRateType>();
   const [loadingCurrency, setLoadingCurrency] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [shippingFee, SetShippingFee] = useState<number>(0);
   const [formError, setFormError] = useState<Partial<DeliveryDetailsType>>({});
   const [showReceipt, setShowReceipt] = useState(false);
-  const { products, setProducts } = useProductContext();
+  const { products } = useProductContext();
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
 
@@ -83,47 +83,6 @@ const Bag = () => {
       );
     }
   }, []);
-
-  // const getBagItems = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const { data, error } = await supabase
-  //       .from('shopping-bag')
-  //       .select('*')
-  //       .eq('user_id', userId);
-
-  //     setBagItems(data?.map((item) => ({ ...item, quantity: '1' })) ?? []);
-
-  //     if (error) {
-  //       setShowErrorModal(true);
-  //     }
-  //   } catch {
-  //     setShowErrorModal(true);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getBagItems();
-  // }, []);
-
-  // const removeItemFromBag = async (id: string) => {
-  //   try {
-  //     const { error } = await supabase
-  //       .from('shopping-bag')
-  //       .delete()
-  //       .eq('id', id);
-  //     if (error) {
-  //       console.log(error);
-  //     } else {
-  //       setShowDeleteSuccessModal(true);
-  //       //getBagItems();
-  //     }
-  //   } catch {
-  //     console.log('error');
-  //   }
-  // };
 
   const removeItemFromBag = (id: string) => {
     const updatedBagItems = bagItems.filter((item) => item.id !== id);
@@ -388,6 +347,20 @@ const Bag = () => {
     console.log('closed');
   };
 
+  const applyDiscount = () => {
+    if (discountCode === STORAGE_KEYS.TWENTY_PERCENT_DISCOUNT) {
+      const discount = (totalPrice + shippingFee) * 0.2;
+      setDiscountAmount(discount);
+      setFinalTotal(totalPrice + shippingFee - discount);
+    } else {
+      setDiscountAmount(0);
+      setFinalTotal(totalPrice + shippingFee);
+    }
+  };
+
+  useEffect(() => {
+    applyDiscount();
+  }, [discountCode, totalPrice, shippingFee]);
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
       <Header />
@@ -643,37 +616,6 @@ const Bag = () => {
               </div>
             </div>
 
-            {/* <div className=' w-full text-xs md:text-sm'>
-                <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
-                  Delivery Details
-                </h2>
-                {savedDeliveryDetails.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`${
-                      selectedDeliveryDetail === item
-                        ? 'border border-[#a1a1a19c] p-2'
-                        : ''
-                    } flex gap-2 mt-5 items-center`}
-                    onClick={() => setSelectedDeliveryDetail(item)}
-                  >
-                    <CiLocationOn size={18} />
-                    <div className=''>
-                      <p className='font-semibold mb-1'>{item.address}</p>
-                      <p>{item.city}</p>
-                    </div>
-                  </div>
-                ))}
-
-                <div
-                  onClick={() => setAddDeliveryDetail(true)}
-                  className='mt-3 font-bold cursor-pointer '
-                >
-                  {' '}
-                  + Add new delivery details
-                </div>
-              </div> */}
-
             <div className=' w-full text-xs md:text-sm '>
               <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
                 Shipping Method
@@ -748,9 +690,18 @@ const Bag = () => {
                       : `$${shippingFee.toFixed(2)}`}{' '}
                   </p>
                 </div>
+                <div className='flex gap-3 items-center justify-between'>
+                  <p>Discount Code</p>
+                  <input
+                    type='text'
+                    value={discountCode}
+                    onChange={(e) => setDiscountCode(e.target.value)}
+                    className='border border-[#3d3e3f] uppercase rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                  />
+                </div>
                 <div className='flex gap-3 justify-between'>
                   <p>Discount Fee</p>
-                  <p>--</p>
+                  <p>${discountAmount.toFixed(2)}</p>
                 </div>
                 <div className='flex gap-3 justify-between'>
                   <p>Duties, taxes & fees</p>
@@ -758,42 +709,9 @@ const Bag = () => {
                 </div>
                 <div className='flex gap-3 justify-between font-bold'>
                   <p className=''>Total</p>
-                  <p>${(totalPrice + shippingFee).toFixed(2)}</p>
+                  <p>${finalTotal.toFixed(2)}</p>
                 </div>
               </div>
-
-              {/* <div className=' w-full'>
-                <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
-                  Currency Converter
-                </h2>
-                <div className='border-b border-[#a1a1a19c] p-3'>
-                  <div
-                    onClick={() =>
-                      setShowCurrencyDropdown(!showCurrencyDropdown)
-                    }
-                    className='flex justify-between cursor-pointer'
-                  >
-                    <div className='gap-6 flex'>
-                      <p>USD</p>
-                      <p className='font-semibold'>
-                        ${(totalPrice + shippingFee).toFixed(2)}
-                      </p>
-                    </div>
-                    <MdOutlineKeyboardArrowDown
-                      size={18}
-                      className='text-gray-400 cursor-pointer '
-                    />
-                  </div>
-                </div>
-                {showCurrencyDropdown && (
-                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 '>
-                    <div className='flex gap-6 hover:bg-gray-100 hover:cursor-pointer p-2'>
-                      <p>Naira</p>
-                      <p>350,000</p>
-                    </div>
-                  </div>
-                )}
-              </div> */}
 
               <div className=' w-full'>
                 <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
