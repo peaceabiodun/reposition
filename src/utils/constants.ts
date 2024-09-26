@@ -6,4 +6,5 @@ export const STORAGE_KEYS = {
   USER_ID: 'user_id',
   BAG_ITEMS: 'bag_items',
   SEEN_CAMPAIGN: 'seen_campaign',
+  TWENTY_PERCENT_DISCOUNT: 'UGXGA',
 };

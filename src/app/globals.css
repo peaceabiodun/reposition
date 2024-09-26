@@ -4,6 +4,7 @@
 
 @import 'slick-carousel/slick/slick.css';
 @import 'slick-carousel/slick/slick-theme.css';
+@import url('/fonts/daikon/fonts.css');
 
 @layer base {
   :root {
@@ -89,9 +90,13 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.daikon {
+  font-family: 'Daikon', sans-serif;
+}
 body {
   margin: 0;
-  font-family: 'Archivo', sans-serif;
+  font-family: 'Daikon', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #3d3e3f;

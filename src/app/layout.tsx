@@ -3,7 +3,7 @@ import { Archivo } from 'next/font/google';
 import './globals.css';
 import { ProductProvider } from '@/context/product-context';
 
-const archivo = Archivo({ subsets: ['latin'] });
+// const archivo = Archivo({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Reposition',
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <ProductProvider>
       <html lang='en'>
-        <body className={archivo.className}>{children}</body>
+        <body className={`Daikon`}>{children}</body>
       </html>
     </ProductProvider>
   );
