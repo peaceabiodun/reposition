@@ -97,6 +97,7 @@
 body {
   margin: 0;
   font-family: 'Daikon', sans-serif;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #3d3e3f;
