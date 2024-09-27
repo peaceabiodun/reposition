@@ -372,7 +372,7 @@ const Bag = () => {
         Back
       </Link>
 
-      <h2 className='text-sm font-medium text-center my-4 px-3 xs:px-4'>
+      <h2 className='text-sm font-light text-center my-4 px-3 xs:px-4'>
         Shopping Bag ({bagItems.length})
       </h2>
       {bagItems.length <= 0 ? (
@@ -557,9 +557,9 @@ const Bag = () => {
                       }}
                       className={`${
                         selectedCountry === item
-                          ? ' font-medium bg-gray-100'
+                          ? ' font-light bg-gray-100'
                           : ''
-                      } hover:font-medium hover:bg-gray-100 p-2 cursor-pointer`}
+                      } hover:font-light hover:bg-gray-100 p-2 cursor-pointer`}
                     >
                       {item}
                     </div>
@@ -630,8 +630,8 @@ const Bag = () => {
                     readOnly
                   />
                   <div>
-                    <h3 className='font-medium'>Standard Courier</h3>
-                    <div className='font-bold'>(Free delivery)</div>
+                    <h3 className='font-light'>Standard Courier</h3>
+                    <div className='font-light'>(Free delivery)</div>
                     <p>
                       Delivery takes up to 10-16 business days for products
                       marked &apos;made-to-order&apos; or &apos;pre-order&apos;.
@@ -654,7 +654,7 @@ const Bag = () => {
                     // }
                   />
                   <div>
-                    <h3 className='font-medium'>Standard Courier</h3>
+                    <h3 className='font-light'>Standard Courier</h3>
                     <div>${shippingFee.toFixed(2)}</div>
                     <p>
                       Delivery takes up to 10-16 business days for products
@@ -707,7 +707,7 @@ const Bag = () => {
                   <p>Duties, taxes & fees</p>
                   <p>--</p>
                 </div>
-                <div className='flex gap-3 justify-between font-bold'>
+                <div className='flex gap-3 justify-between font-light'>
                   <p className=''>Total</p>
                   <p>${finalTotal.toFixed(2)}</p>
                 </div>

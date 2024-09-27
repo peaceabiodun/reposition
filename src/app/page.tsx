@@ -141,7 +141,7 @@ const Home = () => {
   };
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
+      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] font-light '>
         <Header />
         <div className='flex flex-col items-center  w-full p-4'>
           {campaignLoading ? (
@@ -157,7 +157,7 @@ const Home = () => {
             </div>
           ) : (
             <div className=''>
-              <h2 className='text-lg sm:text-2xl font-semibold text-center mt-6'>
+              <h2 className='text-lg sm:text-2xl font-light text-center mt-6'>
                 <Typewriter
                   options={{
                     strings: [
@@ -183,7 +183,7 @@ const Home = () => {
                   {/* <video width='100%' height='500px' autoPlay src='/video1.mp4' /> */}
                 </div>
 
-                <div className='text-[#704e21] text-sm md:text-[16px] font-semibold flex flex-col items-center gap-2 mt-3'>
+                <div className='text-[#704e21] text-sm md:text-[16px] font-light flex flex-col items-center gap-2 mt-3'>
                   <p>{campaignDetails?.campaign_subtext}</p>
                 </div>
               </div>
@@ -233,8 +233,8 @@ const Home = () => {
                     </div>
                   )}
                 </div>
-                <p className='my-2 font-semibold text-[16px]'>{item.name}</p>
-                <div className='flex gap-2'>
+                <p className='my-2 font-light text-[16px]'>{item.name}</p>
+                <div className='flex gap-2 font-light'>
                   <p className='text-sm'>${item.price}</p>
                   {item.pre_order ? (
                     <p className='text-sm'>[Pre-Order]</p>
@@ -277,7 +277,7 @@ const Home = () => {
 
           <button
             onClick={() => router.push('/campaign')}
-            className='bg-white p-2 h-[33px] w-[90px] text-xs font-semibold'
+            className='bg-white p-2 h-[33px] w-[90px] text-xs font-light'
           >
             View
           </button>

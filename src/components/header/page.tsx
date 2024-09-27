@@ -6,13 +6,14 @@ import Typewriter from 'typewriter-effect';
 import { TbShirt } from 'react-icons/tb';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { Fragment, useEffect, useState } from 'react';
-import LocalModal from '../modal/page';
+
 import { supabase } from '@/lib/supabase';
 import SuccessModal from '../success-modal/page';
 import { ShoppingBagType } from '@/utils/types';
 import { MdMenuOpen } from 'react-icons/md';
 import MobileMenu from '../mobile-menu/page';
 import UpdatePasswordModal from '../update-password-modal/page';
+import Image from 'next/image';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -114,9 +115,9 @@ const Header = () => {
             : ''
         }`}
       >
-        <h3 className='font-bold text-sm sm:text-lg flex gap-1'>
+        <h3 className='font-light text-sm sm:text-lg flex gap-1'>
           REPOSITION{' '}
-          <span className='md:hidden'>
+          <span className=''>
             <Typewriter
               options={{
                 strings: ['[ ]', '[ ]'],
@@ -126,8 +127,9 @@ const Header = () => {
             />
           </span>
         </h3>
+
         <div
-          className='text-[16px] font-semibold cursor-pointer hidden sm:flex'
+          className='text-[16px] font-light cursor-pointer hidden sm:flex'
           onClick={() => router.push('/we-are')}
         >
           We Are
@@ -161,7 +163,7 @@ const Header = () => {
               onClick={() => router.push('/bag')}
               className={`text-[10px] absolute ${
                 scroll ? 'top-[6px] ' : 'top-[7px]'
-              }  right-[4px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-semibold cursor-pointer`}
+              }  right-[4px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-light cursor-pointer`}
             >
               {bagItems.length ?? '0'}
             </span>
@@ -177,14 +179,14 @@ const Header = () => {
         <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-12 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
           <div
             onClick={() => setShowUpdatePasswordModal(true)}
-            className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
+            className='hover:font-light hover:bg-gray-50 p-1 cursor-pointer'
           >
             Update password
           </div>
 
           <div
             onClick={() => setShowLogoutModal(true)}
-            className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
+            className='hover:font-light hover:bg-gray-50 p-1 cursor-pointer'
           >
             Logout
           </div>

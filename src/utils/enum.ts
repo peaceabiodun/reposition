@@ -1,5 +1,5 @@
 export enum ENUM_PRODUCT_FILTER_LIST {
-  ALL = 'All',
+  ALL = 'Shop All',
   SHIRTS = 'Shirts',
   SHORTS = 'Shorts',
   SUIT = 'Suit',
