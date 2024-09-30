@@ -348,7 +348,11 @@ const Bag = () => {
   };
 
   const applyDiscount = () => {
-    if (discountCode === STORAGE_KEYS.TWENTY_PERCENT_DISCOUNT) {
+    if (
+      discountCode === STORAGE_KEYS.DISCOUNT_CODE_ONE ||
+      discountCode === STORAGE_KEYS.DISCOUNT_CODE_TWO ||
+      discountCode === STORAGE_KEYS.DISCOUNT_CODE_THREE
+    ) {
       const discount = (totalPrice + shippingFee) * 0.2;
       setDiscountAmount(discount);
       setFinalTotal(totalPrice + shippingFee - discount);
@@ -696,7 +700,7 @@ const Bag = () => {
                     type='text'
                     value={discountCode}
                     onChange={(e) => setDiscountCode(e.target.value)}
-                    className='border border-[#3d3e3f] uppercase rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                    className='border border-[#3d3e3f] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
                   />
                 </div>
                 <div className='flex gap-3 justify-between'>
@@ -782,7 +786,7 @@ const Bag = () => {
           onRequestClose={() => setShowReceipt(false)}
           orderDetails={orderPayload}
           subTotal={totalPrice.toFixed(2)}
-          total={(totalPrice + shippingFee).toFixed(2)}
+          total={finalTotal.toFixed(2)}
         />
       )}
     </div>

@@ -6,7 +6,6 @@ import Typewriter from 'typewriter-effect';
 import { TbShirt } from 'react-icons/tb';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { Fragment, useEffect, useState } from 'react';
-
 import { supabase } from '@/lib/supabase';
 import SuccessModal from '../success-modal/page';
 import { ShoppingBagType } from '@/utils/types';
@@ -115,7 +114,17 @@ const Header = () => {
             : ''
         }`}
       >
-        <h3 className='font-light text-sm sm:text-lg flex gap-1'>
+        <div className='flex gap-1'>
+          <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
+          <Image
+            src={'/logo.svg'}
+            alt='logo'
+            width={30}
+            height={30}
+            className='object-cover'
+          />
+        </div>
+        {/* <h2 className='font-bold text-sm sm:text-lg flex gap-1'>
           REPOSITION{' '}
           <span className=''>
             <Typewriter
@@ -126,7 +135,7 @@ const Header = () => {
               }}
             />
           </span>
-        </h3>
+        </h2> */}
 
         <div
           className='text-[16px] font-light cursor-pointer hidden sm:flex'
