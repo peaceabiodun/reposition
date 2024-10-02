@@ -347,13 +347,27 @@ const Bag = () => {
     console.log('closed');
   };
 
+  // const DISCOUNT_CODES = [
+  //   STORAGE_KEYS.DISCOUNT_CODE_ONE,
+  //   STORAGE_KEYS.DISCOUNT_CODE_TWO,
+  //   STORAGE_KEYS.DISCOUNT_CODE_THREE,
+  //   STORAGE_KEYS.DISCOUNT_CODE_FOUR,
+  //   STORAGE_KEYS.DISCOUNT_CODE_FIVE,
+  // ];
+
   const applyDiscount = () => {
     if (
       discountCode === STORAGE_KEYS.DISCOUNT_CODE_ONE ||
       discountCode === STORAGE_KEYS.DISCOUNT_CODE_TWO ||
-      discountCode === STORAGE_KEYS.DISCOUNT_CODE_THREE
+      discountCode === STORAGE_KEYS.DISCOUNT_CODE_THREE ||
+      discountCode === STORAGE_KEYS.DISCOUNT_CODE_FOUR ||
+      discountCode === STORAGE_KEYS.DISCOUNT_CODE_FIVE
     ) {
       const discount = (totalPrice + shippingFee) * 0.2;
+      setDiscountAmount(discount);
+      setFinalTotal(totalPrice + shippingFee - discount);
+    } else if (discountCode === STORAGE_KEYS.TEN_PERCENT_DISCOUNT) {
+      const discount = (totalPrice + shippingFee) * 0.1;
       setDiscountAmount(discount);
       setFinalTotal(totalPrice + shippingFee - discount);
     } else {
