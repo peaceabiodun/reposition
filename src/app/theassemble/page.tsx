@@ -4,6 +4,12 @@ import ErrorModal from '@/components/error-modal/page';
 import { FileUploader } from '@/components/file-uploader/page';
 import SuccessModal from '@/components/success-modal/page';
 import { supabase } from '@/lib/supabase';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -17,8 +23,9 @@ type FormDataType = {
   birthDate: string;
   sex: string;
   phoneNumber: string;
-  size: string;
-  basic1MealADayPlan: string;
+  maleSize: string;
+  femaleSize: string;
+  basic1MealADayPlan: string[];
   address: string;
   city: string;
   state: string;
@@ -47,8 +54,9 @@ const TheAssemble = () => {
     birthDate: '',
     sex: '',
     phoneNumber: '',
-    size: '',
-    basic1MealADayPlan: '',
+    maleSize: '',
+    femaleSize: '',
+    basic1MealADayPlan: [],
     address: '',
     city: '',
     state: '',
@@ -69,20 +77,23 @@ const TheAssemble = () => {
     receiptScreenshot: [],
   });
   const [loading, setLoading] = useState(false);
-  const [showSizeDropdown, setShowSizeDropdown] = useState(false);
+  const [showMaleSizeDropdown, setShowMaleSizeDropdown] = useState(false);
+  const [showFemaleSizeDropdown, setShowFemaleSizeDropdown] = useState(false);
   const [showMealDropdown, setShowMealDropdown] = useState(false);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedMeal, setSelectedMeal] = useState('');
+  const [selectedMaleSize, setSelectedMaleSize] = useState('');
+  const [selectedFemaleSize, setSelectedFemaleSize] = useState('');
+  const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const router = useRouter();
   const [maxDate, setMaxDate] = useState('');
-  const sizeOptions = ['M', 'L', 'XL', 'XXL', 'XXXL'];
+  const maleSizeOptions = ['M', 'L', 'XL', 'XXL', 'XXXL'];
+  const femaleSizeOptions = ['6', '8', '10', '12', '14', '16'];
   const mealOptions = [
-    'TUNA PASTA SALAD [Day 1]',
-    'SMOKED SALMON SALAD [Day 2]',
-    'JOLLOF RICE & FISH/CHICKEN [Day 3]',
-    'FRESH JUICE [All Day]',
+    'TUNA PASTA SALAD ',
+    'SMOKED SALMON SALAD ',
+    'JOLLOF RICE & FISH/CHICKEN ',
+    'FRESH JUICE ',
   ];
 
   const isFormValid = () => {
@@ -113,6 +124,16 @@ const TheAssemble = () => {
     );
   };
 
+  const toggleMealSelection = (meal: string) => {
+    setSelectedMeals((prevMeals) => {
+      if (prevMeals.includes(meal)) {
+        return prevMeals.filter((m) => m !== meal);
+      } else if (prevMeals.length < 2) {
+        return [...prevMeals, meal];
+      }
+      return prevMeals;
+    });
+  };
   useEffect(() => {
     const today = new Date();
     const year = today.getFullYear();
@@ -163,8 +184,9 @@ const TheAssemble = () => {
       birthDate: formData?.birthDate,
       sex: formData?.sex,
       phoneNumber: formData?.phoneNumber,
-      size: formData?.size,
-      basic1MealADayPlan: formData?.basic1MealADayPlan,
+      maleSize: selectedMaleSize,
+      femaleSize: selectedFemaleSize,
+      basic1MealADayPlan: selectedMeals,
       address: formData?.address,
       city: formData?.city,
       state: formData?.state,
@@ -201,8 +223,9 @@ const TheAssemble = () => {
           birthDate: '',
           sex: '',
           phoneNumber: '',
-          size: '',
-          basic1MealADayPlan: '',
+          maleSize: '',
+          femaleSize: '',
+          basic1MealADayPlan: [],
           address: '',
           city: '',
           state: '',
@@ -231,7 +254,7 @@ const TheAssemble = () => {
   };
 
   return (
-    <div className='min-h-[100vh] bg-[#dbd9d2] font-light p-4'>
+    <div className='min-h-[100vh] bg-[#dbd9d2] font-light p-4 '>
       <header>
         <div className='flex gap-1'>
           <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
@@ -370,13 +393,15 @@ const TheAssemble = () => {
 
           <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
             <div className='w-full relative'>
-              <label>Size</label>
+              <label>Male Sizes</label>
               <div
-                onClick={() => setShowSizeDropdown(!showSizeDropdown)}
+                onClick={() => setShowMaleSizeDropdown(!showMaleSizeDropdown)}
                 className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex justify-between items-center gap-4 cursor-pointer'
               >
                 <p className='text-sm'>
-                  {selectedSize ? selectedSize : 'Please select'}
+                  {selectedMaleSize
+                    ? selectedMaleSize
+                    : 'Please select an appropriate size'}
                 </p>
                 <MdOutlineKeyboardArrowDown
                   size={18}
@@ -388,14 +413,14 @@ const TheAssemble = () => {
                 care package
               </p>
 
-              {showSizeDropdown && (
+              {showMaleSizeDropdown && (
                 <div className='bg-[#d3cdc1] rounded-sm p-2 absolute shadow-md text-sm flex flex-col gap-2 z-50 w-[200px]'>
-                  {sizeOptions.map((item, index) => (
+                  {maleSizeOptions.map((item, index) => (
                     <div
                       key={index}
                       onClick={() => {
-                        setSelectedSize(item);
-                        setShowSizeDropdown(false);
+                        setSelectedMaleSize(item);
+                        setShowMaleSizeDropdown(false);
                       }}
                       className='py-1 px-2 cursor-pointer hover:bg-[#b4afa4] rounded-sm'
                     >
@@ -405,14 +430,19 @@ const TheAssemble = () => {
                 </div>
               )}
             </div>
+
             <div className='w-full relative'>
-              <label>Basic 1-Meal-A-Day Plan</label>
+              <label>Female Sizes</label>
               <div
-                onClick={() => setShowMealDropdown(!showMealDropdown)}
+                onClick={() =>
+                  setShowFemaleSizeDropdown(!showFemaleSizeDropdown)
+                }
                 className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex justify-between items-center gap-4 cursor-pointer'
               >
                 <p className='text-sm'>
-                  {selectedMeal ? selectedMeal : 'Please select'}
+                  {selectedFemaleSize
+                    ? selectedFemaleSize
+                    : 'Please select an appropriate size'}
                 </p>
                 <MdOutlineKeyboardArrowDown
                   size={18}
@@ -420,18 +450,18 @@ const TheAssemble = () => {
                 />
               </div>
               <p className='text-xs text-[#50210b] mt-1'>
-                Note: This selection is for 1-Meal-A-Day Plan to help us prepare
-                better
+                Note: This selection is for items included in the Reposition
+                care package
               </p>
 
-              {showMealDropdown && (
-                <div className='bg-[#d3cdc1] rounded-sm p-2 absolute shadow-md text-sm flex flex-col gap-2 z-50 w-full'>
-                  {mealOptions.map((item, index) => (
+              {showFemaleSizeDropdown && (
+                <div className='bg-[#d3cdc1] rounded-sm p-2 absolute shadow-md text-sm flex flex-col gap-2 z-50 w-[200px]'>
+                  {femaleSizeOptions.map((item, index) => (
                     <div
                       key={index}
                       onClick={() => {
-                        setSelectedMeal(item);
-                        setShowMealDropdown(false);
+                        setSelectedFemaleSize(item);
+                        setShowFemaleSizeDropdown(false);
                       }}
                       className='py-1 px-2 cursor-pointer hover:bg-[#b4afa4] rounded-sm'
                     >
@@ -442,7 +472,47 @@ const TheAssemble = () => {
               )}
             </div>
           </div>
+          <div className='w-full relative mt-4'>
+            <label>Basic 1-Meal-A-Day Plan</label>
+            <div
+              onClick={() => setShowMealDropdown(!showMealDropdown)}
+              className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 flex justify-between items-center gap-4 cursor-pointer'
+            >
+              <p className='text-sm'>
+                {selectedMeals.length > 0
+                  ? selectedMeals.join(', ')
+                  : 'Please select two meals'}
+              </p>
+              <MdOutlineKeyboardArrowDown
+                size={18}
+                className='text-[#3d3e3f] '
+              />
+            </div>
+            <p className='text-xs text-[#50210b] mt-1'>
+              Note:Please select any two items. [This selection is for
+              1-Meal-A-Day Plan to help us prepare better]
+            </p>
 
+            {showMealDropdown && (
+              <div className='bg-[#d3cdc1] rounded-sm p-2 absolute shadow-md text-sm flex flex-col gap-2 z-50 w-full'>
+                {mealOptions.map((item, index) => (
+                  <div
+                    key={index}
+                    onClick={() => toggleMealSelection(item)}
+                    className='py-1 px-2 cursor-pointer hover:bg-[#b4afa4] rounded-sm'
+                  >
+                    <input
+                      type='checkbox'
+                      checked={selectedMeals.includes(item)}
+                      onChange={() => {}}
+                      className='mr-2 accent-black mt-2'
+                    />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <div className='flex gap-2 mt-4'>
             <p className='text-lg'>Address</p>
             <p className='text-red-500'>*</p>
@@ -755,70 +825,86 @@ const TheAssemble = () => {
             />
           </div>
 
-          <div className='mt-6'>
-            <h3 className='text-lg font-bold underline underline-offset-1'>
-              On-Boarding Information
-            </h3>
+          <Accordion w-full type='single' collapsible className='w-full mt-6'>
+            <AccordionItem
+              value='On-boarding-information'
+              className='border-b-[#a1a1a19c]'
+            >
+              <AccordionTrigger className='text-lg font-bold underline underline-offset-1'>
+                On-Boarding Information
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className='mt-2 text-[16px] leading-6'>
+                  The Assemble is a 3-night camping experience, put together by
+                  REPOSITION to help discerning individuals experience a
+                  momentarily offline living, where you unplug from the
+                  day-to-day routines, and reconnect with nature, people and
+                  God. During this time you will be encouraged to observe a
+                  digital detox/fast for the duration of the camp-retreat
+                  experience, having only 30mins of screen time each day. <br />{' '}
+                  <br /> You will be expected to turn-off or put on airplane
+                  mode, and hand-in your phones/digital devices for safe
+                  keeping, and pick up for 15mins by 12:30pm, and another 15mins
+                  by 7:00pm respectively. <br /> You will be provided with many
+                  experiences from the moment you&apos;re welcomed to the moment
+                  we share goodbyes, to make your camp-retreat experience
+                  wholesome and rejuvenating. <br />
+                  Couples are encouraged to participate, but are not allow to
+                  share a camping tent, as we&apos;d love to have everyone enjoy
+                  a moment with themselve as much as they can - to help you
+                  reflect, correct, give gratitude and plan for the new year all
+                  in a journal. <br /> Your packs will include a specially
+                  curated care package and timetable of all activities. <br />{' '}
+                  <br />
+                  Fully armed private security and Healthcare assistants will be
+                  on standby.
+                  <br /> Unprescribed/illegal drugs are not allowed throughout
+                  The Assemble camp-retreat experience, any type of specialized
+                  fast is also encouraged. We&apos;d also like to promote low
+                  carb/fatty food intake during this period.
+                  <br /> We have carefully curated this experience for you to
+                  CHILL, CONNECT, have CONVERSATIONS and to COMMUNE. <br />{' '}
+                  Thank you for deciding to share this experience with yourself,
+                  as the most intimate moment of the year is almost here..
+                  <br /> <br />
+                  Come In, You&apos;re Welcome.
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
-            <p className='mt-2'>
-              The Assemble is a 3-night camping experience, put together by
-              REPOSITION to help discerning individuals experience a momentarily
-              offline living, where you unplug from the day-to-day routines, and
-              reconnect with nature, people and God. During this time you will
-              be encouraged to observe a digital detox/fast for the duration of
-              the camp-retreat experience, having only 30mins of screen time
-              each day. <br /> <br /> You will be expected to turn-off or put on
-              airplane mode, and hand-in your phones/digital devices for safe
-              keeping, and pick up for 15mins by 12:30pm, and another 15mins by
-              7:00pm respectively. <br /> You will be provided with many
-              experiences from the moment you&apos;re welcomed to the moment we
-              share goodbyes, to make your camp-retreat experience wholesome and
-              rejuvenating. <br />
-              Couples are encouraged to participate, but are not allow to share
-              a camping tent, as we&apos;d love to have everyone enjoy a moment
-              with themselve as much as they can - to help you reflect, correct,
-              give gratitude and plan for the new year all in a journal. <br />{' '}
-              Your packs will include a specially curated care package and
-              timetable of all activities. <br /> <br />
-              Fully armed private security and Healthcare assistants will be on
-              standby.
-              <br /> Unprescribed/illegal drugs are not allowed throughout The
-              Assemble camp-retreat experience, any type of specialized fast is
-              also encouraged. We&apos;d also like to promote low carb/fatty
-              food intake during this period.
-              <br /> We have carefully curated this experience for you to CHILL,
-              CONNECT, have CONVERSATIONS and to COMMUNE. <br /> Thank you for
-              deciding to share this experience with yourself, as the most
-              intimate moment of the year is almost here..
-              <br /> <br />
-              Come In, You&apos;re Welcome.
-            </p>
-          </div>
-
-          <div className='mt-6'>
-            <h3 className='text-lg font-bold underline underline-offset-1'>
-              Informed Consent and Acknowledgement
-            </h3>
-            <p className='mt-2'>
-              I hereby give my consent to participate in any and all activities
-              prepared by REPOSITION - The Assemble during the selected
-              camp-retreat. In exchange for the acceptance of my candidacy by
-              REPOSITION - The Assemble, I assume all risk and hazards
-              incidental to the conduct of the activities, and release, absolve
-              and hold harmless REPOSITION - The Assemble and all its respective
-              officers, agents, and representatives from any and all liability
-              for injuries arising out of traveling to, participating in, or
-              returning from selected retreat/camp sessions. <br /> <br />
-              In case of injury, I hereby waive all claims against REPOSITION -
-              The Assemble including all Directors, Coaches, Speakers and
-              Affiliates, all participants, sponsoring agencies, advertisers;
-              and, if applicable, owners and lessors of premises used to conduct
-              the event. There is a risk of being injured that is inherent in
-              all outdoor or adventure activities. Some of these injuries
-              include but are not limited to, the risk of fractures, paralysis,
-              or death.
-            </p>
-          </div>
+          <Accordion w-full type='single' collapsible className='w-full mt-6 '>
+            <AccordionItem
+              value='informed-consent'
+              className='border-b-[#a1a1a19c]'
+            >
+              <AccordionTrigger className='text-lg font-bold underline underline-offset-1'>
+                Informed Consent and Acknowledgement
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className='mt-2 text-[16px] leading-6'>
+                  I hereby give my consent to participate in any and all
+                  activities prepared by REPOSITION - The Assemble during the
+                  selected camp-retreat. In exchange for the acceptance of my
+                  candidacy by REPOSITION - The Assemble, I assume all risk and
+                  hazards incidental to the conduct of the activities, and
+                  release, absolve and hold harmless REPOSITION - The Assemble
+                  and all its respective officers, agents, and representatives
+                  from any and all liability for injuries arising out of
+                  traveling to, participating in, or returning from selected
+                  retreat/camp sessions. <br /> <br />
+                  In case of injury, I hereby waive all claims against
+                  REPOSITION - The Assemble including all Directors, Coaches,
+                  Speakers and Affiliates, all participants, sponsoring
+                  agencies, advertisers; and, if applicable, owners and lessors
+                  of premises used to conduct the event. There is a risk of
+                  being injured that is inherent in all outdoor or adventure
+                  activities. Some of these injuries include but are not limited
+                  to, the risk of fractures, paralysis, or death.
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           <div className='mt-6'>
             <h3 className='text-lg font-bold underline underline-offset-1'>

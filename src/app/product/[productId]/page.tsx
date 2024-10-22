@@ -223,29 +223,6 @@ const ProductDetails = () => {
                 />
               ))}
             </div>
-            {/* <Slider {...settings} className='w-full h-[70vh]  '>
-              {productDetails?.images.map((item, index) => (
-                <div key={index} className='box bounce-1'>
-                  <Image
-                    src={item ? item : '/placeholder.png'}
-                    alt='product_image'
-                    width='300'
-                    height='300'
-                    className={`object-cover border border-[#3f2a16]  ${
-                      productDetails?.sold_out ? 'brightness-50' : ''
-                    }`}
-                    loading='lazy'
-                  />
-                  {productDetails?.sold_out && (
-                    <span className=' absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
-                      <p className=' text-sm text-gray-400 font-medium'>
-                        Sold out
-                      </p>
-                    </span>
-                  )}
-                </div>
-              ))}
-            </Slider> */}
           </div>
 
           <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[70vh]'>
