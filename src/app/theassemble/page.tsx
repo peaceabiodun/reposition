@@ -94,6 +94,7 @@ const TheAssemble = () => {
     'SMOKED SALMON SALAD ',
     'JOLLOF RICE & FISH/CHICKEN ',
     'FRESH JUICE ',
+    'SMOKED BEEF SALAD',
   ];
 
   const isFormValid = () => {
@@ -103,7 +104,7 @@ const TheAssemble = () => {
       'email',
       'phoneNumber',
       'city',
-      'state',
+      'address',
       'validId',
       'emergencyContactFirstName',
       'emergencyContactLastName',
@@ -810,6 +811,10 @@ const TheAssemble = () => {
               <p>BANK: Zenith Bank</p>
               <p>ACCOUNT NAME: Reposition</p>
               <p>ACCOUNT NUMBER: 1311142463</p>
+              <p className='mt-2 text-white text-sm'>
+                Limited & Curated Guests Only.
+              </p>
+              <p className='text-white text-sm'>Payment closes 27.11.2024</p>
             </div>
 
             <div className='w-full mt-4'>
@@ -941,6 +946,12 @@ const TheAssemble = () => {
                 Please fill all required fields
               </p>
             )}
+          </div>
+          <div className='space-y-1 mt-4 text-sm font-semibold text-[#f7e6d1]'>
+            <p>Supported By</p>
+            <p>JENDAYA UK</p>
+            <p>Xpresso Cafe & Bar</p>
+            <p>Mr Think Sneakers</p>
           </div>
         </section>
       </div>
