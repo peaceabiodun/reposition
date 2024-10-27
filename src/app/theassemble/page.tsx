@@ -947,11 +947,13 @@ const TheAssemble = () => {
               </p>
             )}
           </div>
-          <div className='space-y-1 mt-4 text-sm font-semibold text-[#f7e6d1]'>
+          <div className=' mt-4 text-xs font-semibold text-[#f7e6d1]'>
             <p>Supported By</p>
-            <p>JENDAYA UK</p>
-            <p>Xpresso Cafe & Bar</p>
-            <p>Mr Think Sneakers</p>
+            <div className='flex gap-3 mt-1'>
+              <p>JENDAYA UK</p>
+              <p className='italic'>Xpresso Cafe & Bar</p>
+              <p>Mr Think Sneakers</p>
+            </div>
           </div>
         </section>
       </div>
