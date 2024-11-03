@@ -14,6 +14,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import axios from 'axios';
+import { ConversionRateType } from '@/utils/types';
+import { usePaystackPayment } from 'react-paystack';
 
 type FormDataType = {
   firstName: string;
@@ -46,6 +49,8 @@ type FormDataType = {
   receiptScreenshot: string[];
 };
 const TheAssemble = () => {
+  const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
+  const [Currencies, setCurrencies] = useState<ConversionRateType>();
   const [formData, setFormData] = useState<FormDataType>({
     firstName: '',
     lastName: '',
@@ -85,6 +90,8 @@ const TheAssemble = () => {
   const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showPaystackSuccess, setShowPaystackSuccess] = useState(false);
+  const [showPaystackError, setShowPaystackError] = useState(false);
   const router = useRouter();
   const [maxDate, setMaxDate] = useState('');
   const maleSizeOptions = ['M', 'L', 'XL', 'XXL', 'XXXL'];
@@ -252,6 +259,52 @@ const TheAssemble = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: formData.email,
+    amount: Math.round(calculateTotalPrice() * 100),
+    // Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+    Currency: 'NGN',
+    metadata: {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      user_email: formData.email,
+      phone_number: formData.phoneNumber,
+      address: formData.address,
+    },
+  } as any;
+
+  const initializePayment: any = usePaystackPayment(config);
+
+  const onSuccess = (reference: any) => {
+    // Implementation for whatever you want to do with reference and after success call.
+
+    if (reference.message === 'Approved') {
+      setShowPaystackSuccess(true);
+    }
+  };
+
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed');
+  };
+
+  const handlePaystackPayment = () => {
+    if (!formData.email) {
+      setShowPaystackError(true);
+      return;
+    }
+
+    const totalPrice = calculateTotalPrice();
+    if (totalPrice <= 0) {
+      setShowPaystackError(true);
+      return;
+    }
+
+    initializePayment({ onSuccess, onClose });
   };
 
   return (
@@ -811,11 +864,29 @@ const TheAssemble = () => {
               <p>BANK: Zenith Bank</p>
               <p>ACCOUNT NAME: Reposition</p>
               <p>ACCOUNT NUMBER: 1311142463</p>
-              <p className='mt-2 text-white text-sm'>
-                Limited & Curated Guests Only.
-              </p>
-              <p className='text-white text-sm'>Payment closes 27.11.2024</p>
             </div>
+
+            <div className='mt-4 text-white font-bold'>
+              <p>OR</p>
+              <button
+                onClick={handlePaystackPayment}
+                // disabled={!formData.email || calculateTotalPrice() <= 0}
+                className='flex gap-2 items-center mt-4 cursor-pointer'
+              >
+                <Image
+                  src={'/paystack.png'}
+                  alt='paystack'
+                  width={40}
+                  height={40}
+                  className='rounded-md'
+                />
+                <p>Pay with Paystack</p>
+              </button>
+            </div>
+            <p className='mt-2 text-white text-sm'>
+              Limited & Curated Guests Only.
+            </p>
+            <p className='text-white text-sm'>Payment closes 27.11.2024</p>
 
             <div className='w-full mt-4'>
               <div className='flex gap-2 '>
@@ -972,6 +1043,23 @@ const TheAssemble = () => {
           description=" Come In, You're Welcome."
           buttonText='Back to home'
           buttonClick={() => router.push('/')}
+        />
+      )}
+      {showPaystackError && (
+        <ErrorModal
+          show={showPaystackError}
+          onClose={() => setShowPaystackError(false)}
+          description='Please input your email and select a package'
+        />
+      )}
+      {showPaystackSuccess && (
+        <SuccessModal
+          show={showPaystackSuccess}
+          onClose={() => setShowPaystackSuccess(false)}
+          title='Payment Successful'
+          description='please continue to upload your receipt screenshot and confirm your details'
+          buttonText='Continue'
+          buttonClick={() => setShowPaystackSuccess(false)}
         />
       )}
     </div>

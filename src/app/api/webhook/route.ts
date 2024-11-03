@@ -40,8 +40,7 @@ export async function POST(req: Request) {
           customer_address: data.metadata.address,
         },
       };
-      console.log(orderPayload, 'order');
-      console.log(customerPayload, 'customer');
+
       if (event === 'charge.success') {
         const { error } = await supabase
           .from('orders')
