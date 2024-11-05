@@ -87,7 +87,7 @@ const TheAssemble = () => {
   const [showMealDropdown, setShowMealDropdown] = useState(false);
   const [selectedMaleSize, setSelectedMaleSize] = useState('');
   const [selectedFemaleSize, setSelectedFemaleSize] = useState('');
-  const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
+  const [selectedMeals, setSelectedMeals] = useState<string[]>(['FRESH JUICE']);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showPaystackSuccess, setShowPaystackSuccess] = useState(false);
@@ -134,9 +134,10 @@ const TheAssemble = () => {
 
   const toggleMealSelection = (meal: string) => {
     setSelectedMeals((prevMeals) => {
+      if (meal === 'FRESH JUICE ') return prevMeals;
       if (prevMeals.includes(meal)) {
         return prevMeals.filter((m) => m !== meal);
-      } else if (prevMeals.length < 2) {
+      } else if (prevMeals.length < 3) {
         return [...prevMeals, meal];
       }
       return prevMeals;
@@ -293,7 +294,7 @@ const TheAssemble = () => {
   };
 
   const handlePaystackPayment = () => {
-    if (!formData.email) {
+    if (!formData.email || calculateTotalPrice() <= 0) {
       setShowPaystackError(true);
       return;
     }
@@ -546,8 +547,9 @@ const TheAssemble = () => {
                 />
               </div>
               <p className='text-xs text-[#50210b] mt-1'>
-                Note:Please select any two items. [This selection is for
-                1-Meal-A-Day Plan to help us prepare better]
+                Note: Fresh juice is compulsory. Please select any two other
+                meals. [This selection is for 1-Meal-A-Day Plan to help us
+                prepare better]
               </p>
 
               {showMealDropdown && (
@@ -562,6 +564,7 @@ const TheAssemble = () => {
                         type='checkbox'
                         checked={selectedMeals.includes(item)}
                         onChange={() => {}}
+                        disabled={item === 'FRESH JUICE '}
                         className='mr-2 accent-black mt-2'
                       />
                       {item}
@@ -876,14 +879,32 @@ const TheAssemble = () => {
                 <Image
                   src={'/paystack.png'}
                   alt='paystack'
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className='rounded-md'
                 />
-                <p>Pay with Paystack</p>
+                <Image
+                  alt='master-card'
+                  src={'/master-card-icon.svg'}
+                  width={35}
+                  height={35}
+                />
+                <Image
+                  alt='visa-card'
+                  src={'/visa-icon.svg'}
+                  width={35}
+                  height={35}
+                />
+
+                <Image
+                  alt='bank-transfer'
+                  src={'/bank-transfer-icon.svg'}
+                  width={35}
+                  height={35}
+                />
               </button>
             </div>
-            <p className='mt-2 text-white text-sm'>
+            <p className='mt-4 text-white text-sm'>
               Limited & Curated Guests Only.
             </p>
             <p className='text-white text-sm'>Payment closes 27.11.2024</p>
@@ -906,7 +927,7 @@ const TheAssemble = () => {
               />
             </div>
 
-            <Accordion w-full type='single' collapsible className='w-full mt-6'>
+            <Accordion type='single' collapsible className='w-full mt-6'>
               <AccordionItem
                 value='On-boarding-information'
                 className='border-b-[#a1a1a19c]'
@@ -955,12 +976,7 @@ const TheAssemble = () => {
               </AccordionItem>
             </Accordion>
 
-            <Accordion
-              w-full
-              type='single'
-              collapsible
-              className='w-full mt-6 '
-            >
+            <Accordion type='single' collapsible className='w-full mt-6 '>
               <AccordionItem
                 value='informed-consent'
                 className='border-b-[#a1a1a19c]'
