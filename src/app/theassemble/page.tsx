@@ -863,18 +863,17 @@ const TheAssemble = () => {
             <div className='mt-4 text-lg font-bold'>
               Total : {formatPrice(calculateTotalPrice())}
             </div>
-            <div className='mt-4 text-[#f7e6d1] font-bold'>
+            {/* <div className='mt-4 text-[#f7e6d1] font-bold'>
               <p>BANK: Zenith Bank</p>
               <p>ACCOUNT NAME: Reposition</p>
               <p>ACCOUNT NUMBER: 1311142463</p>
-            </div>
+            </div> */}
 
             <div className='mt-4 text-white font-bold'>
-              <p>OR</p>
               <button
                 onClick={handlePaystackPayment}
                 // disabled={!formData.email || calculateTotalPrice() <= 0}
-                className='flex gap-2 items-center mt-4 cursor-pointer'
+                className='flex gap-2 items-center  cursor-pointer'
               >
                 <Image
                   src={'/paystack.png'}
@@ -907,7 +906,7 @@ const TheAssemble = () => {
             <p className='mt-4 text-white text-sm'>
               Limited & Curated Guests Only.
             </p>
-            <p className='text-white text-sm'>Payment closes 27.11.2024</p>
+            <p className='text-white text-sm'>Payment closes 25.11.2024</p>
 
             <div className='w-full mt-4'>
               <div className='flex gap-2 '>
