@@ -756,6 +756,9 @@ const Bag = () => {
                     height={40}
                   />
                 </div>
+                <p className='mt-2 text-[#644120] italic text-sm'>
+                  please note that transcation fees will be added at checkout
+                </p>
               </div>
             </div>
           </div>

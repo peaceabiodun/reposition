@@ -903,9 +903,13 @@ const TheAssemble = () => {
                 />
               </button>
             </div>
+            <p className='mt-2 text-green-300 text-sm'>
+              please note that transcation fees will be added at checkout
+            </p>
             <p className='mt-4 text-white text-sm'>
               Limited & Curated Guests Only.
             </p>
+
             <p className='text-white text-sm'>Payment closes 25.11.2024</p>
 
             <div className='w-full mt-4'>
