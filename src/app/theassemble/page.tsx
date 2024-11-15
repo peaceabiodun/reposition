@@ -14,9 +14,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import axios from 'axios';
-import { ConversionRateType } from '@/utils/types';
 import { usePaystackPayment } from 'react-paystack';
+import { emailService, EmailServiceType } from '../api/email/email-service';
 
 type FormDataType = {
   firstName: string;
@@ -49,8 +48,6 @@ type FormDataType = {
   receiptScreenshot: string[];
 };
 const TheAssemble = () => {
-  const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
-  const [Currencies, setCurrencies] = useState<ConversionRateType>();
   const [formData, setFormData] = useState<FormDataType>({
     firstName: '',
     lastName: '',
@@ -223,6 +220,15 @@ const TheAssemble = () => {
       if (error !== null) {
         setShowErrorMessage(true);
       } else {
+        // const emailPayload: EmailServiceType = {
+        //   recipient_email: formData.email,
+        //   template_uuid: process.env.NEXT_THEASSEMBLE_TEMPLATE_ID!,
+        //   customer_name: formData.firstName + ' ' + formData.lastName,
+        //   template_variables: {
+        //     name: formData.firstName,
+        //   },
+        // };
+
         setShowSuccessMessage(true);
         setFormData({
           firstName: '',
@@ -270,6 +276,7 @@ const TheAssemble = () => {
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
     Currency: 'NGN',
     metadata: {
+      payment_type: 'assemble',
       first_name: formData.firstName,
       last_name: formData.lastName,
       user_email: formData.email,
@@ -282,7 +289,7 @@ const TheAssemble = () => {
 
   const onSuccess = (reference: any) => {
     // Implementation for whatever you want to do with reference and after success call.
-
+    console.log('Payment successful:', reference);
     if (reference.message === 'Approved') {
       setShowPaystackSuccess(true);
     }
@@ -903,8 +910,8 @@ const TheAssemble = () => {
                 />
               </button>
             </div>
-            <p className='mt-2 text-green-300 text-sm'>
-              please note that transcation fees will be added at checkout
+            <p className='mt-2 text-white text-xs'>
+              Click any of the icons to pay. Transcation fees apply
             </p>
             <p className='mt-4 text-white text-sm'>
               Limited & Curated Guests Only.

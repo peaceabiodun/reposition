@@ -1,10 +1,10 @@
 const { MailtrapClient } = require('mailtrap');
 
-type EmailServiceType = {
+export type EmailServiceType = {
   recipient_email: string;
   template_uuid: string;
   customer_name: string;
-  template_variables: object;
+  template_variables?: object;
 };
 const TOKEN = process.env.NEXT_MAIL_TRAP_TOKEN;
 const ENDPOINT = 'https://send.api.mailtrap.io/';
