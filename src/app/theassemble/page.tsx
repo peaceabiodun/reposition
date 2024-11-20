@@ -41,8 +41,10 @@ type FormDataType = {
   emergencyContactLastName: string;
   emergencyContactRelationship: string;
   emergencyContactPhoneNumber: string;
+  royalGuestPackage: boolean;
   royalAssemblePackage: boolean;
   palacePackage: boolean;
+  royalGuestQuantity: number;
   royalAssembleQuantity: number;
   palaceQuantity: number;
   receiptScreenshot: string[];
@@ -72,8 +74,10 @@ const TheAssemble = () => {
     emergencyContactLastName: '',
     emergencyContactRelationship: '',
     emergencyContactPhoneNumber: '',
+    royalGuestPackage: false,
     royalAssemblePackage: false,
     palacePackage: false,
+    royalGuestQuantity: 0,
     royalAssembleQuantity: 0,
     palaceQuantity: 0,
     receiptScreenshot: [],
@@ -125,7 +129,9 @@ const TheAssemble = () => {
         }
         return typeof value === 'string' && value !== '';
       }) &&
-      (formData.royalAssemblePackage || formData.palacePackage)
+      (formData.royalAssemblePackage ||
+        formData.palacePackage ||
+        formData.royalGuestPackage)
     );
   };
 
@@ -149,7 +155,7 @@ const TheAssemble = () => {
   }, []);
 
   const handlePackageChange = (
-    packageType: 'royalAssemblePackage' | 'palacePackage'
+    packageType: 'royalAssemblePackage' | 'palacePackage' | 'royalGuestPackage'
   ) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -164,6 +170,10 @@ const TheAssemble = () => {
     ? 600000 * (formData.palaceQuantity ?? 0)
     : 0;
 
+  const royalGuestPackagePrice = formData.royalGuestPackage
+    ? 150000 * (formData.royalGuestQuantity ?? 0)
+    : 0;
+
   const calculateTotalPrice = (): number => {
     const royalAssemblePrice = formData.royalAssemblePackage
       ? 350000 * (formData.royalAssembleQuantity ?? 0)
@@ -171,7 +181,10 @@ const TheAssemble = () => {
     const palacePackagePrice = formData.palacePackage
       ? 600000 * (formData.palaceQuantity ?? 0)
       : 0;
-    return royalAssemblePrice + palacePackagePrice;
+    const royalGuestPackagePrice = formData.royalGuestPackage
+      ? 150000 * (formData.royalGuestQuantity ?? 0)
+      : 0;
+    return royalAssemblePrice + palacePackagePrice + royalGuestPackagePrice;
   };
 
   const formatPrice = (price: number): string => {
@@ -208,8 +221,10 @@ const TheAssemble = () => {
       emergencyContactPhoneNumber: formData?.emergencyContactPhoneNumber,
       royalAssemblePackage: formData?.royalAssemblePackage,
       palacePackage: formData?.palacePackage,
+      royalGuestPackage: formData?.royalGuestPackage,
       royalAssembleQuantity: formData?.royalAssembleQuantity,
       palaceQuantity: formData?.palaceQuantity,
+      royalGuestQuantity: formData?.royalGuestQuantity,
       receiptScreenshot: formData?.receiptScreenshot,
     };
     try {
@@ -254,10 +269,12 @@ const TheAssemble = () => {
           emergencyContactLastName: '',
           emergencyContactRelationship: '',
           emergencyContactPhoneNumber: '',
+          royalGuestPackage: false,
           royalAssemblePackage: false,
           palacePackage: false,
           royalAssembleQuantity: 0,
           palaceQuantity: 0,
+          royalGuestQuantity: 0,
           receiptScreenshot: [],
         });
       }
@@ -793,6 +810,42 @@ const TheAssemble = () => {
             <div className='flex gap-2 mt-4'>
               <p className='text-lg'>Package Options</p>
               <p className='text-red-500'>*</p>
+            </div>
+
+            <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
+              <input
+                type='checkbox'
+                checked={formData?.royalGuestPackage}
+                onChange={() => handlePackageChange('royalGuestPackage')}
+                className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
+              />
+              <label>
+                <p className='text-lg font-bold'>The Royal Guest</p>
+                <p>
+                  [1 Day] Outdoor tent assembly -- (1 daily Healthy Meal/Snack &
+                  drink, water, Reposition Welcome and after care package)
+                </p>
+                <p className='mt-1 font-medium text-lg'>150,000 NGN</p>
+                <p className='mt-2'>Quantity</p>
+                <input
+                  type='number'
+                  placeholder='1'
+                  value={formData?.royalGuestQuantity ?? ''}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      royalGuestQuantity: e.target.value
+                        ? parseInt(e.target.value)
+                        : 0,
+                    })
+                  }
+                  min={0}
+                  className='border border-[#3d3e3f] rounded-sm w-[100px] p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
+                />
+                <p className='mt-2 text-lg'>
+                  Total Items: {formatPrice(royalGuestPackagePrice)}
+                </p>
+              </label>
             </div>
 
             <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
