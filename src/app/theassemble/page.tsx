@@ -970,7 +970,7 @@ const TheAssemble = () => {
               Limited & Curated Guests Only.
             </p>
 
-            <p className='text-white text-sm'>Payment closes 25.11.2024</p>
+            <p className='text-white text-sm'>Payment closes 30.11.2024</p>
 
             <div className='w-full mt-4'>
               <div className='flex gap-2 '>
