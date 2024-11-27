@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { usePaystackPayment } from 'react-paystack';
 import { emailService, EmailServiceType } from '../api/email/email-service';
+import CountdownTimer from '@/components/countdown-timer/page';
 
 type FormDataType = {
   firstName: string;
@@ -353,7 +354,7 @@ const TheAssemble = () => {
             THE ASSEMBLE
           </h2>
           <p className='text-sm text-center mt-2'>REGISTRATION FORM</p>
-
+          <CountdownTimer />
           <div className='mt-6 flex flex-col m-auto w-full max-w-[1200px] '>
             <div className='flex gap-2'>
               <p className='text-lg'>Personal Information</p>
@@ -969,9 +970,6 @@ const TheAssemble = () => {
             <p className='mt-4 text-white text-sm'>
               Limited & Curated Guests Only.
             </p>
-
-            <p className='text-white text-sm'>Payment closes 30.11.2024</p>
-
             <div className='w-full mt-4'>
               <div className='flex gap-2 '>
                 <p className='text-lg'>
