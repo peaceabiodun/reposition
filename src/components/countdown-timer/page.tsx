@@ -71,7 +71,7 @@ const CountdownTimer = () => {
         <p className='text-center mt-4 text-sm'>
           {timeLeft.days} day(s) to go before late payment
         </p>
-        <p className='text-center mt-2 text-sm'>7 Solts left</p>
+        <p className='text-center mt-2 text-sm'>7 Slots left</p>
       </div>
     </div>
   );
