@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 const CountdownTimer = () => {
-  const targetDate = new Date('2024-11-30T00:00:00');
+  const targetDate = new Date('2024-11-30T23:59:00');
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -47,7 +47,7 @@ const CountdownTimer = () => {
             <span className='text-2xl md:text-3xl font-bold '>
               {timeLeft.days}
             </span>
-            <span className='text-sm'>Days </span>
+            <span className='text-sm'>Day </span>
           </div>
           <div className='flex flex-col'>
             <span className='text-2xl md:text-3xl font-bold '>
@@ -69,9 +69,9 @@ const CountdownTimer = () => {
           </div>
         </div>
         <p className='text-center mt-4 text-sm'>
-          {timeLeft.days} day(s) to go before late payment
+          {timeLeft.days} day to go before late payment
         </p>
-        <p className='text-center mt-2 text-sm'>7 Slots left</p>
+        <p className='text-center mt-2 text-sm'>6 Slots left</p>
       </div>
     </div>
   );
