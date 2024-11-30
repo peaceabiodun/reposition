@@ -109,16 +109,9 @@ const TheAssemble = () => {
   const isFormValid = () => {
     const requiredFields: (keyof FormDataType)[] = [
       'firstName',
-      'lastName',
       'email',
       'phoneNumber',
-      'city',
-      'address',
       'validId',
-      'emergencyContactFirstName',
-      'emergencyContactLastName',
-      'emergencyContactRelationship',
-      'emergencyContactPhoneNumber',
       'receiptScreenshot',
     ];
 
@@ -164,26 +157,26 @@ const TheAssemble = () => {
     }));
   };
   const royalAssemblePrice = formData.royalAssemblePackage
-    ? 350000 * (formData.royalAssembleQuantity ?? 0)
+    ? 400000 * (formData.royalAssembleQuantity ?? 0)
     : 0;
 
   const palacePackagePrice = formData.palacePackage
-    ? 600000 * (formData.palaceQuantity ?? 0)
+    ? 650000 * (formData.palaceQuantity ?? 0)
     : 0;
 
   const royalGuestPackagePrice = formData.royalGuestPackage
-    ? 150000 * (formData.royalGuestQuantity ?? 0)
+    ? 200000 * (formData.royalGuestQuantity ?? 0)
     : 0;
 
   const calculateTotalPrice = (): number => {
     const royalAssemblePrice = formData.royalAssemblePackage
-      ? 350000 * (formData.royalAssembleQuantity ?? 0)
+      ? 400000 * (formData.royalAssembleQuantity ?? 0)
       : 0;
     const palacePackagePrice = formData.palacePackage
-      ? 600000 * (formData.palaceQuantity ?? 0)
+      ? 650000 * (formData.palaceQuantity ?? 0)
       : 0;
     const royalGuestPackagePrice = formData.royalGuestPackage
-      ? 150000 * (formData.royalGuestQuantity ?? 0)
+      ? 200000 * (formData.royalGuestQuantity ?? 0)
       : 0;
     return royalAssemblePrice + palacePackagePrice + royalGuestPackagePrice;
   };
@@ -375,35 +368,7 @@ const TheAssemble = () => {
                   className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f] '
                 />
               </div>
-              <div className='w-full'>
-                <label>Last Name</label>
-                <input
-                  type='text'
-                  placeholder='E.g Onyeka'
-                  required
-                  value={formData?.lastName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, lastName: e.target.value })
-                  }
-                  className='border  border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f] '
-                />
-              </div>
-            </div>
-
-            <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
-              <div className='w-full'>
-                <label>Nick Name</label>
-                <input
-                  type='text'
-                  placeholder='E.g Top G'
-                  value={formData?.nickName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, nickName: e.target.value })
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-              </div>
-              <div className='w-full'>
+               <div className='w-full'>
                 <label>Email</label>
                 <input
                   type='email'
@@ -419,19 +384,19 @@ const TheAssemble = () => {
             </div>
 
             <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
-              <div className='w-full'>
-                <label className=''>Birth Date</label>
-                <input
-                  type='date'
-                  placeholder='please select'
-                  value={formData?.birthDate}
-                  onChange={(e) =>
-                    setFormData({ ...formData, birthDate: e.target.value })
-                  }
-                  max={maxDate}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-              </div>
+               <div className='w-full'>
+              <label>Phone Number</label>
+              <input
+                type='tel'
+                placeholder='E.g 08012345678'
+                value={formData?.phoneNumber}
+                onChange={(e) =>
+                  setFormData({ ...formData, phoneNumber: e.target.value })
+                }
+                required
+                className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
+              />
+            </div>
               <div className='w-full '>
                 <label>Sex</label>
 
@@ -458,20 +423,6 @@ const TheAssemble = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className='w-full mt-4'>
-              <label>Phone Number</label>
-              <input
-                type='tel'
-                placeholder='E.g 08012345678'
-                value={formData?.phoneNumber}
-                onChange={(e) =>
-                  setFormData({ ...formData, phoneNumber: e.target.value })
-                }
-                required
-                className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-              />
             </div>
 
             <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
@@ -598,10 +549,6 @@ const TheAssemble = () => {
                 </div>
               )}
             </div>
-            <div className='flex gap-2 mt-4'>
-              <p className='text-lg'>Address</p>
-              <p className='text-red-500'>*</p>
-            </div>
 
             <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
               <div className='w-full'>
@@ -616,34 +563,7 @@ const TheAssemble = () => {
                   className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f] '
                 />
               </div>
-              <div className='flex gap-4 w-full'>
-                <div className='w-full'>
-                  <label>City</label>
-                  <input
-                    type='text'
-                    placeholder='E.g Abuja'
-                    required
-                    value={formData?.city}
-                    onChange={(e) =>
-                      setFormData({ ...formData, city: e.target.value })
-                    }
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                  />
-                </div>
-                <div className='w-full'>
-                  <label>State</label>
-                  <input
-                    type='text'
-                    placeholder='E.g FCT'
-                    required
-                    value={formData?.state}
-                    onChange={(e) =>
-                      setFormData({ ...formData, state: e.target.value })
-                    }
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                  />
-                </div>
-              </div>
+             
             </div>
             <div className='w-full mt-4'>
               <label>
@@ -661,41 +581,6 @@ const TheAssemble = () => {
               />
             </div>
 
-            <div className='w-full mt-4'>
-              <label>Social Media Links</label>
-            </div>
-            <div className='w-full flex flex-col sm:flex-row gap-4'>
-              <input
-                type='text'
-                placeholder='Instagram'
-                required
-                value={formData?.instagramLink}
-                onChange={(e) =>
-                  setFormData({ ...formData, instagramLink: e.target.value })
-                }
-                className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-              />
-              <input
-                type='text'
-                placeholder='Twitter (X)'
-                required
-                value={formData?.twitterLink}
-                onChange={(e) =>
-                  setFormData({ ...formData, twitterLink: e.target.value })
-                }
-                className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-              />
-              <input
-                type='text'
-                placeholder='Snapchat'
-                required
-                value={formData?.snapchatLink}
-                onChange={(e) =>
-                  setFormData({ ...formData, snapchatLink: e.target.value })
-                }
-                className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-              />
-            </div>
             <div className='flex gap-2 mt-4'>
               <p className='text-lg'>Medical Information</p>
               <p className='text-red-500'>*</p>
@@ -735,80 +620,6 @@ const TheAssemble = () => {
             </div>
 
             <div className='flex gap-2 mt-4'>
-              <p className='text-lg'>Emergency Contact</p>
-              <p className='text-red-500'>*</p>
-            </div>
-            <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
-              <div className='w-full'>
-                <label>Contact&apos;s First Name</label>
-                <input
-                  type='text'
-                  placeholder='E.g John'
-                  required
-                  value={formData?.emergencyContactFirstName}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      emergencyContactFirstName: e.target.value,
-                    })
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-              </div>
-              <div className='w-full'>
-                <label>Contact&apos;s Last Name</label>
-                <input
-                  type='text'
-                  placeholder='E.g Adewale'
-                  required
-                  value={formData?.emergencyContactLastName}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      emergencyContactLastName: e.target.value,
-                    })
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-              </div>
-            </div>
-
-            <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
-              <div className='w-full'>
-                <label>Relationship</label>
-                <input
-                  type='text'
-                  placeholder='E.g Brother'
-                  required
-                  value={formData?.emergencyContactRelationship}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      emergencyContactRelationship: e.target.value,
-                    })
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-              </div>
-              <div className='w-full'>
-                <label>Contact&apos;s Phone Number</label>
-                <input
-                  type='text'
-                  placeholder='E.g 08012345678'
-                  required
-                  value={formData?.emergencyContactPhoneNumber}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      emergencyContactPhoneNumber: e.target.value,
-                    })
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-              </div>
-            </div>
-
-            <div className='flex gap-2 mt-4'>
               <p className='text-lg'>Package Options</p>
               <p className='text-red-500'>*</p>
             </div>
@@ -823,10 +634,10 @@ const TheAssemble = () => {
               <label>
                 <p className='text-lg font-bold'>The Royal Guest</p>
                 <p>
-                  [1 Day] Outdoor tent assembly -- (1 daily Healthy Meal/Snack &
-                  drink, water, Reposition Welcome and after care package)
+                  [24 hours walk-in] Outdoor tent assembly -- (1 daily Healthy Meal/Snack &
+                  drink and water)
                 </p>
-                <p className='mt-1 font-medium text-lg'>150,000 NGN</p>
+                <p className='mt-1 font-medium text-lg'>200,000 NGN</p>
                 <p className='mt-2'>Quantity</p>
                 <input
                   type='number'
@@ -859,10 +670,10 @@ const TheAssemble = () => {
               <label>
                 <p className='text-lg font-bold'>The Royal Assemble</p>
                 <p>
-                  Outdoor tent assembly -- (1 daily Healthy Meal/Snack & drink,
+                 [3-Nights] Outdoor tent assemble -- (1 daily Healthy Meal/Snack & drink,
                   water, Reposition Welcome and after care package)
                 </p>
-                <p className='mt-1 font-medium text-lg'>350,000 NGN</p>
+                <p className='mt-1 font-medium text-lg'>400,000 NGN</p>
                 <p className='mt-2'>Quantity</p>
                 <input
                   type='number'
@@ -895,10 +706,10 @@ const TheAssemble = () => {
               <label>
                 <p className='text-lg font-bold'>The Palace</p>
                 <p>
-                  Private Hut (Re-curated) -- (1 daily Healthy Meal/Snack &
+                  [3-Nights] Private Hut (Re-curated) -- (1 daily Healthy Meal/Snack &
                   drink, water, Reposition Welcome and after care package)
                 </p>
-                <p className='mt-1 font-medium text-lg'>600,000 NGN</p>
+                <p className='mt-1 font-medium text-lg'>650,000 NGN</p>
                 <p className='mt-2'>Quantity</p>
                 <input
                   type='number'
