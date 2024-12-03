@@ -15,73 +15,42 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { usePaystackPayment } from 'react-paystack';
-import { emailService, EmailServiceType } from '../api/email/email-service';
 import CountdownTimer from '@/components/countdown-timer/page';
 
 type FormDataType = {
   firstName: string;
-  lastName: string;
-  nickName: string;
   email: string;
-  birthDate: string;
-  sex: string;
   phoneNumber: string;
   maleSize: string;
   femaleSize: string;
   basic1MealADayPlan: string[];
-  address: string;
-  city: string;
-  state: string;
   validId: string[];
-  instagramLink: string;
-  twitterLink: string;
-  snapchatLink: string;
   allergies: string;
   specialNeeds: string;
-  emergencyContactFirstName: string;
-  emergencyContactLastName: string;
-  emergencyContactRelationship: string;
-  emergencyContactPhoneNumber: string;
   royalGuestPackage: boolean;
   royalAssemblePackage: boolean;
   palacePackage: boolean;
   royalGuestQuantity: number;
   royalAssembleQuantity: number;
   palaceQuantity: number;
-  receiptScreenshot: string[];
 };
 const TheAssemble = () => {
   const [formData, setFormData] = useState<FormDataType>({
     firstName: '',
-    lastName: '',
-    nickName: '',
     email: '',
-    birthDate: '',
-    sex: '',
     phoneNumber: '',
     maleSize: '',
     femaleSize: '',
     basic1MealADayPlan: [],
-    address: '',
-    city: '',
-    state: '',
     validId: [],
-    instagramLink: '',
-    twitterLink: '',
-    snapchatLink: '',
     allergies: '',
     specialNeeds: '',
-    emergencyContactFirstName: '',
-    emergencyContactLastName: '',
-    emergencyContactRelationship: '',
-    emergencyContactPhoneNumber: '',
     royalGuestPackage: false,
     royalAssemblePackage: false,
     palacePackage: false,
     royalGuestQuantity: 0,
     royalAssembleQuantity: 0,
     palaceQuantity: 0,
-    receiptScreenshot: [],
   });
   const [loading, setLoading] = useState(false);
   const [showMaleSizeDropdown, setShowMaleSizeDropdown] = useState(false);
@@ -95,7 +64,6 @@ const TheAssemble = () => {
   const [showPaystackSuccess, setShowPaystackSuccess] = useState(false);
   const [showPaystackError, setShowPaystackError] = useState(false);
   const router = useRouter();
-  const [maxDate, setMaxDate] = useState('');
   const maleSizeOptions = ['M', 'L', 'XL', 'XXL', 'XXXL'];
   const femaleSizeOptions = ['6', '8', '10', '12', '14', '16'];
   const mealOptions = [
@@ -106,28 +74,27 @@ const TheAssemble = () => {
     'SMOKED BEEF SALAD',
   ];
 
-  const isFormValid = () => {
-    const requiredFields: (keyof FormDataType)[] = [
-      'firstName',
-      'email',
-      'phoneNumber',
-      'validId',
-      'receiptScreenshot',
-    ];
+  // const isFormValid = () => {
+  //   const requiredFields: (keyof FormDataType)[] = [
+  //     'firstName',
+  //     'email',
+  //     'phoneNumber',
+  //     'validId',
+  //   ];
 
-    return (
-      requiredFields.every((field) => {
-        const value = formData[field];
-        if (Array.isArray(value)) {
-          return value.length > 0;
-        }
-        return typeof value === 'string' && value !== '';
-      }) &&
-      (formData.royalAssemblePackage ||
-        formData.palacePackage ||
-        formData.royalGuestPackage)
-    );
-  };
+  //   return (
+  //     requiredFields.every((field) => {
+  //       const value = formData[field];
+  //       if (Array.isArray(value)) {
+  //         return value.length > 0;
+  //       }
+  //       return typeof value === 'string' && value !== '';
+  //     }) &&
+  //     (formData.royalAssemblePackage ||
+  //       formData.palacePackage ||
+  //       formData.royalGuestPackage)
+  //   );
+  // };
 
   const toggleMealSelection = (meal: string) => {
     setSelectedMeals((prevMeals) => {
@@ -140,13 +107,6 @@ const TheAssemble = () => {
       return prevMeals;
     });
   };
-  useEffect(() => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    setMaxDate(`${year}-${month}-${day}`);
-  }, []);
 
   const handlePackageChange = (
     packageType: 'royalAssemblePackage' | 'palacePackage' | 'royalGuestPackage'
@@ -191,35 +151,20 @@ const TheAssemble = () => {
   const signUpForTheassemble = async () => {
     const payload = {
       first_name: formData?.firstName,
-      last_name: formData?.lastName,
-      nick_name: formData?.nickName,
       email: formData?.email,
-      birthDate: formData?.birthDate,
-      sex: formData?.sex,
       phoneNumber: formData?.phoneNumber,
       maleSize: selectedMaleSize,
       femaleSize: selectedFemaleSize,
       basic1MealADayPlan: selectedMeals,
-      address: formData?.address,
-      city: formData?.city,
-      state: formData?.state,
       validId: formData?.validId,
-      instagramLink: formData?.instagramLink,
-      twitterLink: formData?.twitterLink,
-      snapchatLink: formData?.snapchatLink,
       allergies: formData?.allergies,
       specialNeeds: formData?.specialNeeds,
-      emergencyContactFirstName: formData?.emergencyContactFirstName,
-      emergencyContactLastName: formData?.emergencyContactLastName,
-      emergencyContactRelationship: formData?.emergencyContactRelationship,
-      emergencyContactPhoneNumber: formData?.emergencyContactPhoneNumber,
       royalAssemblePackage: formData?.royalAssemblePackage,
       palacePackage: formData?.palacePackage,
       royalGuestPackage: formData?.royalGuestPackage,
       royalAssembleQuantity: formData?.royalAssembleQuantity,
       palaceQuantity: formData?.palaceQuantity,
       royalGuestQuantity: formData?.royalGuestQuantity,
-      receiptScreenshot: formData?.receiptScreenshot,
     };
     try {
       setLoading(true);
@@ -229,47 +174,23 @@ const TheAssemble = () => {
       if (error !== null) {
         setShowErrorMessage(true);
       } else {
-        // const emailPayload: EmailServiceType = {
-        //   recipient_email: formData.email,
-        //   template_uuid: process.env.NEXT_THEASSEMBLE_TEMPLATE_ID!,
-        //   customer_name: formData.firstName + ' ' + formData.lastName,
-        //   template_variables: {
-        //     name: formData.firstName,
-        //   },
-        // };
-
         setShowSuccessMessage(true);
         setFormData({
           firstName: '',
-          lastName: '',
-          nickName: '',
           email: '',
-          birthDate: '',
-          sex: '',
           phoneNumber: '',
           maleSize: '',
           femaleSize: '',
           basic1MealADayPlan: [],
-          address: '',
-          city: '',
-          state: '',
           validId: [],
-          instagramLink: '',
-          twitterLink: '',
-          snapchatLink: '',
           allergies: '',
           specialNeeds: '',
-          emergencyContactFirstName: '',
-          emergencyContactLastName: '',
-          emergencyContactRelationship: '',
-          emergencyContactPhoneNumber: '',
           royalGuestPackage: false,
           royalAssemblePackage: false,
           palacePackage: false,
           royalAssembleQuantity: 0,
           palaceQuantity: 0,
           royalGuestQuantity: 0,
-          receiptScreenshot: [],
         });
       }
     } catch (err: any) {
@@ -289,10 +210,8 @@ const TheAssemble = () => {
     metadata: {
       payment_type: 'assemble',
       first_name: formData.firstName,
-      last_name: formData.lastName,
       user_email: formData.email,
       phone_number: formData.phoneNumber,
-      address: formData.address,
     },
   } as any;
 
@@ -368,7 +287,7 @@ const TheAssemble = () => {
                   className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f] '
                 />
               </div>
-               <div className='w-full'>
+              <div className='w-full'>
                 <label>Email</label>
                 <input
                   type='email'
@@ -384,44 +303,18 @@ const TheAssemble = () => {
             </div>
 
             <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
-               <div className='w-full'>
-              <label>Phone Number</label>
-              <input
-                type='tel'
-                placeholder='E.g 08012345678'
-                value={formData?.phoneNumber}
-                onChange={(e) =>
-                  setFormData({ ...formData, phoneNumber: e.target.value })
-                }
-                required
-                className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-              />
-            </div>
-              <div className='w-full '>
-                <label>Sex</label>
-
-                <div className='flex gap-4 mt-4'>
-                  <div className='flex gap-2'>
-                    <input
-                      type='checkbox'
-                      className='w-4 h-4 bg-transparent accent-black mt-1'
-                      checked={formData?.sex === 'Male'}
-                      onChange={() => setFormData({ ...formData, sex: 'Male' })}
-                    />
-                    <p>Male</p>
-                  </div>
-                  <div className='flex gap-2'>
-                    <input
-                      type='checkbox'
-                      className='w-4 h-4 bg-transparent accent-black mt-1'
-                      checked={formData?.sex === 'Female'}
-                      onChange={() =>
-                        setFormData({ ...formData, sex: 'Female' })
-                      }
-                    />
-                    <p>Female</p>
-                  </div>
-                </div>
+              <div className='w-full'>
+                <label>Phone Number</label>
+                <input
+                  type='tel'
+                  placeholder='E.g 08012345678'
+                  value={formData?.phoneNumber}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phoneNumber: e.target.value })
+                  }
+                  required
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
+                />
               </div>
             </div>
 
@@ -550,21 +443,6 @@ const TheAssemble = () => {
               )}
             </div>
 
-            <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
-              <div className='w-full'>
-                <label>Street Address</label>
-                <input
-                  type='text'
-                  placeholder='E.g 123, Main Street'
-                  value={formData?.address}
-                  onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f] '
-                />
-              </div>
-             
-            </div>
             <div className='w-full mt-4'>
               <label>
                 Upload a recent valid ID (NIN, Driver&apos;s License, Int.
@@ -581,10 +459,7 @@ const TheAssemble = () => {
               />
             </div>
 
-            <div className='flex gap-2 mt-4'>
-              <p className='text-lg'>Medical Information</p>
-              <p className='text-red-500'>*</p>
-            </div>
+            <p className='text-lg mt-4'>Medical Information</p>
 
             <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
               <div className='w-full'>
@@ -634,8 +509,8 @@ const TheAssemble = () => {
               <label>
                 <p className='text-lg font-bold'>The Royal Guest</p>
                 <p>
-                  [24 hours walk-in] Outdoor tent assembly -- (1 daily Healthy Meal/Snack &
-                  drink and water)
+                  [24 hours walk-in] Outdoor tent assemble -- (1 daily Healthy
+                  Meal/Snack & drink and water)
                 </p>
                 <p className='mt-1 font-medium text-lg'>200,000 NGN</p>
                 <p className='mt-2'>Quantity</p>
@@ -670,8 +545,9 @@ const TheAssemble = () => {
               <label>
                 <p className='text-lg font-bold'>The Royal Assemble</p>
                 <p>
-                 [3-Nights] Outdoor tent assemble -- (1 daily Healthy Meal/Snack & drink,
-                  water, Reposition Welcome and after care package)
+                  [3-Nights] Outdoor tent assemble -- (1 daily Healthy
+                  Meal/Snack & drink, water, Reposition Welcome and after care
+                  package)
                 </p>
                 <p className='mt-1 font-medium text-lg'>400,000 NGN</p>
                 <p className='mt-2'>Quantity</p>
@@ -706,8 +582,9 @@ const TheAssemble = () => {
               <label>
                 <p className='text-lg font-bold'>The Palace</p>
                 <p>
-                  [3-Nights] Private Hut (Re-curated) -- (1 daily Healthy Meal/Snack &
-                  drink, water, Reposition Welcome and after care package)
+                  [3-Nights] Private Hut (Re-curated) -- (1 daily Healthy
+                  Meal/Snack & drink, water, Reposition Welcome and after care
+                  package)
                 </p>
                 <p className='mt-1 font-medium text-lg'>650,000 NGN</p>
                 <p className='mt-2'>Quantity</p>
@@ -781,23 +658,6 @@ const TheAssemble = () => {
             <p className='mt-4 text-white text-sm'>
               Limited & Curated Guests Only.
             </p>
-            <div className='w-full mt-4'>
-              <div className='flex gap-2 '>
-                <p className='text-lg'>
-                  Please Upload your receipt screenshot for proof of payment
-                </p>
-                <p className='text-red-500'>*</p>
-              </div>
-
-              <FileUploader
-                fileUrls={formData?.receiptScreenshot}
-                setFileUrls={(img) =>
-                  setFormData({ ...formData, receiptScreenshot: img })
-                }
-                className=''
-                fileType='image'
-              />
-            </div>
 
             <Accordion type='single' collapsible className='w-full mt-6'>
               <AccordionItem
@@ -894,17 +754,24 @@ const TheAssemble = () => {
             </div>
 
             <button
-              disabled={!isFormValid() || loading}
+              disabled={
+                !formData.firstName ||
+                !formData.email ||
+                !formData.phoneNumber ||
+                loading
+              }
               onClick={signUpForTheassemble}
               className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-6'
             >
               {loading ? 'Loading...' : ' Confirm'}
             </button>
-            {!isFormValid() && (
-              <p className='text-red-500 text-xs mt-2 mb-6'>
-                Please fill all required fields
-              </p>
-            )}
+            {!formData.firstName ||
+              !formData.email ||
+              (!formData.phoneNumber && (
+                <p className='text-red-500 text-xs mt-2 mb-6'>
+                  Please fill all required fields
+                </p>
+              ))}
           </div>
           <div className=' mt-4 text-xs font-semibold text-[#f7e6d1]'>
             <p>Supported By</p>
