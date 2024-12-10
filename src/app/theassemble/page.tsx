@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/accordion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { usePaystackPayment } from 'react-paystack';
 import CountdownTimer from '@/components/countdown-timer/page';
@@ -61,7 +61,6 @@ const TheAssemble = () => {
   const [selectedMeals, setSelectedMeals] = useState<string[]>(['FRESH JUICE']);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showPaystackSuccess, setShowPaystackSuccess] = useState(false);
   const [showPaystackError, setShowPaystackError] = useState(false);
   const router = useRouter();
   const maleSizeOptions = ['M', 'L', 'XL', 'XXL', 'XXXL'];
@@ -221,7 +220,7 @@ const TheAssemble = () => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log('Payment successful:', reference);
     if (reference.message === 'Approved') {
-      setShowPaystackSuccess(true);
+      signUpForTheassemble();
     }
   };
 
@@ -231,7 +230,13 @@ const TheAssemble = () => {
   };
 
   const handlePaystackPayment = () => {
-    if (!formData.email || calculateTotalPrice() <= 0) {
+    if (
+      !formData.email ||
+      calculateTotalPrice() <= 0 ||
+      !formData.firstName ||
+      !formData.phoneNumber ||
+      !formData.validId
+    ) {
       setShowPaystackError(true);
       return;
     }
@@ -618,47 +623,6 @@ const TheAssemble = () => {
               <p>ACCOUNT NUMBER: 1311142463</p>
             </div> */}
 
-            <div className='mt-4 text-white font-bold'>
-              <button
-                onClick={handlePaystackPayment}
-                // disabled={!formData.email || calculateTotalPrice() <= 0}
-                className='flex gap-2 items-center  cursor-pointer'
-              >
-                <Image
-                  src={'/paystack.png'}
-                  alt='paystack'
-                  width={30}
-                  height={30}
-                  className='rounded-md'
-                />
-                <Image
-                  alt='master-card'
-                  src={'/master-card-icon.svg'}
-                  width={35}
-                  height={35}
-                />
-                <Image
-                  alt='visa-card'
-                  src={'/visa-icon.svg'}
-                  width={35}
-                  height={35}
-                />
-
-                <Image
-                  alt='bank-transfer'
-                  src={'/bank-transfer-icon.svg'}
-                  width={35}
-                  height={35}
-                />
-              </button>
-            </div>
-            <p className='mt-2 text-white text-xs'>
-              Click any of the icons to pay. Transcation fees apply
-            </p>
-            <p className='mt-4 text-white text-sm'>
-              Limited & Curated Guests Only.
-            </p>
-
             <Accordion type='single' collapsible className='w-full mt-6'>
               <AccordionItem
                 value='On-boarding-information'
@@ -752,18 +716,50 @@ const TheAssemble = () => {
                 BE EQUALLY AS BINDING AS AN ORIGINAL MANUAL PAPER SIGNATURE.
               </p>
             </div>
+            <div className='mt-4 text-white font-bold'>
+              <button
+                // onClick={handlePaystackPayment}
+                // disabled={!formData.email || calculateTotalPrice() <= 0}
+                className='flex gap-2 items-center  cursor-pointer'
+              >
+                <Image
+                  src={'/paystack.png'}
+                  alt='paystack'
+                  width={30}
+                  height={30}
+                  className='rounded-md'
+                />
+                <Image
+                  alt='master-card'
+                  src={'/master-card-icon.svg'}
+                  width={35}
+                  height={35}
+                />
+                <Image
+                  alt='visa-card'
+                  src={'/visa-icon.svg'}
+                  width={35}
+                  height={35}
+                />
 
+                <Image
+                  alt='bank-transfer'
+                  src={'/bank-transfer-icon.svg'}
+                  width={35}
+                  height={35}
+                />
+              </button>
+            </div>
+            <p className='mt-2 text-white text-xs'>Transcation fees apply</p>
+            <p className='mt-4 text-white text-sm'>
+              Limited & Curated Guests Only.
+            </p>
             <button
-              disabled={
-                !formData.firstName ||
-                !formData.email ||
-                !formData.phoneNumber ||
-                loading
-              }
-              onClick={signUpForTheassemble}
+              disabled={loading}
+              onClick={handlePaystackPayment}
               className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-6'
             >
-              {loading ? 'Loading...' : ' Confirm'}
+              {loading ? 'Loading...' : ' Make Payment'}
             </button>
             {!formData.firstName ||
               !formData.email ||
@@ -804,17 +800,7 @@ const TheAssemble = () => {
         <ErrorModal
           show={showPaystackError}
           onClose={() => setShowPaystackError(false)}
-          description='Please input your email and select a package'
-        />
-      )}
-      {showPaystackSuccess && (
-        <SuccessModal
-          show={showPaystackSuccess}
-          onClose={() => setShowPaystackSuccess(false)}
-          title='Payment Successful'
-          description='please continue to upload your receipt screenshot and confirm your details'
-          buttonText='Continue'
-          buttonClick={() => setShowPaystackSuccess(false)}
+          description='Please input your contact details, a valid ID and select a package'
         />
       )}
     </div>
