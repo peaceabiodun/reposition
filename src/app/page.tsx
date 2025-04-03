@@ -6,6 +6,8 @@ import { validateEmail } from '@/utils/functions';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { FaRegEyeSlash } from 'react-icons/fa';
+import { IoEyeOutline } from 'react-icons/io5';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const AuthPage = () => {
@@ -16,6 +18,7 @@ const AuthPage = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [showSignupForm, setShowSignupForm] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -97,6 +100,7 @@ const AuthPage = () => {
                 className='object-cover invert'
               />
               <h3 className='font-semibold'>Create an account</h3>
+              <p className='text-lg font-bold'> You&apos;re Almost There!</p>
               <input
                 type='text'
                 placeholder='Full Name'
@@ -119,13 +123,28 @@ const AuthPage = () => {
                 pattern='[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                 className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
               />
-              <input
-                type='password'
-                placeholder='Create Password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0]'
-              />
+              <div className='flex border border-[#909192] w-full p-2'>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='Password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className=' w-full outline-none bg-transparent placeholder:text-[#e4e0e0] pr-3'
+                />
+                {showPassword ? (
+                  <FaRegEyeSlash
+                    size={20}
+                    onClick={() => setShowPassword(!showPassword)}
+                    className='cursor-pointer'
+                  />
+                ) : (
+                  <IoEyeOutline
+                    size={20}
+                    onClick={() => setShowPassword(!showPassword)}
+                    className='cursor-pointer'
+                  />
+                )}
+              </div>
               {emailError && (
                 <p className='text-xs text-red-800'>{emailError}</p>
               )}
@@ -158,7 +177,11 @@ const AuthPage = () => {
                 className='object-cover invert'
               />
               <h3 className='font-semibold'>Login</h3>
-              <p className='text-lg'> I Think You&apos;ve got Free Shipping!</p>
+              <p className='text-lg'>
+                {' '}
+                I Think You&apos;ve got{' '}
+                <span className='font-bold'>Free Shipping!</span>
+              </p>
               <input
                 type='text'
                 placeholder='Email'
@@ -174,20 +197,35 @@ const AuthPage = () => {
                 pattern='[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                 className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
               />
-              <input
-                type='password'
-                placeholder='Password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0]'
-              />
+              <div className='flex border border-[#909192] w-full p-2'>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='Password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className=' w-full outline-none bg-transparent placeholder:text-[#e4e0e0] pr-3'
+                />
+                {showPassword ? (
+                  <FaRegEyeSlash
+                    size={20}
+                    onClick={() => setShowPassword(!showPassword)}
+                    className='cursor-pointer'
+                  />
+                ) : (
+                  <IoEyeOutline
+                    size={20}
+                    onClick={() => setShowPassword(!showPassword)}
+                    className='cursor-pointer'
+                  />
+                )}
+              </div>
               {emailError && (
                 <p className='text-xs text-red-800'>{emailError}</p>
               )}
               <button
                 disabled={disableButton}
                 onClick={login}
-                className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
+                className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer font-semibold`}
               >
                 {loading ? 'Loading...' : 'Login and Claim'}
               </button>

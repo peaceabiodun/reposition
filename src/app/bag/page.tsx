@@ -383,7 +383,7 @@ const Bag = () => {
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
       <Header />
       <Link
-        href='/'
+        href='/home'
         className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
       >
         <MdOutlineArrowBackIosNew size={20} />

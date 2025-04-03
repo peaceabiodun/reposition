@@ -51,7 +51,7 @@ const CampaignPage = () => {
       <div className='bg-[#f8d3c98a] h-full min-h-screen'>
         <Header />
         <div className='p-4 gap-1 flex justify-between text-sm items-center'>
-          <Link href='/' className=' gap-1 flex text-sm items-center'>
+          <Link href='/home' className=' gap-1 flex text-sm items-center'>
             <MdOutlineArrowBackIosNew size={20} />
             Back
           </Link>

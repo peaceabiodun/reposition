@@ -89,7 +89,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
         if (token) {
           setShowLogoutModal(true);
         } else {
-          router.push('/login');
+          router.push('/');
         }
       },
     },

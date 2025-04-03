@@ -170,7 +170,7 @@ const ProductDetails = () => {
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2]'>
       <Header />
       <div className='flex w-full justify-between gap-4 p-4 mb-4'>
-        <Link href='/' className=' gap-1 flex text-sm items-center '>
+        <Link href='/home' className=' gap-1 flex text-sm items-center '>
           <MdOutlineArrowBackIosNew size={20} />
           Back
         </Link>
