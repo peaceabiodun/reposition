@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const disableButton = !email ?? !password;
+  const disableButton = !email || !password;
   const router = useRouter();
 
   const login = async () => {

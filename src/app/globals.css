@@ -154,8 +154,8 @@ body {
 }
 
 .blur-bg {
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
 }
 
 .login_bg {
@@ -167,7 +167,7 @@ body {
       rgba(255, 0, 0, 0),
       rgb(37, 36, 36)
     ),
-    url('https://d3u7b9fq2opvwp.cloudfront.net/upload-service/935ce589-c643-482d-97ed-791fa48e6e20:IMG_4674.jpg');
+    url('/auth-bg.jpg');
 }
 
 .we_are_bg {
