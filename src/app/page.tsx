@@ -3,6 +3,7 @@ import ErrorModal from '@/components/error-modal/page';
 import { supabase } from '@/lib/supabase';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { validateEmail } from '@/utils/functions';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
@@ -88,6 +89,13 @@ const AuthPage = () => {
         {showSignupForm ? (
           <div className='flex justify-center'>
             <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center'>
+              <Image
+                src={'/logo.svg'}
+                alt='logo'
+                width={70}
+                height={70}
+                className='object-cover invert'
+              />
               <h3 className='font-semibold'>Create an account</h3>
               <input
                 type='text'
@@ -142,8 +150,15 @@ const AuthPage = () => {
         ) : (
           <div className='flex justify-center'>
             <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center'>
+              <Image
+                src={'/logo.svg'}
+                alt='logo'
+                width={70}
+                height={70}
+                className='object-cover invert'
+              />
               <h3 className='font-semibold'>Login</h3>
-              {/* <p className='text-xs'> Are you the owner of this apllication ?</p> */}
+              <p className='text-lg'> I Think You&apos;ve got Free Shipping!</p>
               <input
                 type='text'
                 placeholder='Email'
@@ -174,7 +189,7 @@ const AuthPage = () => {
                 onClick={login}
                 className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
               >
-                {loading ? 'Loading...' : 'Confirm'}
+                {loading ? 'Loading...' : 'Login and Claim'}
               </button>
               <p className='text-xs'>
                 Don&apos;t have an account?{' '}
