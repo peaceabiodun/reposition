@@ -99,7 +99,7 @@ const AuthPage = () => {
                 height={70}
                 className='object-cover invert'
               />
-              <h3 className='font-semibold'>Create an account</h3>
+              {/* <h3 className='font-semibold'>Create an account</h3> */}
               <p className='text-lg font-bold'> You&apos;re Almost There!</p>
               <input
                 type='text'
@@ -151,7 +151,7 @@ const AuthPage = () => {
               <button
                 disabled={disableButton}
                 onClick={signup}
-                className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
+                className={`border border-[#909192] bg-[#523f3fab] font-semibold rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
               >
                 {loading ? 'Loading...' : 'Create Account'}
               </button>
@@ -159,7 +159,7 @@ const AuthPage = () => {
                 Already have an account?
                 <span
                   onClick={() => setShowSignupForm(false)}
-                  className='text-[#3b1010ab] cursor-pointer ml-1'
+                  className='text-[#3b1010ab] font-semibold cursor-pointer ml-1'
                 >
                   Login
                 </span>
@@ -176,7 +176,7 @@ const AuthPage = () => {
                 height={70}
                 className='object-cover invert'
               />
-              <h3 className='font-semibold'>Login</h3>
+              {/* <h3 className='font-semibold'>Login</h3> */}
               <p className='text-lg'>
                 {' '}
                 I Think You&apos;ve got{' '}
@@ -233,7 +233,7 @@ const AuthPage = () => {
                 Don&apos;t have an account?{' '}
                 <span
                   onClick={() => setShowSignupForm(true)}
-                  className='text-[#3b1010ab] cursor-pointer ml-1'
+                  className='text-[#3b1010ab] font-semibold cursor-pointer ml-1'
                 >
                   Register
                 </span>

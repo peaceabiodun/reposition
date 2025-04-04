@@ -30,7 +30,7 @@ const ResetPassword = () => {
       });
       if (data.user?.role === 'authenticated') {
         setShowSuccessModal(true);
-        router.push('/');
+        router.push('/home');
       } else {
         setShowErrorMessage(true);
       }

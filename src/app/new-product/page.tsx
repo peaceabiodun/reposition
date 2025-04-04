@@ -365,7 +365,7 @@ const AddNewProduct = () => {
           title='Product Created'
           description='You have successfully created a product '
           buttonText='Back to product'
-          buttonClick={() => router.push('/')}
+          buttonClick={() => router.push('/home')}
         />
       )}
     </div>
