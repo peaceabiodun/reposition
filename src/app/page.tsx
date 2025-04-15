@@ -178,9 +178,7 @@ const AuthPage = () => {
               />
               {/* <h3 className='font-semibold'>Login</h3> */}
               <p className='text-lg'>
-                {' '}
-                I Think You&apos;ve got{' '}
-                <span className='font-bold'>Free Shipping!</span>
+               Welcome
               </p>
               <input
                 type='text'
@@ -227,7 +225,7 @@ const AuthPage = () => {
                 onClick={login}
                 className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer font-semibold`}
               >
-                {loading ? 'Loading...' : 'Login and Claim'}
+                {loading ? 'Loading...' : 'Enter'}
               </button>
               <p className='text-xs'>
                 Don&apos;t have an account?{' '}
