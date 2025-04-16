@@ -22,9 +22,9 @@ const WeAre = () => {
       </Link>
       <div className='w-full h-full p-4 flex flex-col items-center text-[#4d3c1d] text-sm font-semibold'>
         <h3 className='text-center'>
-          We are a people with love for elevated streetwear and contemporary
-          classics; as it maintains it&apos;s appeal through time - our symbol
-          of sustained style, designed to last.{' '}
+          We are a brand with love for elevated and contemporary classics; our
+          symbol of sustained heritage and craftsmanship for a discerning few -
+          designed to last.
         </h3>
         <h3 className='mt-4 text-center'>
           <Typewriter
