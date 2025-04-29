@@ -618,3 +618,7 @@ body {
   align-items: center;
   cursor: pointer;
 }
+
+.campaign_video video {
+  object-fit: cover;
+}

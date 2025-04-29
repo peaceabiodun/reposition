@@ -115,11 +115,11 @@ const AddNewProduct = () => {
     }
   };
   const disableButton =
-    !productFormData.name ??
-    !productFormData.price ??
-    !productFormData.description ??
-    productFormData.images.length <= 0 ??
-    productFormData.colors.length <= 0 ??
+    !productFormData.name ||
+    !productFormData.price ||
+    !productFormData.description ||
+    productFormData.images.length <= 0 ||
+    productFormData.colors.length <= 0 ||
     productFormData.sizes.length <= 0;
 
   return (
@@ -365,7 +365,7 @@ const AddNewProduct = () => {
           title='Product Created'
           description='You have successfully created a product '
           buttonText='Back to product'
-          buttonClick={() => router.push('/home')}
+          buttonClick={() => router.push('/')}
         />
       )}
     </div>

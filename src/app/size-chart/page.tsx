@@ -78,7 +78,7 @@ const SizeChart = () => {
   return (
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2]'>
       <Header />
-      <Link href='/home' className=' gap-1 flex text-sm items-center p-4'>
+      <Link href='/' className=' gap-1 flex text-sm items-center p-4'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>

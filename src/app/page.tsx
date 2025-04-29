@@ -1,254 +1,309 @@
 'use client';
-import ErrorModal from '@/components/error-modal/page';
-import { supabase } from '@/lib/supabase';
-import { STORAGE_KEYS } from '@/utils/constants';
-import { validateEmail } from '@/utils/functions';
+import Footer from '@/components/footer/page';
+import Header from '@/components/header/page';
 import Image from 'next/image';
+import Link from 'next/link';
+import Typewriter from 'typewriter-effect';
+import { ThreeCircles } from 'react-loader-spinner';
+import { Fragment, useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import ErrorModal from '@/components/error-modal/page';
+import { useProductContext } from '@/context/product-context';
+import { STORAGE_KEYS } from '@/utils/constants';
+import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
+import SortInput from '@/components/sort/page';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { FaRegEyeSlash } from 'react-icons/fa';
-import { IoEyeOutline } from 'react-icons/io5';
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
+import { CampaignDetailsType } from '@/utils/types';
+import ReactPlayer from 'react-player';
 
-const AuthPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [showSignupForm, setShowSignupForm] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
+  const [campaignLoading, setCampaignLoading] = useState(false);
+  const { products, setProducts } = useProductContext();
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  //const [showCampaign, setShowCampaign] = useState(true);
+  const [filterValue, setFilterValue] = useState<string>(
+    ENUM_PRODUCT_FILTER_LIST.ALL
+  );
   const router = useRouter();
+  const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
 
-  const disableButton = !email || !password;
-  const login = async () => {
+  // useEffect(() => {
+  //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
+  //   if (hasSeenCampaign) {
+  //     setShowCampaign(false);
+  //   }
+  // }, []);
+
+  const options = [
+    { name: ENUM_PRODUCT_FILTER_LIST.ALL },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.SHOES },
+    { name: ENUM_PRODUCT_FILTER_LIST.SUIT },
+    { name: ENUM_PRODUCT_FILTER_LIST.COAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
+    { name: ENUM_PRODUCT_FILTER_LIST.ACCESSORIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.TSHIRTS },
+    { name: ENUM_PRODUCT_FILTER_LIST.HOODIES },
+    { name: ENUM_PRODUCT_FILTER_LIST.HAT },
+    { name: ENUM_PRODUCT_FILTER_LIST.JACKET },
+  ];
+  const fetchProducts = async () => {
     setLoading(true);
     try {
-      let { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-      if (data.session !== null) {
-        localStorage.setItem(
-          STORAGE_KEYS.AUTH_TOKEN,
-          data.session.access_token
-        );
-        localStorage.setItem(STORAGE_KEYS.USER_EMAIL, data.user.email ?? '');
-        router.push('/home');
-      } else {
-        setShowErrorMessage(true);
+      let { data, error } = await supabase
+        .from('products')
+        .select()
+        .order('created_at', { ascending: false });
+      if (data !== null) {
+        if (filterValue !== ENUM_PRODUCT_FILTER_LIST.ALL) {
+          data = data.filter((product) => product.category === filterValue);
+        }
+        setProducts(data ?? []);
+      }
+
+      if (error) {
+        setShowErrorModal(true);
       }
     } catch (err: any) {
-      setShowErrorMessage(true);
+      setShowErrorModal(true);
     } finally {
       setLoading(false);
     }
   };
-  const signup = async () => {
-    setLoading(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [filterValue]);
+
+  const fetchCampaignDetails = async () => {
+    setCampaignLoading(true);
     try {
-      let { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            full_name: fullName,
-            user_role: 'user',
-          },
-        },
-      });
-      if (data.session !== null) {
-        localStorage.setItem(
-          STORAGE_KEYS.AUTH_TOKEN,
-          data.session.access_token
-        );
-        localStorage.setItem(STORAGE_KEYS.USER_EMAIL, data?.user?.email ?? '');
-        localStorage.setItem(
-          STORAGE_KEYS.USER_ROLE,
-          data?.user?.user_metadata?.user_role ?? ''
-        );
-        router.push('/home');
-      } else {
-        setShowErrorMessage(true);
+      const { data, error } = await supabase.from('campaign').select();
+      if (data) {
+        setCampaignDetails(data[0]);
+      }
+
+      if (error) {
+        setShowErrorModal(true);
       }
     } catch (err: any) {
-      setShowErrorMessage(true);
+      setShowErrorModal(true);
     } finally {
-      setLoading(false);
+      setCampaignLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchCampaignDetails();
+  }, []);
+
+  const getSession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (session !== null) {
+      localStorage.setItem(
+        STORAGE_KEYS.AUTH_TOKEN,
+        session?.access_token ?? ''
+      );
+      localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session?.user.email ?? '');
+      localStorage.setItem(STORAGE_KEYS.USER_ID, session?.user.id ?? '');
+      localStorage.setItem(
+        STORAGE_KEYS.USER_ROLE,
+        session?.user.user_metadata.user_role ?? ''
+      );
+    }
+  };
+
+  useEffect(() => {
+    getSession();
+  }, []);
+  //check to get the user role and redirect to the appropriate page
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     await getSession();
+  //     const authToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+
+  //     if (!authToken) {
+  //       router.push('/login');
+  //     }
+  //   };
+  //   checkAuth();
+  // }, [router]);
+
+  // const refreshSession = async () => {
+  //   const {
+  //     data: { session },
+  //   } = await supabase.auth.refreshSession();
+
+  //   if (session !== null) {
+  //     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, session.access_token);
+  //     localStorage.setItem(STORAGE_KEYS.USER_EMAIL, session.user?.email ?? '');
+  //   }
+  // };
+
+  // const handleCloseCampaign = () => {
+  //   setShowCampaign(false);
+  //   localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, 'true');
+  // };
   return (
-    <div className='w-full min-h-screen login_bg bg-[#dbd9d2] text-sm'>
-      <div className='blur-bg p-3 xs:p-4 text-[#e4e0e0] '>
-        {/* <Link
-          href='/'
-          className='mt-4 gap-1 flex text-sm items-center text-[#e4e0e0] '
-        >
-          <MdOutlineArrowBackIosNew size={20} />
-          Back
-        </Link> */}
-        {showSignupForm ? (
-          <div className='flex justify-center'>
-            <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center'>
-              <Image
-                src={'/logo.svg'}
-                alt='logo'
-                width={70}
-                height={70}
-                className='object-cover invert'
+    <Fragment>
+      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] font-light '>
+        <Header />
+        <div className='flex flex-col items-center  w-full p-4'>
+          {campaignLoading ? (
+            <div className='grow w-full flex justify-center items-center p-4'>
+              <ThreeCircles
+                visible={true}
+                height={50}
+                width={50}
+                color='#b4b4b4ad'
+                ariaLabel='three-circles-loading'
+                wrapperClass='my-4'
               />
-              {/* <h3 className='font-semibold'>Create an account</h3> */}
-              <p className='text-lg font-bold'> You&apos;re Almost There!</p>
-              <input
-                type='text'
-                placeholder='Full Name'
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
-              />
-              <input
-                type='text'
-                placeholder='Email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={(e) => {
-                  if (e.target.value && !validateEmail(e.target.value)) {
-                    setEmailError('Please enter a valid email address');
-                  } else {
-                    setEmailError('');
-                  }
-                }}
-                pattern='[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-                className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
-              />
-              <div className='flex border border-[#909192] w-full p-2'>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder='Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className=' w-full outline-none bg-transparent placeholder:text-[#e4e0e0] pr-3'
-                />
-                {showPassword ? (
-                  <FaRegEyeSlash
-                    size={20}
-                    onClick={() => setShowPassword(!showPassword)}
-                    className='cursor-pointer'
-                  />
-                ) : (
-                  <IoEyeOutline
-                    size={20}
-                    onClick={() => setShowPassword(!showPassword)}
-                    className='cursor-pointer'
-                  />
-                )}
-              </div>
-              {emailError && (
-                <p className='text-xs text-red-800'>{emailError}</p>
-              )}
-              <button
-                disabled={disableButton}
-                onClick={signup}
-                className={`border border-[#909192] bg-[#523f3fab] font-semibold rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
-              >
-                {loading ? 'Loading...' : 'Create Account'}
-              </button>
-              <p className='text-xs'>
-                Already have an account?
-                <span
-                  onClick={() => setShowSignupForm(false)}
-                  className='text-[#3b1010ab] font-semibold cursor-pointer ml-1'
-                >
-                  Login
-                </span>
-              </p>
             </div>
+          ) : (
+            <div className=''>
+              <h2 className='text-lg sm:text-2xl font-light text-center mt-6'>
+                <Typewriter
+                  options={{
+                    strings: [
+                      'Experience Freedom',
+                      `${campaignDetails?.campaign_title}`,
+                    ],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </h2>
+
+              <div className=' mt-3'>
+                <div className='w-screen h-full overflow-hidden sm:h-[700px] campaign_video'>
+                  <ReactPlayer
+                    width='100%'
+                    height='100%'
+                    url={campaignDetails?.campaign_video}
+                    controls={true}
+                    playing={true}
+                    loop={true}
+                    style={{ objectFit: 'cover' }}
+                  />
+                  {/* <video width='100%' height='500px' autoPlay src='/video1.mp4' /> */}
+                </div>
+
+                <div className='text-[#704e21] text-sm md:text-[16px] font-light flex flex-col items-center gap-2 mt-3'>
+                  <p>{campaignDetails?.campaign_subtext}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <SortInput
+          options={options}
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+        />
+        {loading ? (
+          <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4'>
+            <ThreeCircles
+              visible={true}
+              height={50}
+              width={50}
+              color='#b4b4b4ad'
+              ariaLabel='three-circles-loading'
+              wrapperClass='my-4'
+            />
+          </div>
+        ) : products.length === 0 ? (
+          <div className='w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4 text-sm'>
+            {' '}
+            No Products Available
           </div>
         ) : (
-          <div className='flex justify-center'>
-            <div className='w-full min-h-[88vh] sm:max-w-[350px] space-y-6 flex flex-col items-center justify-center'>
-              <Image
-                src={'/logo.svg'}
-                alt='logo'
-                width={70}
-                height={70}
-                className='object-cover invert'
-              />
-              {/* <h3 className='font-semibold'>Login</h3> */}
-              <p className='text-lg'>
-               Welcome
-              </p>
-              <input
-                type='text'
-                placeholder='Email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={(e) => {
-                  if (e.target.value && !validateEmail(e.target.value)) {
-                    setEmailError('Please enter a valid email address');
-                  } else {
-                    setEmailError('');
-                  }
-                }}
-                pattern='[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-                className='border border-[#909192] w-full p-2 outline-none bg-transparent placeholder:text-[#e4e0e0] '
-              />
-              <div className='flex border border-[#909192] w-full p-2'>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder='Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className=' w-full outline-none bg-transparent placeholder:text-[#e4e0e0] pr-3'
-                />
-                {showPassword ? (
-                  <FaRegEyeSlash
-                    size={20}
-                    onClick={() => setShowPassword(!showPassword)}
-                    className='cursor-pointer'
+          <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 md:grid-cols-3 p-4'>
+            {products?.map((item) => (
+              <Link href={`product/${item.id}`} key={item.id} className='mb-4'>
+                <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] '>
+                  <Image
+                    src={item?.images[0] ?? '/placeholder.png'}
+                    alt='product_image'
+                    fill
+                    className={` min-h-[400px] h-[400px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
+                      item.sold_out ? 'brightness-50' : ''
+                    } `}
                   />
-                ) : (
-                  <IoEyeOutline
-                    size={20}
-                    onClick={() => setShowPassword(!showPassword)}
-                    className='cursor-pointer'
-                  />
-                )}
-              </div>
-              {emailError && (
-                <p className='text-xs text-red-800'>{emailError}</p>
-              )}
-              <button
-                disabled={disableButton}
-                onClick={login}
-                className={`border border-[#909192] bg-[#523f3fab] rounded-sm p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer font-semibold`}
-              >
-                {loading ? 'Loading...' : 'Enter'}
-              </button>
-              <p className='text-xs'>
-                Don&apos;t have an account?{' '}
-                <span
-                  onClick={() => setShowSignupForm(true)}
-                  className='text-[#3b1010ab] font-semibold cursor-pointer ml-1'
-                >
-                  Register
-                </span>
-              </p>
-            </div>
+                  {item.sold_out && (
+                    <div className='home_img w-[200px] absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
+                      <p className=' text-sm text-gray-400 font-medium'>
+                        Sold out
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <p className='my-2 font-light text-[16px]'>{item.name}</p>
+                <div className='flex gap-2 font-light'>
+                  <p className='text-sm'>${item.price}</p>
+                  {item.pre_order ? (
+                    <p className='text-sm'>[Pre-Order]</p>
+                  ) : null}
+                </div>
+              </Link>
+            ))}
           </div>
         )}
+        <Footer />
       </div>
-      {showErrorMessage && (
+      {showErrorModal && (
         <ErrorModal
-          show={showErrorMessage}
-          onClose={() => setShowErrorMessage(false)}
-          description='Make sure you input the correct email and password'
+          show={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          description='Sorry an error occured while loading the products'
         />
       )}
-    </div>
+      {/* {showCampaign && (
+        <div
+          style={{
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundImage: `linear-gradient(
+              to left,
+              rgba(39, 37, 37, 0.699),
+              rgba(39, 37, 37, 0.651)
+            ),
+            url('${campaignDetails?.banner_image}')`,
+          }}
+          className=' fixed inset-0 flex flex-col items-center justify-center p-4'
+        >
+          <h3 className='text-[#eefcff] text-sm text-center'>
+            {campaignDetails?.banner_title}
+          </h3>
+          <p className='text-[#d2dadb] text-xs my-3 text-center'>
+            {campaignDetails?.banner_subtext}
+          </p>
+
+          <button
+            onClick={() => router.push('/campaign')}
+            className='bg-white p-2 h-[33px] w-[90px] text-xs font-light'
+          >
+            View
+          </button>
+
+          <button
+            onClick={handleCloseCampaign}
+            className='bg-[#ebfaf7d3] rounded-full p-1 w-6 h-6 flex items-center justify-center mt-7'
+          >
+            <MdClose />
+          </button>
+        </div>
+      )} */}
+    </Fragment>
   );
 };
 
-export default AuthPage;
+export default Home;

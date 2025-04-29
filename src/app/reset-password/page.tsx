@@ -30,7 +30,7 @@ const ResetPassword = () => {
       });
       if (data.user?.role === 'authenticated') {
         setShowSuccessModal(true);
-        router.push('/home');
+        router.push('/');
       } else {
         setShowErrorMessage(true);
       }
@@ -42,7 +42,7 @@ const ResetPassword = () => {
   };
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4 text-sm  '>
-      <Link href='/home' className='mt-4 gap-1 flex text-sm items-center'>
+      <Link href='/' className='mt-4 gap-1 flex text-sm items-center'>
         <MdOutlineArrowBackIosNew size={20} />
         Back
       </Link>

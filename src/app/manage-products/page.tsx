@@ -78,7 +78,7 @@ const ManageProducts = () => {
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
       <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
-        <Link href='/home' className='flex gap-1'>
+        <Link href='/' className='flex gap-1'>
           <MdOutlineArrowBackIosNew size={20} />
           Back
         </Link>

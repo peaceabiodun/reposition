@@ -157,7 +157,7 @@ const Header = () => {
               if (token) {
                 setShowDropdown(!showDropdown);
               } else {
-                router.push('/');
+                router.push('/login');
               }
             }}
             className='cursor-pointer hidden sm:flex'
