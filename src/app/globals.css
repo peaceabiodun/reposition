@@ -190,7 +190,7 @@ body {
       rgba(255, 0, 0, 0),
       rgba(112, 109, 109, 0.281)
     ),
-    url('/bg1.jpg');
+    url('/assemble-bg.png');
 }
 .campaign_modal {
   background-size: cover;
