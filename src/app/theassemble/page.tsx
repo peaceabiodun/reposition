@@ -148,7 +148,7 @@ const TheAssemble = () => {
   };
 
   return (
-    <div className='min-h-[100vh] bg-[#dbd9d2] the_assemble_bg font-light  '>
+    <div className='min-h-[100vh] bg-[#dbd9d2] the_assemble_bg   '>
       <div className='blur-bg p-4'>
         <header>
           <div className='flex gap-1'>
@@ -163,11 +163,13 @@ const TheAssemble = () => {
           </div>
         </header>
 
-        <section className='text-[#311b07]'>
-          <h2 className='text-lg sm:text-2xl font-light text-center mt-6'>
+        <section className='text-[#000000]'>
+          <h2 className='text-lg sm:text-2xl font-bold text-center mt-6'>
             THE ASSEMBLE
           </h2>
-          <p className='text-sm text-center mt-2'>REGISTRATION FORM</p>
+          <p className='text-sm text-center mt-2 font-medium'>
+            MEMBERSHIP FORM
+          </p>
           {/* <CountdownTimer /> */}
           <div className='mt-6 flex flex-col m-auto w-full max-w-[1200px] '>
             <div className='flex gap-2'>
@@ -186,7 +188,7 @@ const TheAssemble = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, firstName: e.target.value })
                   }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f] '
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000] '
                 />
               </div>
               <div className='w-full'>
@@ -199,7 +201,7 @@ const TheAssemble = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000]'
                 />
               </div>
             </div>
@@ -215,7 +217,7 @@ const TheAssemble = () => {
                     setFormData({ ...formData, phoneNumber: e.target.value })
                   }
                   required
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000]'
                 />
               </div>
             </div>
@@ -233,14 +235,14 @@ const TheAssemble = () => {
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <div>
-                <p className='text-lg font-bold'>Revere [10,000pts]</p>
+                <p className='text-lg font-bold'>Respect [10,000pts]</p>
                 <ul className='list-disc list-inside'>
                   <li> One house mocktail</li>
                   <li>
                     One-time monthly discounts on coffee/pastries at The
                     Assemble partner venues
                   </li>
-                  <li>5mins early access on Reposition collection drops</li>
+                  <li>45mins early access on Reposition collection drops</li>
                   <li>
                     Special codes to redeem discounts on Select Reposition & TOT
                     purchase
@@ -251,22 +253,24 @@ const TheAssemble = () => {
                   </li>
                 </ul>
                 <p className='mt-1 font-bold text-lg'>10,000 NGN</p>
-                <p className='mt-2'>Quantity</p>
-                <input
-                  type='number'
-                  placeholder='1'
-                  value={formData?.revereQuantity ?? ''}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      revereQuantity: e.target.value
-                        ? parseInt(e.target.value)
-                        : 0,
-                    })
-                  }
-                  min={0}
-                  className='border border-[#3d3e3f] rounded-sm w-[100px] p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
+                <div className='flex gap-2 items-center'>
+                  <p className='mt-2'>Quantity</p>
+                  <input
+                    type='number'
+                    placeholder='1'
+                    value={formData?.revereQuantity ?? ''}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        revereQuantity: e.target.value
+                          ? parseInt(e.target.value)
+                          : 0,
+                      })
+                    }
+                    min={0}
+                    className='border border-[#3d3e3f] rounded-sm w-[100px] p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000]'
+                  />
+                </div>
                 <p className='mt-2 text-lg'>
                   Total Items: {formatPrice(reverePackagePrice)}
                 </p>
@@ -281,7 +285,7 @@ const TheAssemble = () => {
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <label>
-                <p className='text-lg font-bold'>Prive [30,000pts]</p>
+                <p className='text-lg font-bold'>Private [30,000pts]</p>
                 <ul className='list-disc list-inside'>
                   <li>One house mocktail </li>
                   <li>
@@ -310,30 +314,34 @@ const TheAssemble = () => {
                     initiative
                   </li>
                 </ul>
-                <p className='mt-1 font-bold text-lg'>30,000 NGN</p>
-                <p className='mt-2'>Quantity</p>
-                <input
-                  type='number'
-                  placeholder='1'
-                  value={formData?.priveQuantity ?? ''}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      priveQuantity: e.target.value
-                        ? parseInt(e.target.value)
-                        : 0,
-                    })
-                  }
-                  min={0}
-                  className='border border-[#3d3e3f] rounded-sm w-[100px] p-2 mt-2 outline-none bg-transparent placeholder:text-[#6d522f]'
-                />
-                <p className='mt-2 text-lg'>
+                <p className='mt-1 font-bold text-lg text-white lg:text-[#000000]'>
+                  30,000 NGN
+                </p>
+                <div className='flex gap-2 items-center'>
+                  <p className='mt-2 text-white lg:text-[#000000]'>Quantity</p>
+                  <input
+                    type='number'
+                    placeholder='1'
+                    value={formData?.priveQuantity ?? ''}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        priveQuantity: e.target.value
+                          ? parseInt(e.target.value)
+                          : 0,
+                      })
+                    }
+                    min={0}
+                    className='border border-white md:border-[#3d3e3f] rounded-sm w-[100px] p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000] text-white lg:text-[#000000]'
+                  />
+                </div>
+                <p className='mt-2 text-lg text-white lg:text-[#000000]'>
                   Total Items: {formatPrice(privePackagePrice)}
                 </p>
               </label>
             </div>
 
-            <div className='mt-4 text-lg font-bold text-[#ffffff] sm:text-[#311b07]'>
+            <div className='mt-4 text-lg font-bold text-[#ffffff] lg:text-[#000000]'>
               Total : {formatPrice(calculateTotalPrice())}
             </div>
 
