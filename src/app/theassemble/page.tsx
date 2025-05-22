@@ -163,7 +163,7 @@ const TheAssemble = () => {
           </div>
         </header>
 
-        <section className='text-[#000000]'>
+        <section className='text-[#000000] mb-10'>
           <h2 className='text-lg sm:text-2xl font-bold text-center mt-6'>
             THE ASSEMBLE
           </h2>
@@ -303,13 +303,13 @@ const TheAssemble = () => {
                     first-reserve access for next event
                   </li>
                   <li>Christmas gifting</li>
-                  <li>Brand item exclusive </li>
-                  <li>
+                  <li className='text-white lg:text-[#000000]'>Brand item exclusive </li>
+                  <li className='text-white lg:text-[#000000]'>
                     Exclusive invitation to attend private retreats and jazz
                     events
                   </li>
-                  <li>Request name customization for Reposition purchase</li>
-                  <li>
+                  <li className='text-white lg:text-[#000000]'>Request name customization for Reposition purchase</li>
+                  <li className='text-white lg:text-[#000000]'>
                     Invitation to support an annual Down-Syndromn outreach
                     initiative
                   </li>
@@ -345,17 +345,7 @@ const TheAssemble = () => {
               Total : {formatPrice(calculateTotalPrice())}
             </div>
 
-            <div className='mt-6 text-[#ffffff]'>
-              <h3 className='text-lg font-bold underline underline-offset-1'>
-                Confirmation
-              </h3>
-              <p className='mt-2'>
-                BY ACKNOWLEDGING AND SUBMITTING BELOW, I AM DELIVERING AN
-                ELECTRONIC SIGNATURE THAT WILL HAVE THE SAME EFFECT AS AN
-                ORIGINAL MANUAL PAPER SIGNATURE. THE ELECTRONIC SIGNATURE WILL
-                BE EQUALLY AS BINDING AS AN ORIGINAL MANUAL PAPER SIGNATURE.
-              </p>
-            </div>
+  
             <div className='mt-4 text-white font-bold'>
               <button
                 // onClick={handlePaystackPayment}
@@ -391,15 +381,13 @@ const TheAssemble = () => {
               </button>
             </div>
             <p className='mt-2 text-white text-xs'>Transcation fees apply</p>
-            <p className='mt-4 text-white text-sm'>
-              Limited & Curated Guests Only.
-            </p>
+           
             <button
               disabled={loading}
               onClick={handlePaystackPayment}
               className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-6'
             >
-              {loading ? 'Loading...' : ' Make Payment'}
+              {loading ? 'Loading...' : 'Join'}
             </button>
             {!formData.firstName ||
               !formData.email ||
