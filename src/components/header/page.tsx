@@ -108,23 +108,24 @@ const Header = () => {
     <Fragment>
       <div
         id={`${scroll ? 'sticky' : ''}`}
-        className={`flex justify-between gap-4 items-center h-[45px] p-4 ${
+        className={` ${
           scroll
-            ? 'fixed top-0 w-full border-b border-[#a1a1a19c] h-[45px] bg-[#dbd9d2] z-[999]'
+            ? 'fixed left-0 top-0 w-full border-b border-[#a1a1a19c] h-[45px] bg-[#dbd9d2] z-[999]'
             : ''
         }`}
       >
-        <div className='flex gap-1'>
-          <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
-          <Image
-            src={'/logo.svg'}
-            alt='logo'
-            width={30}
-            height={30}
-            className='object-cover'
-          />
-        </div>
-        {/* <h2 className='font-bold text-sm sm:text-lg flex gap-1'>
+        <div className='max-w-[1500px] mx-auto flex justify-between gap-4 items-center h-[45px] p-4 relative'>
+          <div className='flex gap-1'>
+            <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
+            <Image
+              src={'/logo.svg'}
+              alt='logo'
+              width={30}
+              height={30}
+              className='object-cover'
+            />
+          </div>
+          {/* <h2 className='font-bold text-sm sm:text-lg flex gap-1'>
           REPOSITION{' '}
           <span className=''>
             <Typewriter
@@ -137,70 +138,72 @@ const Header = () => {
           </span>
         </h2> */}
 
-        <div
-          className='text-[16px] font-light cursor-pointer hidden sm:flex'
-          onClick={() => router.push('/we-are')}
-        >
-          We Are
-        </div>
-        <div className='flex gap-3'>
-          {userRole === 'ADMIN' && (
-            <TbShirt
+          <div
+            className='text-[16px] font-light cursor-pointer hidden sm:flex'
+            onClick={() => router.push('/we-are')}
+          >
+            We Are
+          </div>
+          <div className='flex gap-3'>
+            {userRole === 'ADMIN' && (
+              <TbShirt
+                size={22}
+                onClick={() => router.push('/manage-products')}
+                className='cursor-pointer hidden sm:flex'
+              />
+            )}
+            <GoPerson
               size={22}
-              onClick={() => router.push('/manage-products')}
+              onClick={() => {
+                if (token) {
+                  setShowDropdown(!showDropdown);
+                } else {
+                  router.push('/login');
+                }
+              }}
               className='cursor-pointer hidden sm:flex'
             />
-          )}
-          <GoPerson
-            size={22}
-            onClick={() => {
-              if (token) {
-                setShowDropdown(!showDropdown);
-              } else {
-                router.push('/login');
-              }
-            }}
-            className='cursor-pointer hidden sm:flex'
-          />
-          <div className='relative'>
-            <AiOutlineShopping
-              size={24}
-              onClick={() => router.push('/bag')}
-              className='cursor-pointer '
+            <div className='relative'>
+              <AiOutlineShopping
+                size={24}
+                onClick={() => router.push('/bag')}
+                className='cursor-pointer '
+              />
+              <span
+                onClick={() => router.push('/bag')}
+                className={`text-[10px] absolute ${
+                  scroll ? 'top-[6px] ' : 'top-[7px]'
+                }  right-[4px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-light cursor-pointer`}
+              >
+                {bagItems.length ?? '0'}
+              </span>
+            </div>
+            <MdMenuOpen
+              size={26}
+              className='cursor-pointer sm:hidden'
+              onClick={() => setShowMobileMenu(true)}
             />
-            <span
-              onClick={() => router.push('/bag')}
-              className={`text-[10px] absolute ${
-                scroll ? 'top-[6px] ' : 'top-[7px]'
-              }  right-[4px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-light cursor-pointer`}
-            >
-              {bagItems.length ?? '0'}
-            </span>
           </div>
-          <MdMenuOpen
-            size={26}
-            className='cursor-pointer sm:hidden'
-            onClick={() => setShowMobileMenu(true)}
-          />
+          {showDropdown && (
+            <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-12 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+              <div
+                onClick={() => setShowUpdatePasswordModal(true)}
+                className='hover:font-light hover:bg-gray-50 p-1 cursor-pointer'
+              >
+                Update password
+              </div>
+
+              <div
+                onClick={() => setShowLogoutModal(true)}
+                className='hover:font-light hover:bg-gray-50 p-1 cursor-pointer'
+              >
+                Logout
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {showDropdown && (
-        <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-12 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
-          <div
-            onClick={() => setShowUpdatePasswordModal(true)}
-            className='hover:font-light hover:bg-gray-50 p-1 cursor-pointer'
-          >
-            Update password
-          </div>
 
-          <div
-            onClick={() => setShowLogoutModal(true)}
-            className='hover:font-light hover:bg-gray-50 p-1 cursor-pointer'
-          >
-            Logout
-          </div>
-        </div>
-      )}
       {showUpdatePasswordModal && (
         <UpdatePasswordModal
           show={showUpdatePasswordModal}

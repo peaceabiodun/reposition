@@ -245,7 +245,9 @@ const Home = () => {
                 </div>
                 <p className='my-2 font-light text-[16px]'>{item.name}</p>
                 <div className='flex gap-2 font-light'>
-                  <p className='text-sm'>${item.price}</p>
+                  <p className='text-sm'>
+                    ₦ {Number(item.price).toLocaleString()}
+                  </p>
                   {item.pre_order ? (
                     <p className='text-sm'>[Pre-Order]</p>
                   ) : null}

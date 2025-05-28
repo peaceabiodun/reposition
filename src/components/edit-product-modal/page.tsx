@@ -153,11 +153,11 @@ const EditProductModal = ({
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
 
-        <label className=''>Product Price</label>
+        <label className=''>Product Price (NGN)</label>
         <input
           type='text'
           className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-          placeholder='$100'
+          placeholder='enter price in NGN'
           value={formData?.price}
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         />

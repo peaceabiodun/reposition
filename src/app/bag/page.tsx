@@ -36,7 +36,7 @@ const Bag = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
   const [selectedCountry, setSelectedCountry] = useState('');
-  const [Currencies, setCurrencies] = useState<ConversionRateType>();
+  // const [Currencies, setCurrencies] = useState<ConversionRateType>();
   const [loadingCurrency, setLoadingCurrency] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [shippingFee, SetShippingFee] = useState<number>(0);
@@ -68,7 +68,7 @@ const Bag = () => {
     'South Africa',
     'United State of America',
     'Canada',
-    'Uk',
+    'United Kingdom',
   ];
 
   const frequentlyBoughtItems = products.filter((itm) => itm.frequently_bought);
@@ -147,20 +147,20 @@ const Bag = () => {
 
       shippingFee = 0;
     } else if (
-      (totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-      (totalPrice >= 300 && selectedCountry === 'Nigeria')
+      (totalPrice >= 600000 && selectedCountry !== 'Nigeria') ||
+      (totalPrice >= 300000 && selectedCountry === 'Nigeria')
     ) {
       shippingFee = 0;
     } else if (totalWeight === 1 && selectedCountry === 'Nigeria') {
-      shippingFee = 7;
+      shippingFee = 11690;
     } else if (totalWeight === 1 && selectedCountry !== 'Nigeria') {
-      shippingFee = 20;
+      shippingFee = 33400;
     } else if (totalWeight === 2 && selectedCountry !== 'Nigeria') {
-      shippingFee = 55;
+      shippingFee = 91850;
     } else if (totalWeight && selectedCountry == 'Nigeria') {
-      shippingFee = 7 * totalWeight;
+      shippingFee = 11690 * totalWeight;
     } else {
-      shippingFee = 20 * totalWeight;
+      shippingFee = 33400 * totalWeight;
     }
     SetShippingFee(shippingFee);
   };
@@ -247,24 +247,24 @@ const Bag = () => {
     setDeliveryDetails((p) => ({ ...p, [key]: value }));
   };
 
-  const getConversionRate = async () => {
-    setLoadingCurrency(true);
-    try {
-      const res = await axios.get(
-        `https://v6.exchangerate-api.com/v6/${exchangeRateApiKey}/latest/USD`
-      );
+  // const getConversionRate = async () => {
+  //   setLoadingCurrency(true);
+  //   try {
+  //     const res = await axios.get(
+  //       `https://v6.exchangerate-api.com/v6/${exchangeRateApiKey}/latest/USD`
+  //     );
 
-      setCurrencies(res?.data?.conversion_rates);
-    } catch (err: any) {
-      console.log(err);
-    } finally {
-      setLoadingCurrency(false);
-    }
-  };
+  //     setCurrencies(res?.data?.conversion_rates);
+  //   } catch (err: any) {
+  //     console.log(err);
+  //   } finally {
+  //     setLoadingCurrency(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    getConversionRate();
-  }, []);
+  // useEffect(() => {
+  //   getConversionRate();
+  // }, []);
 
   const generateOrderNumber = (maxValue: number) => {
     const randomNumber = Math.random();
@@ -310,9 +310,7 @@ const Bag = () => {
   const config = {
     reference: new Date().getTime().toString(),
     email: deliveryDetails.user_email,
-    amount: Math.round(
-      (totalPrice + shippingFee) * parseFloat(Currencies?.NGN ?? '0') * 100
-    ),
+    amount: Math.round((totalPrice + shippingFee) * 100),
     //totalPrice + shippingFee Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
     Currency: 'NGN',
@@ -381,404 +379,418 @@ const Bag = () => {
   }, [discountCode, totalPrice, shippingFee]);
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] '>
-      <Header />
-      <Link
-        href='/'
-        className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
-      >
-        <MdOutlineArrowBackIosNew size={20} />
-        Back
-      </Link>
+      <div className='max-w-[1500px] mx-auto'>
+        <Header />
+        <Link
+          href='/'
+          className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
+        >
+          <MdOutlineArrowBackIosNew size={20} />
+          Back
+        </Link>
 
-      <h2 className='text-sm font-light text-center my-4 px-3 xs:px-4'>
-        Shopping Bag ({bagItems.length})
-      </h2>
-      {bagItems.length <= 0 ? (
-        <div className='flex justify-center items-center p-3 my-6 text-sm h-full'>
-          No item in your shopping bag
-        </div>
-      ) : loading ? (
-        <div className='flex justify-center items-center p-3 '>
-          <ThreeCircles
-            visible={true}
-            height={50}
-            width={50}
-            color='#b4b4b4ad'
-            ariaLabel='three-circles-loading'
-            wrapperClass='my-4'
-          />
-        </div>
-      ) : (
-        <div className='my-4 space-y-6 px-3 xs:px-4'>
-          <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
-            Order Summary
-          </h2>
+        <h2 className='text-sm font-light text-center my-4 px-3 xs:px-4'>
+          Shopping Bag ({bagItems.length})
+        </h2>
+        {bagItems.length <= 0 ? (
+          <div className='flex justify-center items-center p-3 my-6 text-sm h-full'>
+            No item in your shopping bag
+          </div>
+        ) : loading ? (
+          <div className='flex justify-center items-center p-3 '>
+            <ThreeCircles
+              visible={true}
+              height={50}
+              width={50}
+              color='#b4b4b4ad'
+              ariaLabel='three-circles-loading'
+              wrapperClass='my-4'
+            />
+          </div>
+        ) : (
+          <div className='my-4 space-y-6 px-3 xs:px-4'>
+            <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+              Order Summary
+            </h2>
 
-          {bagItems?.map((item, index) => (
-            <div
-              key={item.id}
-              className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
-            >
-              <Image
-                src={item?.image ?? '/placeholder.png'}
-                alt='product_image'
-                width='80'
-                height='90'
-                className='h-[90px] object-cover'
-              />
-              <div className='flex flex-col gap-3 '>
-                <p className=''>
-                  {item.name} [{item.color}]
-                </p>
-                <p>Size: {item.size}</p>
+            {bagItems?.map((item, index) => (
+              <div
+                key={item.id}
+                className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
+              >
+                <Image
+                  src={item?.image ?? '/placeholder.png'}
+                  alt='product_image'
+                  width='90'
+                  height='90'
+                  className='h-[90px] object-cover'
+                />
+                <div className='flex flex-col gap-3 '>
+                  <p className=''>
+                    {item.name} [{item.color}]
+                  </p>
+                  <p>Size: {item.size}</p>
+                </div>
+                <div className='flex flex-col gap-3 '>
+                  <div className='flex gap-2 items-center'>
+                    <h2>Qty</h2>
+                    <input
+                      type='text'
+                      value={item.quantity}
+                      onChange={(e) => updateQuantity(e.target.value, index)}
+                      className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
+                    />
+                  </div>
+                  <p>₦ {Number(item.price).toLocaleString()}</p>
+                </div>
+                <div
+                  onClick={() => removeItemFromBag(item.id)}
+                  className='cursor-pointer'
+                >
+                  <CiTrash size={20} />
+                </div>
               </div>
-              <div className='flex flex-col gap-3 '>
-                <div className='flex gap-2 items-center'>
-                  <h2>Qty</h2>
+            ))}
+
+            <div className='border-b border-[#a1a1a19c] w-full py-3 '>
+              <h2 className='text-sm'>Frequently Bought Items</h2>
+
+              <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar'>
+                {frequentlyBoughtItems.map((item, index) => (
+                  <div key={index} className=''>
+                    <Image
+                      src={item?.images[0]}
+                      alt='product-img'
+                      width={100}
+                      height={100}
+                      className='w-[100px] h-[100px] object-cover'
+                    />
+                    <p className='mt-2 mb-1 text-center '>₦ {item?.price}</p>
+                    <button
+                      onClick={() => router.push(`product/${item.id}`)}
+                      className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center'
+                    >
+                      View
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
+              <div className=' w-full text-xs md:text-sm '>
+                <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
+                  <h2>Delivery Details</h2>
+                </div>
+                <div className='w-full mt-5'>
+                  <label>First Name</label>
+
                   <input
                     type='text'
-                    value={item.quantity}
-                    onChange={(e) => updateQuantity(e.target.value, index)}
-                    className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
+                    placeholder='E.g Walter'
+                    value={deliveryDetails.first_name}
+                    onChange={(e) =>
+                      updateFormData('first_name', e.target.value)
+                    }
+                    className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
                   />
-                </div>
-                <p>${item.price}</p>
-              </div>
-              <div
-                onClick={() => removeItemFromBag(item.id)}
-                className='cursor-pointer'
-              >
-                <CiTrash size={20} />
-              </div>
-            </div>
-          ))}
-
-          <div className='border-b border-[#a1a1a19c] w-full py-3 '>
-            <h2 className='text-sm'>Frequently Bought Items</h2>
-
-            <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar'>
-              {frequentlyBoughtItems.map((item, index) => (
-                <div key={index} className=''>
-                  <Image
-                    src={item?.images[0]}
-                    alt='product-img'
-                    width={100}
-                    height={100}
-                    className='w-[100px] h-[100px] object-cover'
-                  />
-                  <p className='mt-2 mb-1 text-center '>${item?.price}</p>
-                  <button
-                    onClick={() => router.push(`product/${item.id}`)}
-                    className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center'
-                  >
-                    View
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
-            <div className=' w-full text-xs md:text-sm '>
-              <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
-                <h2>Delivery Details</h2>
-              </div>
-              <div className='w-full mt-5'>
-                <label>First Name</label>
-
-                <input
-                  type='text'
-                  placeholder='E.g Walter'
-                  value={deliveryDetails.first_name}
-                  onChange={(e) => updateFormData('first_name', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
-                />
-                {formError.first_name && (
-                  <div className='text-xs text-red-500 mt-2'>
-                    {formError.first_name}
-                  </div>
-                )}
-              </div>
-              <div className='my-5'>
-                <label>Last Name</label>
-                <input
-                  type='text'
-                  placeholder='E.g White'
-                  value={deliveryDetails.last_name}
-                  onChange={(e) => updateFormData('last_name', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
-                />
-                {formError.last_name && (
-                  <div className='text-xs text-red-500 mt-2'>
-                    {formError.last_name}
-                  </div>
-                )}
-              </div>
-              <div>
-                <label>Email</label>
-                <input
-                  type='email'
-                  placeholder='E.g white@gmail.com'
-                  value={deliveryDetails.user_email}
-                  onChange={(e) => updateFormData('user_email', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                />
-                {!validateEmail(deliveryDetails.user_email) &&
-                  formError.user_email && (
-                    <div className='text-[10px] text-red-500 mt-2'>
-                      {formError.user_email}
+                  {formError.first_name && (
+                    <div className='text-xs text-red-500 mt-2'>
+                      {formError.first_name}
                     </div>
                   )}
-              </div>
-              <div className='my-5'>
-                <label> City</label>
-                <input
-                  type='text'
-                  placeholder='E.g Los Angeles'
-                  value={deliveryDetails.city}
-                  onChange={(e) => updateFormData('city', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                />
-                {formError.city && (
-                  <div className='text-[10px] text-red-500 mt-2'>
-                    {formError.city}
-                  </div>
-                )}
-              </div>
-              <p className='mb-2'>Country </p>
-              <div
-                onClick={() => setShowDropdown(!showDropdown)}
-                className={`border  text-gray-400 border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
-              >
-                <p
-                  className={`${
-                    selectedCountry && selectedCountry !== ''
-                      ? 'text-[#000]'
-                      : ' text-gray-400'
-                  } `}
-                >
-                  {selectedCountry ? selectedCountry : 'E.g United States'}
-                </p>
-                <MdOutlineKeyboardArrowDown
-                  size={18}
-                  className='text-gray-400 '
-                />
-              </div>
-              {showDropdown && (
-                <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
-                  {countryList.map((item, index) => (
-                    <div
-                      key={index}
-                      onClick={() => {
-                        setSelectedCountry(item);
-                        setShowDropdown(false);
-                      }}
-                      className={`${
-                        selectedCountry === item
-                          ? ' font-light bg-gray-100'
-                          : ''
-                      } hover:font-light hover:bg-gray-100 p-2 cursor-pointer`}
-                    >
-                      {item}
-                    </div>
-                  ))}
                 </div>
-              )}
-              <div className='my-5'>
-                <label>Address</label>
-                <input
-                  type='text'
-                  placeholder='E.g No 5, Centinela Avenue, Los Angeles, USA'
-                  value={deliveryDetails.address}
-                  onChange={(e) => updateFormData('address', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                />
-                {formError.address && (
-                  <div className='text-[10px] text-red-500 mt-2'>
-                    {formError.address}
-                  </div>
-                )}
-              </div>
-              <div>
-                <label>Zip code</label>
-
-                <input
-                  type='text'
-                  placeholder='E.g 90004'
-                  value={deliveryDetails.zip_code}
-                  onChange={(e) => updateFormData('zip_code', e.target.value)}
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                />
-                {formError.zip_code && (
-                  <div className='text-[10px] text-red-500 mt-2'>
-                    {formError.zip_code}
-                  </div>
-                )}
-              </div>
-              <div className='my-5'>
-                <label>Phone Number</label>
-                <input
-                  type='text'
-                  placeholder='E.g +213 90445678'
-                  value={deliveryDetails.phone_number}
-                  onChange={(e) =>
-                    updateFormData('phone_number', e.target.value)
-                  }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
-                />
-                {formError.phone_number && (
-                  <div className='text-[10px] text-red-500 mt-2'>
-                    {formError.phone_number}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className=' w-full text-xs md:text-sm '>
-              <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
-                Shipping Method
-              </h2>
-              {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-              (totalPrice >= 300 && selectedCountry === 'Nigeria') ? (
-                <div className='flex gap-2 items-start mt-5'>
-                  <input
-                    type='checkbox'
-                    checked
-                    className='accent-black mt-1'
-                    readOnly
-                  />
-                  <div>
-                    <h3 className='font-light'>Standard Courier</h3>
-                    <div className='font-light'>(Free delivery)</div>
-                    <p>
-                      Delivery takes up to 10-16 business days for products
-                      marked &apos;made-to-order&apos; or &apos;pre-order&apos;.
-                      Estimated delivery time once the order has shipped.
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className='flex gap-2 items-start mt-5'>
-                  <input
-                    type='checkbox'
-                    checked
-                    className='accent-black mt-1'
-                    readOnly
-                    // onChange={(e) =>
-                    //   setDeliveryDetails({
-                    //     ...deliveryDetails,
-                    //     shipping: e.target.checked ? 'standard' : 'free',
-                    //   })
-                    // }
-                  />
-                  <div>
-                    <h3 className='font-light'>Standard Courier</h3>
-                    <div>${shippingFee.toFixed(2)}</div>
-                    <p>
-                      Delivery takes up to 10-16 business days for products
-                      marked &apos;made-to-order&apos; or &apos;pre-order&apos;.
-                      Estimated delivery time once the order has shipped.
-                    </p>
-                  </div>
-                </div>
-              )}
-              <h2 className='border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm'>
-                Billing Summary
-              </h2>
-              <div className='space-y-3 mt-3'>
-                <div className='flex gap-3 justify-between'>
-                  <p>Item total</p>
-                  <p>${totalPrice.toFixed(2)}</p>
-                </div>
-                <div className='flex gap-3 justify-between'>
-                  <div className=''>
-                    <p>Shipping fee</p>
-                    <p className='text-[10px] text-[#644120] italic'>
-                      *Shipping fee may reduce or increase depending on
-                      destination country.
-                    </p>
-                    <p className='text-[10px] text-[#644120] italic'>
-                      *Please select a country to see correct shipping fee
-                    </p>
-                  </div>
-                  <p>
-                    {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-                    (totalPrice >= 300 && selectedCountry === 'Nigeria')
-                      ? 'Free Delivery'
-                      : `$${shippingFee.toFixed(2)}`}{' '}
-                  </p>
-                </div>
-                <div className='flex gap-3 items-center justify-between'>
-                  <p>Discount Code</p>
+                <div className='my-5'>
+                  <label>Last Name</label>
                   <input
                     type='text'
-                    value={discountCode}
-                    onChange={(e) => setDiscountCode(e.target.value)}
-                    className='border border-[#3d3e3f] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                    placeholder='E.g White'
+                    value={deliveryDetails.last_name}
+                    onChange={(e) =>
+                      updateFormData('last_name', e.target.value)
+                    }
+                    className='border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
+                  />
+                  {formError.last_name && (
+                    <div className='text-xs text-red-500 mt-2'>
+                      {formError.last_name}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <label>Email</label>
+                  <input
+                    type='email'
+                    placeholder='E.g white@gmail.com'
+                    value={deliveryDetails.user_email}
+                    onChange={(e) =>
+                      updateFormData('user_email', e.target.value)
+                    }
+                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  />
+                  {!validateEmail(deliveryDetails.user_email) &&
+                    formError.user_email && (
+                      <div className='text-[10px] text-red-500 mt-2'>
+                        {formError.user_email}
+                      </div>
+                    )}
+                </div>
+                <div className='my-5'>
+                  <label> City</label>
+                  <input
+                    type='text'
+                    placeholder='E.g Los Angeles'
+                    value={deliveryDetails.city}
+                    onChange={(e) => updateFormData('city', e.target.value)}
+                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  />
+                  {formError.city && (
+                    <div className='text-[10px] text-red-500 mt-2'>
+                      {formError.city}
+                    </div>
+                  )}
+                </div>
+                <p className='mb-2'>Country </p>
+                <div
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className={`border  text-gray-400 border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
+                >
+                  <p
+                    className={`${
+                      selectedCountry && selectedCountry !== ''
+                        ? 'text-[#000]'
+                        : ' text-gray-400'
+                    } `}
+                  >
+                    {selectedCountry ? selectedCountry : 'E.g United States'}
+                  </p>
+                  <MdOutlineKeyboardArrowDown
+                    size={18}
+                    className='text-gray-400 '
                   />
                 </div>
-                <div className='flex gap-3 justify-between'>
-                  <p>Discount Fee</p>
-                  <p>${discountAmount.toFixed(2)}</p>
+                {showDropdown && (
+                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
+                    {countryList.map((item, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setSelectedCountry(item);
+                          setShowDropdown(false);
+                        }}
+                        className={`${
+                          selectedCountry === item
+                            ? ' font-light bg-gray-100'
+                            : ''
+                        } hover:font-light hover:bg-gray-100 p-2 cursor-pointer`}
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className='my-5'>
+                  <label>Address</label>
+                  <input
+                    type='text'
+                    placeholder='E.g No 5, Centinela Avenue, Los Angeles, USA'
+                    value={deliveryDetails.address}
+                    onChange={(e) => updateFormData('address', e.target.value)}
+                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  />
+                  {formError.address && (
+                    <div className='text-[10px] text-red-500 mt-2'>
+                      {formError.address}
+                    </div>
+                  )}
                 </div>
-                <div className='flex gap-3 justify-between'>
-                  <p>Duties, taxes & fees</p>
-                  <p>--</p>
+                <div>
+                  <label>Zip code</label>
+
+                  <input
+                    type='text'
+                    placeholder='E.g 90004'
+                    value={deliveryDetails.zip_code}
+                    onChange={(e) => updateFormData('zip_code', e.target.value)}
+                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                  />
+                  {formError.zip_code && (
+                    <div className='text-[10px] text-red-500 mt-2'>
+                      {formError.zip_code}
+                    </div>
+                  )}
                 </div>
-                <div className='flex gap-3 justify-between font-light'>
-                  <p className=''>Total</p>
-                  <p>${finalTotal.toFixed(2)}</p>
+                <div className='my-5'>
+                  <label>Phone Number</label>
+                  <input
+                    type='text'
+                    placeholder='E.g +213 90445678'
+                    value={deliveryDetails.phone_number}
+                    onChange={(e) =>
+                      updateFormData('phone_number', e.target.value)
+                    }
+                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
+                  />
+                  {formError.phone_number && (
+                    <div className='text-[10px] text-red-500 mt-2'>
+                      {formError.phone_number}
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div className=' w-full'>
-                <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
-                  Payment Options
+              <div className=' w-full text-xs md:text-sm '>
+                <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+                  Shipping Method
                 </h2>
-                <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
-                  <Image
-                    alt='master-card'
-                    src={'/master-card-icon.svg'}
-                    width={50}
-                    height={50}
-                  />
-                  <Image
-                    alt='visa-card'
-                    src={'/visa-icon.svg'}
-                    width={50}
-                    height={50}
-                  />
-
-                  <Image
-                    alt='bank-transfer'
-                    src={'/bank-transfer-icon.svg'}
-                    width={40}
-                    height={40}
-                  />
+                {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
+                (totalPrice >= 300 && selectedCountry === 'Nigeria') ? (
+                  <div className='flex gap-2 items-start mt-5'>
+                    <input
+                      type='checkbox'
+                      checked
+                      className='accent-black mt-1'
+                      readOnly
+                    />
+                    <div>
+                      <h3 className='font-light'>Standard Courier</h3>
+                      <div className='font-light'>(Free delivery)</div>
+                      <p>
+                        Delivery takes up to 10-16 business days for products
+                        marked &apos;made-to-order&apos; or
+                        &apos;pre-order&apos;. Estimated delivery time once the
+                        order has shipped.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className='flex gap-2 items-start mt-5'>
+                    <input
+                      type='checkbox'
+                      checked
+                      className='accent-black mt-1'
+                      readOnly
+                      // onChange={(e) =>
+                      //   setDeliveryDetails({
+                      //     ...deliveryDetails,
+                      //     shipping: e.target.checked ? 'standard' : 'free',
+                      //   })
+                      // }
+                    />
+                    <div>
+                      <h3 className='font-light'>Standard Courier</h3>
+                      <div>${shippingFee.toFixed(2)}</div>
+                      <p>
+                        Delivery takes up to 10-16 business days for products
+                        marked &apos;made-to-order&apos; or
+                        &apos;pre-order&apos;. Estimated delivery time once the
+                        order has shipped.
+                      </p>
+                    </div>
+                  </div>
+                )}
+                <h2 className='border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm'>
+                  Billing Summary
+                </h2>
+                <div className='space-y-3 mt-3'>
+                  <div className='flex gap-3 justify-between'>
+                    <p>Item total</p>
+                    <p>₦ {totalPrice.toLocaleString()}</p>
+                  </div>
+                  <div className='flex gap-3 justify-between'>
+                    <div className=''>
+                      <p>Shipping fee</p>
+                      <p className='text-[10px] text-[#644120] italic'>
+                        *Shipping fee may reduce or increase depending on
+                        destination country.
+                      </p>
+                      <p className='text-[10px] text-[#644120] italic'>
+                        *Please select a country to see correct shipping fee
+                      </p>
+                    </div>
+                    <p>
+                      {(totalPrice >= 600000 &&
+                        selectedCountry !== 'Nigeria') ||
+                      (totalPrice >= 300000 && selectedCountry === 'Nigeria')
+                        ? 'Free Delivery'
+                        : `₦${shippingFee.toLocaleString()}`}{' '}
+                    </p>
+                  </div>
+                  <div className='flex gap-3 items-center justify-between'>
+                    <p>Discount Code</p>
+                    <input
+                      type='text'
+                      value={discountCode}
+                      onChange={(e) => setDiscountCode(e.target.value)}
+                      className='border border-[#3d3e3f] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                    />
+                  </div>
+                  <div className='flex gap-3 justify-between'>
+                    <p>Discount Fee</p>
+                    <p>₦ {discountAmount.toLocaleString()}</p>
+                  </div>
+                  <div className='flex gap-3 justify-between'>
+                    <p>Duties, taxes & fees</p>
+                    <p>--</p>
+                  </div>
+                  <div className='flex gap-3 justify-between font-light'>
+                    <p className=''>Total</p>
+                    <p>₦ {finalTotal.toLocaleString()}</p>
+                  </div>
                 </div>
-                <p className='mt-2 text-[#644120] italic text-sm'>
-                  please note that transcation fees will be added at checkout
-                </p>
+
+                <div className=' w-full'>
+                  <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
+                    Payment Options
+                  </h2>
+                  <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
+                    <Image
+                      alt='master-card'
+                      src={'/master-card-icon.svg'}
+                      width={50}
+                      height={50}
+                    />
+                    <Image
+                      alt='visa-card'
+                      src={'/visa-icon.svg'}
+                      width={50}
+                      height={50}
+                    />
+
+                    <Image
+                      alt='bank-transfer'
+                      src={'/bank-transfer-icon.svg'}
+                      width={40}
+                      height={40}
+                    />
+                  </div>
+                  <p className='mt-2 text-[#644120] italic text-sm'>
+                    please note that transcation fees will be added at checkout
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      {bagItems.length <= 0 ? null : (
-        <div className='flex justify-center py-6 px-3 xs:px-4'>
-          <button
-            onClick={() => {
-              if (formIsValid() || !validateEmail(deliveryDetails.user_email)) {
-                return;
-              }
-              initializePayment({ onSuccess, onClose });
-            }}
-            className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
-          >
-            Complete Order
-          </button>
-        </div>
-      )}
+        )}
+        {bagItems.length <= 0 ? null : (
+          <div className='flex justify-center py-6 px-3 xs:px-4'>
+            <button
+              onClick={() => {
+                if (
+                  formIsValid() ||
+                  !validateEmail(deliveryDetails.user_email)
+                ) {
+                  return;
+                }
+                initializePayment({ onSuccess, onClose });
+              }}
+              className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
+            >
+              Complete Order
+            </button>
+          </div>
+        )}
+      </div>
 
       {showErrorModal && (
         <ErrorModal

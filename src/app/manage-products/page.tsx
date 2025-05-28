@@ -77,87 +77,88 @@ const ManageProducts = () => {
   };
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
-      <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
-        <Link href='/' className='flex gap-1'>
-          <MdOutlineArrowBackIosNew size={20} />
-          Back
-        </Link>
-        <button
-          onClick={() => router.push('/new-product')}
-          className='border border-[#3d3e3f]  p-2 text-xs md:text-sm'
-        >
-          Add product
-        </button>
-      </div>
-
-      <h3 className='text-sm font-semibold text-center my-8'>
-        Manage Your Products
-      </h3>
-      {loading ? (
-        <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-3 xs:p-4'>
-          <ThreeCircles
-            visible={true}
-            height={50}
-            width={50}
-            color='#b4b4b4ad'
-            ariaLabel='three-circles-loading'
-            wrapperClass='my-4'
-          />
+      <div className='max-w-[1500px] mx-auto'>
+        <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
+          <Link href='/' className='flex gap-1'>
+            <MdOutlineArrowBackIosNew size={20} />
+            Back
+          </Link>
+          <button
+            onClick={() => router.push('/new-product')}
+            className='border border-[#3d3e3f]  p-2 text-xs md:text-sm'
+          >
+            Add product
+          </button>
         </div>
-      ) : (
-        <div className='flex items-center justify-center'>
-          <div className=' text-sm w-full md:max-w-[85vw] '>
-            {products?.map((item, index) => (
-              <div
-                key={item?.id}
-                className={`relative flex gap-3 justify-between items-center ${
-                  index === products?.length - 1
-                    ? ''
-                    : 'border-b border-[#b9b9b96c]'
-                }  py-2`}
-              >
-                <div className=''>
-                  <Image
-                    src={item?.images[0]}
-                    alt='product_image'
-                    width='70'
-                    height='70'
-                    className={`${
-                      item.sold_out ? 'brightness-50' : ''
-                    } h-[70px] object-cover`}
-                  />
-                </div>
-                <p className='sm:hidden'>
-                  {truncateString(`${item?.name}`, 3)}{' '}
-                </p>
-                <p className='hidden sm:flex'>
-                  {truncateString(`${item?.name}`, 6)}{' '}
-                </p>
-                <div
-                  className='cursor-pointer '
-                  onClick={() => handleSelectProduct(item)}
-                >
-                  <CiMenuKebab size={20} />
-                </div>
-                {selectedProduct && selectedProduct === item && (
-                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
-                    {dropDownLinks?.map((item, index) => (
-                      <p
-                        key={index}
-                        className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
-                        onClick={item?.link}
-                      >
-                        {item?.text}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+
+        <h3 className='text-sm font-semibold text-center my-8'>
+          Manage Your Products
+        </h3>
+        {loading ? (
+          <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-3 xs:p-4'>
+            <ThreeCircles
+              visible={true}
+              height={50}
+              width={50}
+              color='#b4b4b4ad'
+              ariaLabel='three-circles-loading'
+              wrapperClass='my-4'
+            />
           </div>
-        </div>
-      )}
-
+        ) : (
+          <div className='flex items-center justify-center'>
+            <div className=' text-sm w-full md:max-w-[85vw] '>
+              {products?.map((item, index) => (
+                <div
+                  key={item?.id}
+                  className={`relative flex gap-3 justify-between items-center ${
+                    index === products?.length - 1
+                      ? ''
+                      : 'border-b border-[#b9b9b96c]'
+                  }  py-2`}
+                >
+                  <div className=''>
+                    <Image
+                      src={item?.images[0]}
+                      alt='product_image'
+                      width='100'
+                      height='100'
+                      className={`${
+                        item.sold_out ? 'brightness-50' : ''
+                      } h-[100px] object-cover`}
+                    />
+                  </div>
+                  <p className='sm:hidden'>
+                    {truncateString(`${item?.name}`, 3)}{' '}
+                  </p>
+                  <p className='hidden sm:flex'>
+                    {truncateString(`${item?.name}`, 6)}{' '}
+                  </p>
+                  <div
+                    className='cursor-pointer '
+                    onClick={() => handleSelectProduct(item)}
+                  >
+                    <CiMenuKebab size={20} />
+                  </div>
+                  {selectedProduct && selectedProduct === item && (
+                    <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                      {dropDownLinks?.map((item, index) => (
+                        <p
+                          key={index}
+                          className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
+                          onClick={item?.link}
+                        >
+                          {item?.text}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
       <DeleteModal
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}

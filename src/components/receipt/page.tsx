@@ -113,7 +113,7 @@ const PaymentReceipt = ({
                 >
                   <td className='py-1'>{itm.quantity}</td>
                   <td>{itm.name}</td>
-                  <td>${itm.price}</td>
+                  <td>₦{Number(itm.price).toLocaleString()}</td>
                 </tr>
               ))}
 

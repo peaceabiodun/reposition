@@ -222,10 +222,13 @@ const TheAssemble = () => {
               </div>
             </div>
 
-            <div className='flex gap-2 mt-4'>
+            <div className='flex gap-2 mt-6'>
               <p className='text-lg'>Package Options</p>
               <p className='text-red-500'>*</p>
             </div>
+            <p className='mt-1 text-xs'>
+              Note: Tick the checkbox and input quantity you want to purchase
+            </p>
 
             <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
               <input
@@ -303,12 +306,16 @@ const TheAssemble = () => {
                     first-reserve access for next event
                   </li>
                   <li>Christmas gifting</li>
-                  <li className='text-white lg:text-[#000000]'>Brand item exclusive </li>
+                  <li className='text-white lg:text-[#000000]'>
+                    Brand item exclusive{' '}
+                  </li>
                   <li className='text-white lg:text-[#000000]'>
                     Exclusive invitation to attend private retreats and jazz
                     events
                   </li>
-                  <li className='text-white lg:text-[#000000]'>Request name customization for Reposition purchase</li>
+                  <li className='text-white lg:text-[#000000]'>
+                    Request name customization for Reposition purchase
+                  </li>
                   <li className='text-white lg:text-[#000000]'>
                     Invitation to support an annual Down-Syndromn outreach
                     initiative
@@ -342,10 +349,9 @@ const TheAssemble = () => {
             </div>
 
             <div className='mt-4 text-lg font-bold text-[#ffffff] lg:text-[#000000]'>
-              Total : {formatPrice(calculateTotalPrice())}
+              Total : {formatPrice(reverePackagePrice + privePackagePrice)}
             </div>
 
-  
             <div className='mt-4 text-white font-bold'>
               <button
                 // onClick={handlePaystackPayment}
@@ -381,7 +387,7 @@ const TheAssemble = () => {
               </button>
             </div>
             <p className='mt-2 text-white text-xs'>Transcation fees apply</p>
-           
+
             <button
               disabled={loading}
               onClick={handlePaystackPayment}

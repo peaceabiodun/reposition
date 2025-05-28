@@ -228,7 +228,9 @@ const ProductDetails = () => {
           <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[70vh]'>
             <div className='flex flex-col items-center space-y-3 '>
               <h1 className='uppercase font-medium'>{productDetails?.name}</h1>
-              <h3 className='font-semibold'>${productDetails?.price}</h3>
+              <h3 className='font-semibold'>
+                ₦ {Number(productDetails?.price).toLocaleString()}
+              </h3>
               <Accordion
                 w-full
                 type='single'
