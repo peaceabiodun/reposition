@@ -465,7 +465,9 @@ const Bag = () => {
                       height={100}
                       className='w-[100px] h-[100px] object-cover'
                     />
-                    <p className='mt-2 mb-1 text-center '>₦ {item?.price}</p>
+                    <p className='mt-2 mb-1 text-center '>
+                      ₦ {Number(item.price).toLocaleString()}
+                    </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
                       className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center'
