@@ -13,6 +13,7 @@ import { MdMenuOpen } from 'react-icons/md';
 import MobileMenu from '../mobile-menu/page';
 import UpdatePasswordModal from '../update-password-modal/page';
 import Image from 'next/image';
+import { IoIosBasket } from 'react-icons/io';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -114,7 +115,7 @@ const Header = () => {
             : ''
         }`}
       >
-        <div className='max-w-[1500px] mx-auto flex justify-between gap-4 items-center h-[45px] p-4 relative'>
+        <div className='max-w-[1500px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
           <div className='flex gap-1'>
             <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
             <Image
@@ -164,16 +165,16 @@ const Header = () => {
               className='cursor-pointer hidden sm:flex'
             />
             <div className='relative'>
-              <AiOutlineShopping
+              <IoIosBasket
                 size={24}
                 onClick={() => router.push('/bag')}
                 className='cursor-pointer '
               />
               <span
                 onClick={() => router.push('/bag')}
-                className={`text-[10px] absolute ${
-                  scroll ? 'top-[6px] ' : 'top-[7px]'
-                }  right-[4px] rounded-full p-2 w-4 h-4 text-[#000000] flex items-center justify-center font-light cursor-pointer`}
+                className={`text-[10px] absolute bg-[#3f2a16] text-white ${
+                  scroll ? 'top-[-8px] right-[0px]' : 'top-[-8px] right-[0px]'
+                }  right-[4px] rounded-full p-2 w-4 h-4  flex items-center justify-center font-light cursor-pointer`}
               >
                 {bagItems.length ?? '0'}
               </span>
