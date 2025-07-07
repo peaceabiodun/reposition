@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import Header from '@/components/header/page';
 
@@ -17,6 +18,10 @@ import { ThreeCircles } from 'react-loader-spinner';
 import SuccessModal from '@/components/success-modal/page';
 import ErrorModal from '@/components/error-modal/page';
 import { STORAGE_KEYS } from '@/utils/constants';
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+} from 'react-icons/io';
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -167,7 +172,7 @@ const ProductDetails = () => {
   }, [currentIndex]);
 
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2]'>
+    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] pb-12'>
       <Header />
       <div className='flex w-full justify-between gap-4 p-4 mb-4'>
         <Link href='/' className=' gap-1 flex text-sm items-center '>
@@ -194,30 +199,42 @@ const ProductDetails = () => {
           <div className='flex flex-col items-center justify-center w-full '>
             <div
               ref={carouselRef}
-              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar border border-[#3f2a16]'
+              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar border border-[#3f2a16] relative'
             >
               {productDetails?.images.map((item, index) => (
                 <div
                   key={index}
-                  className='carousel-item w-[100vw] md:w-[50vw] h-[75vh] flex-shrink-0 snap-center '
+                  className='carousel-item w-[100vw] md:w-[50vw] h-[95vh] flex-shrink-0 snap-center cursor-pointer'
                   data-index={index}
                 >
                   <img
                     src={item ? item : '/placeholder.png'}
                     alt='product_image'
-                    className={` object-cover w-[99.5%] h-[75vh] object-center transition-all duration-300 ${
+                    className={` object-cover w-[99.5%] h-[95vh] object-center transition-all duration-300 ${
                       productDetails?.sold_out ? 'brightness-50' : ''
                     }`}
                   />
                 </div>
               ))}
             </div>
+            <div className='flex items-center justify-between text-[#3f2a16b6] absolute top-1/2 -translate-y-1/2 left-0 right-0 w-[100vw] md:w-[50vw] px-6 '>
+              <IoIosArrowDropleftCircle
+                size={25}
+                className='cursor-pointer'
+                onClick={handlePrev}
+              />
+              <IoIosArrowDroprightCircle
+                size={25}
+                className='cursor-pointer'
+                onClick={handleNext}
+              />
+            </div>
             <div className='transform flex mt-4 justify-center items-center w-full'>
               {productDetails?.images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => handleIndicatorClick(index)}
-                  className={`w-8 h-5 ${
+                  className={`w-8 h-3 ${
                     currentIndex === index ? 'bg-[#c7bbb0]' : 'bg-[#523f3fab] '
                   }`}
                 />
@@ -225,26 +242,28 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[70vh]'>
+          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[80vh]'>
             <div className='flex flex-col items-center space-y-3 '>
-              <h1 className='uppercase font-medium'>{productDetails?.name}</h1>
+              <h1 className='uppercase font-medium text-lg'>
+                {productDetails?.name}
+              </h1>
               <h3 className='font-semibold'>
                 ₦ {Number(productDetails?.price).toLocaleString()}
               </h3>
               <Accordion
-                w-full
                 type='single'
                 collapsible
-                className='w-[280px] sm:w-[290px] '
+                defaultValue='product-details'
+                className='w-[270px] sm:w-[290px] '
               >
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
                 >
                   <AccordionTrigger className=' hover:no-underline font-normal'>
-                    Product Details
+                    Product Description
                   </AccordionTrigger>
-                  <AccordionContent>
+                  <AccordionContent className='text-base font-semibold'>
                     {productDetails?.description}
                   </AccordionContent>
                 </AccordionItem>
@@ -276,7 +295,7 @@ const ProductDetails = () => {
                             selectedSize === item
                               ? ' bg-[#523f3f79]'
                               : 'bg-[#c7c5c5a1]'
-                          }  shadow-sm p-2 rounded-sm cursor-pointer`}
+                          }  shadow-sm py-2 px-4 rounded-sm cursor-pointer hover:bg-[#523f3f79]`}
                         >
                           {item}
                         </div>
@@ -312,7 +331,7 @@ const ProductDetails = () => {
                             selectedColor === item
                               ? ' bg-[#523f3f79]'
                               : 'bg-[#c7c5c5a1]'
-                          }   shadow-sm p-2 rounded-sm cursor-pointer`}
+                          }   shadow-sm py-2 px-4 rounded-sm cursor-pointer hover:bg-[#523f3f79]`}
                         >
                           {item}
                         </div>
@@ -385,9 +404,9 @@ const ProductDetails = () => {
             <button
               disabled={disableBtn}
               onClick={addToBag}
-              className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer'
+              className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300'
             >
-              ADD TO BAG
+              ADD TO BASKET
             </button>
           </div>
         </div>
@@ -396,8 +415,8 @@ const ProductDetails = () => {
         <SuccessModal
           show={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
-          description='You have added a product to your shopping bag'
-          buttonText='View shopping bag'
+          description={`You have added ${productDetails?.name} to your shopping basket`}
+          buttonText='View Basket'
           buttonClick={() => router.push('/bag')}
           title='Product Added'
         />

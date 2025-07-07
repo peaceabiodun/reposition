@@ -15,6 +15,7 @@ import SortInput from '@/components/sort/page';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType } from '@/utils/types';
 import ReactPlayer from 'react-player';
+import { IoIosBasket } from 'react-icons/io';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -183,7 +184,7 @@ const Home = () => {
                 </h2>
 
                 <div className=' mt-3'>
-                  <div className='w-screen h-full overflow-hidden sm:h-[700px] campaign_video'>
+                  <div className='w-[90vw] border border-[#3f2a16]  h-full overflow-hidden sm:h-[700px] campaign_video'>
                     <ReactPlayer
                       width='100%'
                       height='100%'
@@ -193,10 +194,9 @@ const Home = () => {
                       loop={true}
                       style={{ objectFit: 'cover' }}
                     />
-                    {/* <video width='100%' height='500px' autoPlay src='/video1.mp4' /> */}
                   </div>
 
-                  <div className='text-[#704e21] text-sm md:text-[16px] font-light flex flex-col items-center gap-2 mt-3'>
+                  <div className='text-[#704e21] text-base sm:text-lg font-light flex flex-col items-center gap-2 mt-3'>
                     <p>{campaignDetails?.campaign_subtext}</p>
                   </div>
                 </div>
@@ -204,11 +204,20 @@ const Home = () => {
             )}
           </div>
 
-          <SortInput
-            options={options}
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-          />
+          <div className='flex items-center gap-6 mt-4 w-full justify-between'>
+            <SortInput
+              options={options}
+              filterValue={filterValue}
+              setFilterValue={setFilterValue}
+            />
+            <button
+              onClick={() => router.push('/bag')}
+              className='border border-[#3f2a16] p-2 text-sm h-[36px] w-[100px] mr-4 flex items-center justify-center gap-1 hover:scale-105 transition-all duration-300 cursor-pointer'
+            >
+              Basket
+              <IoIosBasket size={18} />
+            </button>
+          </div>
           {loading ? (
             <div className='grow w-full min-h-[85vh] md:min-h-[50vh] flex justify-center items-center p-4'>
               <ThreeCircles
@@ -226,14 +235,14 @@ const Home = () => {
               No Products Available
             </div>
           ) : (
-            <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-4 grid grid-cols-2 md:grid-cols-3 p-4'>
+            <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-5 grid grid-cols-2 md:grid-cols-3 p-4'>
               {products?.map((item) => (
                 <Link
                   href={`product/${item.id}`}
                   key={item.id}
                   className='mb-4'
                 >
-                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] '>
+                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300 '>
                     <Image
                       src={item?.images[0] ?? '/placeholder.png'}
                       alt='product_image'
@@ -250,15 +259,16 @@ const Home = () => {
                       </div>
                     )}
                   </div>
-                  <p className='my-2 font-light text-[16px]'>{item.name}</p>
-                  <div className='flex gap-2 font-light'>
-                    <p className='text-sm'>
+
+                  <div className='flex items-center gap-2 font-light mt-2'>
+                    <p className='text-base sm:text-lg font-medium'>
                       ₦ {Number(item.price).toLocaleString()}
                     </p>
                     {item.pre_order ? (
                       <p className='text-sm'>[Pre-Order]</p>
                     ) : null}
                   </div>
+                  <p className=' font-light text-base'>{item.name}</p>
                 </Link>
               ))}
             </div>

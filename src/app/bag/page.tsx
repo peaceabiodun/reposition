@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Header from '@/components/header/page';
@@ -71,7 +72,9 @@ const Bag = () => {
     'United Kingdom',
   ];
 
-  const frequentlyBoughtItems = products.filter((itm) => itm.frequently_bought);
+  const frequentlyBoughtItems = products?.filter(
+    (itm) => itm.frequently_bought
+  );
 
   // fetching cart items based on local storage
   useEffect(() => {
@@ -389,11 +392,11 @@ const Bag = () => {
           Back
         </Link>
 
-        <h2 className='text-sm font-light text-center my-4 px-3 xs:px-4'>
-          Shopping Bag ({bagItems.length})
+        <h2 className='text-lg font-semibold text-center my-4 px-3 xs:px-4'>
+          YOUR BASKET ({bagItems.length})
         </h2>
         {bagItems.length <= 0 ? (
-          <div className='flex justify-center items-center p-3 my-6 text-sm h-full'>
+          <div className='flex justify-center items-center p-3 my-6 text-sm sm:text-base h-[80vh]'>
             No item in your shopping bag
           </div>
         ) : loading ? (
@@ -416,61 +419,66 @@ const Bag = () => {
             {bagItems?.map((item, index) => (
               <div
                 key={item.id}
-                className='border-b border-[#a1a1a19c] w-full p-3 flex text-xs md:text-sm gap-3 justify-between items-center'
+                className='border-b border-[#a1a1a19c] w-full p-3 flex text-sm gap-5 items-center'
               >
                 <Image
                   src={item?.image ?? '/placeholder.png'}
                   alt='product_image'
-                  width='90'
-                  height='90'
-                  className='h-[90px] object-cover'
+                  width={200}
+                  height={200}
+                  className='h-[200px] w-[200px] object-cover cursor-pointer'
+                  onClick={() => router.push(`product/${item.id}`)}
                 />
-                <div className='flex flex-col gap-3 '>
-                  <p className=''>
-                    {item.name} [{item.color}]
-                  </p>
-                  <p>Size: {item.size}</p>
-                </div>
-                <div className='flex flex-col gap-3 '>
-                  <div className='flex gap-2 items-center'>
-                    <h2>Qty</h2>
-                    <input
-                      type='text'
-                      value={item.quantity}
-                      onChange={(e) => updateQuantity(e.target.value, index)}
-                      className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
-                    />
+                <div className='flex flex-col sm:flex-row sm:justify-between w-full gap-3 sm:items-center'>
+                  <div className='flex flex-col gap-3 '>
+                    <p className='text-base sm:text-lg font-semibold'>
+                      {item.name} [{item.color}]
+                    </p>
+                    <p>₦ {Number(item.price).toLocaleString()}</p>
                   </div>
-                  <p>₦ {Number(item.price).toLocaleString()}</p>
-                </div>
-                <div
-                  onClick={() => removeItemFromBag(item.id)}
-                  className='cursor-pointer'
-                >
-                  <CiTrash size={20} />
+                  <div className='flex flex-col gap-3 '>
+                    <div className='flex gap-2 items-center'>
+                      <h2>Qty</h2>
+                      <input
+                        type='text'
+                        value={item.quantity}
+                        onChange={(e) => updateQuantity(e.target.value, index)}
+                        className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
+                      />
+                    </div>
+                    <p>Size: {item.size}</p>
+                  </div>
+                  <div
+                    onClick={() => removeItemFromBag(item.id)}
+                    className='cursor-pointer'
+                  >
+                    <CiTrash size={20} />
+                  </div>
                 </div>
               </div>
             ))}
 
             <div className='border-b border-[#a1a1a19c] w-full py-3 '>
-              <h2 className='text-sm'>Frequently Bought Items</h2>
+              <h2 className='text-sm'>Top Picks For You</h2>
 
               <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar'>
                 {frequentlyBoughtItems.map((item, index) => (
-                  <div key={index} className=''>
+                  <div key={index} className='min-w-[200px]'>
                     <Image
                       src={item?.images[0]}
                       alt='product-img'
-                      width={100}
-                      height={100}
-                      className='w-[100px] h-[100px] object-cover'
+                      width={200}
+                      height={200}
+                      className='w-[200px] h-[200px] object-cover'
+                      onClick={() => router.push(`product/${item.id}`)}
                     />
-                    <p className='mt-2 mb-1 text-center '>
+                    <p className='mt-2 mb-1 font-semibold '>{item.name}</p>
+                    <p className=' mb-1 '>
                       ₦ {Number(item.price).toLocaleString()}
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[100px] h-[30px] flex items-center justify-center'
+                      className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[200px] h-[30px] flex items-center justify-center'
                     >
                       View
                     </button>
