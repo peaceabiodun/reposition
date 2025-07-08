@@ -5,13 +5,14 @@ import Header from '@/components/header/page';
 import Image from 'next/image';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiTrash } from 'react-icons/ci';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import {
   ConversionRateType,
   DeliveryDetailsType,
+  ProductDetailType,
   ShoppingBagType,
 } from '@/utils/types';
 import { ThreeCircles } from 'react-loader-spinner';
@@ -20,10 +21,10 @@ import { useRouter } from 'next/navigation';
 import { usePaystackPayment } from 'react-paystack';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { STORAGE_KEYS } from '@/utils/constants';
-import axios from 'axios';
 import { validateEmail } from '@/utils/functions';
 import PaymentReceipt from '../../components/receipt/page';
 import { useProductContext } from '@/context/product-context';
+import { HiArrowLongRight } from 'react-icons/hi2';
 
 type FormDataType = {
   quantity: string;
@@ -43,12 +44,14 @@ const Bag = () => {
   const [shippingFee, SetShippingFee] = useState<number>(0);
   const [formError, setFormError] = useState<Partial<DeliveryDetailsType>>({});
   const [showReceipt, setShowReceipt] = useState(false);
-  const { products } = useProductContext();
+  const [products, setProducts] = useState<ProductDetailType[]>([]);
   const [discountCode, setDiscountCode] = useState('');
   const [discountAmount, setDiscountAmount] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
+  const deliveryDetailsRef = useRef<HTMLDivElement>(null);
 
   const [deliveryDetails, setDeliveryDetails] = useState<DeliveryDetailsType>({
     first_name: '',
@@ -72,8 +75,33 @@ const Bag = () => {
     'United Kingdom',
   ];
 
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      let { data, error } = await supabase
+        .from('products')
+        .select()
+        .order('created_at', { ascending: false });
+      if (data !== null) {
+        setProducts(data ?? []);
+      }
+
+      if (error) {
+        console.log(error);
+      }
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const frequentlyBoughtItems = products?.filter(
-    (itm) => itm.frequently_bought
+    (itm) => itm.frequently_bought === true
   );
 
   // fetching cart items based on local storage
@@ -159,7 +187,7 @@ const Bag = () => {
     } else if (totalWeight === 1 && selectedCountry !== 'Nigeria') {
       shippingFee = 33400;
     } else if (totalWeight === 2 && selectedCountry !== 'Nigeria') {
-      shippingFee = 91850;
+      shippingFee = 66800;
     } else if (totalWeight && selectedCountry == 'Nigeria') {
       shippingFee = 11690 * totalWeight;
     } else {
@@ -381,7 +409,7 @@ const Bag = () => {
     applyDiscount();
   }, [discountCode, totalPrice, shippingFee]);
   return (
-    <div className='w-full min-h-screen bg-[#dbd9d2] '>
+    <div className='w-full min-h-screen bg-[#dbd9d2] pb-10 '>
       <div className='max-w-[1500px] mx-auto'>
         <Header />
         <Link
@@ -458,6 +486,38 @@ const Bag = () => {
               </div>
             ))}
 
+            <div className='text-base'>
+              <p>
+                Total Items:
+                <span className='font-semibold'> {bagItems.length}</span>
+              </p>
+              <p>
+                Total Item(s) price:
+                <span className='font-semibold'>
+                  {' '}
+                  ₦ {Number(totalPrice).toLocaleString()}
+                </span>
+              </p>
+            </div>
+
+            {bagItems.length > 0 && !showCheckout && (
+              <button
+                onClick={() => {
+                  setShowCheckout(true);
+                  // Scroll to delivery details section after a short delay to ensure it's rendered
+                  setTimeout(() => {
+                    deliveryDetailsRef.current?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
+                  }, 100);
+                }}
+                className='border border-[#523f3fab] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300'
+              >
+                CHECKOUT
+                <HiArrowLongRight size={20} />
+              </button>
+            )}
             <div className='border-b border-[#a1a1a19c] w-full py-3 '>
               <h2 className='text-sm'>Top Picks For You</h2>
 
@@ -486,303 +546,324 @@ const Bag = () => {
                 ))}
               </div>
             </div>
-
-            <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
-              <div className=' w-full text-xs md:text-sm '>
-                <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
-                  <h2>Delivery Details</h2>
-                </div>
-                <div className='w-full mt-5'>
-                  <label>First Name</label>
-
-                  <input
-                    type='text'
-                    placeholder='E.g Walter'
-                    value={deliveryDetails.first_name}
-                    onChange={(e) =>
-                      updateFormData('first_name', e.target.value)
-                    }
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
-                  />
-                  {formError.first_name && (
-                    <div className='text-xs text-red-500 mt-2'>
-                      {formError.first_name}
-                    </div>
-                  )}
-                </div>
-                <div className='my-5'>
-                  <label>Last Name</label>
-                  <input
-                    type='text'
-                    placeholder='E.g White'
-                    value={deliveryDetails.last_name}
-                    onChange={(e) =>
-                      updateFormData('last_name', e.target.value)
-                    }
-                    className='border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
-                  />
-                  {formError.last_name && (
-                    <div className='text-xs text-red-500 mt-2'>
-                      {formError.last_name}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <label>Email</label>
-                  <input
-                    type='email'
-                    placeholder='E.g white@gmail.com'
-                    value={deliveryDetails.user_email}
-                    onChange={(e) =>
-                      updateFormData('user_email', e.target.value)
-                    }
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                  />
-                  {!validateEmail(deliveryDetails.user_email) &&
-                    formError.user_email && (
-                      <div className='text-[10px] text-red-500 mt-2'>
-                        {formError.user_email}
-                      </div>
-                    )}
-                </div>
-                <div className='my-5'>
-                  <label> City</label>
-                  <input
-                    type='text'
-                    placeholder='E.g Los Angeles'
-                    value={deliveryDetails.city}
-                    onChange={(e) => updateFormData('city', e.target.value)}
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                  />
-                  {formError.city && (
-                    <div className='text-[10px] text-red-500 mt-2'>
-                      {formError.city}
-                    </div>
-                  )}
-                </div>
-                <p className='mb-2'>Country </p>
+            {showCheckout && (
+              <div className='flex flex-col md:flex-row gap-4 md:gap-12 '>
                 <div
-                  onClick={() => setShowDropdown(!showDropdown)}
-                  className={`border  text-gray-400 border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
+                  className=' w-full text-xs md:text-sm '
+                  ref={deliveryDetailsRef}
                 >
-                  <p
-                    className={`${
-                      selectedCountry && selectedCountry !== ''
-                        ? 'text-[#000]'
-                        : ' text-gray-400'
-                    } `}
-                  >
-                    {selectedCountry ? selectedCountry : 'E.g United States'}
-                  </p>
-                  <MdOutlineKeyboardArrowDown
-                    size={18}
-                    className='text-gray-400 '
-                  />
-                </div>
-                {showDropdown && (
-                  <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
-                    {countryList.map((item, index) => (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          setSelectedCountry(item);
-                          setShowDropdown(false);
-                        }}
-                        className={`${
-                          selectedCountry === item
-                            ? ' font-light bg-gray-100'
-                            : ''
-                        } hover:font-light hover:bg-gray-100 p-2 cursor-pointer`}
-                      >
-                        {item}
-                      </div>
-                    ))}
+                  <div className='border-b border-[#a1a1a19c] w-full flex gap-3 justify-between py-3 text-sm'>
+                    <h2>Delivery Details</h2>
                   </div>
-                )}
-                <div className='my-5'>
-                  <label>Address</label>
-                  <input
-                    type='text'
-                    placeholder='E.g No 5, Centinela Avenue, Los Angeles, USA'
-                    value={deliveryDetails.address}
-                    onChange={(e) => updateFormData('address', e.target.value)}
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                  />
-                  {formError.address && (
-                    <div className='text-[10px] text-red-500 mt-2'>
-                      {formError.address}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <label>Zip code</label>
+                  <div className='w-full mt-5'>
+                    <label>First Name</label>
 
-                  <input
-                    type='text'
-                    placeholder='E.g 90004'
-                    value={deliveryDetails.zip_code}
-                    onChange={(e) => updateFormData('zip_code', e.target.value)}
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
-                  />
-                  {formError.zip_code && (
-                    <div className='text-[10px] text-red-500 mt-2'>
-                      {formError.zip_code}
-                    </div>
-                  )}
-                </div>
-                <div className='my-5'>
-                  <label>Phone Number</label>
-                  <input
-                    type='text'
-                    placeholder='E.g +213 90445678'
-                    value={deliveryDetails.phone_number}
-                    onChange={(e) =>
-                      updateFormData('phone_number', e.target.value)
-                    }
-                    className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
-                  />
-                  {formError.phone_number && (
-                    <div className='text-[10px] text-red-500 mt-2'>
-                      {formError.phone_number}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className=' w-full text-xs md:text-sm '>
-                <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
-                  Shipping Method
-                </h2>
-                {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
-                (totalPrice >= 300 && selectedCountry === 'Nigeria') ? (
-                  <div className='flex gap-2 items-start mt-5'>
-                    <input
-                      type='checkbox'
-                      checked
-                      className='accent-black mt-1'
-                      readOnly
-                    />
-                    <div>
-                      <h3 className='font-light'>Standard Courier</h3>
-                      <div className='font-light'>(Free delivery)</div>
-                      <p>
-                        Delivery takes up to 10-16 business days for products
-                        marked &apos;made-to-order&apos; or
-                        &apos;pre-order&apos;. Estimated delivery time once the
-                        order has shipped.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className='flex gap-2 items-start mt-5'>
-                    <input
-                      type='checkbox'
-                      checked
-                      className='accent-black mt-1'
-                      readOnly
-                      // onChange={(e) =>
-                      //   setDeliveryDetails({
-                      //     ...deliveryDetails,
-                      //     shipping: e.target.checked ? 'standard' : 'free',
-                      //   })
-                      // }
-                    />
-                    <div>
-                      <h3 className='font-light'>Standard Courier</h3>
-                      <div>${shippingFee.toFixed(2)}</div>
-                      <p>
-                        Delivery takes up to 10-16 business days for products
-                        marked &apos;made-to-order&apos; or
-                        &apos;pre-order&apos;. Estimated delivery time once the
-                        order has shipped.
-                      </p>
-                    </div>
-                  </div>
-                )}
-                <h2 className='border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm'>
-                  Billing Summary
-                </h2>
-                <div className='space-y-3 mt-3'>
-                  <div className='flex gap-3 justify-between'>
-                    <p>Item total</p>
-                    <p>₦ {totalPrice.toLocaleString()}</p>
-                  </div>
-                  <div className='flex gap-3 justify-between'>
-                    <div className=''>
-                      <p>Shipping fee</p>
-                      <p className='text-[10px] text-[#644120] italic'>
-                        *Shipping fee may reduce or increase depending on
-                        destination country.
-                      </p>
-                      <p className='text-[10px] text-[#644120] italic'>
-                        *Please select a country to see correct shipping fee
-                      </p>
-                    </div>
-                    <p>
-                      {(totalPrice >= 600000 &&
-                        selectedCountry !== 'Nigeria') ||
-                      (totalPrice >= 300000 && selectedCountry === 'Nigeria')
-                        ? 'Free Delivery'
-                        : `₦${shippingFee.toLocaleString()}`}{' '}
-                    </p>
-                  </div>
-                  <div className='flex gap-3 items-center justify-between'>
-                    <p>Discount Code</p>
                     <input
                       type='text'
-                      value={discountCode}
-                      onChange={(e) => setDiscountCode(e.target.value)}
-                      className='border border-[#3d3e3f] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                      placeholder='E.g Walter'
+                      value={deliveryDetails.first_name}
+                      onChange={(e) =>
+                        updateFormData('first_name', e.target.value)
+                      }
+                      className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
+                    />
+                    {formError.first_name && (
+                      <div className='text-xs text-red-500 mt-2'>
+                        {formError.first_name}
+                      </div>
+                    )}
+                  </div>
+                  <div className='my-5'>
+                    <label>Last Name</label>
+                    <input
+                      type='text'
+                      placeholder='E.g White'
+                      value={deliveryDetails.last_name}
+                      onChange={(e) =>
+                        updateFormData('last_name', e.target.value)
+                      }
+                      className='border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
+                    />
+                    {formError.last_name && (
+                      <div className='text-xs text-red-500 mt-2'>
+                        {formError.last_name}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <label>Email</label>
+                    <input
+                      type='email'
+                      placeholder='E.g white@gmail.com'
+                      value={deliveryDetails.user_email}
+                      onChange={(e) =>
+                        updateFormData('user_email', e.target.value)
+                      }
+                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                    />
+                    {!validateEmail(deliveryDetails.user_email) &&
+                      formError.user_email && (
+                        <div className='text-[10px] text-red-500 mt-2'>
+                          {formError.user_email}
+                        </div>
+                      )}
+                  </div>
+                  <div className='my-5'>
+                    <label> City</label>
+                    <input
+                      type='text'
+                      placeholder='E.g Los Angeles'
+                      value={deliveryDetails.city}
+                      onChange={(e) => updateFormData('city', e.target.value)}
+                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                    />
+                    {formError.city && (
+                      <div className='text-[10px] text-red-500 mt-2'>
+                        {formError.city}
+                      </div>
+                    )}
+                  </div>
+                  <p className='mb-2'>
+                    Country{' '}
+                    <span className='text-xs italic'>
+                      (shipping fee may change depending on country)
+                    </span>
+                  </p>
+                  <div
+                    onClick={() => setShowDropdown(!showDropdown)}
+                    className={`border  text-gray-400 border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
+                  >
+                    <p
+                      className={`${
+                        selectedCountry && selectedCountry !== ''
+                          ? 'text-[#000]'
+                          : ' text-gray-400'
+                      } `}
+                    >
+                      {selectedCountry ? selectedCountry : 'E.g United States'}
+                    </p>
+                    <MdOutlineKeyboardArrowDown
+                      size={18}
+                      className='text-gray-400 '
                     />
                   </div>
-                  <div className='flex gap-3 justify-between'>
-                    <p>Discount Fee</p>
-                    <p>₦ {discountAmount.toLocaleString()}</p>
+                  {showDropdown && (
+                    <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
+                      {countryList.map((item, index) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            setSelectedCountry(item);
+                            setShowDropdown(false);
+                          }}
+                          className={`${
+                            selectedCountry === item
+                              ? ' font-light bg-gray-100'
+                              : ''
+                          } hover:font-light hover:bg-gray-100 p-2 cursor-pointer`}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className='my-5'>
+                    <label>Address</label>
+                    <input
+                      type='text'
+                      placeholder='E.g No 5, Centinela Avenue, Los Angeles, USA'
+                      value={deliveryDetails.address}
+                      onChange={(e) =>
+                        updateFormData('address', e.target.value)
+                      }
+                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                    />
+                    {formError.address && (
+                      <div className='text-[10px] text-red-500 mt-2'>
+                        {formError.address}
+                      </div>
+                    )}
                   </div>
-                  <div className='flex gap-3 justify-between'>
-                    <p>Duties, taxes & fees</p>
-                    <p>--</p>
+                  <div>
+                    <label>Zip code</label>
+
+                    <input
+                      type='text'
+                      placeholder='E.g 90004'
+                      value={deliveryDetails.zip_code}
+                      onChange={(e) =>
+                        updateFormData('zip_code', e.target.value)
+                      }
+                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                    />
+                    {formError.zip_code && (
+                      <div className='text-[10px] text-red-500 mt-2'>
+                        {formError.zip_code}
+                      </div>
+                    )}
                   </div>
-                  <div className='flex gap-3 justify-between font-light'>
-                    <p className=''>Total</p>
-                    <p>₦ {finalTotal.toLocaleString()}</p>
+                  <div className='my-5'>
+                    <label>Phone Number</label>
+                    <input
+                      type='text'
+                      placeholder='E.g +213 90445678'
+                      value={deliveryDetails.phone_number}
+                      onChange={(e) =>
+                        updateFormData('phone_number', e.target.value)
+                      }
+                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
+                    />
+                    {formError.phone_number && (
+                      <div className='text-[10px] text-red-500 mt-2'>
+                        {formError.phone_number}
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                <div className=' w-full'>
-                  <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
-                    Payment Options
+                <div className=' w-full text-xs md:text-sm '>
+                  <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
+                    Shipping Method
                   </h2>
-                  <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
-                    <Image
-                      alt='master-card'
-                      src={'/master-card-icon.svg'}
-                      width={50}
-                      height={50}
-                    />
-                    <Image
-                      alt='visa-card'
-                      src={'/visa-icon.svg'}
-                      width={50}
-                      height={50}
-                    />
-
-                    <Image
-                      alt='bank-transfer'
-                      src={'/bank-transfer-icon.svg'}
-                      width={40}
-                      height={40}
-                    />
+                  {(totalPrice >= 600 && selectedCountry !== 'Nigeria') ||
+                  (totalPrice >= 300 && selectedCountry === 'Nigeria') ? (
+                    <div className='flex gap-2 items-start mt-5'>
+                      <input
+                        type='checkbox'
+                        checked
+                        className='accent-black mt-1'
+                        readOnly
+                      />
+                      <div>
+                        <h3 className='font-light'>Standard Courier</h3>
+                        <div className='font-light'>(Free delivery)</div>
+                        <p>
+                          Delivery takes up to 10-16 business days for products
+                          marked &apos;made-to-order&apos; or
+                          &apos;pre-order&apos;. Estimated delivery time once
+                          the order has shipped.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className='flex gap-2 items-start mt-5'>
+                      <input
+                        type='checkbox'
+                        checked
+                        className='accent-black mt-1'
+                        readOnly
+                        // onChange={(e) =>
+                        //   setDeliveryDetails({
+                        //     ...deliveryDetails,
+                        //     shipping: e.target.checked ? 'standard' : 'free',
+                        //   })
+                        // }
+                      />
+                      <div>
+                        <h3 className='font-light'>Standard Courier</h3>
+                        <div>${shippingFee.toFixed(2)}</div>
+                        <p>
+                          Delivery takes up to 10-16 business days for products
+                          marked &apos;made-to-order&apos; or
+                          &apos;pre-order&apos;. Estimated delivery time once
+                          the order has shipped.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <h2 className='border-b border-[#a1a1a19c] mt-3 w-full py-3 text-sm'>
+                    Billing Summary
+                  </h2>
+                  <div className='space-y-3 mt-3'>
+                    <div className='flex gap-3 justify-between'>
+                      <p>Item total</p>
+                      <p>₦ {totalPrice.toLocaleString()}</p>
+                    </div>
+                    <div className='flex gap-3 justify-between'>
+                      <div className=''>
+                        <p>Shipping fee</p>
+                        <p className='text-[10px] text-[#644120] italic'>
+                          *Shipping fee may reduce or increase depending on
+                          destination country.
+                        </p>
+                        <p className='text-[10px] text-[#644120] italic'>
+                          *Please select a country to see correct shipping fee
+                        </p>
+                      </div>
+                      <p>
+                        {(totalPrice >= 600000 &&
+                          selectedCountry !== 'Nigeria') ||
+                        (totalPrice >= 300000 && selectedCountry === 'Nigeria')
+                          ? 'Free Delivery'
+                          : `₦${shippingFee.toLocaleString()}`}{' '}
+                      </p>
+                    </div>
+                    <div className='flex gap-3 items-center justify-between'>
+                      <p>Discount Code</p>
+                      <input
+                        type='text'
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value)}
+                        className='border border-[#3d3e3f] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                      />
+                    </div>
+                    <div className='flex gap-3 justify-between'>
+                      <p>Discount Fee</p>
+                      <p>₦ {discountAmount.toLocaleString()}</p>
+                    </div>
+                    <div className='flex gap-3 justify-between'>
+                      <p>Duties, taxes & fees</p>
+                      <p>--</p>
+                    </div>
+                    <div className='flex gap-3 justify-between font-light'>
+                      <p className=''>Total</p>
+                      <p>₦ {finalTotal.toLocaleString()}</p>
+                    </div>
                   </div>
-                  <p className='mt-2 text-[#644120] italic text-sm'>
-                    please note that transcation fees will be added at checkout
-                  </p>
+
+                  <div className=' w-full'>
+                    <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
+                      Payment Options
+                    </h2>
+                    <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
+                      <Image
+                        alt='master-card'
+                        src={'/master-card-icon.svg'}
+                        width={50}
+                        height={50}
+                      />
+                      <Image
+                        alt='visa-card'
+                        src={'/visa-icon.svg'}
+                        width={50}
+                        height={50}
+                      />
+
+                      <Image
+                        alt='bank-transfer'
+                        src={'/bank-transfer-icon.svg'}
+                        width={40}
+                        height={40}
+                      />
+                    </div>
+                    <p className='mt-2 text-[#644120] italic text-sm'>
+                      please note that transcation fees will be added at
+                      checkout
+                    </p>
+                    <p className='mt-2 text-[#644120] italic text-sm'>
+                      If you have any issues ordering or with your order
+                      payment, please contact us at {''}
+                      <span className='font-semibold'>
+                        welcome@re-position.co
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
-        {bagItems.length <= 0 ? null : (
+        {bagItems.length <= 0 || !showCheckout ? null : (
           <div className='flex justify-center py-6 px-3 xs:px-4'>
             <button
               onClick={() => {

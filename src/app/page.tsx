@@ -184,7 +184,7 @@ const Home = () => {
                 </h2>
 
                 <div className=' mt-3'>
-                  <div className='w-[90vw] border border-[#3f2a16]  h-full overflow-hidden sm:h-[700px] campaign_video'>
+                  <div className='w-[90vw] border border-[#3f2a16]  h-[400px] overflow-hidden sm:h-[700px] campaign_video'>
                     <ReactPlayer
                       width='100%'
                       height='100%'
