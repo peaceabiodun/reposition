@@ -32,7 +32,7 @@ const ManageProducts = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductDetailType>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-
+  const [showDropDown, setShowDropDown] = useState(false);
   const handleSelectProduct = (product: ProductDetailType) => {
     setSelectedProduct(product);
   };
@@ -111,7 +111,7 @@ const ManageProducts = () => {
               {products?.map((item, index) => (
                 <div
                   key={item?.id}
-                  className={`relative flex gap-3 justify-between items-center ${
+                  className={`relative flex gap-3 justify-between items-center hover:bg-[#ecebeb] p-2  ${
                     index === products?.length - 1
                       ? ''
                       : 'border-b border-[#b9b9b96c]'
@@ -121,38 +121,43 @@ const ManageProducts = () => {
                     <Image
                       src={item?.images[0]}
                       alt='product_image'
-                      width='100'
-                      height='100'
+                      width='150'
+                      height='150'
                       className={`${
                         item.sold_out ? 'brightness-50' : ''
-                      } h-[100px] object-cover`}
+                      } h-[150px] object-cover`}
                     />
                   </div>
-                  <p className='sm:hidden'>
+                  <div className='sm:hidden'>
                     {truncateString(`${item?.name}`, 3)}{' '}
-                  </p>
-                  <p className='hidden sm:flex'>
+                  </div>
+                  <div className='hidden sm:flex'>
                     {truncateString(`${item?.name}`, 6)}{' '}
-                  </p>
+                  </div>
                   <div
                     className='cursor-pointer '
-                    onClick={() => handleSelectProduct(item)}
+                    onClick={() => {
+                      handleSelectProduct(item);
+                      setShowDropDown(!showDropDown);
+                    }}
                   >
                     <CiMenuKebab size={20} />
                   </div>
-                  {selectedProduct && selectedProduct === item && (
-                    <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-14 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
-                      {dropDownLinks?.map((item, index) => (
-                        <p
-                          key={index}
-                          className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
-                          onClick={item?.link}
-                        >
-                          {item?.text}
-                        </p>
-                      ))}
-                    </div>
-                  )}
+                  {showDropDown &&
+                    selectedProduct &&
+                    selectedProduct === item && (
+                      <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-2 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                        {dropDownLinks?.map((item, index) => (
+                          <p
+                            key={index}
+                            className='hover:font-medium hover:bg-gray-50 p-1 cursor-pointer'
+                            onClick={item?.link}
+                          >
+                            {item?.text}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                 </div>
               ))}
             </div>

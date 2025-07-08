@@ -284,7 +284,8 @@ const ProductDetails = () => {
                   <AccordionContent className='flex flex-col space-y-4'>
                     <div>
                       Follows standard US mens sizing. If between sizes, size
-                      down.
+                      down. We have a size chart available at the top of the
+                      page for reference.
                     </div>
                     <div className='flex flex-col gap-2'>
                       {productDetails?.sizes.map((item, index) => (
