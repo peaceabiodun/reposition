@@ -399,7 +399,7 @@ const ProductDetails = () => {
             </div>
             {disableBtn && (
               <p className='text-xs text-red-500 mt-2'>
-                * Please select a color and Size before you add to bag
+                * Please select a color and Size before you add to basket
               </p>
             )}
             <button

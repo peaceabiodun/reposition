@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Archivo } from 'next/font/google';
 import './globals.css';
 import { ProductProvider } from '@/context/product-context';
+import { PostHogProvider } from './provider';
 
 // const archivo = Archivo({ subsets: ['latin'] });
 
@@ -16,10 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ProductProvider>
-      <html lang='en'>
-        <body className={`Daikon`}>{children}</body>
-      </html>
-    </ProductProvider>
+    <PostHogProvider>
+      <ProductProvider>
+        <html lang='en'>
+          <body className={`Daikon`}>{children}</body>
+        </html>
+      </ProductProvider>
+    </PostHogProvider>
   );
 }
