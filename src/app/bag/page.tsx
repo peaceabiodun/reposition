@@ -49,6 +49,7 @@ const Bag = () => {
   const [discountAmount, setDiscountAmount] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [orderNumber, setOrderNumber] = useState<number | null>(null);
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
   const deliveryDetailsRef = useRef<HTMLDivElement>(null);
@@ -303,6 +304,23 @@ const Bag = () => {
     return scaledNumber;
   };
 
+  // Ensure order number is generated
+  const getOrderNumber = () => {
+    if (!orderNumber) {
+      const newOrderNumber = generateOrderNumber(100000);
+      setOrderNumber(newOrderNumber);
+      return newOrderNumber;
+    }
+    return orderNumber;
+  };
+
+  // Generate order number when checkout is initiated
+  useEffect(() => {
+    if (showCheckout && !orderNumber) {
+      setOrderNumber(generateOrderNumber(100000));
+    }
+  }, [showCheckout, orderNumber]);
+
   const orderPayload = {
     first_name: deliveryDetails.first_name,
     last_name: deliveryDetails.last_name,
@@ -320,7 +338,7 @@ const Bag = () => {
     })),
     amount_paid: totalPrice + shippingFee,
     shipping_fee: shippingFee,
-    order_id: generateOrderNumber(100000),
+    order_id: getOrderNumber(),
     status: 'processing',
   };
   const orderConfirmationDetails = async (orderReference: string) => {
@@ -504,6 +522,10 @@ const Bag = () => {
               <button
                 onClick={() => {
                   setShowCheckout(true);
+                  // Generate order number when checkout is initiated
+                  if (!orderNumber) {
+                    setOrderNumber(generateOrderNumber(100000));
+                  }
                   // Scroll to delivery details section after a short delay to ensure it's rendered
                   setTimeout(() => {
                     deliveryDetailsRef.current?.scrollIntoView({
@@ -736,7 +758,7 @@ const Bag = () => {
                       />
                       <div>
                         <h3 className='font-light'>Standard Courier</h3>
-                        <div className='font-light'>(Free delivery)</div>
+                        {/* <div className='font-light'>(Free delivery)</div> */}
                         <p>
                           Delivery takes up to 10-16 business days for products
                           marked &apos;made-to-order&apos; or

@@ -146,7 +146,7 @@ const ManageProducts = () => {
                   {showDropDown &&
                     selectedProduct &&
                     selectedProduct === item && (
-                      <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-2 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                      <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-4 top-[-10px] shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
                         {dropDownLinks?.map((item, index) => (
                           <p
                             key={index}
