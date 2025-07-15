@@ -67,6 +67,10 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
       title: 'We Are',
       onClick: () => router.push('/we-are'),
     },
+    {
+      title: 'Join The Assemble',
+      onClick: () => router.push('/theassemble'),
+    },
     ...(token && userRole === 'ADMIN'
       ? [
           {

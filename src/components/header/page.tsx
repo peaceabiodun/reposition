@@ -115,7 +115,7 @@ const Header = () => {
             : ''
         }`}
       >
-        <div className='max-w-[1500px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
+        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
           <div className='flex gap-1'>
             <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
             <Image

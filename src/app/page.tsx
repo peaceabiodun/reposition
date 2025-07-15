@@ -13,9 +13,15 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import SortInput from '@/components/sort/page';
 import { useRouter } from 'next/navigation';
-import { CampaignDetailsType } from '@/utils/types';
+import { CampaignDetailsType, ShoppingBagType } from '@/utils/types';
 import ReactPlayer from 'react-player';
 import { IoIosBasket } from 'react-icons/io';
+import { MdMenuOpen } from 'react-icons/md';
+import { TbShirt } from 'react-icons/tb';
+import { GoPerson } from 'react-icons/go';
+import UpdatePasswordModal from '@/components/update-password-modal/page';
+import SuccessModal from '@/components/success-modal/page';
+import MobileMenu from '@/components/mobile-menu/page';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +33,16 @@ const Home = () => {
     ENUM_PRODUCT_FILTER_LIST.ALL
   );
   const router = useRouter();
+  const [showDropdown, setShowDropdown] = useState(false);
   const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [token, setToken] = useState('');
+  const [scroll, setScroll] = useState(false);
+  const [bagItems, setBagItems] = useState<ShoppingBagType[]>([]);
+  const [email, setEmail] = useState('');
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // useEffect(() => {
   //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
@@ -123,6 +138,59 @@ const Home = () => {
   useEffect(() => {
     getSession();
   }, []);
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      setScroll(window.scrollY > 20);
+    });
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const email = localStorage.getItem(STORAGE_KEYS.USER_EMAIL) ?? '';
+      setEmail(email ?? '');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const authToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) ?? '';
+      setToken(authToken ?? '');
+    }
+  }, []);
+
+  const userRole =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.USER_ROLE)
+      : '';
+
+  const logout = async () => {
+    setLoading(true);
+    try {
+      await supabase.auth.signOut();
+      setToken('');
+      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
+      setShowLogoutModal(false);
+      setShowDropdown(false);
+      router.refresh();
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const existingBagItemsJSON = localStorage.getItem(STORAGE_KEYS.BAG_ITEMS);
+    if (existingBagItemsJSON) {
+      const existingBagItems = JSON.parse(existingBagItemsJSON);
+      setBagItems(existingBagItems ?? []);
+      localStorage.setItem(
+        STORAGE_KEYS.CART_LENGTH,
+        (existingBagItems?.length ?? 0).toString()
+      );
+    }
+  }, []);
   //check to get the user role and redirect to the appropriate page
   // useEffect(() => {
   //   const checkAuth = async () => {
@@ -154,8 +222,8 @@ const Home = () => {
   return (
     <Fragment>
       <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] font-light '>
-        <div className='max-w-[1500px] mx-auto'>
-          <Header />
+        <div className='max-w-[1700px] mx-auto'>
+          {/* <Header /> */}
           <div className='flex flex-col items-center  w-full p-4'>
             {campaignLoading ? (
               <div className='grow w-full flex justify-center items-center p-4'>
@@ -169,37 +237,128 @@ const Home = () => {
                 />
               </div>
             ) : (
-              <div className=''>
-                <h2 className='text-lg sm:text-2xl font-light text-center mt-6'>
-                  <Typewriter
-                    options={{
-                      strings: [
-                        'Experience Freedom',
-                        `${campaignDetails?.campaign_title}`,
-                      ],
-                      autoStart: true,
-                      loop: true,
-                    }}
-                  />
-                </h2>
-
+              <div className='relative w-full'>
                 <div className=' mt-3'>
-                  <div className='w-[90vw] border border-[#3f2a16]  h-[400px] overflow-hidden sm:h-[700px] campaign_video'>
+                  <div className='w-full border border-[#3f2a16] overflow-hidden h-[50vh] md:h-[90vh] campaign_video rounded-[16px]'>
                     <ReactPlayer
                       width='100%'
                       height='100%'
                       url={campaignDetails?.campaign_video}
-                      controls={true}
+                      controls={false}
                       playing={true}
                       loop={true}
                       style={{ objectFit: 'cover' }}
                     />
                   </div>
-
-                  <div className='text-[#704e21] text-base sm:text-lg font-light flex flex-col items-center gap-2 mt-3'>
-                    <p>{campaignDetails?.campaign_subtext}</p>
+                  <div className='absolute bottom-0 p-8 text-white '>
+                    <h2 className='text-xl sm:text-3xl mt-6'>
+                      <Typewriter
+                        options={{
+                          strings: [
+                            'Experience Freedom',
+                            `${campaignDetails?.campaign_title}`,
+                          ],
+                          autoStart: true,
+                          loop: true,
+                        }}
+                      />
+                    </h2>
+                    <div className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white rounded-lg p-2 sm:w-[280px]'>
+                      {/* <p>{campaignDetails?.campaign_subtext}</p> */}
+                      Shop the Collection
+                    </div>
                   </div>
                 </div>
+
+                <nav className='absolute top-0 flex justify-between w-full p-8 text-white'>
+                  <div className='gap-8 hidden sm:flex'>
+                    <p
+                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden sm:flex'
+                      onClick={() => router.push('/we-are')}
+                    >
+                      We Are
+                    </p>
+                    <p
+                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden sm:flex'
+                      onClick={() => router.push('/theassemble')}
+                    >
+                      Join The Assemble
+                    </p>
+                  </div>
+
+                  <div className='flex gap-1'>
+                    <h2 className='font-bold text-sm sm:text-lg md:text-xl text-[#fafafa]'>
+                      REPOSITION{' '}
+                    </h2>
+                    <Image
+                      src={'/logo.svg'}
+                      alt='logo'
+                      width={30}
+                      height={30}
+                      className='object-cover invert'
+                    />
+                  </div>
+
+                  <div className='flex gap-3'>
+                    {userRole === 'ADMIN' && (
+                      <TbShirt
+                        size={26}
+                        onClick={() => router.push('/manage-products')}
+                        className='cursor-pointer hidden sm:flex'
+                      />
+                    )}
+                    <GoPerson
+                      size={26}
+                      onClick={() => {
+                        if (token) {
+                          setShowDropdown(!showDropdown);
+                        } else {
+                          router.push('/login');
+                        }
+                      }}
+                      className='cursor-pointer hidden sm:flex'
+                    />
+                    <div className='relative'>
+                      <IoIosBasket
+                        size={26}
+                        onClick={() => router.push('/bag')}
+                        className='cursor-pointer '
+                      />
+                      <span
+                        onClick={() => router.push('/bag')}
+                        className={`text-[10px] absolute bg-[#3f2a16] text-white ${
+                          scroll
+                            ? 'top-[-8px] right-[0px]'
+                            : 'top-[-8px] right-[0px]'
+                        }  right-[4px] rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
+                      >
+                        {bagItems.length ?? '0'}
+                      </span>
+                    </div>
+                    <MdMenuOpen
+                      size={26}
+                      className='cursor-pointer sm:hidden'
+                      onClick={() => setShowMobileMenu(true)}
+                    />
+                  </div>
+                  {showDropdown && (
+                    <div className='backdrop-blur-md rounded-sm p-2 absolute right-2 top-16 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                      <div
+                        onClick={() => setShowUpdatePasswordModal(true)}
+                        className='hover:border border-white rounded-md p-2 cursor-pointer'
+                      >
+                        Update password
+                      </div>
+
+                      <div
+                        onClick={() => setShowLogoutModal(true)}
+                        className=' hover:border border-white rounded-md p-2 cursor-pointer'
+                      >
+                        Logout
+                      </div>
+                    </div>
+                  )}
+                </nav>
               </div>
             )}
           </div>
@@ -320,6 +479,38 @@ const Home = () => {
           </button>
         </div>
       )} */}
+      {showUpdatePasswordModal && (
+        <UpdatePasswordModal
+          show={showUpdatePasswordModal}
+          onClose={() => setShowUpdatePasswordModal(false)}
+          email={email}
+        />
+      )}
+
+      {showLogoutModal && (
+        <SuccessModal
+          show={showLogoutModal}
+          onClose={() => setShowLogoutModal(false)}
+          title='Are you sure you want to Logout ?'
+          buttonText='Logout'
+          buttonClick={logout}
+        />
+      )}
+
+      {showSuccessModal && (
+        <SuccessModal
+          show={showSuccessModal}
+          onClose={() => setShowSuccessModal(false)}
+          title='Email sent!'
+          description='Check your email for the reset link'
+        />
+      )}
+      {showMobileMenu && (
+        <MobileMenu
+          show={showMobileMenu}
+          onClose={() => setShowMobileMenu(false)}
+        />
+      )}
     </Fragment>
   );
 };
