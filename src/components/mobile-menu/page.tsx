@@ -64,6 +64,10 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
 
   const menuInfo = [
     {
+      title: 'Shop',
+      onClick: () => router.push('/shop'),
+    },
+    {
       title: 'We Are',
       onClick: () => router.push('/we-are'),
     },

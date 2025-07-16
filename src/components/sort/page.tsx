@@ -20,7 +20,7 @@ const SortInput = ({
     <div className='w-[200px] m-4 '>
       <div
         onClick={() => setShowDropdown(!showDropdown)}
-        className='cursor-pointer flex justify-between items-center border border-[#3f2a16]  p-2 text-[#5E6164] text-sm gap-2 h-[36px] w-full font-normal shadow-md '
+        className='cursor-pointer flex justify-between items-center border border-[#3f2a16] rounded-lg p-2 text-[#5E6164] text-sm gap-2 h-[36px] w-full font-normal shadow-md '
       >
         <p className='  gap-3 pl-2  text-sm text-[#5E6164]'>
           {filterValue || text}

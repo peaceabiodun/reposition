@@ -116,7 +116,10 @@ const Header = () => {
         }`}
       >
         <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
-          <div className='flex gap-1'>
+          <div
+            onClick={() => router.push('/')}
+            className='flex gap-1 cursor-pointer'
+          >
             <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
             <Image
               src={'/logo.svg'}
