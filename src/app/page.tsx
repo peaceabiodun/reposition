@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import Footer from '@/components/footer/page';
 import Image from 'next/image';
@@ -449,7 +450,7 @@ const Home = () => {
           </div>
 
           {loading ? (
-            <div className='grow w-full flex justify-center items-center p-4'>
+            <div className='grow w-full flex justify-center items-center p-4 h-[40vh]'>
               <ThreeCircles
                 visible={true}
                 height={50}
@@ -460,15 +461,18 @@ const Home = () => {
               />
             </div>
           ) : products.length === 0 ? (
-            <div className='w-full flex justify-center items-center p-4 text-sm'>
+            <div className='w-full flex justify-center items-center p-4 text-sm h-[40vh]'>
               {' '}
               No Products Available
             </div>
           ) : (
-            <>
+            <div className='bg-[#5a3c1f36] m-4 p-6 rounded-2xl'>
+              <p className=' pl-4 text-xl md:text-2xl font-semibold'>
+                EXPERIENCE FREEDOM
+              </p>
               <div
                 ref={scrollContainerRef}
-                className='flex md:gap-5 gap-2 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
+                className='flex md:gap-5 gap-3 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
                 style={{
                   width: '100%',
                   maxWidth: '100%',
@@ -480,15 +484,15 @@ const Home = () => {
                   <Link
                     href={`product/${item.id}`}
                     key={item.id}
-                    className=' mb-4 min-w-[500px] h-[600px]'
+                    className='lg:pl-4 relative'
                     style={{ scrollSnapAlign: 'start' }}
                   >
-                    <div className='relative '>
+                    <div className='relative w-[330px] h-[500px] md:w-[500px] md:h-[650px]'>
                       <Image
                         src={item?.images[0] ?? '/placeholder.png'}
                         alt='product_image'
                         fill
-                        className={` min-h-[600px] h-[600px] object-cover border border-solid border-[#3f2a16] shadow-md ${
+                        className={` object-cover border border-solid border-[#3f2a16] shadow-md rounded-lg ${
                           item.sold_out ? 'brightness-50' : ''
                         } `}
                       />
@@ -501,15 +505,18 @@ const Home = () => {
                       )}
                     </div>
 
-                    <div className='flex items-center gap-2 font-light mt-2'>
-                      <p className='text-base sm:text-lg font-medium'>
+                    <div className='absolute bottom-5 text-[#3f2a16] pl-5'>
+                      <div className='flex items-center gap-2 mt-2'>
+                        <p className=' text-xl font-semibold'>{item.name}</p>
+                        {item.pre_order ? (
+                          <p className='text-sm'>[Pre-Order]</p>
+                        ) : null}
+                      </div>
+
+                      <p className='text-base font-semibold'>
                         ₦ {Number(item.price).toLocaleString()}
                       </p>
-                      {item.pre_order ? (
-                        <p className='text-sm'>[Pre-Order]</p>
-                      ) : null}
                     </div>
-                    <p className=' font-light text-base'>{item.name}</p>
                   </Link>
                 ))}
               </div>
@@ -532,8 +539,30 @@ const Home = () => {
                   />
                 </button>
               </div>
-            </>
+            </div>
           )}
+          <div className='bg-[#5a3c1f36] mx-4 my-8 p-6 rounded-2xl grid grid-cols-1 lg:grid-cols-2 gap-4'>
+            <div className='w-full h-[300px] md:h-[600px] relative'>
+              <img
+                src='/img2.png'
+                alt='assemble'
+                className='w-full h-full object-cover rounded-[20px]'
+              />
+              <div
+                onClick={() => router.push('/theassemble')}
+                className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white rounded-lg p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer absolute bottom-5 left-5'
+              >
+                Join The Assemble
+              </div>
+            </div>
+            <div className='w-full h-[300px] md:h-[600px]'>
+              <img
+                src='/img1.png'
+                alt='assemble'
+                className='w-full h-full object-cover rounded-[20px]'
+              />
+            </div>
+          </div>
           <Footer />
         </div>
       </div>

@@ -11,7 +11,7 @@ const Footer = () => {
       <div className='flex flex-col items-center justify-center text-xs '>
         <div className='flex items-center gap-2'>
           <a
-            href='https://www.instagram.com/repositionglobal'
+            href='https://www.instagram.com/reposition.co'
             target='_blank'
             rel='noopener noreferrer'
           >

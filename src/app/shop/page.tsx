@@ -9,8 +9,6 @@ import { supabase } from '@/lib/supabase';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import ErrorModal from '@/components/error-modal/page';
 import Header from '@/components/header/page';
-import { STORAGE_KEYS } from '@/utils/constants';
-import { useRouter } from 'next/navigation';
 import Footer from '@/components/footer/page';
 
 const Shop = () => {
