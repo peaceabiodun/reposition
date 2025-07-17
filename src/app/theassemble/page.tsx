@@ -151,7 +151,10 @@ const TheAssemble = () => {
     <div className='min-h-[100vh] bg-[#dbd9d2] the_assemble_bg   '>
       <div className='blur-bg p-4'>
         <header>
-          <div className='flex gap-1'>
+          <div
+            onClick={() => router.push('/')}
+            className='flex gap-1 cursor-pointer'
+          >
             <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
             <Image
               src={'/logo.svg'}
