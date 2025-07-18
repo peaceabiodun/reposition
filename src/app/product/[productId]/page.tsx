@@ -264,7 +264,12 @@ const ProductDetails = () => {
                     Product Description
                   </AccordionTrigger>
                   <AccordionContent className='text-base font-semibold'>
-                    {productDetails?.description}
+                    <div className='flex flex-col gap-2'>
+                      {productDetails?.product_details?.map((item, index) => (
+                        <p key={index}>{item}</p>
+                      ))}
+                    </div>
+                    {/* {productDetails?.description} */}
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

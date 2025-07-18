@@ -21,6 +21,7 @@ export type ProductDetailType = {
   name: string;
   price: string;
   description: string;
+  product_details: string[];
   images: string[];
   sizes: string[];
   colors: string[];
