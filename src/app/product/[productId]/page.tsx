@@ -264,7 +264,12 @@ const ProductDetails = () => {
                     Product Description
                   </AccordionTrigger>
                   <AccordionContent className='text-base font-semibold'>
-                    {productDetails?.description}
+                    <div className='flex flex-col gap-2'>
+                      {productDetails?.product_details?.map((item, index) => (
+                        <p key={index}>{item}</p>
+                      ))}
+                    </div>
+                    {/* {productDetails?.description} */}
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -399,7 +404,7 @@ const ProductDetails = () => {
             </div>
             {disableBtn && (
               <p className='text-xs text-red-500 mt-2'>
-                * Please select a color and Size before you add to basket
+                * Please select a color and Size before you add to cart
               </p>
             )}
             <button
@@ -407,7 +412,7 @@ const ProductDetails = () => {
               onClick={addToBag}
               className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300'
             >
-              ADD TO BASKET
+              ADD TO CART
             </button>
           </div>
         </div>
@@ -416,8 +421,8 @@ const ProductDetails = () => {
         <SuccessModal
           show={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
-          description={`You have added ${productDetails?.name} to your shopping basket`}
-          buttonText='View Basket'
+          description={`You have added ${productDetails?.name} to your shopping cart`}
+          buttonText='View Cart'
           buttonClick={() => router.push('/bag')}
           title='Product Added'
         />
