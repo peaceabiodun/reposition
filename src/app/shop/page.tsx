@@ -118,7 +118,7 @@ const Shop = () => {
                       src={item?.images[0] ?? '/placeholder.png'}
                       alt='product_image'
                       fill
-                      className={` min-h-[400px] h-[400px] home_img object-cover border border-solid border-[#3f2a16] shadow-md rounded-lg ${
+                      className={` min-h-[400px] h-[400px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
                         item.sold_out ? 'brightness-50' : ''
                       } `}
                     />

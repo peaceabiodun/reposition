@@ -3,7 +3,6 @@
 import Footer from '@/components/footer/page';
 import Image from 'next/image';
 import Link from 'next/link';
-import Typewriter from 'typewriter-effect';
 import { ThreeCircles } from 'react-loader-spinner';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -11,11 +10,10 @@ import ErrorModal from '@/components/error-modal/page';
 import { useProductContext } from '@/context/product-context';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
-import SortInput from '@/components/sort/page';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType, ShoppingBagType } from '@/utils/types';
 import ReactPlayer from 'react-player';
-import { IoIosBasket } from 'react-icons/io';
+import { BsCart2 } from 'react-icons/bs';
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
@@ -299,9 +297,9 @@ const Home = () => {
   return (
     <Fragment>
       <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
-        <div className='max-w-[1700px] mx-auto'>
+        <div className=''>
           {/* <Header /> */}
-          <div className='flex flex-col items-center  w-full p-4'>
+          <div className='flex flex-col items-center  w-full'>
             {campaignLoading ? (
               <div className='grow w-full flex justify-center items-center p-4'>
                 <ThreeCircles
@@ -315,8 +313,8 @@ const Home = () => {
               </div>
             ) : (
               <div className='relative w-full'>
-                <div className=' mt-3'>
-                  <div className='w-full border border-[#3f2a16] overflow-hidden h-[50vh] md:h-[90vh] campaign_video rounded-[16px]'>
+                <div className=''>
+                  <div className='w-full border border-[#3f2a16] overflow-hidden h-[50vh] md:h-[100vh] campaign_video'>
                     <ReactPlayer
                       width='100%'
                       height='100%'
@@ -329,20 +327,11 @@ const Home = () => {
                   </div>
                   <div className='absolute bottom-0 p-8 text-white '>
                     <h2 className='text-xl sm:text-3xl mt-6'>
-                      <Typewriter
-                        options={{
-                          strings: [
-                            'Experience Freedom',
-                            `${campaignDetails?.campaign_title}`,
-                          ],
-                          autoStart: true,
-                          loop: true,
-                        }}
-                      />
+                      Experience Freedom
                     </h2>
                     <div
                       onClick={() => router.push('/shop')}
-                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white rounded-lg p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
+                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
                     >
                       {/* <p>{campaignDetails?.campaign_subtext}</p> */}
                       Shop The Collection
@@ -350,7 +339,7 @@ const Home = () => {
                   </div>
                 </div>
 
-                <nav className='absolute top-3 flex items-center justify-between w-full p-8 text-white hover:bg-[#fafafa41] rounded-t-[16px] hover:text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer'>
+                <nav className='absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer'>
                   <div className='gap-8 hidden sm:flex'>
                     <p
                       className='text-[16px] md:text-lg font-semibold cursor-pointer hidden md:flex'
@@ -372,17 +361,10 @@ const Home = () => {
                     </p>
                   </div>
 
-                  <div className='flex gap-1'>
+                  <div className='flex '>
                     <h2 className='font-bold text-sm sm:text-lg md:text-xl text-[#fafafa]'>
                       REPOSITION{' '}
                     </h2>
-                    <Image
-                      src={'/logo.svg'}
-                      alt='logo'
-                      width={30}
-                      height={30}
-                      className='object-cover invert'
-                    />
                   </div>
 
                   <div className='flex gap-3'>
@@ -405,7 +387,7 @@ const Home = () => {
                       className='cursor-pointer hidden sm:flex'
                     />
                     <div className='relative'>
-                      <IoIosBasket
+                      <BsCart2
                         size={26}
                         onClick={() => router.push('/bag')}
                         className='cursor-pointer '
@@ -416,7 +398,7 @@ const Home = () => {
                           scroll
                             ? 'top-[-8px] right-[0px]'
                             : 'top-[-8px] right-[0px]'
-                        }  right-[4px] rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
+                        }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
                       >
                         {bagItems.length ?? '0'}
                       </span>
@@ -449,6 +431,19 @@ const Home = () => {
             )}
           </div>
 
+          <div className='w-full sm:h-[100vh] flex flex-col sm:flex-row'>
+            <img
+              src='/home-img.png'
+              alt='home-img'
+              className='w-full sm:w-[50%] h-full object-cover'
+            />
+            <img
+              src='/home-img1.png'
+              alt='home-img'
+              className='w-full sm:w-[50%] h-full object-cover'
+            />
+          </div>
+
           {loading ? (
             <div className='grow w-full flex justify-center items-center p-4 h-[40vh]'>
               <ThreeCircles
@@ -466,10 +461,7 @@ const Home = () => {
               No Products Available
             </div>
           ) : (
-            <div className='bg-[#5a3c1f36] m-4 p-6 rounded-2xl'>
-              <p className=' pl-4 text-xl md:text-2xl font-semibold'>
-                EXPERIENCE FREEDOM
-              </p>
+            <div className='max-w-[1700px] mx-auto'>
               <div
                 ref={scrollContainerRef}
                 className='flex md:gap-5 gap-3 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
@@ -492,7 +484,7 @@ const Home = () => {
                         src={item?.images[0] ?? '/placeholder.png'}
                         alt='product_image'
                         fill
-                        className={` object-cover border border-solid border-[#3f2a16] shadow-md rounded-lg ${
+                        className={` object-cover shadow-md ${
                           item.sold_out ? 'brightness-50' : ''
                         } `}
                       />
@@ -516,6 +508,12 @@ const Home = () => {
                       <p className='text-base font-semibold'>
                         ₦ {Number(item.price).toLocaleString()}
                       </p>
+                      <button
+                        onClick={() => router.push(`product/${item.id}`)}
+                        className='text-sm flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
+                      >
+                        Buy Now
+                      </button>
                     </div>
                   </Link>
                 ))}
@@ -539,18 +537,26 @@ const Home = () => {
                   />
                 </button>
               </div>
+              <div className='flex items-center justify-center mt-4'>
+                <button
+                  onClick={() => router.push('/shop')}
+                  className='cursor-pointer hover:bg-[#3f2a164d] text-[#3f2a16ef] px-4 py-2 w-[300px] border border-solid border-[#3f2a16]'
+                >
+                  Shop The Collection
+                </button>
+              </div>
             </div>
           )}
-          <div className='bg-[#5a3c1f36] mx-4 my-8 p-6 rounded-2xl grid grid-cols-1 lg:grid-cols-2 gap-4'>
+          <div className=' grid grid-cols-1 lg:grid-cols-2 my-8'>
             <div className='w-full h-[300px] md:h-[600px] relative'>
               <img
                 src='/img2.png'
                 alt='assemble'
-                className='w-full h-full object-cover rounded-[20px]'
+                className='w-full h-full object-cover'
               />
               <div
                 onClick={() => router.push('/theassemble')}
-                className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white rounded-lg p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer absolute bottom-5 left-5'
+                className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer absolute bottom-5 left-5'
               >
                 Join The Assemble
               </div>
@@ -559,9 +565,23 @@ const Home = () => {
               <img
                 src='/img1.png'
                 alt='assemble'
-                className='w-full h-full object-cover rounded-[20px]'
+                className='w-full h-full object-cover'
               />
             </div>
+          </div>
+
+          <div className='flex flex-col items-center justify-center gap-4 mb-10 p-4'>
+            <h4 className='text-center text-sm md:text-lg max-w-[450px]'>
+              Click to join the Reposition community &quot;The Assemble&quot; &
+              enjoy discounts, early access, personalized event access, free
+              delivery and more!
+            </h4>
+            <button
+              onClick={() => router.push('/theassemble')}
+              className='cursor-pointer hover:bg-[#3f2a164d] text-[#3f2a16ef] px-4 py-2  sm:w-[300px] border border-solid border-[#3f2a16]'
+            >
+              Join The Assemble
+            </button>
           </div>
           <Footer />
         </div>

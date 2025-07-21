@@ -439,7 +439,7 @@ const Bag = () => {
         </Link>
 
         <h2 className='text-lg font-semibold text-center my-4 px-3 xs:px-4'>
-          YOUR BASKET ({bagItems.length})
+          YOUR CART ({bagItems.length})
         </h2>
         {bagItems.length <= 0 ? (
           <div className='flex justify-center items-center p-3 my-6 text-sm sm:text-base h-[80vh]'>

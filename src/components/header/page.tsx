@@ -1,8 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { AiOutlineShopping } from 'react-icons/ai';
 import { GoPerson } from 'react-icons/go';
-import Typewriter from 'typewriter-effect';
 import { TbShirt } from 'react-icons/tb';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { Fragment, useEffect, useState } from 'react';
@@ -12,8 +10,7 @@ import { ShoppingBagType } from '@/utils/types';
 import { MdMenuOpen } from 'react-icons/md';
 import MobileMenu from '../mobile-menu/page';
 import UpdatePasswordModal from '../update-password-modal/page';
-import Image from 'next/image';
-import { IoIosBasket } from 'react-icons/io';
+import { BsCart2 } from 'react-icons/bs';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -118,16 +115,16 @@ const Header = () => {
         <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
           <div
             onClick={() => router.push('/')}
-            className='flex gap-1 cursor-pointer'
+            className='flex  cursor-pointer'
           >
             <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
-            <Image
+            {/* <Image
               src={'/logo.svg'}
               alt='logo'
               width={30}
               height={30}
               className='object-cover'
-            />
+            /> */}
           </div>
           {/* <h2 className='font-bold text-sm sm:text-lg flex gap-1'>
           REPOSITION{' '}
@@ -168,7 +165,7 @@ const Header = () => {
               className='cursor-pointer hidden sm:flex'
             />
             <div className='relative'>
-              <IoIosBasket
+              <BsCart2
                 size={24}
                 onClick={() => router.push('/bag')}
                 className='cursor-pointer '
