@@ -10,10 +10,12 @@ import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import ErrorModal from '@/components/error-modal/page';
 import Header from '@/components/header/page';
 import Footer from '@/components/footer/page';
+import { useRouter } from 'next/navigation';
 
 const Shop = () => {
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
+  const router = useRouter();
   const [filterValue, setFilterValue] = useState<string>(
     ENUM_PRODUCT_FILTER_LIST.ALL
   );
@@ -132,15 +134,22 @@ const Shop = () => {
                   </div>
 
                   <div className='absolute bottom-0 left-0 right-0 p-4 text-[#3f2a16]'>
-                    <div className='flex items-center gap-2 font-light mt-2'>
-                      <p className='text-base sm:text-lg font-medium'>
-                        ₦ {Number(item.price).toLocaleString()}
-                      </p>
+                    <div className='flex flex-col sm:flex-row sm:items-center sm:gap-2 font-light mt-2'>
+                      <p className=' font-medium text-base'>{item.name}</p>
+
                       {item.pre_order ? (
                         <p className='text-sm'>[Pre-Order]</p>
                       ) : null}
                     </div>
-                    <p className=' font-semibold text-base'>{item.name}</p>
+                    <p className='text-base sm:text-lg font-medium'>
+                      ₦ {Number(item.price).toLocaleString()}
+                    </p>
+                    <button
+                      onClick={() => router.push(`product/${item.id}`)}
+                      className='text-sm flex flex-col items-center justify-center gap-2 mt-3 border border-white p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
+                    >
+                      Buy Now
+                    </button>
                   </div>
                 </Link>
               ))}

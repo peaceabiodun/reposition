@@ -4,7 +4,9 @@
 
 @import 'slick-carousel/slick/slick.css';
 @import 'slick-carousel/slick/slick-theme.css';
-@import url('/fonts/daikon/fonts.css');
+@import url('https://fonts.googleapis.com/css2?family=Tenali+Ramakrishna&family=Tenor+Sans&display=swap');
+
+/* @import url('/fonts/daikon/fonts.css'); */
 
 @layer base {
   :root {
@@ -91,16 +93,29 @@
   }
 }
 
-.daikon {
+/* .daikon {
   font-family: 'Daikon', sans-serif;
+} */
+.tenali {
+  font-family: var(--font-tenali), sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
+
+.tenor {
+  font-family: var(--font-tenor), sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   margin: 0;
-  font-family: 'Daikon', sans-serif;
+  font-family: var(--font-tenor), sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #3d3e3f;
+  top: 0 !important;
 }
 
 /* stylish scrollbar */
@@ -121,6 +136,11 @@ body {
 
 .scrollable-div::-webkit-scrollbar-thumb:hover {
   background-color: #9ca3af;
+}
+/* Hide Google Translate elements */
+.goog-te-banner-frame,
+.skiptranslate {
+  display: none !important;
 }
 
 /* @media screen and (min-width: 1024px) {
@@ -263,7 +283,6 @@ body {
 }
 
 .l-modal__body {
-  padding: 0 1rem 1.5rem;
   flex-grow: 1;
   overflow-y: auto;
 }

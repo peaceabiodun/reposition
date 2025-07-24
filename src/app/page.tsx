@@ -19,11 +19,13 @@ import {
   MdArrowCircleRight,
   MdMenuOpen,
 } from 'react-icons/md';
-import { TbShirt } from 'react-icons/tb';
+import { TbShirt, TbWorld } from 'react-icons/tb';
 import { GoPerson } from 'react-icons/go';
 import UpdatePasswordModal from '@/components/update-password-modal/page';
 import SuccessModal from '@/components/success-modal/page';
 import MobileMenu from '@/components/mobile-menu/page';
+import TeaCoffeeModal from '@/components/tea-coffee-modal/page';
+import LanguageSelector from '@/components/language-dropdown/page';
 
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -50,6 +52,7 @@ const Home = () => {
   const [isEndDisabled, setIsEndDisabled] = useState(false);
   const [activeButton, setActiveButton] = useState<'left' | 'right'>('right');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showTeaCoffeeModal, setShowTeaCoffeeModal] = useState(false);
 
   // useEffect(() => {
   //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
@@ -301,7 +304,7 @@ const Home = () => {
           {/* <Header /> */}
           <div className='flex flex-col items-center  w-full'>
             {campaignLoading ? (
-              <div className='grow w-full flex justify-center items-center p-4'>
+              <div className='w-full flex justify-center items-center p-4'>
                 <ThreeCircles
                   visible={true}
                   height={50}
@@ -314,28 +317,21 @@ const Home = () => {
             ) : (
               <div className='relative w-full'>
                 <div className=''>
-                  <div className='w-full border border-[#3f2a16] overflow-hidden h-[50vh] md:h-[100vh] campaign_video'>
-                    <ReactPlayer
+                  <div className='w-full border border-[#3f2a16] overflow-hidden h-[100vh] campaign_video'>
+                    <video
                       width='100%'
                       height='100%'
-                      url={campaignDetails?.campaign_video}
+                      src={campaignDetails?.campaign_video[0] ?? ''}
                       controls={false}
-                      playing={true}
                       loop={true}
-                      style={{ objectFit: 'cover' }}
+                      autoPlay={true}
+                      muted={true}
+                      className='w-full h-full object-cover'
                     />
-                  </div>
-                  <div className='absolute bottom-0 p-8 text-white '>
-                    <h2 className='text-xl sm:text-3xl mt-6'>
-                      Experience Freedom
-                    </h2>
-                    <div
-                      onClick={() => router.push('/shop')}
-                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
-                    >
-                      {/* <p>{campaignDetails?.campaign_subtext}</p> */}
-                      Shop The Collection
-                    </div>
+                    <source
+                      src={campaignDetails?.campaign_video[0] ?? ''}
+                      type='video/mp4'
+                    />
                   </div>
                 </div>
 
@@ -361,8 +357,8 @@ const Home = () => {
                     </p>
                   </div>
 
-                  <div className='flex '>
-                    <h2 className='font-bold text-sm sm:text-lg md:text-xl text-[#fafafa]'>
+                  <div className='mr-16 '>
+                    <h2 className='font-bold text-sm sm:text-lg md:text-xl  '>
                       REPOSITION{' '}
                     </h2>
                   </div>
@@ -403,6 +399,7 @@ const Home = () => {
                         {bagItems.length ?? '0'}
                       </span>
                     </div>
+                    <LanguageSelector />
                     <MdMenuOpen
                       size={26}
                       className='cursor-pointer sm:hidden'
@@ -431,17 +428,29 @@ const Home = () => {
             )}
           </div>
 
-          <div className='w-full sm:h-[100vh] flex flex-col sm:flex-row'>
-            <img
-              src='/home-img.png'
-              alt='home-img'
-              className='w-full sm:w-[50%] h-full object-cover'
-            />
-            <img
-              src='/home-img1.png'
-              alt='home-img'
-              className='w-full sm:w-[50%] h-full object-cover'
-            />
+          <div className='relative'>
+            <div className='w-full sm:h-[100vh] flex flex-col sm:flex-row'>
+              <img
+                src='/home-img.png'
+                alt='home-img'
+                className='w-full sm:w-[50%] h-full object-cover'
+              />
+              <img
+                src='/home-img1.png'
+                alt='home-img'
+                className='w-full sm:w-[50%] h-full object-cover'
+              />
+            </div>
+            <div className='absolute top-0 p-8 text-white '>
+              <h2 className='text-xl sm:text-3xl mt-6'>Experience Freedom</h2>
+              <div
+                onClick={() => router.push('/shop')}
+                className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
+              >
+                {/* <p>{campaignDetails?.campaign_subtext}</p> */}
+                Shop The Collection
+              </div>
+            </div>
           </div>
 
           {loading ? (
@@ -499,13 +508,13 @@ const Home = () => {
 
                     <div className='absolute bottom-5 text-[#3f2a16] pl-5'>
                       <div className='flex items-center gap-2 mt-2'>
-                        <p className=' text-xl font-semibold'>{item.name}</p>
+                        <p className=' text-xl font-medium'>{item.name}</p>
                         {item.pre_order ? (
                           <p className='text-sm'>[Pre-Order]</p>
                         ) : null}
                       </div>
 
-                      <p className='text-base font-semibold'>
+                      <p className='text-base font-medium'>
                         ₦ {Number(item.price).toLocaleString()}
                       </p>
                       <button
@@ -591,6 +600,12 @@ const Home = () => {
           show={showErrorModal}
           onClose={() => setShowErrorModal(false)}
           description='Sorry an error occured while loading the products'
+        />
+      )}
+      {showTeaCoffeeModal && (
+        <TeaCoffeeModal
+          show={showTeaCoffeeModal}
+          onClose={() => setShowTeaCoffeeModal(false)}
         />
       )}
       {/* {showCampaign && (

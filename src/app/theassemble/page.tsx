@@ -8,13 +8,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
+import { TfiControlBackward } from 'react-icons/tfi';
 
 type FormDataType = {
   firstName: string;
   email: string;
   phoneNumber: string;
-  reverePackage: boolean;
-  privePackage: boolean;
+  selectedPackage: 'revere' | 'prive' | null;
   revereQuantity: number;
   priveQuantity: number;
 };
@@ -23,8 +23,7 @@ const TheAssemble = () => {
     firstName: '',
     email: '',
     phoneNumber: '',
-    reverePackage: false,
-    privePackage: false,
+    selectedPackage: null,
     revereQuantity: 0,
     priveQuantity: 0,
   });
@@ -34,21 +33,22 @@ const TheAssemble = () => {
   const [showPaystackError, setShowPaystackError] = useState(false);
   const router = useRouter();
 
-  const handlePackageChange = (
-    packageType: 'reverePackage' | 'privePackage'
-  ) => {
+  const handlePackageChange = (packageType: 'revere' | 'prive') => {
     setFormData((prevData) => ({
       ...prevData,
-      [packageType]: !prevData[packageType],
+      selectedPackage:
+        prevData.selectedPackage === packageType ? null : packageType,
     }));
   };
-  const reverePackagePrice = formData.reverePackage
-    ? 10000 * (formData.revereQuantity ?? 0)
-    : 0;
+  const reverePackagePrice =
+    formData.selectedPackage === 'revere'
+      ? 10000 * (formData.revereQuantity ?? 0)
+      : 0;
 
-  const privePackagePrice = formData.privePackage
-    ? 30000 * (formData.priveQuantity ?? 0)
-    : 0;
+  const privePackagePrice =
+    formData.selectedPackage === 'prive'
+      ? 30000 * (formData.priveQuantity ?? 0)
+      : 0;
 
   const calculateTotalPrice = (): number => {
     return reverePackagePrice + privePackagePrice;
@@ -62,12 +62,15 @@ const TheAssemble = () => {
   };
 
   const signUpForTheassemble = async () => {
+    if (!formData.firstName || !formData.email || !formData.phoneNumber) {
+      return;
+    }
     const payload = {
       full_name: formData?.firstName,
       email: formData?.email,
       phone_number: formData?.phoneNumber,
-      revere_package: formData?.reverePackage,
-      prive_package: formData?.privePackage,
+      revere_package: formData?.selectedPackage === 'revere',
+      prive_package: formData?.selectedPackage === 'prive',
       revere_package_qty: formData?.revereQuantity,
       prive_package_qty: formData?.priveQuantity,
     };
@@ -84,8 +87,7 @@ const TheAssemble = () => {
           firstName: '',
           email: '',
           phoneNumber: '',
-          reverePackage: false,
-          privePackage: false,
+          selectedPackage: null,
           revereQuantity: 0,
           priveQuantity: 0,
         });
@@ -166,7 +168,15 @@ const TheAssemble = () => {
           </div>
         </header>
 
-        <section className='text-[#000000] mb-10'>
+        <section className='text-[#000000] mb-10 max-w-[1200px] m-auto'>
+          <div className='flex justify-start items-center text-sm cursor-pointer w-[100px] mb-5'>
+            <TfiControlBackward
+              size={20}
+              className='cursor-pointer'
+              onClick={() => router.back()}
+            />
+            Back
+          </div>
           <h2 className='text-lg sm:text-2xl font-bold text-center mt-6'>
             THE ASSEMBLE
           </h2>
@@ -230,18 +240,19 @@ const TheAssemble = () => {
               <p className='text-red-500'>*</p>
             </div>
             <p className='mt-1 text-xs'>
-              Note: Tick the checkbox and input quantity you want to purchase
+              Note: Tick the checkbox to select the package
             </p>
 
             <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
               <input
-                type='checkbox'
-                checked={formData?.reverePackage}
-                onChange={() => handlePackageChange('reverePackage')}
+                type='radio'
+                name='package'
+                checked={formData.selectedPackage === 'revere'}
+                onChange={() => handlePackageChange('revere')}
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <div>
-                <p className='text-lg font-bold'>Respect [10,000pts]</p>
+                <p className='text-lg font-bold'>Respect</p>
                 <ul className='list-disc list-inside'>
                   <li> One house mocktail</li>
                   <li>
@@ -250,15 +261,17 @@ const TheAssemble = () => {
                   </li>
                   <li>45mins early access on Reposition collection drops</li>
                   <li>
-                    Special codes to redeem discounts on Select Reposition & TOT
-                    purchase
+                    Special codes to redeem discounts on Select Reposition
                   </li>
                   <li>
                     Access to personalized event content and first-reserve
                     access for next event
                   </li>
+                  <li>
+                    Free delivery on 6-time purchase of Reposition products
+                  </li>
                 </ul>
-                <p className='mt-1 font-bold text-lg'>10,000 NGN</p>
+                {/* <p className='mt-1 font-bold text-lg'>10,000 NGN</p>
                 <div className='flex gap-2 items-center'>
                   <p className='mt-2'>Quantity</p>
                   <input
@@ -279,19 +292,20 @@ const TheAssemble = () => {
                 </div>
                 <p className='mt-2 text-lg'>
                   Total Items: {formatPrice(reverePackagePrice)}
-                </p>
+                </p> */}
               </div>
             </div>
 
             <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
               <input
-                type='checkbox'
-                checked={formData?.privePackage}
-                onChange={() => handlePackageChange('privePackage')}
+                type='radio'
+                name='package'
+                checked={formData.selectedPackage === 'prive'}
+                onChange={() => handlePackageChange('prive')}
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <label>
-                <p className='text-lg font-bold'>Private [30,000pts]</p>
+                <p className='text-lg font-bold'>Private</p>
                 <ul className='list-disc list-inside'>
                   <li>One house mocktail </li>
                   <li>
@@ -308,6 +322,7 @@ const TheAssemble = () => {
                     content, or email personalized event content, and
                     first-reserve access for next event
                   </li>
+                  <p className='text-lg font-bold'>FOR YOU [30,000PTS]</p>
                   <li>Christmas gifting</li>
                   <li className='text-white lg:text-[#000000]'>
                     Brand item exclusive{' '}
@@ -323,8 +338,14 @@ const TheAssemble = () => {
                     Invitation to support an annual Down-Syndromn outreach
                     initiative
                   </li>
+                  <li className='text-white lg:text-[#000000]'>
+                    Vendor discounts
+                  </li>
+                  <li className='text-white lg:text-[#000000]'>
+                    Free delivery on 3-time purchase of Reposition products
+                  </li>
                 </ul>
-                <p className='mt-1 font-bold text-lg text-white lg:text-[#000000]'>
+                {/* <p className='mt-1 font-bold text-lg text-white lg:text-[#000000]'>
                   30,000 NGN
                 </p>
                 <div className='flex gap-2 items-center'>
@@ -347,15 +368,15 @@ const TheAssemble = () => {
                 </div>
                 <p className='mt-2 text-lg text-white lg:text-[#000000]'>
                   Total Items: {formatPrice(privePackagePrice)}
-                </p>
+                </p> */}
               </label>
             </div>
 
-            <div className='mt-4 text-lg font-bold text-[#ffffff] lg:text-[#000000]'>
+            {/* <div className='mt-4 text-lg font-bold text-[#ffffff] lg:text-[#000000]'>
               Total : {formatPrice(reverePackagePrice + privePackagePrice)}
-            </div>
+            </div> */}
 
-            <div className='mt-4 text-white font-bold'>
+            {/* <div className='mt-4 text-white font-bold'>
               <button
                 // onClick={handlePaystackPayment}
                 // disabled={!formData.email || calculateTotalPrice() <= 0}
@@ -389,11 +410,11 @@ const TheAssemble = () => {
                 />
               </button>
             </div>
-            <p className='mt-2 text-white text-xs'>Transcation fees apply</p>
+            <p className='mt-2 text-white text-xs'>Transcation fees apply</p> */}
 
             <button
               disabled={loading}
-              onClick={handlePaystackPayment}
+              onClick={signUpForTheassemble}
               className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-6'
             >
               {loading ? 'Loading...' : 'Join'}
