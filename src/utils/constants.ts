@@ -12,4 +12,5 @@ export const STORAGE_KEYS = {
   DISCOUNT_CODE_THREE: 'RPxUmaru',
   DISCOUNT_CODE_FOUR: 'RPxCajii',
   DISCOUNT_CODE_FIVE: 'RSxSbala',
+  BEVERAGE_SELECTED: 'beverage_selected',
 };

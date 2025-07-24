@@ -28,6 +28,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        tenali: ['var(--font-tenali)', 'serif'],
+        tenor: ['var(--font-tenor)', 'serif'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
