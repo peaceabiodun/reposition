@@ -52,7 +52,14 @@ const Home = () => {
   const [isEndDisabled, setIsEndDisabled] = useState(false);
   const [activeButton, setActiveButton] = useState<'left' | 'right'>('right');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showTeaCoffeeModal, setShowTeaCoffeeModal] = useState(false);
+  const [showTeaCoffeeModal, setShowTeaCoffeeModal] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
+      setShowTeaCoffeeModal(!beverage);
+    }
+  }, []);
 
   // useEffect(() => {
   //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
@@ -358,7 +365,7 @@ const Home = () => {
                   </div>
 
                   <div className='mr-16 '>
-                    <h2 className='font-bold text-sm sm:text-lg md:text-xl  '>
+                    <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
                       REPOSITION{' '}
                     </h2>
                   </div>

@@ -81,10 +81,10 @@ const Shop = () => {
                   setFilterValue?.(item.name);
                   setSelectedFilter(item.name);
                 }}
-                className={`border border-[#5e3f22] rounded-3xl py-2 px-4 h-[36px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base ${
+                className={`  py-2 px-4 h-[36px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base ${
                   selectedFilter === item.name
                     ? 'bg-[#5e3f225b] text-white '
-                    : ''
+                    : 'bg-[#5e3f2217]'
                 }`}
               >
                 {item.name}
@@ -108,7 +108,7 @@ const Shop = () => {
               No Products Available
             </div>
           ) : (
-            <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-5 grid grid-cols-2 md:grid-cols-3 gap-4 p-4'>
+            <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-5 grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 '>
               {products?.map((item) => (
                 <Link
                   href={`product/${item.id}`}
@@ -120,7 +120,7 @@ const Shop = () => {
                       src={item?.images[0] ?? '/placeholder.png'}
                       alt='product_image'
                       fill
-                      className={` min-h-[400px] h-[400px] home_img object-cover border border-solid border-[#3f2a16] shadow-md ${
+                      className={` min-h-[400px] h-[400px] home_img object-cover shadow-md ${
                         item.sold_out ? 'brightness-50' : ''
                       } `}
                     />

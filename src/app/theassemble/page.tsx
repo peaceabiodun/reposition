@@ -8,7 +8,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { usePaystackPayment } from 'react-paystack';
-import { TfiControlBackward } from 'react-icons/tfi';
+
+import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 type FormDataType = {
   firstName: string;
@@ -157,7 +158,9 @@ const TheAssemble = () => {
             onClick={() => router.push('/')}
             className='flex gap-1 cursor-pointer'
           >
-            <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
+            <h2 className='font-bold text-sm sm:text-lg daikon '>
+              REPOSITION{' '}
+            </h2>
             <Image
               src={'/logo.svg'}
               alt='logo'
@@ -170,13 +173,14 @@ const TheAssemble = () => {
 
         <section className='text-[#000000] mb-10 max-w-[1200px] m-auto'>
           <div className='flex justify-start items-center text-sm cursor-pointer w-[100px] mb-5'>
-            <TfiControlBackward
+            <MdOutlineArrowBackIosNew
               size={20}
               className='cursor-pointer'
               onClick={() => router.back()}
             />
             Back
           </div>
+
           <h2 className='text-lg sm:text-2xl font-bold text-center mt-6'>
             THE ASSEMBLE
           </h2>

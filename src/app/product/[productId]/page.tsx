@@ -174,7 +174,7 @@ const ProductDetails = () => {
   return (
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] pb-12'>
       <Header />
-      <div className='flex w-full justify-between gap-4 p-4 mb-4'>
+      <div className='flex w-full justify-between gap-4 p-4 mb-4 max-w-[1700px] mx-auto'>
         <Link href='/' className=' gap-1 flex text-sm items-center '>
           <MdOutlineArrowBackIosNew size={20} />
           Back
@@ -199,7 +199,7 @@ const ProductDetails = () => {
           <div className='flex flex-col items-center justify-center w-full '>
             <div
               ref={carouselRef}
-              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar border border-[#3f2a16] relative'
+              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar shadow-md relative'
             >
               {productDetails?.images.map((item, index) => (
                 <div
@@ -217,7 +217,7 @@ const ProductDetails = () => {
                 </div>
               ))}
             </div>
-            <div className='flex items-center justify-between text-[#3f2a16b6] absolute top-1/2 -translate-y-1/2 left-0 right-0 w-[100vw] md:w-[50vw] px-6 '>
+            <div className='flex items-center justify-between text-[#3f2a16b6] absolute md:top-1/2 -translate-y-1/2 left-0 right-0 w-[100vw] md:w-[50vw] px-6 '>
               <IoIosArrowDropleftCircle
                 size={25}
                 className='cursor-pointer'
@@ -242,8 +242,8 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[80vh]'>
-            <div className='flex flex-col items-center space-y-3 '>
+          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[80vh] px-8 '>
+            <div className='flex flex-col items-center space-y-3 w-full max-w-[600px]'>
               <h1 className='uppercase font-medium text-lg'>
                 {productDetails?.name}
               </h1>
@@ -254,11 +254,11 @@ const ProductDetails = () => {
                 type='single'
                 collapsible
                 defaultValue='product-details'
-                className='w-[270px] sm:w-[290px] '
+                className='w-full '
               >
                 <AccordionItem
                   value='product-details'
-                  className='border-b-[#a1a1a19c]'
+                  className='border-b-[#a1a1a19c] w-full'
                 >
                   <AccordionTrigger className=' hover:no-underline font-normal'>
                     Product Description
@@ -274,11 +274,7 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion
-                type='single'
-                collapsible
-                className='w-[270px] sm:w-[290px] '
-              >
+              <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -311,11 +307,7 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion
-                type='single'
-                collapsible
-                className=' w-[270px] sm:w-[290px] '
-              >
+              <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -347,11 +339,7 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion
-                type='single'
-                collapsible
-                className='w-[270px] sm:w-[290px] '
-              >
+              <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
