@@ -11,6 +11,7 @@ import { MdMenuOpen } from 'react-icons/md';
 import MobileMenu from '../mobile-menu/page';
 import UpdatePasswordModal from '../update-password-modal/page';
 import { BsCart2 } from 'react-icons/bs';
+import LanguageSelector from '../language-dropdown/page';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -114,10 +115,18 @@ const Header = () => {
       >
         <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
           <div
+            className='text-[16px] font-light cursor-pointer hidden sm:flex'
+            onClick={() => router.push('/we-are')}
+          >
+            We Are
+          </div>
+          <div
             onClick={() => router.push('/')}
             className='flex  cursor-pointer'
           >
-            <h2 className='font-bold text-sm sm:text-lg '>REPOSITION </h2>
+            <h2 className='font-bold text-sm sm:text-lg daikon '>
+              REPOSITION{' '}
+            </h2>
             {/* <Image
               src={'/logo.svg'}
               alt='logo'
@@ -125,25 +134,6 @@ const Header = () => {
               height={30}
               className='object-cover'
             /> */}
-          </div>
-          {/* <h2 className='font-bold text-sm sm:text-lg flex gap-1'>
-          REPOSITION{' '}
-          <span className=''>
-            <Typewriter
-              options={{
-                strings: ['[ ]', '[ ]'],
-                autoStart: true,
-                loop: true,
-              }}
-            />
-          </span>
-        </h2> */}
-
-          <div
-            className='text-[16px] font-light cursor-pointer hidden sm:flex'
-            onClick={() => router.push('/we-are')}
-          >
-            We Are
           </div>
           <div className='flex gap-3'>
             {userRole === 'ADMIN' && (
@@ -179,6 +169,7 @@ const Header = () => {
                 {bagItems.length ?? '0'}
               </span>
             </div>
+            <LanguageSelector />
             <MdMenuOpen
               size={26}
               className='cursor-pointer sm:hidden'

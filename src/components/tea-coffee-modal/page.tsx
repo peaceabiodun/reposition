@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { STORAGE_KEYS } from '@/utils/constants';
 import LocalModal from '../modal/page';
@@ -19,31 +20,49 @@ const TeaCoffeeModal = ({ show, onClose }: ModalProps) => {
           WELCOME
         </h2>
         <div className='flex gap-4'>
-          <video
-            src='/videos/tea.mp4'
-            autoPlay
-            loop
-            muted
-            className='sm:w-[350px] sm:h-[400px] w-[150px] h-[200px] hover:border-2 border-white object-cover object-center'
-            onClick={() => {
-              localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Tea');
-              onClose();
-            }}
-          />
+          <div>
+            <img
+              src='/tea.png'
+              alt='tea'
+              className='sm:w-[320px] sm:h-[400px] w-[150px] h-[200px] hover:scale-105 transition-all duration-300 object-contain object-center'
+              onClick={() => {
+                localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Tea');
+                onClose();
+              }}
+            />
+            <p
+              onClick={() => {
+                localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Tea');
+                onClose();
+              }}
+              className='text-center text-sm sm:text-base bg-[#fafafa41] p-2 cursor-pointer hover:bg-[#fafafa81] transition-all duration-300'
+            >
+              Tea please
+            </p>
+          </div>
           <div className='text-white text-lg font-semibold h-[300px] flex flex-col items-center justify-center'>
             OR
           </div>
-          <video
-            src='/videos/coffee.mp4'
-            autoPlay
-            loop
-            muted
-            className='sm:w-[350px] sm:h-[400px] w-[150px] h-[200px] hover:border-2 border-white object-cover'
-            onClick={() => {
-              localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Coffee');
-              onClose();
-            }}
-          />
+          <div>
+            <img
+              src='/coffee.png'
+              alt='coffee'
+              className='sm:w-[320px] sm:h-[400px] w-[150px] h-[200px] hover:scale-105 transition-all duration-300 object-contain object-center'
+              onClick={() => {
+                localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Coffee');
+                onClose();
+              }}
+            />
+            <p
+              onClick={() => {
+                localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Coffee');
+                onClose();
+              }}
+              className='text-center text-sm sm:text-base bg-[#fafafa41] p-2 cursor-pointer hover:bg-[#fafafa81] transition-all duration-300'
+            >
+              Coffee please
+            </p>
+          </div>
         </div>
       </div>
     </LocalModal>

@@ -24,17 +24,9 @@ const WeAre = () => {
           designed to last.
         </h3>
         <h3 className='mt-4 text-center'>
-          <Typewriter
-            options={{
-              strings: [
-                'As we help each other as much as we can to adjust our position - connect better in a personal fellowship with God, in spirit and in truth. ',
-                'As we help each other as much as we can to adjust our position - connect better in a personal fellowship with God, in spirit and in truth.',
-              ],
-              autoStart: true,
-              loop: true,
-              // delay: 1,
-            }}
-          />
+          As we help each other as much as we can to adjust our position -
+          connect better in a personal fellowship with God, in spirit and in
+          truth.
         </h3>
       </div>
       {/* <div className='blur_bg w-full h-full p-4 flex flex-col justify-center items-center'>
