@@ -7,7 +7,7 @@ export type ProductType = {
 export type ProductFormDataType = {
   name: string;
   price: string;
-  description: string;
+  description: string[];
   weight: number | null;
   images: string[];
   sizes: string[];

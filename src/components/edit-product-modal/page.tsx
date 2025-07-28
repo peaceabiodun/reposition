@@ -20,7 +20,7 @@ type EditModalProps = {
 type EditFormDataType = {
   name: string;
   price: string;
-  description: string;
+  description: string[];
   weight: number | null;
   images: string[];
   sizes: string[];
@@ -42,6 +42,7 @@ const EditProductModal = ({
 
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
+  const [description, setDescription] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -71,7 +72,7 @@ const EditProductModal = ({
       setFormData({
         name: selectedProduct?.name,
         price: selectedProduct?.price,
-        description: selectedProduct?.description,
+        description: selectedProduct?.product_details,
         weight: selectedProduct?.weight,
         images: selectedProduct?.images,
         sizes: selectedProduct?.sizes,
@@ -95,6 +96,12 @@ const EditProductModal = ({
     setFormData((data) => ({ ...data, colors }));
     setColor('');
   };
+  const addDescription = () => {
+    if (!description) return;
+    const descriptions = [...formData.description, description];
+    setFormData((data) => ({ ...data, description: descriptions }));
+    setDescription('');
+  };
 
   const handleRemoveSize = (index: number) => {
     const sizes = formData.sizes.filter((_, i) => i !== index);
@@ -106,12 +113,17 @@ const EditProductModal = ({
     setFormData((data) => ({ ...data, colors }));
   };
 
+  const handleRemoveDescription = (index: number) => {
+    const descriptions = formData.description.filter((_, i) => i !== index);
+    setFormData((data) => ({ ...data, description: descriptions }));
+  };
+
   const editProductDetails = async () => {
     setLoading(true);
     const payload = {
       name: formData?.name,
       price: formData?.price,
-      description: formData?.description,
+      product_details: formData?.description,
       weight: formData?.weight,
       images: formData?.images,
       sizes: formData?.sizes,
@@ -162,15 +174,41 @@ const EditProductModal = ({
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         />
 
-        <label className=''>Product Description</label>
-        <textarea
-          className='border border-[#3d3e3f] rounded-sm w-full h-[160px] my-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-          placeholder='Describe your product'
-          value={formData?.description}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
-        />
+        <p className=''>Product Description</p>
+        <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
+          <p className=''>+ Add Descriptions one after another</p>
+          <div className='flex items-center justify-between gap-3'>
+            <input
+              type='text'
+              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent'
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            {description &&
+            !formData?.description.find((s) => s === description) ? (
+              <FaCheck className='cursor-pointer' onClick={addDescription} />
+            ) : null}
+          </div>
+
+          <div className='mt-6 text-sm space-y-3'>
+            {formData?.description?.map((item, index) => (
+              <div
+                key={index}
+                className='flex justify-between items-center gap-3'
+              >
+                <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                  {item}
+                </span>
+                <div
+                  onClick={() => handleRemoveDescription(index)}
+                  className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
+                >
+                  <AiOutlineDelete className='cursor-pointer' />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className='w-full mb-2 relative '>
           <p className=''>Product Category</p>

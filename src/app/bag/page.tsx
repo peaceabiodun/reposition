@@ -116,6 +116,11 @@ const Bag = () => {
     }
   }, []);
 
+  const userBeverage =
+    typeof window !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED)
+      : '';
+
   const removeItemFromBag = (id: string) => {
     const updatedBagItems = bagItems.filter((item) => item.id !== id);
     localStorage.setItem(
@@ -515,6 +520,16 @@ const Bag = () => {
                   {' '}
                   ₦ {Number(totalPrice).toLocaleString()}
                 </span>
+              </p>
+            </div>
+
+            <div>
+              <p>
+                Your preferred beverage{' '}
+                <span className='font-semibold text-[#38271c]'>
+                  {userBeverage}
+                </span>{' '}
+                Will be packaged and delivered with your Order. Thank you.{' '}
               </p>
             </div>
 

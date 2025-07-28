@@ -44,7 +44,7 @@ const LocalSideModal = ({
       shouldCloseOnOverlayClick
       {...modalProps}
     >
-      <div className='w-[98vw] sm:w-[450px] pt-5 pl-[30px] sidemodal'>
+      <div className='w-[98vw] sm:w-[550px] pt-5 pl-[30px] sidemodal'>
         <div className='sidemodal__close' onClick={onRequestClose}>
           <MdClose />
         </div>

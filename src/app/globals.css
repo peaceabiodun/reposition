@@ -267,6 +267,11 @@ body {
 }
 
 /* modal styles */
+
+.ReactModal__Content:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 .l-modal__content {
   width: 95vw;
   max-height: 95vh;

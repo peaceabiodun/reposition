@@ -13,7 +13,7 @@ const TeaCoffeeModal = ({ show, onClose }: ModalProps) => {
       isOpen={show}
       onRequestClose={onClose}
       contentClassName='w-[90%] sm:w-[800px] h-[550px]'
-      backgroundColor='bg-[#fafafa41]'
+      backgroundColor='bg-transparent'
     >
       <div className='flex flex-col items-center justify-center'>
         <h2 className='text-lg font-semibold text-center text-white mb-5'>
@@ -35,7 +35,7 @@ const TeaCoffeeModal = ({ show, onClose }: ModalProps) => {
                 localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Tea');
                 onClose();
               }}
-              className='text-center text-sm sm:text-base bg-[#fafafa41] p-2 cursor-pointer hover:bg-[#fafafa81] transition-all duration-300'
+              className='text-center text-sm sm:text-base text-[#F5F5DC] bg-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 '
             >
               Tea please
             </p>
@@ -58,7 +58,7 @@ const TeaCoffeeModal = ({ show, onClose }: ModalProps) => {
                 localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Coffee');
                 onClose();
               }}
-              className='text-center text-sm sm:text-base bg-[#fafafa41] p-2 cursor-pointer hover:bg-[#fafafa81] transition-all duration-300'
+              className='text-center text-sm sm:text-base text-[#F5F5DC] bg-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300'
             >
               Coffee please
             </p>
