@@ -24,7 +24,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-
+    borderColor: 'transparent',
     // backgroundColor: '#ece8e3',
     border: '0px',
     padding: '0px',
@@ -34,6 +34,7 @@ const customStyles = {
     background: 'rgba(0, 0, 0, 0.4)',
     backdropFilter: 'blur(4px)',
     zIndex: 10000,
+    border: '0px',
   },
 };
 const LocalModal = ({
@@ -59,7 +60,7 @@ const LocalModal = ({
         appElement={document.getElementById('__next') as HTMLElement}
         className={`${
           backgroundColor ? `${backgroundColor}` : 'bg-[#ece8e3]'
-        } fixed inset-0 border-[0px] w-auto h-auto`}
+        } fixed inset-0 !border-transparent w-auto h-auto !border-none`}
       >
         <div className={`p-5 w-full h-full relative ${contentClassName}`}>
           <div className=''>

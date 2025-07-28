@@ -33,12 +33,12 @@ export default function RootLayout({
     <PostHogProvider>
       <ProductProvider>
         <html lang='en' suppressHydrationWarning={true}>
-          <head>
+          {/* <head>
             <script
               src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
               defer
             ></script>
-          </head>
+          </head> */}
           <body className={`${tenali.variable} ${tenor.variable}`}>
             {children}
           </body>

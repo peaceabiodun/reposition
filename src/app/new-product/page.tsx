@@ -22,7 +22,7 @@ const AddNewProduct = () => {
   const [productFormData, setProductFormData] = useState<ProductFormDataType>({
     name: '',
     price: '',
-    description: '',
+    description: [],
     weight: 0,
     images: [],
     sizes: [],
@@ -32,6 +32,7 @@ const AddNewProduct = () => {
 
   const [size, setSize] = useState('');
   const [color, setColor] = useState('');
+  const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -54,6 +55,12 @@ const AddNewProduct = () => {
     setProductFormData((data) => ({ ...data, colors }));
     setColor('');
   };
+  const addDescription = () => {
+    if (!description) return;
+    const descriptions = [...productFormData.description, description];
+    setProductFormData((data) => ({ ...data, description: descriptions }));
+    setDescription('');
+  };
   const handleRemoveSize = (index: number) => {
     const sizes = productFormData.sizes.filter((_, i) => i !== index);
     setProductFormData((data) => ({ ...data, sizes }));
@@ -61,6 +68,12 @@ const AddNewProduct = () => {
   const handleRemoveColor = (index: number) => {
     const colors = productFormData.colors.filter((_, i) => i !== index);
     setProductFormData((data) => ({ ...data, colors }));
+  };
+  const handleRemoveDescription = (index: number) => {
+    const descriptions = productFormData.description.filter(
+      (_, i) => i !== index
+    );
+    setProductFormData((data) => ({ ...data, description: descriptions }));
   };
 
   const categoryOptions = [
@@ -82,7 +95,7 @@ const AddNewProduct = () => {
     const payload = {
       name: productFormData.name,
       price: productFormData.price,
-      description: productFormData.description,
+      product_details: productFormData.description,
       images: productFormData.images,
       sizes: productFormData.sizes,
       colors: productFormData.colors,
@@ -100,7 +113,7 @@ const AddNewProduct = () => {
         setProductFormData({
           name: '',
           price: '',
-          description: '',
+          description: [],
           weight: 0,
           images: [],
           sizes: [],
@@ -117,7 +130,7 @@ const AddNewProduct = () => {
   const disableButton =
     !productFormData.name ||
     !productFormData.price ||
-    !productFormData.description ||
+    productFormData.description.length <= 0 ||
     productFormData.images.length <= 0 ||
     productFormData.colors.length <= 0 ||
     productFormData.sizes.length <= 0;
@@ -171,19 +184,39 @@ const AddNewProduct = () => {
           </div>
         </div>
 
-        <div className='w-full text-sm my-4'>
-          <label className=''>Product Description</label>
-          <textarea
-            className='border border-[#3d3e3f] rounded-sm w-full h-[160px] mt-2 p-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-            placeholder='Describe your product'
-            value={productFormData.description}
-            onChange={(e) =>
-              setProductFormData({
-                ...productFormData,
-                description: e.target.value,
-              })
-            }
-          />
+        <div className='w-full text-sm my-4 '>
+          <p>Product Description</p>
+          <div className=' border border-[#3d3e3f] rounded-sm w-full h-[160px] p-3 mt-2 overflow-y-scroll '>
+            <p className=''>+ Add Descriptions one after another</p>
+            <div className='flex items-center  gap-3'>
+              <input
+                type='text'
+                className='border border-[#3d3e3f] rounded-sm w-[240px] p-2 mt-1 outline-none bg-transparent '
+                placeholder='e.g Cotton Blend, 100% Cotton'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              {description &&
+              !productFormData.description.find((s) => s === description) ? (
+                <FaCheck className='cursor-pointer' onClick={addDescription} />
+              ) : null}
+            </div>
+            <div className='mt-6 text-sm space-y-3'>
+              {productFormData.description.map((item, index) => (
+                <div key={index} className='flex gap-3 items-center'>
+                  <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-auto max-w-[400px] text-wrap '>
+                    {item}
+                  </span>
+                  <div
+                    className='p-[0.75rem] rounded-lg flex bg-[#a3a3a325]'
+                    onClick={() => handleRemoveDescription(index)}
+                  >
+                    <AiOutlineDelete className='cursor-pointer' />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className='my-4 text-sm w-full flex flex-col sm:flex-row gap-4 sm:gap-6'>
           <div className='w-full'>
