@@ -32,7 +32,7 @@ const customStyles = {
   },
   overlay: {
     background: 'rgba(0, 0, 0, 0.4)',
-    backdropFilter: 'blur(4px)',
+    backdropFilter: 'blur(6px)',
     zIndex: 10000,
     border: '0px',
   },
