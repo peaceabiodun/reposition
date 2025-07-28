@@ -25,6 +25,7 @@ import { validateEmail } from '@/utils/functions';
 import PaymentReceipt from '../../components/receipt/page';
 import { useProductContext } from '@/context/product-context';
 import { HiArrowLongRight } from 'react-icons/hi2';
+import { IoAdd, IoRemove } from 'react-icons/io5';
 
 type FormDataType = {
   quantity: string;
@@ -67,13 +68,16 @@ const Bag = () => {
 
   const countryList = [
     'Nigeria',
+    'United Kingdom',
+    'United States of America',
     'Ghana',
     'Kenya',
     'Rwanda',
     'South Africa',
-    'United State of America',
     'Canada',
-    'United Kingdom',
+    'Cameroon',
+    'Germany',
+    'Portugal',
   ];
 
   const fetchProducts = async () => {
@@ -486,19 +490,35 @@ const Bag = () => {
                       {item.name} [{item.color}]
                     </p>
                     <p>₦ {Number(item.price).toLocaleString()}</p>
-                  </div>
-                  <div className='flex flex-col gap-3 '>
-                    <div className='flex gap-2 items-center'>
-                      <h2>Qty</h2>
-                      <input
-                        type='text'
-                        value={item.quantity}
-                        onChange={(e) => updateQuantity(e.target.value, index)}
-                        className='outline-none border-b rounded-none border-[#3d3e3f] bg-transparent w-[36px] p-2 h-[24px]'
-                      />
-                    </div>
                     <p>Size: {item.size}</p>
                   </div>
+
+                  <div className='flex items-center justify-between border border-[#523f3fab] rounded-full p-2 w-[100px] '>
+                    <button
+                      onClick={() => {
+                        const currentQty = parseInt(item.quantity);
+                        if (currentQty > 1) {
+                          updateQuantity((currentQty - 1).toString(), index);
+                        }
+                      }}
+                      className='w-5 h-5 rounded-full bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
+                    >
+                      <IoRemove size={16} />
+                    </button>
+                    <span className='px-3 text-[#523f3f] text-base font-medium'>
+                      {item.quantity}
+                    </span>
+                    <button
+                      onClick={() => {
+                        const currentQty = parseInt(item.quantity);
+                        updateQuantity((currentQty + 1).toString(), index);
+                      }}
+                      className='w-5 h-5 rounded-full bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
+                    >
+                      <IoAdd size={16} />
+                    </button>
+                  </div>
+
                   <div
                     onClick={() => removeItemFromBag(item.id)}
                     className='cursor-pointer'
@@ -511,8 +531,11 @@ const Bag = () => {
 
             <div className='text-base'>
               <p>
-                Total Items:
-                <span className='font-semibold'> {bagItems.length}</span>
+                <span className='font-semibold mr-1 text-lg'>
+                  {' '}
+                  {bagItems.length}
+                </span>
+                Item(s)
               </p>
               <p>
                 Total Item(s) price:
@@ -520,6 +543,9 @@ const Bag = () => {
                   {' '}
                   ₦ {Number(totalPrice).toLocaleString()}
                 </span>
+              </p>
+              <p className='text-xs italic'>
+                *shipping, taxes, and discounts calculated at checkout.
               </p>
             </div>
 
@@ -549,7 +575,7 @@ const Bag = () => {
                     });
                   }, 100);
                 }}
-                className='border border-[#523f3fab] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300'
+                className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300'
               >
                 CHECKOUT
                 <HiArrowLongRight size={20} />
@@ -661,7 +687,7 @@ const Bag = () => {
                     )}
                   </div>
                   <p className='mb-2'>
-                    Country{' '}
+                    Country/Region{' '}
                     <span className='text-xs italic'>
                       (shipping fee may change depending on country)
                     </span>
