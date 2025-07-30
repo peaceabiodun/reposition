@@ -12,7 +12,6 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType, ShoppingBagType } from '@/utils/types';
-import ReactPlayer from 'react-player';
 import { BsCart2 } from 'react-icons/bs';
 import {
   MdArrowCircleLeft,
@@ -26,6 +25,7 @@ import SuccessModal from '@/components/success-modal/page';
 import MobileMenu from '@/components/mobile-menu/page';
 import TeaCoffeeModal from '@/components/tea-coffee-modal/page';
 import LanguageSelector from '@/components/language-dropdown/page';
+import BeverageConfirmationModal from '@/components/beverage-confirmation-modal/page';
 
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -53,13 +53,15 @@ const Home = () => {
   const [activeButton, setActiveButton] = useState<'left' | 'right'>('right');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showTeaCoffeeModal, setShowTeaCoffeeModal] = useState(true);
+  const [showBeverageConfirmationModal, setShowBeverageConfirmationModal] =
+    useState(false);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
-      setShowTeaCoffeeModal(!beverage);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
+  //     setShowTeaCoffeeModal(!beverage);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
@@ -68,21 +70,6 @@ const Home = () => {
   //   }
   // }, []);
 
-  const options = [
-    { name: ENUM_PRODUCT_FILTER_LIST.ALL },
-    { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.SHOES },
-    { name: ENUM_PRODUCT_FILTER_LIST.SUIT },
-    { name: ENUM_PRODUCT_FILTER_LIST.COAT },
-    { name: ENUM_PRODUCT_FILTER_LIST.PANTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.BAGS },
-    { name: ENUM_PRODUCT_FILTER_LIST.ACCESSORIES },
-    { name: ENUM_PRODUCT_FILTER_LIST.TSHIRTS },
-    { name: ENUM_PRODUCT_FILTER_LIST.HOODIES },
-    { name: ENUM_PRODUCT_FILTER_LIST.HAT },
-    { name: ENUM_PRODUCT_FILTER_LIST.JACKET },
-  ];
   const fetchProducts = async () => {
     setLoading(true);
     try {
@@ -334,6 +321,7 @@ const Home = () => {
                       autoPlay={true}
                       muted={true}
                       className='w-full h-full object-cover'
+                      poster='/poster-img.png'
                     />
                     <source
                       src={campaignDetails?.campaign_video[0] ?? ''}
@@ -480,7 +468,7 @@ const Home = () => {
             <div className='max-w-[1700px] mx-auto'>
               <div
                 ref={scrollContainerRef}
-                className='flex md:gap-5 gap-3 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
+                className='flex gap-2 mdLg:gap-0 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
                 style={{
                   width: '100%',
                   maxWidth: '100%',
@@ -613,45 +601,19 @@ const Home = () => {
         <TeaCoffeeModal
           show={showTeaCoffeeModal}
           onClose={() => setShowTeaCoffeeModal(false)}
+          showConfirmationModal={() => {
+            setShowBeverageConfirmationModal(true);
+            setShowTeaCoffeeModal(false);
+          }}
         />
       )}
-      {/* {showCampaign && (
-        <div
-          style={{
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundImage: `linear-gradient(
-              to left,
-              rgba(39, 37, 37, 0.699),
-              rgba(39, 37, 37, 0.651)
-            ),
-            url('${campaignDetails?.banner_image}')`,
-          }}
-          className=' fixed inset-0 flex flex-col items-center justify-center p-4'
-        >
-          <h3 className='text-[#eefcff] text-sm text-center'>
-            {campaignDetails?.banner_title}
-          </h3>
-          <p className='text-[#d2dadb] text-xs my-3 text-center'>
-            {campaignDetails?.banner_subtext}
-          </p>
+      {showBeverageConfirmationModal && (
+        <BeverageConfirmationModal
+          show={showBeverageConfirmationModal}
+          onClose={() => setShowBeverageConfirmationModal(false)}
+        />
+      )}
 
-          <button
-            onClick={() => router.push('/campaign')}
-            className='bg-white p-2 h-[33px] w-[90px] text-xs font-light'
-          >
-            View
-          </button>
-
-          <button
-            onClick={handleCloseCampaign}
-            className='bg-[#ebfaf7d3] rounded-full p-1 w-6 h-6 flex items-center justify-center mt-7'
-          >
-            <MdClose />
-          </button>
-        </div>
-      )} */}
       {showUpdatePasswordModal && (
         <UpdatePasswordModal
           show={showUpdatePasswordModal}

@@ -26,6 +26,7 @@ import PaymentReceipt from '../../components/receipt/page';
 import { useProductContext } from '@/context/product-context';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { IoAdd, IoRemove } from 'react-icons/io5';
+import { BsFillInfoSquareFill } from 'react-icons/bs';
 
 type FormDataType = {
   quantity: string;
@@ -51,6 +52,7 @@ const Bag = () => {
   const [finalTotal, setFinalTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderNumber, setOrderNumber] = useState<number | null>(null);
+  const [showWhy, setShowWhy] = useState(false);
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
   const deliveryDetailsRef = useRef<HTMLDivElement>(null);
@@ -73,6 +75,8 @@ const Bag = () => {
     'Ghana',
     'Kenya',
     'Rwanda',
+    'Mali',
+    "Côte d'ivoire",
     'South Africa',
     'Canada',
     'Cameroon',
@@ -391,25 +395,15 @@ const Bag = () => {
   const initializePayment: any = usePaystackPayment(config);
 
   const onSuccess = (reference: any) => {
-    // Implementation for whatever you want to do with reference and after success call.
-
     if (reference.message === 'Approved') {
       orderConfirmationDetails(reference.reference);
+      localStorage.removeItem(STORAGE_KEYS.BEVERAGE_SELECTED);
     }
   };
 
   const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log('closed');
   };
-
-  // const DISCOUNT_CODES = [
-  //   STORAGE_KEYS.DISCOUNT_CODE_ONE,
-  //   STORAGE_KEYS.DISCOUNT_CODE_TWO,
-  //   STORAGE_KEYS.DISCOUNT_CODE_THREE,
-  //   STORAGE_KEYS.DISCOUNT_CODE_FOUR,
-  //   STORAGE_KEYS.DISCOUNT_CODE_FIVE,
-  // ];
 
   const applyDiscount = () => {
     if (
@@ -435,6 +429,7 @@ const Bag = () => {
   useEffect(() => {
     applyDiscount();
   }, [discountCode, totalPrice, shippingFee]);
+
   return (
     <div className='w-full min-h-screen bg-[#dbd9d2] pb-10 '>
       <div className='max-w-[1500px] mx-auto'>
@@ -466,7 +461,7 @@ const Bag = () => {
             />
           </div>
         ) : (
-          <div className='my-4 space-y-6 px-3 xs:px-4'>
+          <div className='my-4 px-3 xs:px-4'>
             <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
               Order Summary
             </h2>
@@ -493,7 +488,7 @@ const Bag = () => {
                     <p>Size: {item.size}</p>
                   </div>
 
-                  <div className='flex items-center justify-between border border-[#523f3fab] rounded-full p-2 w-[100px] '>
+                  <div className='flex items-center justify-between border border-[#523f3fab] p-2 w-[100px] '>
                     <button
                       onClick={() => {
                         const currentQty = parseInt(item.quantity);
@@ -501,7 +496,7 @@ const Bag = () => {
                           updateQuantity((currentQty - 1).toString(), index);
                         }
                       }}
-                      className='w-5 h-5 rounded-full bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
+                      className='w-5 h-5  bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
                     >
                       <IoRemove size={16} />
                     </button>
@@ -513,7 +508,7 @@ const Bag = () => {
                         const currentQty = parseInt(item.quantity);
                         updateQuantity((currentQty + 1).toString(), index);
                       }}
-                      className='w-5 h-5 rounded-full bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
+                      className='w-5 h-5  bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
                     >
                       <IoAdd size={16} />
                     </button>
@@ -529,7 +524,7 @@ const Bag = () => {
               </div>
             ))}
 
-            <div className='text-base'>
+            <div className='text-base space-y-1 mt-4'>
               <p>
                 <span className='font-semibold mr-1 text-lg'>
                   {' '}
@@ -550,13 +545,67 @@ const Bag = () => {
             </div>
 
             <div>
-              <p>
-                Your preferred beverage{' '}
-                <span className='font-semibold text-[#38271c]'>
-                  {userBeverage}
-                </span>{' '}
-                Will be packaged and delivered with your Order. Thank you.{' '}
+              <div className='flex items-center gap-1 text-xs xs:text-sm flex-wrap '>
+                <p className='text-nowrap'>Your preferred beverage </p>
+                {userBeverage === 'Tea' ? (
+                  <img
+                    src='/tea.png'
+                    alt='tea'
+                    className=' w-[80px] h-[60px] hover:scale-105 transition-all duration-300 object-contain object-center'
+                  />
+                ) : (
+                  <img
+                    src='/coffee.png'
+                    alt='coffee'
+                    className=' w-[80px] h-[60px] hover:scale-105 transition-all duration-300 object-contain object-center'
+                  />
+                )}
+                <p>
+                  Will be packaged and delivered with your Order. Thank you.{' '}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <p
+                onClick={() => setShowWhy(!showWhy)}
+                className='text-sm flex italic items-center gap-1 my-4 text-[#38271c] animate-bounce cursor-pointer w-fit'
+              >
+                <BsFillInfoSquareFill />
+                Why?
               </p>
+              {showWhy && (
+                <div className='transition-all duration-500 ease-in-out text-sm max-w-[500px] shadow-md p-2'>
+                  <p className='font-semibold'>IMPACT</p>
+                  <p>
+                    Reposition believes in the power of the creative mind, to
+                    create, sustain and advance the human experience across all
+                    sectors and fields of life.
+                  </p>{' '}
+                  <p className='font-semibold mt-1'>WHAT WE ARE DOING</p>
+                  <p>
+                    In collaboration with you, we seek to Identify and sponsor
+                    creative children with special needs from age 5-15yrs Old.
+                    Equipping them with knowledge, tools, access to mentorship
+                    and monthly upkeep.
+                  </p>{' '}
+                  <p className='font-semibold mt-1'>SPECIFIC Focus:</p>
+                  <p>
+                    Children with down syndrome, autism, and learning
+                    disabilities such as dyslexia.
+                  </p>{' '}
+                  <p className='font-semibold mt-1'>REGIONAL Focus:</p>
+                  <p>
+                    Africa [ Nigeria, Ghana, Mali, Côte d’ivoire, and Rwanda ]
+                  </p>{' '}
+                  <p className='font-semibold mt-1'>PURPOSE:</p>
+                  <p>
+                    To create level playing access to opportunities and support
+                    for less privileged special needs children, helping them to
+                    make their own contribution to humanity.
+                  </p>
+                </div>
+              )}
             </div>
 
             {bagItems.length > 0 && !showCheckout && (
@@ -575,16 +624,16 @@ const Bag = () => {
                     });
                   }, 100);
                 }}
-                className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300'
+                className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300 my-4'
               >
                 CHECKOUT
                 <HiArrowLongRight size={20} />
               </button>
             )}
             <div className='border-b border-[#a1a1a19c] w-full py-3 '>
-              <h2 className='text-sm'>Top Picks For You</h2>
+              <h2 className='text-lg'>Top Picks For You</h2>
 
-              <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth no-scrollbar'>
+              <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth scrollable-div pb-2'>
                 {frequentlyBoughtItems.map((item, index) => (
                   <div key={index} className='min-w-[200px]'>
                     <Image
@@ -601,9 +650,9 @@ const Bag = () => {
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className=' bg-[#523f3fab] text-[#e4e0e0] p-2 w-[200px] h-[30px] flex items-center justify-center'
+                      className=' bg-[#523f3fab] hover:bg-[#523f3f71] text-[#e4e0e0] p-2 w-[200px] h-[30px] flex items-center justify-center cursor-pointer'
                     >
-                      View
+                      Buy Now
                     </button>
                   </div>
                 ))}
