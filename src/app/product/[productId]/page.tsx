@@ -400,7 +400,7 @@ const ProductDetails = () => {
               onClick={addToBag}
               className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300'
             >
-              ADD TO CART
+              ADD TO BAG
             </button>
           </div>
         </div>

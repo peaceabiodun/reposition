@@ -7,11 +7,12 @@ import { Fragment, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import SuccessModal from '../success-modal/page';
 import { ShoppingBagType } from '@/utils/types';
-import { MdMenuOpen } from 'react-icons/md';
 import MobileMenu from '../mobile-menu/page';
 import UpdatePasswordModal from '../update-password-modal/page';
-import { BsCart2 } from 'react-icons/bs';
+import { BsCart2, BsHandbag } from 'react-icons/bs';
 import LanguageSelector from '../language-dropdown/page';
+import { CgMenuRight } from 'react-icons/cg';
+import { MdOutlineInventory } from 'react-icons/md';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -149,8 +150,8 @@ const Header = () => {
           </div>
           <div className='flex gap-3'>
             {userRole === 'ADMIN' && (
-              <TbShirt
-                size={22}
+              <MdOutlineInventory
+                size={24}
                 onClick={() => router.push('/manage-products')}
                 className='cursor-pointer hidden sm:flex'
               />
@@ -167,23 +168,23 @@ const Header = () => {
               className='cursor-pointer hidden sm:flex'
             />
             <div className='relative'>
-              <BsCart2
-                size={24}
+              <BsHandbag
+                size={23}
                 onClick={() => router.push('/bag')}
                 className='cursor-pointer '
               />
               <span
                 onClick={() => router.push('/bag')}
-                className={`text-[10px] absolute bg-[#3f2a16] text-white ${
-                  scroll ? 'top-[-8px] right-[0px]' : 'top-[-8px] right-[0px]'
+                className={`text-[10px] absolute text-[#3f2a16] top-[8px] ${
+                  scroll ? ' ' : ' '
                 }  right-[4px] rounded-full p-2 w-4 h-4  flex items-center justify-center font-light cursor-pointer`}
               >
                 {bagItems.length ?? '0'}
               </span>
             </div>
             <LanguageSelector />
-            <MdMenuOpen
-              size={26}
+            <CgMenuRight
+              size={20}
               className='cursor-pointer sm:hidden'
               onClick={() => setShowMobileMenu(true)}
             />

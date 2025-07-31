@@ -441,11 +441,11 @@ const Bag = () => {
         </Link>
 
         <h2 className='text-base font-semibold text-center my-4 px-3 xs:px-4'>
-          YOUR CART ({bagItems.length})
+          YOUR BAG ({bagItems.length})
         </h2>
         {bagItems.length <= 0 ? (
           <div className='flex justify-center items-center p-3 my-6 text-sm sm:text-base h-[80vh]'>
-            No item in your shopping cart
+            No item in your shopping bag
           </div>
         ) : loading ? (
           <div className='flex justify-center items-center p-3 '>
@@ -461,7 +461,7 @@ const Bag = () => {
         ) : (
           <div className='my-4 px-3 xs:px-4'>
             <h2 className='border-b border-[#a1a1a19c] w-full py-3 text-sm'>
-              Order Summary
+              Summary
             </h2>
 
             {bagItems?.map((item, index) => (
@@ -537,7 +537,7 @@ const Bag = () => {
             </div>
 
             <div>
-              <div className='flex items-center gap-1 text-xs xs:text-sm flex-wrap '>
+              <div className='flex items-center gap-1 text-xs xs:text-sm '>
                 <p className='text-nowrap'>Your </p>
                 {userBeverage === 'Tea' ? (
                   <img
@@ -576,12 +576,12 @@ const Bag = () => {
                 }}
                 className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300 my-4'
               >
-                CHECKOUT
+                CHECKOUT SECURELY
                 <HiArrowLongRight size={20} />
               </button>
             )}
             <div className='border-b border-[#a1a1a19c] w-full py-3 '>
-              <h2 className='text-lg'>Made to Fit</h2>
+              <h2 className='text-base font-semibold'>MADE TO FIT</h2>
 
               <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth scrollable-div pb-2'>
                 {frequentlyBoughtItems.map((item, index) => (

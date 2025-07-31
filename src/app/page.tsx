@@ -12,12 +12,13 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType, ShoppingBagType } from '@/utils/types';
-import { BsCart2 } from 'react-icons/bs';
+import { BsCart2, BsHandbag } from 'react-icons/bs';
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
-  MdMenuOpen,
+  MdOutlineInventory,
 } from 'react-icons/md';
+import { CgMenuRight } from 'react-icons/cg';
 import { TbShirt, TbWorld } from 'react-icons/tb';
 import { GoPerson } from 'react-icons/go';
 import UpdatePasswordModal from '@/components/update-password-modal/page';
@@ -310,7 +311,7 @@ const Home = () => {
               </div>
             ) : (
               <div className='relative w-full'>
-                <div className=''>
+                <div className='relative'>
                   <div className='w-full border border-[#3f2a16] overflow-hidden h-[100vh] campaign_video'>
                     <video
                       width='100%'
@@ -327,6 +328,17 @@ const Home = () => {
                       src={campaignDetails?.campaign_video[0] ?? ''}
                       type='video/mp4'
                     />
+                  </div>
+                  <div className='absolute bottom-0 p-8 text-white '>
+                    <h2 className='text-xl sm:text-3xl mt-6'>
+                      Experience Freedom
+                    </h2>
+                    <div
+                      onClick={() => router.push('/shop')}
+                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
+                    >
+                      STEP IN
+                    </div>
                   </div>
                 </div>
 
@@ -360,8 +372,8 @@ const Home = () => {
 
                   <div className='flex gap-3'>
                     {userRole === 'ADMIN' && (
-                      <TbShirt
-                        size={26}
+                      <MdOutlineInventory
+                        size={24}
                         onClick={() => router.push('/manage-products')}
                         className='cursor-pointer hidden sm:flex'
                       />
@@ -378,25 +390,23 @@ const Home = () => {
                       className='cursor-pointer hidden sm:flex'
                     />
                     <div className='relative'>
-                      <BsCart2
-                        size={26}
+                      <BsHandbag
+                        size={23}
                         onClick={() => router.push('/bag')}
                         className='cursor-pointer '
                       />
                       <span
                         onClick={() => router.push('/bag')}
-                        className={`text-[10px] absolute bg-[#3f2a16] text-white ${
-                          scroll
-                            ? 'top-[-8px] right-[0px]'
-                            : 'top-[-8px] right-[0px]'
+                        className={`text-[10px] absolute top-[8px] ${
+                          scroll ? ' ' : ' '
                         }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
                       >
                         {bagItems.length ?? '0'}
                       </span>
                     </div>
                     <LanguageSelector />
-                    <MdMenuOpen
-                      size={26}
+                    <CgMenuRight
+                      size={20}
                       className='cursor-pointer sm:hidden'
                       onClick={() => setShowMobileMenu(true)}
                     />
@@ -435,16 +445,6 @@ const Home = () => {
                 alt='home-img'
                 className='w-full sm:w-[50%] h-full object-cover'
               />
-            </div>
-            <div className='absolute top-0 p-8 text-white '>
-              <h2 className='text-xl sm:text-3xl mt-6'>Experience Freedom</h2>
-              <div
-                onClick={() => router.push('/shop')}
-                className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
-              >
-                {/* <p>{campaignDetails?.campaign_subtext}</p> */}
-                Shop The Collection
-              </div>
             </div>
           </div>
 
@@ -503,20 +503,22 @@ const Home = () => {
 
                     <div className='absolute bottom-5 text-[#3f2a16] pl-5'>
                       <div className='flex items-center gap-2 mt-2'>
-                        <p className=' text-xl font-medium'>{item.name}</p>
+                        <p className=' text-base uppercase font-semibold'>
+                          {item.name}
+                        </p>
                         {item.pre_order ? (
                           <p className='text-sm'>[Pre-Order]</p>
                         ) : null}
                       </div>
 
-                      <p className='text-base font-medium'>
+                      <p className='text-sm md:text-base '>
                         ₦ {Number(item.price).toLocaleString()}
                       </p>
                       <button
                         onClick={() => router.push(`product/${item.id}`)}
                         className='text-sm flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
                       >
-                        Buy Now
+                        BUY NOW
                       </button>
                     </div>
                   </Link>
@@ -541,14 +543,14 @@ const Home = () => {
                   />
                 </button>
               </div>
-              <div className='flex items-center justify-center mt-4'>
+              {/* <div className='flex items-center justify-center mt-4'>
                 <button
                   onClick={() => router.push('/shop')}
                   className='cursor-pointer hover:bg-[#3f2a164d] text-[#3f2a16ef] px-4 py-2 w-[300px] border border-solid border-[#3f2a16]'
                 >
                   Shop The Collection
                 </button>
-              </div>
+              </div> */}
             </div>
           )}
           <div className=' grid grid-cols-1 lg:grid-cols-2 my-8'>

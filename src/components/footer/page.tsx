@@ -42,9 +42,7 @@ const Footer = () => {
             <FaXTwitter size={17} />
           </a>
         </div>
-        <span className='text-[10px] mt-1'>
-          © {currentYear} Reposition global, Inc.{' '}
-        </span>
+        <span className='text-[10px] mt-1'>© {currentYear} Reposition</span>
       </div>
     </div>
   );
