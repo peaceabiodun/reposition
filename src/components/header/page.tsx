@@ -114,19 +114,31 @@ const Header = () => {
         }`}
       >
         <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
-          <div
-            className='text-[16px] font-light cursor-pointer hidden sm:flex'
-            onClick={() => router.push('/we-are')}
-          >
-            We Are
+          <div className='gap-8 hidden sm:flex'>
+            <p
+              className='text-[16px] md:text-lg  cursor-pointer hidden md:flex'
+              onClick={() => router.push('/shop')}
+            >
+              Shop
+            </p>
+            <p
+              className='text-[16px] md:text-lg  cursor-pointer hidden sm:flex'
+              onClick={() => router.push('/we-are')}
+            >
+              We Are
+            </p>
+            <p
+              className='text-[16px] md:text-lg  cursor-pointer hidden sm:flex'
+              onClick={() => router.push('/theassemble')}
+            >
+              Join The Assemble
+            </p>
           </div>
           <div
             onClick={() => router.push('/')}
-            className='flex  cursor-pointer'
+            className='flex  cursor-pointer mr-16'
           >
-            <h2 className='font-bold text-sm sm:text-lg daikon '>
-              REPOSITION{' '}
-            </h2>
+            <h2 className='font-bold text-sm sm:text-lg daikon'>REPOSITION </h2>
             {/* <Image
               src={'/logo.svg'}
               alt='logo'

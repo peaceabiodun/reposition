@@ -14,6 +14,7 @@ export type LocalModalProps = Props & {
   children?: ReactNode;
   contentClassName?: string;
   backgroundColor?: string;
+  hasCancelIcon?: boolean;
 };
 
 const customStyles = {
@@ -47,6 +48,7 @@ const LocalModal = ({
   footer,
   contentClassName,
   backgroundColor,
+  hasCancelIcon = true,
   ...modalProps
 }: LocalModalProps) => {
   if (typeof window === 'undefined') return null;
@@ -70,12 +72,14 @@ const LocalModal = ({
                 {titleCta}
               </div>
 
-              <MdClose
-                size={18}
-                className='sm:absolute ml-2 right-[-40px] top-[-8px] text-white'
-                role='button'
-                onClick={modalProps.onRequestClose}
-              />
+              {hasCancelIcon && (
+                <MdClose
+                  size={18}
+                  className='sm:absolute ml-2 right-[-40px] top-[-8px] text-white'
+                  role='button'
+                  onClick={modalProps.onRequestClose}
+                />
+              )}
             </div>
             {hasBackButton && (
               <div
