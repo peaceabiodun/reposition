@@ -16,7 +16,7 @@ const customStyles = {
     left: 'auto',
     right: '0%',
     bottom: 'auto',
-    backgroundColor: '#ece8e3',
+    backgroundColor: '#dbd9d2',
     border: 'none',
     padding: '0px',
     height: 'calc(100vh - 70px)',

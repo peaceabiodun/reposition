@@ -72,7 +72,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
       onClick: () => router.push('/we-are'),
     },
     {
-      title: 'Join The Assemble',
+      title: 'Join Assemble',
       onClick: () => router.push('/theassemble'),
     },
     ...(token && userRole === 'ADMIN'
@@ -116,15 +116,14 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
   return (
     <LocalSideModal isOpen={show} onRequestClose={onClose}>
       <div className='text-center font-semibold'>
-        <h3 className='text-xl '>Reposition</h3>
-        <h3 className='text-sm mt-1'>[New In]</h3>
+        <h3 className='text-lg daikon '>REPOSITION</h3>
       </div>
       <div className='flex flex-col gap-2 w-full h-full  justify-center '>
         {menuInfo?.map((item, index) => (
           <div
             key={index}
             onClick={item?.onClick}
-            className='p-2 hover:bg-[#a3a3a37c] hover:font-semibold text-sm '
+            className='p-2 hover:bg-[#a3a3a37c] hover:font-semibold text-sm underline underline-offset-4 '
           >
             {item?.title}
           </div>

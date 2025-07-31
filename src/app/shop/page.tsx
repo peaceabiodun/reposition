@@ -81,10 +81,10 @@ const Shop = () => {
                   setFilterValue?.(item.name);
                   setSelectedFilter(item.name);
                 }}
-                className={`  py-2 px-4 h-[36px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base ${
+                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base ${
                   selectedFilter === item.name
                     ? 'bg-[#5e3f225b] text-white '
-                    : 'bg-[#5e3f2217]'
+                    : 'border border-[#5e3f225b]'
                 }`}
               >
                 {item.name}
@@ -135,20 +135,22 @@ const Shop = () => {
 
                   <div className='absolute bottom-0 left-0 right-0 p-4 text-[#3f2a16]'>
                     <div className='flex flex-col sm:flex-row sm:items-center sm:gap-2 font-light mt-2'>
-                      <p className=' font-medium text-base'>{item.name}</p>
+                      <p className=' text-base uppercase font-semibold'>
+                        {item.name}
+                      </p>
 
                       {item.pre_order ? (
                         <p className='text-sm'>[Pre-Order]</p>
                       ) : null}
                     </div>
-                    <p className='text-base sm:text-lg font-medium'>
+                    <p className='text-sm md:text-base '>
                       ₦ {Number(item.price).toLocaleString()}
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
                       className='text-sm flex flex-col items-center justify-center gap-2 mt-3 border border-white p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
                     >
-                      Buy Now
+                      SELECT
                     </button>
                   </div>
                 </Link>
