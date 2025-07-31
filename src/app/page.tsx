@@ -320,7 +320,7 @@ const Home = () => {
                       loop={true}
                       autoPlay={true}
                       muted={true}
-                      className='w-full h-full object-cover'
+                      className='w-full h-full object-cover z-[-1]'
                       poster='/poster-img.png'
                     />
                     <source

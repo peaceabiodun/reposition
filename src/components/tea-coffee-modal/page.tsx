@@ -2,8 +2,6 @@
 'use client';
 import { STORAGE_KEYS } from '@/utils/constants';
 import LocalModal from '../modal/page';
-import { useEffect, useRef, useState } from 'react';
-import { IoPlayCircle } from 'react-icons/io5';
 
 type ModalProps = {
   show: boolean;
@@ -16,43 +14,16 @@ const TeaCoffeeModal = ({
   onClose,
   showConfirmationModal,
 }: ModalProps) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-
-  useEffect(() => {
-    if (show && audioRef.current) {
-      // Reset audio state when modal opens
-      setIsAudioPlaying(false);
-      audioRef.current.currentTime = 0;
-      audioRef.current.pause();
-    }
-  }, [show]);
-
-  const handlePlayAudio = async () => {
-    if (audioRef.current) {
-      try {
-        await audioRef.current.play();
-        setIsAudioPlaying(true);
-      } catch (error) {
-        console.log('Audio playback failed:', error);
-      }
-    }
-  };
-
   return (
     <LocalModal
       isOpen={show}
       onRequestClose={onClose}
-      contentClassName='w-[90%] sm:w-[500px] md:w-[750px] h-[550px]'
+      contentClassName='w-[90%] sm:w-[500px] md:w-[750px] h-[550px] z-[999]'
       backgroundColor='bg-transparent'
+      hasCancelIcon={false}
     >
-      <audio
-        ref={audioRef}
-        src='/audio/reposition-welcome.mp3'
-        preload='auto'
-      />
       <div className='flex flex-col items-center justify-center'>
-        <h2 className='text-xl font-semibold text-center text-white mb-5'>
+        <h2 className='text-xl font-semibold text-center text-white mb-5 '>
           WELCOME
         </h2>
         <div className='flex gap-4'>
@@ -100,15 +71,6 @@ const TeaCoffeeModal = ({
           </div>
         </div>
       </div>
-      {!isAudioPlaying && (
-        <div className='w-full h-full flex items-center justify-center absolute inset-0 bg-black/20 z-50'>
-          <IoPlayCircle
-            size={35}
-            className='text-white cursor-pointer animate-pulse transition-all duration-300 hover:scale-110'
-            onClick={handlePlayAudio}
-          />
-        </div>
-      )}
     </LocalModal>
   );
 };

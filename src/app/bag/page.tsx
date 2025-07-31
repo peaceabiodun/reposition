@@ -26,7 +26,6 @@ import PaymentReceipt from '../../components/receipt/page';
 import { useProductContext } from '@/context/product-context';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { IoAdd, IoRemove } from 'react-icons/io5';
-import { BsFillInfoSquareFill } from 'react-icons/bs';
 
 type FormDataType = {
   quantity: string;
@@ -52,7 +51,6 @@ const Bag = () => {
   const [finalTotal, setFinalTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderNumber, setOrderNumber] = useState<number | null>(null);
-  const [showWhy, setShowWhy] = useState(false);
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
   const deliveryDetailsRef = useRef<HTMLDivElement>(null);
@@ -442,12 +440,12 @@ const Bag = () => {
           Back
         </Link>
 
-        <h2 className='text-lg font-semibold text-center my-4 px-3 xs:px-4'>
+        <h2 className='text-base font-semibold text-center my-4 px-3 xs:px-4'>
           YOUR CART ({bagItems.length})
         </h2>
         {bagItems.length <= 0 ? (
           <div className='flex justify-center items-center p-3 my-6 text-sm sm:text-base h-[80vh]'>
-            No item in your shopping bag
+            No item in your shopping cart
           </div>
         ) : loading ? (
           <div className='flex justify-center items-center p-3 '>
@@ -526,27 +524,21 @@ const Bag = () => {
 
             <div className='text-base space-y-1 mt-4'>
               <p>
-                <span className='font-semibold mr-1 text-lg'>
-                  {' '}
-                  {bagItems.length}
-                </span>
+                <span className=' mr-1 text-sm'> {bagItems.length}</span>
                 Item(s)
               </p>
               <p>
-                Total Item(s) price:
-                <span className='font-semibold'>
+                Total price:
+                <span className='font-medium'>
                   {' '}
                   ₦ {Number(totalPrice).toLocaleString()}
                 </span>
-              </p>
-              <p className='text-xs italic'>
-                *shipping, taxes, and discounts calculated at checkout.
               </p>
             </div>
 
             <div>
               <div className='flex items-center gap-1 text-xs xs:text-sm flex-wrap '>
-                <p className='text-nowrap'>Your preferred beverage </p>
+                <p className='text-nowrap'>Your </p>
                 {userBeverage === 'Tea' ? (
                   <img
                     src='/tea.png'
@@ -564,48 +556,6 @@ const Bag = () => {
                   Will be packaged and delivered with your Order. Thank you.{' '}
                 </p>
               </div>
-            </div>
-
-            <div>
-              <p
-                onClick={() => setShowWhy(!showWhy)}
-                className='text-sm flex italic items-center gap-1 my-4 text-[#38271c] animate-bounce cursor-pointer w-fit'
-              >
-                <BsFillInfoSquareFill />
-                Why?
-              </p>
-              {showWhy && (
-                <div className='transition-all duration-500 ease-in-out text-sm max-w-[500px] shadow-md p-2'>
-                  <p className='font-semibold'>IMPACT</p>
-                  <p>
-                    Reposition believes in the power of the creative mind, to
-                    create, sustain and advance the human experience across all
-                    sectors and fields of life.
-                  </p>{' '}
-                  <p className='font-semibold mt-1'>WHAT WE ARE DOING</p>
-                  <p>
-                    In collaboration with you, we seek to Identify and sponsor
-                    creative children with special needs from age 5-15yrs Old.
-                    Equipping them with knowledge, tools, access to mentorship
-                    and monthly upkeep.
-                  </p>{' '}
-                  <p className='font-semibold mt-1'>SPECIFIC Focus:</p>
-                  <p>
-                    Children with down syndrome, autism, and learning
-                    disabilities such as dyslexia.
-                  </p>{' '}
-                  <p className='font-semibold mt-1'>REGIONAL Focus:</p>
-                  <p>
-                    Africa [ Nigeria, Ghana, Mali, Côte d’ivoire, and Rwanda ]
-                  </p>{' '}
-                  <p className='font-semibold mt-1'>PURPOSE:</p>
-                  <p>
-                    To create level playing access to opportunities and support
-                    for less privileged special needs children, helping them to
-                    make their own contribution to humanity.
-                  </p>
-                </div>
-              )}
             </div>
 
             {bagItems.length > 0 && !showCheckout && (
@@ -631,7 +581,7 @@ const Bag = () => {
               </button>
             )}
             <div className='border-b border-[#a1a1a19c] w-full py-3 '>
-              <h2 className='text-lg'>Top Picks For You</h2>
+              <h2 className='text-lg'>Made to Fit</h2>
 
               <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth scrollable-div pb-2'>
                 {frequentlyBoughtItems.map((item, index) => (
