@@ -115,24 +115,30 @@ const Header = () => {
         }`}
       >
         <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
-          <div className='gap-8 hidden sm:flex'>
+          <div className='gap-8 hidden lg:flex'>
             <p
-              className='text-[16px] md:text-lg  cursor-pointer hidden md:flex'
+              className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
               onClick={() => router.push('/shop')}
             >
               Shop
             </p>
             <p
-              className='text-[16px] md:text-lg  cursor-pointer hidden sm:flex'
-              onClick={() => router.push('/we-are')}
+              className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
+              onClick={() => router.push('/our-story')}
             >
-              We Are
+              Our Story
             </p>
             <p
-              className='text-[16px] md:text-lg  cursor-pointer hidden sm:flex'
+              className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
               onClick={() => router.push('/theassemble')}
             >
-              Join The Assemble
+              Join Assemble
+            </p>
+            <p
+              className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
+              onClick={() => router.push('/our-impact')}
+            >
+              Our Impact
             </p>
           </div>
           <div
@@ -153,7 +159,7 @@ const Header = () => {
               <MdOutlineInventory
                 size={24}
                 onClick={() => router.push('/manage-products')}
-                className='cursor-pointer hidden sm:flex'
+                className='cursor-pointer hidden lg:flex'
               />
             )}
             <GoPerson
@@ -165,7 +171,7 @@ const Header = () => {
                   router.push('/login');
                 }
               }}
-              className='cursor-pointer hidden sm:flex'
+              className='cursor-pointer hidden lg:flex'
             />
             <div className='relative'>
               <BsHandbag
@@ -185,7 +191,7 @@ const Header = () => {
             <LanguageSelector />
             <CgMenuRight
               size={20}
-              className='cursor-pointer sm:hidden'
+              className='cursor-pointer lg:hidden'
               onClick={() => setShowMobileMenu(true)}
             />
           </div>

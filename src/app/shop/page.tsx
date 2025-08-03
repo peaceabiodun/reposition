@@ -148,7 +148,7 @@ const Shop = () => {
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className='text-sm flex flex-col items-center justify-center gap-2 mt-3 border border-white p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
+                      className='text-sm flex flex-col items-center justify-center mt-3 border border-white p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
                     >
                       SELECT
                     </button>

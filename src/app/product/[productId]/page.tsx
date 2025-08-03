@@ -242,14 +242,61 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth md:h-[80vh] px-8 '>
-            <div className='flex flex-col items-center space-y-3 w-full max-w-[600px]'>
-              <h1 className='uppercase font-medium text-lg'>
-                {productDetails?.name}
-              </h1>
-              <h3 className='font-semibold'>
-                ₦ {Number(productDetails?.price).toLocaleString()}
-              </h3>
+          <div className=' mt-5 md:mt-0 flex flex-col items-center justify-center text-sm overflow-y-scroll scroll-smooth scrollable-div md:h-[80vh] px-8 '>
+            <div className='flex flex-col space-y-4 w-full max-w-[600px]'>
+              <div>
+                <h1 className='uppercase font-medium text-lg'>
+                  {productDetails?.name}
+                </h1>
+                <h3 className='font-semibold mt-1'>
+                  ₦ {Number(productDetails?.price).toLocaleString()}
+                </h3>
+              </div>
+
+              <div>
+                <p className='text-sm mb-2'>Color</p>
+                <div className='flex flex-wrap gap-2'>
+                  {productDetails?.colors.map((item, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setSelectedColor(item)}
+                      className={`${
+                        selectedColor === item
+                          ? ' bg-[#38271c] text-white'
+                          : 'bg-[#c7c5c5a1]'
+                      }   shadow-sm py-2 px-4  cursor-pointer hover:bg-[#38271c] hover:text-white transition-all duration-300 `}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className='text-sm mb-2'>Size</p>
+                <div className='flex flex-wrap gap-2'>
+                  {productDetails?.sizes.map((item, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setSelectedSize(item)}
+                      className={`${
+                        selectedSize === item
+                          ? ' bg-[#38271c] text-white'
+                          : 'bg-[#c7c5c5a1]'
+                      }  shadow-sm py-2 px-4 cursor-pointer hover:bg-[#38271c] hover:text-white transition-all duration-300`}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+                <p
+                  onClick={() => router.push('/size-chart')}
+                  className='text-xs mt-2 underline underline-offset-2 cursor-pointer'
+                >
+                  Open size chart
+                </p>
+              </div>
               <Accordion
                 type='single'
                 collapsible
@@ -261,9 +308,9 @@ const ProductDetails = () => {
                   className='border-b-[#a1a1a19c] w-full'
                 >
                   <AccordionTrigger className=' hover:no-underline font-normal'>
-                    Product Description
+                    Creator&apos;s Note
                   </AccordionTrigger>
-                  <AccordionContent className='text-base font-semibold'>
+                  <AccordionContent className='text-sm font-medium'>
                     <div className='flex flex-col gap-2'>
                       {productDetails?.product_details?.map((item, index) => (
                         <p key={index}>{item}</p>
@@ -274,7 +321,7 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              <Accordion type='single' collapsible className='w-full '>
+              {/* <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -305,9 +352,9 @@ const ProductDetails = () => {
                     </div>
                   </AccordionContent>
                 </AccordionItem>
-              </Accordion>
+              </Accordion> */}
 
-              <Accordion type='single' collapsible className='w-full '>
+              {/* <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
                   value='product-details'
                   className='border-b-[#a1a1a19c]'
@@ -337,7 +384,7 @@ const ProductDetails = () => {
                     </div>
                   </AccordionContent>
                 </AccordionItem>
-              </Accordion>
+              </Accordion> */}
 
               <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
@@ -345,7 +392,7 @@ const ProductDetails = () => {
                   className='border-b-[#a1a1a19c]'
                 >
                   <AccordionTrigger className=' hover:no-underline font-normal'>
-                    Delivery and Returns
+                    Shipping and Delivery
                   </AccordionTrigger>
                   <AccordionContent>
                     All domestic and international orders are shipped via DHL.
@@ -398,7 +445,7 @@ const ProductDetails = () => {
             <button
               disabled={disableBtn}
               onClick={addToBag}
-              className='text-xs text-[#f0efef] p-2 border bg-[#523f3fab] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300'
+              className='text-xs text-[#f0efef] p-2 border bg-[#38271c] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300'
             >
               ADD TO BAG
             </button>
@@ -409,8 +456,8 @@ const ProductDetails = () => {
         <SuccessModal
           show={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
-          description={`You have added ${productDetails?.name} to your shopping cart`}
-          buttonText='View Cart'
+          description={`You have added ${productDetails?.name} to your Bag`}
+          buttonText='View Bag'
           buttonClick={() => router.push('/bag')}
           title='Product Added'
         />
@@ -420,7 +467,7 @@ const ProductDetails = () => {
         <ErrorModal
           show={showErrorModal}
           onClose={() => setShowErrorModal(false)}
-          description='Please check your connection or this item is already in your shopping bag.'
+          description='Please check your connection or this item is already in your Bag.'
         />
       )}
     </div>

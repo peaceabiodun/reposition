@@ -528,7 +528,7 @@ const Bag = () => {
                 Item(s)
               </p>
               <p>
-                Total price:
+                Total:
                 <span className='font-medium'>
                   {' '}
                   ₦ {Number(totalPrice).toLocaleString()}
@@ -956,8 +956,8 @@ const Bag = () => {
         <SuccessModal
           show={showDeleteSuccessModal}
           onClose={() => setShowDeleteSuccessModal(false)}
-          title='Product removed from Cart'
-          buttonText='Go back to shopping'
+          title='Product removed from Bag'
+          buttonText='Got it '
           buttonClick={() => router.push('/')}
         />
       )}

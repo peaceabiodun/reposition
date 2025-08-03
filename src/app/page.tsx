@@ -316,16 +316,30 @@ const Home = () => {
                     <video
                       width='100%'
                       height='100%'
-                      src={campaignDetails?.campaign_video[0] ?? ''}
+                      src={
+                        'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
+                      }
                       controls={false}
                       loop={true}
                       autoPlay={true}
                       muted={true}
-                      className='w-full h-full object-cover z-[-1]'
+                      playsInline={true}
+                      disablePictureInPicture={true}
+                      disableRemotePlayback={true}
+                      className='w-full h-full object-cover z-[-1] pointer-events-none'
                       poster='/poster-img.png'
+                      style={{
+                        WebkitUserSelect: 'none',
+                        WebkitTouchCallout: 'none',
+                        WebkitTapHighlightColor: 'transparent',
+                        userSelect: 'none',
+                        touchAction: 'none',
+                      }}
                     />
                     <source
-                      src={campaignDetails?.campaign_video[0] ?? ''}
+                      src={
+                        'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
+                      }
                       type='video/mp4'
                     />
                   </div>
@@ -343,28 +357,35 @@ const Home = () => {
                 </div>
 
                 <nav className='absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer'>
-                  <div className='gap-8 hidden sm:flex'>
+                  <div className='gap-5 hidden lg:flex'>
                     <p
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden md:flex'
+                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
                       onClick={() => router.push('/shop')}
                     >
                       Shop
                     </p>
                     <p
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden sm:flex'
-                      onClick={() => router.push('/we-are')}
+                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
+                      onClick={() => router.push('/our-story')}
                     >
-                      We Are
+                      Our Story
                     </p>
+
                     <p
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden sm:flex'
+                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
                       onClick={() => router.push('/theassemble')}
                     >
-                      Join The Assemble
+                      Join Assemble
+                    </p>
+                    <p
+                      onClick={() => router.push('/our-impact')}
+                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
+                    >
+                      Our Impact
                     </p>
                   </div>
 
-                  <div className='mr-16 '>
+                  <div className='lg:mr-20 '>
                     <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
                       REPOSITION{' '}
                     </h2>
@@ -375,7 +396,7 @@ const Home = () => {
                       <MdOutlineInventory
                         size={24}
                         onClick={() => router.push('/manage-products')}
-                        className='cursor-pointer hidden sm:flex'
+                        className='cursor-pointer hidden lg:flex'
                       />
                     )}
                     <GoPerson
@@ -387,7 +408,7 @@ const Home = () => {
                           router.push('/login');
                         }
                       }}
-                      className='cursor-pointer hidden sm:flex'
+                      className='cursor-pointer hidden lg:flex'
                     />
                     <div className='relative'>
                       <BsHandbag
@@ -407,7 +428,7 @@ const Home = () => {
                     <LanguageSelector />
                     <CgMenuRight
                       size={20}
-                      className='cursor-pointer sm:hidden'
+                      className='cursor-pointer lg:hidden'
                       onClick={() => setShowMobileMenu(true)}
                     />
                   </div>
@@ -516,9 +537,9 @@ const Home = () => {
                       </p>
                       <button
                         onClick={() => router.push(`product/${item.id}`)}
-                        className='text-sm flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
+                        className='text-sm flex flex-col items-center justify-center  mt-3 border border-white p-2  hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999] h-[30px]'
                       >
-                        BUY NOW
+                        SELECT
                       </button>
                     </div>
                   </Link>
@@ -560,11 +581,18 @@ const Home = () => {
                 alt='assemble'
                 className='w-full h-full object-cover'
               />
-              <div
-                onClick={() => router.push('/theassemble')}
-                className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer absolute bottom-5 left-5'
-              >
-                Join The Assemble
+              <div className='absolute bottom-5 left-5'>
+                <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4'>
+                  Click to join the Reposition community &quot;Assemble&quot; &
+                  enjoy discounts, early access, personalized event access, free
+                  delivery and more!
+                </h4>
+                <div
+                  onClick={() => router.push('/theassemble')}
+                  className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
+                >
+                  Join Assemble
+                </div>
               </div>
             </div>
             <div className='w-full h-[300px] md:h-[600px]'>
@@ -576,19 +604,6 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='flex flex-col items-center justify-center gap-4 mb-10 p-4'>
-            <h4 className='text-center text-sm md:text-lg max-w-[450px]'>
-              Click to join the Reposition community &quot;The Assemble&quot; &
-              enjoy discounts, early access, personalized event access, free
-              delivery and more!
-            </h4>
-            <button
-              onClick={() => router.push('/theassemble')}
-              className='cursor-pointer hover:bg-[#3f2a164d] text-[#3f2a16ef] px-4 py-2  sm:w-[300px] border border-solid border-[#3f2a16]'
-            >
-              Join The Assemble
-            </button>
-          </div>
           <Footer />
         </div>
       </div>
