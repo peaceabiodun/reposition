@@ -68,12 +68,16 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
       onClick: () => router.push('/shop'),
     },
     {
-      title: 'We Are',
-      onClick: () => router.push('/we-are'),
+      title: 'Our Story',
+      onClick: () => router.push('/our-story'),
     },
     {
       title: 'Join Assemble',
       onClick: () => router.push('/theassemble'),
+    },
+    {
+      title: 'Our Impact',
+      onClick: () => router.push('/our-impact'),
     },
     ...(token && userRole === 'ADMIN'
       ? [

@@ -12,9 +12,8 @@ declare global {
 
 import { useEffect, useState, useRef } from 'react';
 import Cookies from 'js-cookie';
-import { GoGlobe } from 'react-icons/go';
 import { IoCheckmarkOutline } from 'react-icons/io5';
-import { HiOutlineLanguage } from 'react-icons/hi2';
+import { GiWorld } from 'react-icons/gi';
 
 export default function LanguageSelector() {
   const [languages] = useState([
@@ -298,7 +297,7 @@ export default function LanguageSelector() {
           aria-expanded={isDropdownOpen}
           aria-label='Select language'
         >
-          <HiOutlineLanguage size={24} />
+          <GiWorld size={24} />
         </button>
 
         {isDropdownOpen && (

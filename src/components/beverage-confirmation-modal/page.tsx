@@ -4,7 +4,6 @@
 import { STORAGE_KEYS } from '@/utils/constants';
 import LocalModal from '../modal/page';
 import { useEffect, useRef, useState } from 'react';
-import { IoPlayCircle } from 'react-icons/io5';
 
 type ModalProps = {
   show: boolean;
@@ -45,7 +44,7 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
       onRequestClose={onClose}
       contentClassName='w-[90%] sm:w-[500px] h-[550px]'
       backgroundColor='bg-transparent'
-      hasCancelIcon={false}
+      hasCancelIcon={true}
     >
       <audio
         ref={audioRef}
@@ -71,17 +70,17 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
           at checkout
         </p>
         <p className='text-xs italic text-white text-center'>
-          For every order, we donate $1 on your behalf to creative children with
-          special needs in Africa
+          Everytime your beverage gets to you, $5 dollars goes to a creative
+          special needs child in Africa.
         </p>
         <button
-          onClick={onClose}
+          onClick={handlePlayAudio}
           className='text-sm  text-[#F5F5DC] bg-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-[150px]'
         >
           Got it
         </button>
       </div>
-      {!isAudioPlaying && (
+      {/* {!isAudioPlaying && (
         <div className='w-full h-full flex items-center justify-center absolute inset-0 bg-black/20 z-50'>
           <IoPlayCircle
             size={35}
@@ -89,7 +88,7 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
             onClick={handlePlayAudio}
           />
         </div>
-      )}
+      )} */}
     </LocalModal>
   );
 };

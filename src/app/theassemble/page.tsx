@@ -172,17 +172,16 @@ const TheAssemble = () => {
         </header>
 
         <section className='text-[#000000] mb-10 max-w-[1200px] m-auto'>
-          <div className='flex justify-start items-center text-sm cursor-pointer w-[100px] mb-5'>
-            <MdOutlineArrowBackIosNew
-              size={20}
-              className='cursor-pointer'
-              onClick={() => router.back()}
-            />
+          <div
+            onClick={() => router.push('/')}
+            className='flex justify-start items-center text-sm cursor-pointer w-[100px] mb-5'
+          >
+            <MdOutlineArrowBackIosNew size={20} className='cursor-pointer' />
             Back
           </div>
 
           <h2 className='text-lg sm:text-2xl font-bold text-center mt-6'>
-            THE ASSEMBLE
+            ASSEMBLE
           </h2>
           <p className='text-sm text-center mt-2 font-medium'>
             MEMBERSHIP FORM
@@ -244,7 +243,7 @@ const TheAssemble = () => {
               <p className='text-red-500'>*</p>
             </div>
             <p className='mt-1 text-xs'>
-              Note: Tick the checkbox to select the package
+              Note: Tick the radio button to select the package
             </p>
 
             <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
@@ -256,25 +255,23 @@ const TheAssemble = () => {
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <div>
-                <p className='text-lg font-bold'>Respect</p>
-                <ul className='list-disc list-inside'>
-                  <li> One house mocktail</li>
-                  <li>
-                    One-time monthly discounts on coffee/pastries at The
-                    Assemble partner venues
-                  </li>
+                <p className='text-lg font-bold mb-1'>RESPECT [10,000PTS]</p>
+                <ul className='list-disc list-inside space-y-1'>
+                  <li> One-time monthly discount at Assemble partner venues</li>
                   <li>45mins early access on Reposition collection drops</li>
                   <li>
                     Special codes to redeem discounts on Select Reposition
+                    purchases
                   </li>
                   <li>
                     Access to personalized event content and first-reserve
                     access for next event
                   </li>
-                  <li>
-                    Free delivery on 6-time purchase of Reposition products
-                  </li>
+                  <li>Lifetime-care [T&C applies]</li>
                 </ul>
+                <p className='text-sm mt-1'>
+                  For every 10 Reposition Item purchase or $1550 spent
+                </p>
                 {/* <p className='mt-1 font-bold text-lg'>10,000 NGN</p>
                 <div className='flex gap-2 items-center'>
                   <p className='mt-2'>Quantity</p>
@@ -309,46 +306,42 @@ const TheAssemble = () => {
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <label>
-                <p className='text-lg font-bold'>Private</p>
-                <ul className='list-disc list-inside'>
-                  <li>One house mocktail </li>
+                <p className='text-lg font-bold mb-1'>PRIVATE [30,000PTS]</p>
+                <ul className='list-disc list-inside space-y-1'>
                   <li>
-                    Three-time monthly discount on coffee/pastries at The
-                    Assemble partner venues
+                    Three-time monthly discounts at Assemble partner venues
                   </li>
                   <li>60min early access on Reposition collection drops</li>
                   <li>
-                    Special codes to redeem discounts on Reposition & TOT
-                    purchase
+                    Special codes to redeem discounts on Reposition purchases
                   </li>
                   <li>
                     Access to request removal of publicly displayed personal
                     content, or email personalized event content, and
                     first-reserve access for next event
                   </li>
-                  <p className='text-lg font-bold'>FOR YOU [30,000PTS]</p>
-                  <li>Christmas gifting</li>
-                  <li className='text-white lg:text-[#000000]'>
-                    Brand item exclusive{' '}
-                  </li>
+                  {/* <p className='text-lg font-bold'>FOR YOU [30,000PTS]</p> */}
+                  <li>Privilege christmas gifting</li>
                   <li className='text-white lg:text-[#000000]'>
                     Exclusive invitation to attend private retreats and jazz
                     events
                   </li>
                   <li className='text-white lg:text-[#000000]'>
+                    Name customization for Reposition purchase
+                  </li>
+                  <li className='text-white lg:text-[#000000]'>
                     Request name customization for Reposition purchase
                   </li>
                   <li className='text-white lg:text-[#000000]'>
-                    Invitation to support an annual Down-Syndromn outreach
-                    initiative
+                    Invitation to support an annual outreach initiatives
                   </li>
                   <li className='text-white lg:text-[#000000]'>
-                    Vendor discounts
-                  </li>
-                  <li className='text-white lg:text-[#000000]'>
-                    Free delivery on 3-time purchase of Reposition products
+                    Personalized style DNA profile
                   </li>
                 </ul>
+                <p className='text-sm mt-1'>
+                  For every 30 Reposition item purchase or $4650 spent
+                </p>
                 {/* <p className='mt-1 font-bold text-lg text-white lg:text-[#000000]'>
                   30,000 NGN
                 </p>
