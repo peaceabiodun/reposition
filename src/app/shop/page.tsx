@@ -81,10 +81,10 @@ const Shop = () => {
                   setFilterValue?.(item.name);
                   setSelectedFilter(item.name);
                 }}
-                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base ${
+                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base rounded-[4px] ${
                   selectedFilter === item.name
                     ? 'bg-[#5e3f225b] text-white '
-                    : 'border border-[#5e3f225b]'
+                    : 'border border-[#38271c] border-solid'
                 }`}
               >
                 {item.name}
@@ -148,7 +148,7 @@ const Shop = () => {
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className='text-sm flex flex-col items-center justify-center mt-3 border border-white p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
+                      className='text-sm flex flex-col items-center justify-center mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
                     >
                       SELECT
                     </button>

@@ -343,20 +343,32 @@ const Home = () => {
                       type='video/mp4'
                     />
                   </div>
+                  <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
+                    <h2 className='text-xl sm:text-3xl text-[#3f2a16] daikon p-2'>
+                      REPOSITION
+                    </h2>
+                  </div>
                   <div className='absolute bottom-0 p-8 text-white '>
                     <h2 className='text-xl sm:text-3xl mt-6'>
                       Experience Freedom
                     </h2>
                     <div
                       onClick={() => router.push('/shop')}
-                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
+                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
                     >
                       STEP IN
                     </div>
                   </div>
                 </div>
 
-                <nav className='absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer'>
+                <nav
+                  id={`${scroll ? 'sticky' : ''}`}
+                  className={`flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer ${
+                    scroll
+                      ? 'backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
+                      : 'absolute top-0 '
+                  } `}
+                >
                   <div className='gap-5 hidden lg:flex'>
                     <p
                       className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
@@ -537,7 +549,7 @@ const Home = () => {
                       </p>
                       <button
                         onClick={() => router.push(`product/${item.id}`)}
-                        className='text-sm flex flex-col items-center justify-center  mt-3 border border-white p-2  hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999] h-[30px]'
+                        className='text-sm flex flex-col items-center justify-center  mt-3 border border-[#38271c] border-solid rounded-[4px] p-2  hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999] h-[30px]'
                       >
                         SELECT
                       </button>
@@ -582,14 +594,14 @@ const Home = () => {
                 className='w-full h-full object-cover'
               />
               <div className='absolute bottom-5 left-5'>
-                <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4'>
+                <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4 backdrop-blur-sm p-3 mr-3'>
                   Click to join the Reposition community &quot;Assemble&quot; &
                   enjoy discounts, early access, personalized event access, free
                   delivery and more!
                 </h4>
                 <div
                   onClick={() => router.push('/theassemble')}
-                  className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-white p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
+                  className=' text-base sm:text-lg flex  items-center justify-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] h-[36px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
                 >
                   Join Assemble
                 </div>

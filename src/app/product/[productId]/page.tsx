@@ -179,7 +179,10 @@ const ProductDetails = () => {
           <MdOutlineArrowBackIosNew size={20} />
           Back
         </Link>
-        <Link href='/size-chart' className='text-sm border p-2 border-black'>
+        <Link
+          href='/size-chart'
+          className='text-sm p-2 underline underline-offset-2'
+        >
           Size Chart
         </Link>
       </div>
@@ -445,7 +448,7 @@ const ProductDetails = () => {
             <button
               disabled={disableBtn}
               onClick={addToBag}
-              className='text-xs text-[#f0efef] p-2 border bg-[#38271c] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300'
+              className='text-xs text-[#f0efef] p-2 bg-[#38271c] mt-7 w-[290px] h-[40px] cursor-pointer hover:scale-105 transition-all duration-300 rounded-[4px]'
             >
               ADD TO BAG
             </button>

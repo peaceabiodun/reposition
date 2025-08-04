@@ -94,7 +94,9 @@ const OurStory = () => {
               />
             </div>
             <div className='flex flex-col items-center justify-center  '>
-              <h4 className='text-sm md:text-lg text-center mb-4'>Values</h4>
+              <h4 className='text-sm md:text-lg text-center mb-4'>
+                Our Values
+              </h4>
               <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
               <div className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
