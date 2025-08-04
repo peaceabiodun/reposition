@@ -486,7 +486,7 @@ const Bag = () => {
                     <p>Size: {item.size}</p>
                   </div>
 
-                  <div className='flex items-center justify-between border border-[#523f3fab] p-2 w-[100px] '>
+                  <div className='flex items-center justify-between border border-[#523f3fab] p-2 w-[100px] rounded-[4px] '>
                     <button
                       onClick={() => {
                         const currentQty = parseInt(item.quantity);
@@ -494,7 +494,7 @@ const Bag = () => {
                           updateQuantity((currentQty - 1).toString(), index);
                         }
                       }}
-                      className='w-5 h-5  bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
+                      className='w-5 h-5  bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors rounded-[2px]'
                     >
                       <IoRemove size={16} />
                     </button>
@@ -506,7 +506,7 @@ const Bag = () => {
                         const currentQty = parseInt(item.quantity);
                         updateQuantity((currentQty + 1).toString(), index);
                       }}
-                      className='w-5 h-5  bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors'
+                      className='w-5 h-5  bg-[#523f3f] flex items-center justify-center text-white hover:bg-[#523f3fc5] transition-colors rounded-[2px]'
                     >
                       <IoAdd size={16} />
                     </button>
@@ -574,7 +574,7 @@ const Bag = () => {
                     });
                   }, 100);
                 }}
-                className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300 my-4'
+                className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300 my-4 rounded-[4px]'
               >
                 CHECKOUT SECURELY
                 <HiArrowLongRight size={20} />
@@ -600,7 +600,7 @@ const Bag = () => {
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className=' bg-[#523f3fab] hover:bg-[#523f3f71] text-[#e4e0e0] p-2 w-[200px] h-[30px] flex items-center justify-center cursor-pointer'
+                      className='   border border-[#38271c] border-solid rounded-[4px] hover:bg-[#fafafa56] text-[#3f2a16] p-2 w-[200px] h-[30px] flex items-center justify-center cursor-pointer'
                     >
                       Buy Now
                     </button>
