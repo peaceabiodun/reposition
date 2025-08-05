@@ -80,7 +80,7 @@ const Home = () => {
         .order('created_at', { ascending: false });
       if (data !== null) {
         if (filterValue !== ENUM_PRODUCT_FILTER_LIST.ALL) {
-          data = data.filter((product) => product.category === filterValue);
+          data = data.filter((product:any) => product.category === filterValue);
         }
         setProducts(data ?? []);
       }
