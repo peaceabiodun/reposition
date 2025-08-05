@@ -85,7 +85,7 @@ const ManageProducts = () => {
           </Link>
           <button
             onClick={() => router.push('/new-product')}
-            className='border border-[#3d3e3f]  p-2 text-xs md:text-sm'
+            className='border border-[#38271c] text-[#38271c] p-2 text-xs md:text-sm rounded-[4px] transition-all duration-300'
           >
             Add product
           </button>
@@ -111,7 +111,7 @@ const ManageProducts = () => {
               {products?.map((item, index) => (
                 <div
                   key={item?.id}
-                  className={`relative flex gap-3 justify-between items-center hover:bg-[#ecebeb] p-2  ${
+                  className={`relative flex gap-3 justify-between items-center hover:border hover:border-[#38271c] p-2  ${
                     index === products?.length - 1
                       ? ''
                       : 'border-b border-[#b9b9b96c]'

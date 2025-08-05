@@ -168,19 +168,19 @@ const EditProductModal = ({
         <label className=''>Product Price (NGN)</label>
         <input
           type='text'
-          className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+          className='border border-[#38271c] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
           placeholder='enter price in NGN'
           value={formData?.price}
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         />
 
         <p className=''>Product Description</p>
-        <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
+        <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 h-[200px] overflow-y-scroll scrollable-div'>
           <p className=''>+ Add Descriptions one after another</p>
           <div className='flex items-center justify-between gap-3'>
             <input
               type='text'
-              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent'
+              className='border border-[#38271c] rounded-sm w-[240px] p-2 mt-1 outline-none bg-transparent'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -196,7 +196,7 @@ const EditProductModal = ({
                 key={index}
                 className='flex justify-between items-center gap-3'
               >
-                <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                <span className='border border-[#38271c] shadow-sm p-2 rounded-sm w-[240px] '>
                   {item}
                 </span>
                 <div
@@ -321,12 +321,12 @@ const EditProductModal = ({
         </div>
 
         <p>Product Sizes</p>
-        <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
+        <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll scrollable-div'>
           <p className=''>+ Add Sizes</p>
           <div className='flex items-center justify-between gap-3'>
             <input
               type='text'
-              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent'
+              className='border border-[#38271c] rounded-sm w-[240px] p-2 mt-1 outline-none bg-transparent'
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />
@@ -341,7 +341,7 @@ const EditProductModal = ({
                 key={index}
                 className='flex justify-between items-center gap-3'
               >
-                <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                <span className='border border-[#38271c] shadow-sm p-2 rounded-sm w-[240px] '>
                   {item}
                 </span>
                 <div
@@ -356,12 +356,12 @@ const EditProductModal = ({
         </div>
 
         <p>Product Colors</p>
-        <div className='border border-[#3d3e3f] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll'>
+        <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll scrollable-div'>
           <p className=''>+ Add Colors</p>
           <div className='flex items-center justify-between gap-3'>
             <input
               type='text'
-              className='border border-[#3d3e3f] w-[240px] p-2 mt-1 outline-none bg-transparent'
+              className='border border-[#38271c] rounded-sm w-[240px] p-2 mt-1 outline-none bg-transparent'
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />
@@ -376,7 +376,7 @@ const EditProductModal = ({
                 key={index}
                 className='flex justify-between gap-3 items-center'
               >
-                <span className='bg-[#d3d3d37c] shadow-sm p-2 rounded-sm w-[240px] '>
+                <span className='border border-[#38271c] shadow-sm p-2 rounded-sm w-[240px] '>
                   {item}
                 </span>
                 <div
@@ -392,7 +392,7 @@ const EditProductModal = ({
 
         <button
           onClick={editProductDetails}
-          className='border border-[#909192] bg-[#523f3f9c] text-[#e4e0e0] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#7e5d5dab]'
+          className='border border-[#38271c]  text-[#38271c] rounded-sm p-2 mt-6 mb-9 text-sm w-full h-[40px] hover:bg-[#7e5d5d67] transition-all duration-300'
         >
           {loading ? 'Loading...' : 'Confirm'}
         </button>

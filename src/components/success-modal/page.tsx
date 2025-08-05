@@ -25,7 +25,7 @@ const SuccessModal = ({
         <div>{description}</div>
         {buttonText && buttonClick && (
           <button
-            className='border bg-[#523f3fab] text-[#f0efef] p-2 text-sm w-[150px] h-[40px] hover:bg-[#7e5d5dab] '
+            className='border border-[#38271c] text-[#38271c] p-2 text-sm w-[150px] h-[40px] hover:bg-[#7e5d5d54] rounded-[4px] '
             onClick={buttonClick}
           >
             {buttonText}

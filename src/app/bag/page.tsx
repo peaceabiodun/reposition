@@ -600,9 +600,9 @@ const Bag = () => {
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className='   border border-[#38271c] border-solid rounded-[4px] hover:bg-[#fafafa56] text-[#3f2a16] p-2 w-[200px] h-[30px] flex items-center justify-center cursor-pointer'
+                      className='   border border-[#38271c] border-solid rounded-[4px] hover:bg-[#fafafa56] text-[#3f2a16] p-2 w-[200px] h-[30px] flex items-center justify-center cursor-pointer text-sm'
                     >
-                      Buy Now
+                      SELECT
                     </button>
                   </div>
                 ))}
@@ -627,7 +627,7 @@ const Bag = () => {
                       onChange={(e) =>
                         updateFormData('first_name', e.target.value)
                       }
-                      className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
+                      className='border border-[#38271c] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
                     />
                     {formError.first_name && (
                       <div className='text-xs text-red-500 mt-2'>
@@ -644,7 +644,7 @@ const Bag = () => {
                       onChange={(e) =>
                         updateFormData('last_name', e.target.value)
                       }
-                      className='border border-[#3d3e3f] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
+                      className='border border-[#38271c] rounded-sm w-full mt-2 p-2 outline-none bg-transparent '
                     />
                     {formError.last_name && (
                       <div className='text-xs text-red-500 mt-2'>
@@ -661,7 +661,7 @@ const Bag = () => {
                       onChange={(e) =>
                         updateFormData('user_email', e.target.value)
                       }
-                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                      className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
                     />
                     {!validateEmail(deliveryDetails.user_email) &&
                       formError.user_email && (
@@ -677,7 +677,7 @@ const Bag = () => {
                       placeholder='E.g Los Angeles'
                       value={deliveryDetails.city}
                       onChange={(e) => updateFormData('city', e.target.value)}
-                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                      className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
                     />
                     {formError.city && (
                       <div className='text-[10px] text-red-500 mt-2'>
@@ -693,7 +693,7 @@ const Bag = () => {
                   </p>
                   <div
                     onClick={() => setShowDropdown(!showDropdown)}
-                    className={`border  text-gray-400 border-[#3d3e3f] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
+                    className={`border  text-gray-400 border-[#38271c] rounded-sm w-full p-2 flex gap-3 justify-between  items-center cursor-pointer relative`}
                   >
                     <p
                       className={`${
@@ -710,7 +710,7 @@ const Bag = () => {
                     />
                   </div>
                   {showDropdown && (
-                    <div className='bg-[#ecebeb] rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto'>
+                    <div className='backdrop-blur-md rounded-sm p-2 absolute shadow-md text-xs sm:text-sm flex flex-col gap-2 z-50 max-h-[230px] overflow-y-auto scrollable-div'>
                       {countryList.map((item, index) => (
                         <div
                           key={index}
@@ -720,9 +720,9 @@ const Bag = () => {
                           }}
                           className={`${
                             selectedCountry === item
-                              ? ' font-light bg-gray-100'
+                              ? '  border border-[#38271c] rounded-[4px] '
                               : ''
-                          } hover:font-light hover:bg-gray-100 p-2 cursor-pointer`}
+                          } hover:border hover:border-[#38271c] p-2 cursor-pointer`}
                         >
                           {item}
                         </div>
@@ -738,7 +738,7 @@ const Bag = () => {
                       onChange={(e) =>
                         updateFormData('address', e.target.value)
                       }
-                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                      className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
                     />
                     {formError.address && (
                       <div className='text-[10px] text-red-500 mt-2'>
@@ -756,7 +756,7 @@ const Bag = () => {
                       onChange={(e) =>
                         updateFormData('zip_code', e.target.value)
                       }
-                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
+                      className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent mt-2 '
                     />
                     {formError.zip_code && (
                       <div className='text-[10px] text-red-500 mt-2'>
@@ -773,7 +773,7 @@ const Bag = () => {
                       onChange={(e) =>
                         updateFormData('phone_number', e.target.value)
                       }
-                      className='border border-[#3d3e3f] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
+                      className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent mt-2'
                     />
                     {formError.phone_number && (
                       <div className='text-[10px] text-red-500 mt-2'>
@@ -793,7 +793,7 @@ const Bag = () => {
                       <input
                         type='checkbox'
                         checked
-                        className='accent-black mt-1'
+                        className='accent-[#38271c] mt-1'
                         readOnly
                       />
                       <div>
@@ -866,7 +866,7 @@ const Bag = () => {
                         type='text'
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
-                        className='border border-[#3d3e3f] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
+                        className='border border-[#38271c] rounded-sm w-[130px] h-[30px] p-2 outline-none bg-transparent '
                       />
                     </div>
                     <div className='flex gap-3 justify-between'>
@@ -937,7 +937,7 @@ const Bag = () => {
                 }
                 initializePayment({ onSuccess, onClose });
               }}
-              className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3'
+              className=' cursor-pointer bg-[#38271c] text-[#F5F5DC] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3 rounded-[4px] hover:bg-[#38271cb6] transition-all duration-300'
             >
               Complete Order
             </button>

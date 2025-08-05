@@ -31,7 +31,7 @@ import BeverageConfirmationModal from '@/components/beverage-confirmation-modal/
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
-  const [campaignLoading, setCampaignLoading] = useState(false);
+  // const [campaignLoading, setCampaignLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   const [showErrorModal, setShowErrorModal] = useState(false);
   //const [showCampaign, setShowCampaign] = useState(true);
@@ -99,27 +99,27 @@ const Home = () => {
     fetchProducts();
   }, [filterValue]);
 
-  const fetchCampaignDetails = async () => {
-    setCampaignLoading(true);
-    try {
-      const { data, error } = await supabase.from('campaign').select();
-      if (data) {
-        setCampaignDetails(data[0]);
-      }
+  // const fetchCampaignDetails = async () => {
+  //   setCampaignLoading(true);
+  //   try {
+  //     const { data, error } = await supabase.from('campaign').select();
+  //     if (data) {
+  //       setCampaignDetails(data[0]);
+  //     }
 
-      if (error) {
-        setShowErrorModal(true);
-      }
-    } catch (err: any) {
-      setShowErrorModal(true);
-    } finally {
-      setCampaignLoading(false);
-    }
-  };
+  //     if (error) {
+  //       setShowErrorModal(true);
+  //     }
+  //   } catch (err: any) {
+  //     setShowErrorModal(true);
+  //   } finally {
+  //     setCampaignLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchCampaignDetails();
-  }, []);
+  // useEffect(() => {
+  //   fetchCampaignDetails();
+  // }, []);
 
   const getSession = async () => {
     const {
@@ -298,172 +298,163 @@ const Home = () => {
         <div className=''>
           {/* <Header /> */}
           <div className='flex flex-col items-center  w-full'>
-            {campaignLoading ? (
-              <div className='w-full flex justify-center items-center p-4'>
-                <ThreeCircles
-                  visible={true}
-                  height={50}
-                  width={50}
-                  color='#b4b4b4ad'
-                  ariaLabel='three-circles-loading'
-                  wrapperClass='my-4'
-                />
-              </div>
-            ) : (
-              <div className='relative w-full'>
-                <div className='relative'>
-                  <div className='w-full border border-[#3f2a16] overflow-hidden h-[100vh] campaign_video'>
-                    <video
-                      width='100%'
-                      height='100%'
-                      src={
-                        'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
-                      }
-                      controls={false}
-                      loop={true}
-                      autoPlay={true}
-                      muted={true}
-                      playsInline={true}
-                      disablePictureInPicture={true}
-                      disableRemotePlayback={true}
-                      className='w-full h-full object-cover z-[-1] pointer-events-none'
-                      poster='/poster-img.png'
-                      style={{
-                        WebkitUserSelect: 'none',
-                        WebkitTouchCallout: 'none',
-                        WebkitTapHighlightColor: 'transparent',
-                        userSelect: 'none',
-                        touchAction: 'none',
-                      }}
-                    />
-                    <source
-                      src={
-                        'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
-                      }
-                      type='video/mp4'
-                    />
-                  </div>
-                  <div className='absolute top-0 left-0 w-full h-full flex items-center justify-center'>
-                    <h2 className='text-xl sm:text-3xl text-[#3f2a16] daikon p-2'>
-                      REPOSITION
-                    </h2>
-                  </div>
-                  <div className='absolute bottom-0 p-8 text-white '>
-                    <h2 className='text-xl sm:text-3xl mt-6'>
-                      Experience Freedom
-                    </h2>
-                    <div
-                      onClick={() => router.push('/shop')}
-                      className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
-                    >
-                      STEP IN
-                    </div>
-                  </div>
+            <div className='relative w-full'>
+              <div className='relative'>
+                <div className='w-full border border-[#3f2a16] overflow-hidden h-[100vh] campaign_video'>
+                  <video
+                    width='100%'
+                    height='100%'
+                    src={
+                      'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
+                    }
+                    controls={false}
+                    loop={true}
+                    autoPlay={true}
+                    muted={true}
+                    playsInline={true}
+                    disablePictureInPicture={true}
+                    disableRemotePlayback={true}
+                    className='w-full h-full object-cover z-[-1] pointer-events-none'
+                    poster='/poster-img.png'
+                    style={{
+                      WebkitUserSelect: 'none',
+                      WebkitTouchCallout: 'none',
+                      WebkitTapHighlightColor: 'transparent',
+                      userSelect: 'none',
+                      touchAction: 'none',
+                    }}
+                  />
+                  <source
+                    src={
+                      'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
+                    }
+                    type='video/mp4'
+                  />
                 </div>
 
-                <nav
-                  id={`${scroll ? 'sticky' : ''}`}
-                  className={`flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer ${
-                    scroll
-                      ? 'backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
-                      : 'absolute top-0 '
-                  } `}
-                >
-                  <div className='gap-5 hidden lg:flex'>
-                    <p
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
-                      onClick={() => router.push('/shop')}
-                    >
-                      Shop
-                    </p>
-                    <p
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
-                      onClick={() => router.push('/our-story')}
-                    >
-                      Our Story
-                    </p>
-
-                    <p
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
-                      onClick={() => router.push('/theassemble')}
-                    >
-                      Join Assemble
-                    </p>
-                    <p
-                      onClick={() => router.push('/our-impact')}
-                      className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
-                    >
-                      Our Impact
-                    </p>
+                <div className='absolute bottom-0 p-8 text-white '>
+                  <h2 className='text-xl sm:text-3xl mt-6'>
+                    Experience Freedom
+                  </h2>
+                  <div
+                    onClick={() => router.push('/shop')}
+                    className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
+                  >
+                    STEP IN
                   </div>
+                </div>
+              </div>
 
-                  <div className='lg:mr-20 '>
-                    <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
-                      REPOSITION{' '}
-                    </h2>
-                  </div>
+              <nav
+                className={`absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] cursor-pointer `}
+              >
+                <div className='gap-5 hidden lg:flex'>
+                  <p
+                    className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
+                    onClick={() => router.push('/shop')}
+                  >
+                    Shop
+                  </p>
+                  <p
+                    className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
+                    onClick={() => router.push('/our-story')}
+                  >
+                    Our Story
+                  </p>
 
-                  <div className='flex gap-3'>
-                    {userRole === 'ADMIN' && (
-                      <MdOutlineInventory
-                        size={24}
-                        onClick={() => router.push('/manage-products')}
-                        className='cursor-pointer hidden lg:flex'
-                      />
-                    )}
-                    <GoPerson
-                      size={26}
-                      onClick={() => {
-                        if (token) {
-                          setShowDropdown(!showDropdown);
-                        } else {
-                          router.push('/login');
-                        }
-                      }}
+                  <p
+                    className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
+                    onClick={() => router.push('/theassemble')}
+                  >
+                    Join Assemble
+                  </p>
+                  <p
+                    onClick={() => router.push('/our-impact')}
+                    className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
+                  >
+                    Our Impact
+                  </p>
+                </div>
+
+                <div className='lg:mr-20 '>
+                  <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
+                    REPOSITION{' '}
+                  </h2>
+                </div>
+
+                <div className='flex gap-3'>
+                  {userRole === 'ADMIN' && (
+                    <MdOutlineInventory
+                      size={24}
+                      onClick={() => router.push('/manage-products')}
                       className='cursor-pointer hidden lg:flex'
                     />
-                    <div className='relative'>
-                      <BsHandbag
-                        size={23}
-                        onClick={() => router.push('/bag')}
-                        className='cursor-pointer '
-                      />
-                      <span
-                        onClick={() => router.push('/bag')}
-                        className={`text-[10px] absolute top-[8px] ${
-                          scroll ? ' ' : ' '
-                        }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
-                      >
-                        {bagItems.length ?? '0'}
-                      </span>
-                    </div>
-                    <LanguageSelector />
-                    <CgMenuRight
-                      size={20}
-                      className='cursor-pointer lg:hidden'
-                      onClick={() => setShowMobileMenu(true)}
-                    />
-                  </div>
-                  {showDropdown && (
-                    <div className='backdrop-blur-md rounded-sm p-2 absolute right-2 top-16 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
-                      <div
-                        onClick={() => setShowUpdatePasswordModal(true)}
-                        className='hover:border border-white rounded-md p-2 cursor-pointer'
-                      >
-                        Update password
-                      </div>
-
-                      <div
-                        onClick={() => setShowLogoutModal(true)}
-                        className=' hover:border border-white rounded-md p-2 cursor-pointer'
-                      >
-                        Logout
-                      </div>
-                    </div>
                   )}
-                </nav>
+                  <GoPerson
+                    size={26}
+                    onClick={() => {
+                      if (token) {
+                        setShowDropdown(!showDropdown);
+                      } else {
+                        router.push('/login');
+                      }
+                    }}
+                    className='cursor-pointer hidden lg:flex'
+                  />
+                  <div className='relative'>
+                    <BsHandbag
+                      size={23}
+                      onClick={() => router.push('/bag')}
+                      className='cursor-pointer '
+                    />
+                    <span
+                      onClick={() => router.push('/bag')}
+                      className={`text-[10px] absolute top-[8px] ${
+                        scroll ? ' ' : ' '
+                      }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
+                    >
+                      {bagItems.length ?? '0'}
+                    </span>
+                  </div>
+                  <LanguageSelector />
+                  <CgMenuRight
+                    size={20}
+                    className='cursor-pointer lg:hidden'
+                    onClick={() => setShowMobileMenu(true)}
+                  />
+                </div>
+                {showDropdown && (
+                  <div className='backdrop-blur-md rounded-sm p-2 absolute right-2 top-16 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
+                    <div
+                      onClick={() => setShowUpdatePasswordModal(true)}
+                      className='hover:border border-white rounded-md p-2 cursor-pointer'
+                    >
+                      Update password
+                    </div>
+
+                    <div
+                      onClick={() => setShowLogoutModal(true)}
+                      className=' hover:border border-white rounded-md p-2 cursor-pointer'
+                    >
+                      Logout
+                    </div>
+                  </div>
+                )}
+              </nav>
+
+              <div
+                id={`${scroll ? 'sticky' : ''}`}
+                className={` ${
+                  scroll
+                    ? 'flex items-center justify-center p-4 md:p-8 hover:bg-[#fafafa41] text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
+                    : ' hidden '
+                } `}
+              >
+                <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
+                  REPOSITION
+                </h2>
               </div>
-            )}
+            </div>
           </div>
 
           <div className='relative'>
@@ -593,8 +584,8 @@ const Home = () => {
                 alt='assemble'
                 className='w-full h-full object-cover'
               />
-              <div className='absolute bottom-5 left-5'>
-                <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4 backdrop-blur-sm p-3 mr-3'>
+              <div className='absolute bottom-5 left-5 backdrop-blur-[2px] p-4 mr-3'>
+                <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4  '>
                   Click to join the Reposition community &quot;Assemble&quot; &
                   enjoy discounts, early access, personalized event access, free
                   delivery and more!

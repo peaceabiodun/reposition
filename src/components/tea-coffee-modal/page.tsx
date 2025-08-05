@@ -39,7 +39,7 @@ const TeaCoffeeModal = ({
                   localStorage.setItem(STORAGE_KEYS.BEVERAGE_SELECTED, 'Tea');
                   showConfirmationModal();
                 }}
-                className='text-sm sm:text-base text-[#F5F5DC] bg-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-full sm:w-[150px]'
+                className='text-sm  text-[#F5F5DC] border border-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-full sm:w-[150px] rounded-[4px]'
               >
                 TEA
               </button>
@@ -63,7 +63,7 @@ const TeaCoffeeModal = ({
                   );
                   showConfirmationModal();
                 }}
-                className='text-sm sm:text-base text-[#F5F5DC] bg-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-full sm:w-[150px]'
+                className='text-sm text-[#F5F5DC] border border-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-full sm:w-[150px] rounded-[4px]'
               >
                 COFFEE
               </button>

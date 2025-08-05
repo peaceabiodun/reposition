@@ -58,21 +58,21 @@ const ResetPassword = () => {
             placeholder='New Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
+            className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
           />
           <input
             type='password'
             placeholder='Confirm Password'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className='border border-[#3d3e3f] w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
+            className='border border-[#38271c] rounded-sm w-full p-2 outline-none bg-transparent placeholder:text-[#3d3e3f]'
           />
           {disableButton && (
             <p className='text-xs text-red-500'>Please fill in all details</p>
           )}
           <button
             disabled={disableButton}
-            className={`border border-[#3d3e3f] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
+            className={`border border-[#38271c] p-2 mt-6 w-full sm:max-w-[350px] cursor-pointer`}
             onClick={updatePassword}
           >
             {loading ? 'Loading...' : 'Confirm'}
