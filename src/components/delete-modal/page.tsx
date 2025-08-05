@@ -26,7 +26,7 @@ const DeleteModal = ({
         <p className='text-red-500 my-3'>This action cannot be reversed</p>
         <button
           onClick={onButtonClick}
-          className='border bg-[#523f3fa4] text-[#f0efef] p-2 mt-2 text-sm w-[150px] h-[40px] hover:bg-[#7e5d5dab] '
+          className='border border-[#38271c] text-[#38271c] p-2 mt-2 text-sm w-[150px] h-[40px] hover:bg-[#7e5d5d67] rounded-[4px] transition-all duration-300'
         >
           {loading ? 'Loading...' : 'Delete'}
         </button>

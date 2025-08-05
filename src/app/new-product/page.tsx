@@ -382,7 +382,7 @@ const AddNewProduct = () => {
           <button
             onClick={createProduct}
             disabled={disableButton}
-            className='border border-[#3d3e3f] rounded-sm p-2 text-sm w-full sm:w-[300px] h-[40px]'
+            className='border border-[#38271c] rounded-sm p-2 text-sm w-full sm:w-[300px] h-[40px]'
           >
             {loading ? 'Loading...' : ' Confirm'}
           </button>

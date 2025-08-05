@@ -266,8 +266,8 @@ const ProductDetails = () => {
                       className={`${
                         selectedColor === item
                           ? ' bg-[#38271c] text-white'
-                          : 'bg-[#c7c5c5a1]'
-                      }   shadow-sm py-2 px-4  cursor-pointer hover:bg-[#38271c] hover:text-white transition-all duration-300 `}
+                          : 'border border-[#38271c] text-[#38271c]'
+                      }   shadow-sm py-2 px-4  cursor-pointer hover:bg-[#38271c] hover:text-white transition-all duration-300 rounded-[4px] `}
                     >
                       {item}
                     </div>
@@ -285,8 +285,8 @@ const ProductDetails = () => {
                       className={`${
                         selectedSize === item
                           ? ' bg-[#38271c] text-white'
-                          : 'bg-[#c7c5c5a1]'
-                      }  shadow-sm py-2 px-4 cursor-pointer hover:bg-[#38271c] hover:text-white transition-all duration-300`}
+                          : 'border border-[#38271c] text-[#38271c]'
+                      }  shadow-sm py-2 px-4 cursor-pointer hover:bg-[#38271c] hover:text-white transition-all duration-300 rounded-[4px]`}
                     >
                       {item}
                     </div>
@@ -314,11 +314,13 @@ const ProductDetails = () => {
                     Creator&apos;s Note
                   </AccordionTrigger>
                   <AccordionContent className='text-sm font-medium'>
-                    <div className='flex flex-col gap-2'>
+                    <ul className='flex flex-col gap-2'>
                       {productDetails?.product_details?.map((item, index) => (
-                        <p key={index}>{item}</p>
+                        <li key={index} className='list-disc list-inside'>
+                          {item}
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                     {/* {productDetails?.description} */}
                   </AccordionContent>
                 </AccordionItem>

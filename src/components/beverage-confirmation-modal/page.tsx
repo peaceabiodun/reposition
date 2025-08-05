@@ -4,6 +4,7 @@
 import { STORAGE_KEYS } from '@/utils/constants';
 import LocalModal from '../modal/page';
 import { useEffect, useRef, useState } from 'react';
+import { MdClose } from 'react-icons/md';
 
 type ModalProps = {
   show: boolean;
@@ -18,6 +19,7 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [showCancelIcon, setShowCancelIcon] = useState(false);
 
   useEffect(() => {
     if (show && audioRef.current) {
@@ -44,7 +46,7 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
       onRequestClose={onClose}
       contentClassName='w-[90%] sm:w-[500px] h-[550px]'
       backgroundColor='bg-transparent'
-      hasCancelIcon={true}
+      hasCancelIcon={false}
     >
       <audio
         ref={audioRef}
@@ -73,12 +75,26 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
           Everytime your beverage gets to you, $5 dollars goes to a creative
           special needs child in Africa.
         </p>
-        <button
-          onClick={handlePlayAudio}
-          className='text-sm  text-[#F5F5DC] bg-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-[150px]'
-        >
-          Got it
-        </button>
+
+        {showCancelIcon ? (
+          <div>
+            <MdClose
+              size={22}
+              className='text-white hover:text-[#38271c] m-2 cursor-pointer'
+              onClick={onClose}
+            />
+          </div>
+        ) : (
+          <button
+            onClick={() => {
+              handlePlayAudio();
+              setShowCancelIcon(true);
+            }}
+            className='text-sm text-[#F5F5DC] border border-[#38271c] p-2 cursor-pointer hover:bg-[#38271c8e] transition-all duration-300 w-[150px] rounded-[4px]'
+          >
+            Got it
+          </button>
+        )}
       </div>
       {/* {!isAudioPlaying && (
         <div className='w-full h-full flex items-center justify-center absolute inset-0 bg-black/20 z-50'>
