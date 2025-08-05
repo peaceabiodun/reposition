@@ -7,7 +7,7 @@ import React, {
   ReactNode,
   Fragment,
 } from 'react';
-import { LuUploadCloud } from 'react-icons/lu';
+import { GrCloudUpload } from "react-icons/gr";
 import { AiOutlineDelete } from 'react-icons/ai';
 import ErrorModal from '../error-modal/page';
 
@@ -192,7 +192,7 @@ export function FileUploader({
               <div className='body_text'>Loading image...</div>
             ) : (
               <Fragment>
-                <LuUploadCloud size={20} />
+                <GrCloudUpload  size={20} />
                 <div className='body_text'>
                   <p className='text'> Drop your images here... or </p>
                   <button
