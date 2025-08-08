@@ -80,7 +80,9 @@ const Home = () => {
         .order('created_at', { ascending: false });
       if (data !== null) {
         if (filterValue !== ENUM_PRODUCT_FILTER_LIST.ALL) {
-          data = data.filter((product:any) => product.category === filterValue);
+          data = data.filter(
+            (product: any) => product.category === filterValue
+          );
         }
         setProducts(data ?? []);
       }
@@ -294,7 +296,7 @@ const Home = () => {
   // };
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
+      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] tenali '>
         <div className=''>
           {/* <Header /> */}
           <div className='flex flex-col items-center  w-full'>

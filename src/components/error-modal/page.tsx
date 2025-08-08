@@ -11,7 +11,7 @@ const ErrorModal = ({ show, onClose, description }: Props) => {
   return (
     <LocalModal isOpen={show} onRequestClose={onClose}>
       <div className='text-sm space-y-3 flex flex-col items-center justify-center'>
-        <div className='font-semibold text-red-500'>
+        <div className='font-semibold  text-red-500'>
           Sorry an error occured !
         </div>
         <div>{description}</div>

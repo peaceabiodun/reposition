@@ -61,7 +61,7 @@ const LocalModal = ({
         {...modalProps}
         appElement={document.getElementById('__next') as HTMLElement}
         className={`${
-          backgroundColor ? `${backgroundColor}` : 'bg-[#ece8e3]'
+          backgroundColor ? `${backgroundColor}` : 'bg-transparent'
         } fixed inset-0 !border-transparent w-auto h-auto !border-none`}
       >
         <div className={`p-5 w-full h-full relative ${contentClassName}`}>

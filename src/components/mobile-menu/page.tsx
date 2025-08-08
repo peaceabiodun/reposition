@@ -127,7 +127,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
           <div
             key={index}
             onClick={item?.onClick}
-            className='p-2 hover:bg-[#a3a3a37c] hover:font-semibold text-sm underline underline-offset-4 '
+            className='p-2 hover:bg-[#412e1c21] hover:font-semibold text-sm shadow-md mt-2 '
           >
             {item?.title}
           </div>

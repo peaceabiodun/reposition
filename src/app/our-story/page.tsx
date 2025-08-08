@@ -29,9 +29,10 @@ const OurStory = () => {
                 contemporary classics; A symbol of sustained heritage and
                 generational craftsmanship, designed for a discerning few.{' '}
                 <br />
+                <br />
                 According to our founder Ugo Solomon, “Your clothes and personal
-                style are a reflection of your life’s mission”. <br /> Driven by
-                our desire to help you position better in life towards
+                style are a reflection of your life’s mission”. <br /> <br />
+                Driven by our desire to help you position better in life towards
                 fulfilling purpose, while doing so with faith, love and
                 friendship in fellowship
               </p>
@@ -94,9 +95,7 @@ const OurStory = () => {
               />
             </div>
             <div className='flex flex-col items-center justify-center  '>
-              <h4 className='text-sm md:text-lg text-center mb-4'>
-                Our Values
-              </h4>
+              <h4 className='text-sm md:text-lg text-center mb-4'>Values</h4>
               <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
               <div className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
