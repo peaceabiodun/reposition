@@ -174,16 +174,10 @@ const ProductDetails = () => {
   return (
     <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] pb-12'>
       <Header />
-      <div className='flex w-full justify-between gap-4 p-4 mb-4 max-w-[1700px] mx-auto'>
+      <div className=' w-full  p-4 mb-4 max-w-[1700px] mx-auto'>
         <Link href='/' className=' gap-1 flex text-sm items-center '>
           <MdOutlineArrowBackIosNew size={20} />
           Back
-        </Link>
-        <Link
-          href='/size-chart'
-          className='text-sm p-2 underline underline-offset-2'
-        >
-          Size Chart
         </Link>
       </div>
       {loading ? (
@@ -202,18 +196,18 @@ const ProductDetails = () => {
           <div className='flex flex-col items-center justify-center w-full '>
             <div
               ref={carouselRef}
-              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar shadow-md relative'
+              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar shadow-xl relative rounded-[6px]'
             >
               {productDetails?.images.map((item, index) => (
                 <div
                   key={index}
-                  className='carousel-item w-[100vw] md:w-[50vw] h-[95vh] flex-shrink-0 snap-center cursor-pointer'
+                  className='carousel-item w-[100vw] md:w-[50vw] h-[95vh] flex-shrink-0 snap-center cursor-pointer rounded-[6px] '
                   data-index={index}
                 >
                   <img
                     src={item ? item : '/placeholder.png'}
                     alt='product_image'
-                    className={` object-cover w-[99.5%] h-[95vh] object-center transition-all duration-300 ${
+                    className={` object-cover w-[99.5%] h-[95vh] object-center transition-all duration-300 rounded-[6px] shadow-xl ${
                       productDetails?.sold_out ? 'brightness-50' : ''
                     }`}
                   />
@@ -237,7 +231,7 @@ const ProductDetails = () => {
                 <button
                   key={index}
                   onClick={() => handleIndicatorClick(index)}
-                  className={`w-8 h-3 ${
+                  className={`w-8 h-1 ${
                     currentIndex === index ? 'bg-[#c7bbb0]' : 'bg-[#523f3fab] '
                   }`}
                 />
@@ -431,11 +425,11 @@ const ProductDetails = () => {
                       help@re-position.co
                     </a>
                     <div className='my-2 text-sm'>
-                      For orders above $600 delivery is free for US, UK and
+                      For orders above ₦600 delivery is free for US, UK and
                       Canada.{' '}
                     </div>
                     <div className=' text-sm '>
-                      For orders above $300 within Nigeria, delivery is also
+                      For orders above ₦300 within Nigeria, delivery is also
                       free.{' '}
                     </div>
                   </AccordionContent>

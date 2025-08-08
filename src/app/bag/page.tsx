@@ -958,7 +958,7 @@ const Bag = () => {
           onClose={() => setShowDeleteSuccessModal(false)}
           title='Product removed from Bag'
           buttonText='Got it '
-          buttonClick={() => router.push('/')}
+          buttonClick={() => setShowDeleteSuccessModal(false)}
         />
       )}
 

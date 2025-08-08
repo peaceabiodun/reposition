@@ -151,7 +151,7 @@ const TheAssemble = () => {
   };
 
   return (
-    <div className='min-h-[100vh] bg-[#dbd9d2] the_assemble_bg   '>
+    <div className='min-h-[100vh] bg-[#dbd9d2]   '>
       <div className='blur-bg p-4'>
         <header>
           <div
@@ -171,7 +171,7 @@ const TheAssemble = () => {
           </div>
         </header>
 
-        <section className='text-[#000000] mb-10 max-w-[1200px] m-auto'>
+        <section className='text-[#4d3c1dfb] mb-10 max-w-[1200px] m-auto'>
           <div
             onClick={() => router.push('/')}
             className='flex justify-start items-center text-sm cursor-pointer w-[100px] mb-5'
@@ -189,11 +189,11 @@ const TheAssemble = () => {
           {/* <CountdownTimer /> */}
           <div className='mt-6 flex flex-col m-auto w-full max-w-[1200px] '>
             <div className='flex gap-2'>
-              <p className='text-lg'>Personal Information</p>
+              <p className='text-base'>Personal Information</p>
               <p className='text-red-500'>*</p>
             </div>
 
-            <div className='flex flex-col sm:flex-row gap-4 w-full mt-4'>
+            <div className='flex flex-col sm:flex-row gap-4 w-full mt-4 text-sm'>
               <div className='w-full'>
                 <label>Full Name</label>
                 <input
@@ -204,7 +204,7 @@ const TheAssemble = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, firstName: e.target.value })
                   }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000] '
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent  '
                 />
               </div>
               <div className='w-full'>
@@ -217,7 +217,7 @@ const TheAssemble = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000]'
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
                 />
               </div>
             </div>
@@ -233,20 +233,20 @@ const TheAssemble = () => {
                     setFormData({ ...formData, phoneNumber: e.target.value })
                   }
                   required
-                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#000000]'
+                  className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent '
                 />
               </div>
             </div>
 
             <div className='flex gap-2 mt-6'>
-              <p className='text-lg'>Package Options</p>
+              <p className='text-base'>Package Options</p>
               <p className='text-red-500'>*</p>
             </div>
             <p className='mt-1 text-xs'>
               Note: Tick the radio button to select the package
             </p>
 
-            <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
+            <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2 text-sm'>
               <input
                 type='radio'
                 name='package'
@@ -255,8 +255,8 @@ const TheAssemble = () => {
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <div>
-                <p className='text-lg font-bold mb-1'>RESPECT [10,000PTS]</p>
-                <ul className='list-disc list-inside space-y-1'>
+                <p className='text-base font-bold mb-1'>RESPECT [10,000PTS]</p>
+                <ul className='list-disc list-inside space-y-1 text-sm'>
                   <li> One-time monthly discount at Assemble partner venues</li>
                   <li>45mins early access on Reposition collection drops</li>
                   <li>
@@ -306,8 +306,8 @@ const TheAssemble = () => {
                 className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
               />
               <label>
-                <p className='text-lg font-bold mb-1'>PRIVATE [30,000PTS]</p>
-                <ul className='list-disc list-inside space-y-1'>
+                <p className='text-base font-bold mb-1'>PRIVATE [30,000PTS]</p>
+                <ul className='list-disc list-inside space-y-1 text-sm'>
                   <li>
                     Three-time monthly discounts at Assemble partner venues
                   </li>
@@ -322,22 +322,20 @@ const TheAssemble = () => {
                   </li>
                   {/* <p className='text-lg font-bold'>FOR YOU [30,000PTS]</p> */}
                   <li>Privilege christmas gifting</li>
-                  <li className='text-white lg:text-[#000000]'>
+                  <li className=''>
                     Exclusive invitation to attend private retreats and jazz
                     events
                   </li>
-                  <li className='text-white lg:text-[#000000]'>
+                  <li className=''>
                     Name customization for Reposition purchase
                   </li>
-                  <li className='text-white lg:text-[#000000]'>
+                  <li className=''>
                     Request name customization for Reposition purchase
                   </li>
-                  <li className='text-white lg:text-[#000000]'>
+                  <li className=''>
                     Invitation to support an annual outreach initiatives
                   </li>
-                  <li className='text-white lg:text-[#000000]'>
-                    Personalized style DNA profile
-                  </li>
+                  <li className=''>Personalized style DNA profile</li>
                 </ul>
                 <p className='text-sm mt-1'>
                   For every 30 Reposition item purchase or $4650 spent
@@ -438,8 +436,8 @@ const TheAssemble = () => {
           show={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
           title='Your details have been successfully submitted'
-          description=" Come In, You're Welcome."
-          buttonText='Back to home'
+          description="You're Welcome."
+          buttonText='Got it'
           buttonClick={() => router.push('/')}
         />
       )}

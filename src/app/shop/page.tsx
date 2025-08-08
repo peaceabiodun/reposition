@@ -81,7 +81,7 @@ const Shop = () => {
                   setFilterValue?.(item.name);
                   setSelectedFilter(item.name);
                 }}
-                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base rounded-[4px] ${
+                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base rounded-[4px] shadow-md ${
                   selectedFilter === item.name
                     ? 'bg-[#5e3f225b] text-white '
                     : 'border border-[#38271c] border-solid'
@@ -115,7 +115,7 @@ const Shop = () => {
                   key={item.id}
                   className='mb-4 relative'
                 >
-                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300  '>
+                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300 shadow-md  '>
                     <Image
                       src={item?.images[0] ?? '/placeholder.png'}
                       alt='product_image'
