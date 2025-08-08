@@ -296,7 +296,7 @@ const Home = () => {
   // };
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] tenali '>
+      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
         <div className=''>
           {/* <Header /> */}
           <div className='flex flex-col items-center  w-full'>
