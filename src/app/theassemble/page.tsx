@@ -151,7 +151,7 @@ const TheAssemble = () => {
   };
 
   return (
-    <div className='min-h-[100vh] bg-[#dbd9d2]   '>
+    <div className='min-h-[100vh] bg-[#C4BAAF]  '>
       <div className='blur-bg p-4'>
         <header>
           <div
@@ -173,7 +173,7 @@ const TheAssemble = () => {
 
         <section className='text-[#4d3c1dfb] mb-10 max-w-[1200px] m-auto'>
           <div
-            onClick={() => router.push('/')}
+            onClick={() => router.back()}
             className='flex justify-start items-center text-sm cursor-pointer w-[100px] mb-5'
           >
             <MdOutlineArrowBackIosNew size={20} className='cursor-pointer' />

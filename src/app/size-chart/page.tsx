@@ -1,8 +1,12 @@
+'use client';
+
 import Header from '@/components/header/page';
-import Link from 'next/link';
+
+import { useRouter } from 'next/navigation';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const SizeChart = () => {
+  const router = useRouter();
   const topChart = [
     {
       alpha: 'S',
@@ -76,13 +80,16 @@ const SizeChart = () => {
     },
   ];
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2]'>
+    <div className='w-full h-full min-h-[100vh] bg-[#C4BAAF]'>
       <div className='max-w-[1700px] mx-auto px-4 md:px-8 pb-10'>
         <Header />
-        <Link href='/' className=' gap-1 flex text-sm items-center p-4 w-fit'>
+        <div
+          onClick={() => router.back()}
+          className=' gap-1 flex text-sm items-center p-4 w-fit'
+        >
           <MdOutlineArrowBackIosNew size={20} />
           Back
-        </Link>
+        </div>
         <div className='max-w-[1000px] mx-auto'>
           <h2 className='text-center font-semibold text-sm my-4'>
             How to Measure for Tops and Pants

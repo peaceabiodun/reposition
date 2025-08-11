@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiTrash } from 'react-icons/ci';
 import { useEffect, useState, useRef } from 'react';
-import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import {
@@ -429,16 +428,16 @@ const Bag = () => {
   }, [discountCode, totalPrice, shippingFee]);
 
   return (
-    <div className='w-full min-h-screen bg-[#dbd9d2] pb-10 '>
+    <div className='w-full min-h-screen bg-[#C4BAAF] pb-10 '>
       <div className='max-w-[1500px] mx-auto'>
         <Header />
-        <Link
-          href='/'
+        <div
+          onClick={() => router.back()}
           className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
         >
           <MdOutlineArrowBackIosNew size={20} />
           Back
-        </Link>
+        </div>
 
         <h2 className='text-base font-semibold text-center my-4 px-3 xs:px-4'>
           YOUR BAG ({bagItems.length})
@@ -474,7 +473,7 @@ const Bag = () => {
                   alt='product_image'
                   width={200}
                   height={200}
-                  className='h-[200px] w-[200px] object-cover cursor-pointer'
+                  className='h-[200px] w-[200px] object-cover cursor-pointer rounded-lg shadow-lg'
                   onClick={() => router.push(`product/${item.id}`)}
                 />
                 <div className='flex flex-col sm:flex-row sm:justify-between w-full gap-3 sm:items-center'>
@@ -591,7 +590,7 @@ const Bag = () => {
                       alt='product-img'
                       width={200}
                       height={200}
-                      className='w-[200px] h-[200px] object-cover'
+                      className='w-[200px] h-[200px] object-cover rounded-lg shadow-lg'
                       onClick={() => router.push(`product/${item.id}`)}
                     />
                     <p className='mt-2 mb-1 font-semibold '>{item.name}</p>

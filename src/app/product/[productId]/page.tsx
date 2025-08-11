@@ -172,13 +172,16 @@ const ProductDetails = () => {
   }, [currentIndex]);
 
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] pb-12'>
+    <div className='w-full h-full min-h-[100vh] bg-[#C4BAAF] pb-12'>
       <Header />
       <div className=' w-full  p-4 mb-4 max-w-[1700px] mx-auto'>
-        <Link href='/' className=' gap-1 flex text-sm items-center '>
+        <div
+          onClick={() => router.back()}
+          className=' gap-1 flex text-sm items-center '
+        >
           <MdOutlineArrowBackIosNew size={20} />
           Back
-        </Link>
+        </div>
       </div>
       {loading ? (
         <div className='grow w-full flex justify-center items-center p-4'>
@@ -196,18 +199,18 @@ const ProductDetails = () => {
           <div className='flex flex-col items-center justify-center w-full '>
             <div
               ref={carouselRef}
-              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar shadow-xl relative rounded-[6px]'
+              className='flex overflow-x-auto scroll-smooth w-full snap-x snap-mandatory no-scrollbar shadow-xl relative rounded-lg'
             >
               {productDetails?.images.map((item, index) => (
                 <div
                   key={index}
-                  className='carousel-item w-[100vw] md:w-[50vw] h-[95vh] flex-shrink-0 snap-center cursor-pointer rounded-[6px] '
+                  className='carousel-item w-[100vw] md:w-[50vw] h-[95vh] flex-shrink-0 snap-center cursor-pointer rounded-lg '
                   data-index={index}
                 >
                   <img
                     src={item ? item : '/placeholder.png'}
                     alt='product_image'
-                    className={` object-cover w-[99.5%] h-[95vh] object-center transition-all duration-300 rounded-[6px] shadow-xl ${
+                    className={` object-cover w-[99.5%] h-[95vh] object-center transition-all duration-300 rounded-lg shadow-xl ${
                       productDetails?.sold_out ? 'brightness-50' : ''
                     }`}
                   />
