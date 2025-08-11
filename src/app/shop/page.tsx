@@ -70,7 +70,7 @@ const Shop = () => {
 
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
+      <div className='w-full relative min-h-[100vh] bg-[#C4BAAF] '>
         <div className='max-w-[1700px] mx-auto px-4 md:px-8'>
           <Header />
           <div className='py-4 flex items-center gap-5 2xl:justify-center w-full overflow-x-auto no-scrollbar mt-5'>
@@ -115,12 +115,12 @@ const Shop = () => {
                   key={item.id}
                   className='mb-4 relative'
                 >
-                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300 shadow-md  '>
+                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300 shadow-md rounded-lg '>
                     <Image
                       src={item?.images[0] ?? '/placeholder.png'}
                       alt='product_image'
                       fill
-                      className={` min-h-[400px] h-[400px] home_img object-cover shadow-md ${
+                      className={` min-h-[400px] h-[400px] home_img object-cover shadow-md rounded-lg ${
                         item.sold_out ? 'brightness-50' : ''
                       } `}
                     />

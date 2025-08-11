@@ -2,19 +2,24 @@
 'use client';
 
 import Header from '@/components/header/page';
-import Link from 'next/link';
+
+import { useRouter } from 'next/navigation';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const OurImpact = () => {
+  const router = useRouter();
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#dbd9d2] pb-10'>
+    <div className='w-full h-full min-h-[100vh] bg-[#C4BAAF] pb-10'>
       <div className='max-w-[1700px] mx-auto px-4 md:px-8'>
         <Header />
 
-        <Link href='/' className='flex gap-1 w-fit text-[#4d3c1dfb] mt-4 mb-10'>
+        <div
+          onClick={() => router.back()}
+          className='mt-4 gap-1 flex text-sm items-center px-3 xs:px-4'
+        >
           <MdOutlineArrowBackIosNew size={20} />
           Back
-        </Link>
+        </div>
 
         <div className='mt-8'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full'>

@@ -15,7 +15,11 @@ import Cookies from 'js-cookie';
 import { IoCheckmarkOutline } from 'react-icons/io5';
 import { GiWorld } from 'react-icons/gi';
 
-export default function LanguageSelector() {
+export default function LanguageSelector({
+  position = 'bottom',
+}: {
+  position?: 'top' | 'bottom';
+}) {
   const [languages] = useState([
     { code: 'en', name: 'English' },
     { code: 'es', name: 'Spanish' },
@@ -301,7 +305,11 @@ export default function LanguageSelector() {
         </button>
 
         {isDropdownOpen && (
-          <div className='absolute top-8 right-0 backdrop-blur-md shadow-lg py-3 z-50 w-[106px]'>
+          <div
+            className={`absolute ${
+              position === 'top' ? 'bottom-full right-0 mb-2' : 'top-10 right-0'
+            } bg-[#c4baaf85] shadow-lg py-3 z-[1000] w-[106px] rounded-lg `}
+          >
             <ul className='flex flex-col w-full'>
               {languages.map((language) => (
                 <li

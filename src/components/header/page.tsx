@@ -110,7 +110,7 @@ const Header = () => {
         id={`${scroll ? 'sticky' : ''}`}
         className={` ${
           scroll
-            ? 'fixed left-0 top-0 w-full border-b border-[#a1a1a19c] h-[45px] bg-[#dbd9d2] z-[999]'
+            ? 'fixed left-0 top-0 w-full h-[45px] backdrop-blur-md z-[999]'
             : ''
         }`}
       >

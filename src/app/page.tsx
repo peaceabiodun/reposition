@@ -27,6 +27,7 @@ import MobileMenu from '@/components/mobile-menu/page';
 import TeaCoffeeModal from '@/components/tea-coffee-modal/page';
 import LanguageSelector from '@/components/language-dropdown/page';
 import BeverageConfirmationModal from '@/components/beverage-confirmation-modal/page';
+import BottomNav from '@/components/bottom-nav/page';
 
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -57,12 +58,12 @@ const Home = () => {
   const [showBeverageConfirmationModal, setShowBeverageConfirmationModal] =
     useState(false);
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
-  //     setShowTeaCoffeeModal(!beverage);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
+      setShowTeaCoffeeModal(!beverage);
+    }
+  }, []);
 
   // useEffect(() => {
   //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
@@ -296,9 +297,8 @@ const Home = () => {
   // };
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#dbd9d2] '>
+      <div className='w-full relative min-h-[100vh] bg-[#C4BAAF] pb-10'>
         <div className=''>
-          {/* <Header /> */}
           <div className='flex flex-col items-center  w-full'>
             <div className='relative w-full'>
               <div className='relative'>
@@ -514,7 +514,7 @@ const Home = () => {
                         src={item?.images[0] ?? '/placeholder.png'}
                         alt='product_image'
                         fill
-                        className={` object-cover shadow-md ${
+                        className={` object-cover shadow-lg rounded-lg ${
                           item.sold_out ? 'brightness-50' : ''
                         } `}
                       />
@@ -537,9 +537,9 @@ const Home = () => {
                         ) : null}
                       </div>
 
-                      <p className='text-sm md:text-base '>
+                      {/* <p className='text-sm md:text-base '>
                         ₦ {Number(item.price).toLocaleString()}
-                      </p>
+                      </p> */}
                       <button
                         onClick={() => router.push(`product/${item.id}`)}
                         className='text-sm flex flex-col items-center justify-center  mt-3 border border-[#38271c] border-solid rounded-[4px] p-2  hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999] h-[30px]'
@@ -579,7 +579,7 @@ const Home = () => {
               </div> */}
             </div>
           )}
-          <div className=' grid grid-cols-1 lg:grid-cols-2 my-8'>
+          <div className=' grid grid-cols-1 lg:grid-cols-2 mt-16 mb-8'>
             <div className='w-full h-[300px] md:h-[600px] relative'>
               <img
                 src='/img2.png'
@@ -611,6 +611,7 @@ const Home = () => {
 
           <Footer />
         </div>
+        <BottomNav />
       </div>
       {showErrorModal && (
         <ErrorModal

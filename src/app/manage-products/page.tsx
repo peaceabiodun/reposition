@@ -2,7 +2,6 @@
 
 import { truncateString } from '@/utils/functions';
 import Image from 'next/image';
-import Link from 'next/link';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { CiMenuKebab } from 'react-icons/ci';
 import { useEffect, useState } from 'react';
@@ -76,13 +75,13 @@ const ManageProducts = () => {
     }
   };
   return (
-    <div className='w-full min-h-screen bg-[#dbd9d2] p-3 xs:p-4'>
+    <div className='w-full min-h-screen bg-[#C4BAAF] p-3 xs:p-4'>
       <div className='max-w-[1500px] mx-auto'>
         <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
-          <Link href='/' className='flex gap-1'>
+          <div onClick={() => router.back()} className='flex gap-1'>
             <MdOutlineArrowBackIosNew size={20} />
             Back
-          </Link>
+          </div>
           <button
             onClick={() => router.push('/new-product')}
             className='border border-[#38271c] text-[#38271c] p-2 text-xs md:text-sm rounded-[4px] transition-all duration-300'
