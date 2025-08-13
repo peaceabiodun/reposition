@@ -513,7 +513,7 @@ const Home = () => {
               No Products Available
             </div>
           ) : (
-            <div className='max-w-[1700px] mx-auto'>
+            <div className='max-w-[1700px] mx-auto px-4'>
               <div
                 ref={scrollContainerRef}
                 className='flex gap-2 mdLg:gap-0 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
@@ -602,27 +602,35 @@ const Home = () => {
             </div>
           )}
           <div className=' grid grid-cols-1 lg:grid-cols-2 mt-16 mb-8'>
-            <div className='w-full h-[300px] md:h-[600px] relative'>
+            <div className='w-full h-[400px] md:h-[600px] relative'>
               <img
                 src='/img2.png'
                 alt='assemble'
                 className='w-full h-full object-cover'
               />
-              <div className='absolute bottom-5 left-5 backdrop-blur-[2px] p-4 mr-3'>
-                <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4  '>
-                  Click to join the Reposition community &quot;Assemble&quot; &
-                  enjoy discounts, early access, personalized event access, free
-                  delivery and more!
-                </h4>
-                <div
-                  onClick={() => router.push('/theassemble')}
-                  className=' text-base sm:text-lg flex  items-center justify-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] h-[36px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
-                >
-                  Join Assemble
+              <div className='flex items-center justify-center'>
+                <div className='absolute top-3 backdrop-blur-[2px] p-2'>
+                  <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4 text-center font-semibold '>
+                    Step into Assemble <br />
+                    To experience special offers, <br />
+                    early access to releases, event access,
+                    <br />
+                    free delivery and more!
+                  </h4>
+                </div>
+              </div>
+              <div className='w-full absolute bottom-3 flex items-center justify-center'>
+                <div className=' backdrop-blur-[2px] p-2 '>
+                  <div
+                    onClick={() => router.push('/theassemble')}
+                    className=' text-sm font-medium flex  items-center justify-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] h-[36px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
+                  >
+                    Join Assemble
+                  </div>
                 </div>
               </div>
             </div>
-            <div className='w-full h-[300px] md:h-[600px]'>
+            <div className='w-full h-[400px] md:h-[600px]'>
               {/* <img
                 src='/img1.png'
                 alt='assemble'
