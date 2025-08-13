@@ -448,13 +448,35 @@ const Home = () => {
                 id={`${scroll ? 'sticky' : ''}`}
                 className={` ${
                   scroll
-                    ? 'flex items-center justify-center p-4 md:p-8 hover:bg-[#fafafa41] text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
+                    ? 'flex items-center justify-between gap-4 p-4 md:p-8 hover:bg-[#fafafa41] text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
                     : ' hidden '
                 } `}
               >
+                <div className='relative'>
+                  <BsHandbag
+                    size={23}
+                    onClick={() => router.push('/bag')}
+                    className='cursor-pointer '
+                  />
+                  <span
+                    onClick={() => router.push('/bag')}
+                    className={`text-[10px] absolute top-[8px] ${
+                      scroll ? ' ' : ' '
+                    }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
+                  >
+                    {bagItems.length ?? '0'}
+                  </span>
+                </div>
                 <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
                   REPOSITION
                 </h2>
+                <div>
+                  <CgMenuRight
+                    size={20}
+                    className='cursor-pointer'
+                    onClick={() => setShowMobileMenu(true)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -527,13 +549,13 @@ const Home = () => {
                       )}
                     </div>
 
-                    <div className='absolute bottom-5 text-[#3f2a16] pl-5'>
+                    <div className=' text-[#3f2a16] '>
                       <div className='flex items-center gap-2 mt-2'>
-                        <p className=' text-base uppercase font-semibold'>
+                        <p className=' text-sm uppercase font-semibold'>
                           {item.name}
                         </p>
                         {item.pre_order ? (
-                          <p className='text-sm'>[Pre-Order]</p>
+                          <p className='text-xs'>[Pre-Order]</p>
                         ) : null}
                       </div>
 
@@ -542,7 +564,7 @@ const Home = () => {
                       </p> */}
                       <button
                         onClick={() => router.push(`product/${item.id}`)}
-                        className='text-sm flex flex-col items-center justify-center  mt-3 border border-[#38271c] border-solid rounded-[4px] p-2  hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999] h-[30px]'
+                        className='text-xs flex flex-col items-center justify-center  mt-2 border border-[#38271c] border-solid rounded-[4px] p-2  hover:bg-[#fafafa56] text-[#3f2a16] transition-all duration-300 cursor-pointer z-[999] h-[30px]'
                       >
                         SELECT
                       </button>
@@ -601,17 +623,40 @@ const Home = () => {
               </div>
             </div>
             <div className='w-full h-[300px] md:h-[600px]'>
-              <img
+              {/* <img
                 src='/img1.png'
                 alt='assemble'
                 className='w-full h-full object-cover'
+              /> */}
+              <video
+                src='https://res.cloudinary.com/dggsagtrj/video/upload/v1755071138/Joy_om9xhm.mp4'
+                controls={false}
+                loop={true}
+                autoPlay={true}
+                muted={true}
+                playsInline={true}
+                disablePictureInPicture={true}
+                disableRemotePlayback={true}
+                className='w-full h-full object-cover z-[-1] pointer-events-none'
+                poster='/assemble-poster.png'
+                style={{
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  userSelect: 'none',
+                  touchAction: 'none',
+                }}
+              />
+              <source
+                src='https://res.cloudinary.com/dggsagtrj/video/upload/v1755071138/Joy_om9xhm.mp4'
+                type='video/mp4'
               />
             </div>
           </div>
 
           <Footer />
         </div>
-        <BottomNav />
+        {/* <BottomNav /> */}
       </div>
       {showErrorModal && (
         <ErrorModal

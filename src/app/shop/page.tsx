@@ -81,7 +81,7 @@ const Shop = () => {
                   setFilterValue?.(item.name);
                   setSelectedFilter(item.name);
                 }}
-                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm md:text-base rounded-[4px] shadow-md ${
+                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm rounded-[4px] shadow-md ${
                   selectedFilter === item.name
                     ? 'bg-[#5e3f225b] text-white '
                     : 'border border-[#38271c] border-solid'
@@ -97,7 +97,7 @@ const Shop = () => {
                 visible={true}
                 height={50}
                 width={50}
-                color='#b4b4b4ad'
+                color='#5e3f225b'
                 ariaLabel='three-circles-loading'
                 wrapperClass='my-4'
               />
@@ -113,7 +113,7 @@ const Shop = () => {
                 <Link
                   href={`product/${item.id}`}
                   key={item.id}
-                  className='mb-4 relative'
+                  className='mb-6 relative'
                 >
                   <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300 shadow-md rounded-lg '>
                     <Image
@@ -133,22 +133,22 @@ const Shop = () => {
                     )}
                   </div>
 
-                  <div className='absolute bottom-0 left-0 right-0 p-4 text-[#3f2a16]'>
+                  <div className=' text-[#3f2a16]'>
                     <div className='flex flex-col sm:flex-row sm:items-center sm:gap-2 font-light mt-2'>
-                      <p className=' text-base uppercase font-semibold'>
+                      <p className=' text-sm uppercase font-semibold'>
                         {item.name}
                       </p>
 
                       {item.pre_order ? (
-                        <p className='text-sm'>[Pre-Order]</p>
+                        <p className='text-xs'>[Pre-Order]</p>
                       ) : null}
                     </div>
-                    <p className='text-sm md:text-base '>
+                    <p className='text-sm  '>
                       ₦ {Number(item.price).toLocaleString()}
                     </p>
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className='text-sm flex flex-col items-center justify-center mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 h-[30px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer z-[999]'
+                      className='text-xs flex flex-col items-center justify-center mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 h-[30px] hover:bg-[#fafafa56] text-[#3f2a16] transition-all duration-300 cursor-pointer z-[999]'
                     >
                       SELECT
                     </button>

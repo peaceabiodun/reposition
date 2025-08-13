@@ -477,10 +477,11 @@ const Bag = () => {
                   onClick={() => router.push(`product/${item.id}`)}
                 />
                 <div className='flex flex-col sm:flex-row sm:justify-between w-full gap-3 sm:items-center'>
-                  <div className='flex flex-col gap-3 '>
+                  <div className='flex flex-col gap-2 '>
                     <p className='text-base sm:text-lg font-semibold'>
-                      {item.name} [{item.color}]
+                      {item.name}
                     </p>
+                    <p className='text-sm'>[{item.color}]</p>
                     <p>₦ {Number(item.price).toLocaleString()}</p>
                     <p>Size: {item.size}</p>
                   </div>

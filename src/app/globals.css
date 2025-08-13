@@ -648,7 +648,7 @@ body {
   position: absolute;
   width: 26px;
   height: 26px;
-  background-color: #fff;
+  /* background-color: #fff; */
   stroke-width: 1px;
   stroke: #eaeaeb;
   filter: drop-shadow(0px 2px 4px rgba(69, 75, 84, 0.1));

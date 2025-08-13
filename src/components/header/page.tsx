@@ -107,14 +107,9 @@ const Header = () => {
   return (
     <Fragment>
       <div
-        id={`${scroll ? 'sticky' : ''}`}
-        className={` ${
-          scroll
-            ? 'fixed left-0 top-0 w-full h-[45px] backdrop-blur-md z-[999]'
-            : ''
-        }`}
+        className={`absoluteleft-0 top-0 w-full h-[45px] backdrop-blur-md z-[999]`}
       >
-        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative'>
+        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative text-[#3f2a16]'>
           <div className='gap-8 hidden lg:flex'>
             <p
               className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
@@ -145,7 +140,9 @@ const Header = () => {
             onClick={() => router.push('/')}
             className='flex  cursor-pointer mr-16'
           >
-            <h2 className='font-bold text-sm sm:text-lg daikon'>REPOSITION </h2>
+            <h2 className='font-bold text-sm sm:text-lg daikon text-[#3f2a16]'>
+              REPOSITION{' '}
+            </h2>
             {/* <Image
               src={'/logo.svg'}
               alt='logo'
@@ -215,6 +212,40 @@ const Header = () => {
         </div>
       </div>
 
+      <div
+        id={`${scroll ? 'sticky' : ''}`}
+        className={` ${
+          scroll
+            ? 'flex items-center justify-between gap-4 p-4 md:p-8 hover:bg-[#fafafa41] text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
+            : ' hidden '
+        } `}
+      >
+        <div className='relative'>
+          <BsHandbag
+            size={23}
+            onClick={() => router.push('/bag')}
+            className='cursor-pointer '
+          />
+          <span
+            onClick={() => router.push('/bag')}
+            className={`text-[10px] absolute top-[8px] ${
+              scroll ? ' ' : ' '
+            }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
+          >
+            {bagItems.length ?? '0'}
+          </span>
+        </div>
+        <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
+          REPOSITION
+        </h2>
+        <div>
+          <CgMenuRight
+            size={20}
+            className='cursor-pointer'
+            onClick={() => setShowMobileMenu(true)}
+          />
+        </div>
+      </div>
       {showUpdatePasswordModal && (
         <UpdatePasswordModal
           show={showUpdatePasswordModal}
