@@ -131,6 +131,11 @@ const Shop = () => {
                         </p>
                       </div>
                     )}
+                    {item.pre_order && (
+                      <p className='text-xs absolute top-3 right-3 text-[#3f2a16] font-medium'>
+                        [Pre-Order]
+                      </p>
+                    )}
                   </div>
 
                   <div className=' text-[#3f2a16]'>
@@ -138,17 +143,13 @@ const Shop = () => {
                       <p className=' text-sm uppercase font-semibold'>
                         {item.name}
                       </p>
-
-                      {item.pre_order ? (
-                        <p className='text-xs'>[Pre-Order]</p>
-                      ) : null}
                     </div>
-                    <p className='text-sm  '>
+                    {/* <p className='text-sm  '>
                       ₦ {Number(item.price).toLocaleString()}
-                    </p>
+                    </p> */}
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
-                      className='text-xs flex flex-col items-center justify-center mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 h-[30px] hover:bg-[#fafafa56] text-[#3f2a16] transition-all duration-300 cursor-pointer z-[999]'
+                      className='text-xs flex flex-col items-center justify-center mt-2 border border-[#38271c] border-solid rounded-[4px] p-2 h-[30px] hover:bg-[#fafafa56] text-[#3f2a16] transition-all duration-300 cursor-pointer z-[999]'
                     >
                       SELECT
                     </button>

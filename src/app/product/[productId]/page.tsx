@@ -349,28 +349,19 @@ const ProductDetails = () => {
                     email.
                     <br /> For more information, email:
                     <a
-                      href='mailto:nowreposition@gmail.com'
+                      href='mailto:welcome@re-position.co'
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='text-blue-800 underline'
+                      className='text-blue-800 underline ml-1'
                     >
-                      nowreposition@gmail.com
-                    </a>{' '}
-                    or{' '}
-                    <a
-                      href='mailto:help@re-position.co'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='text-blue-800 underline'
-                    >
-                      help@re-position.co
+                      welcome@re-position.co
                     </a>
                     <div className='my-2 text-sm'>
-                      For orders above ₦600 delivery is free for US, UK and
+                      For orders above ₦700,000 delivery is free for US, UK and
                       Canada.{' '}
                     </div>
                     <div className=' text-sm '>
-                      For orders above ₦300 within Nigeria, delivery is also
+                      For orders above ₦400,000 within Nigeria, delivery is also
                       free.{' '}
                     </div>
                   </AccordionContent>
@@ -385,6 +376,90 @@ const ProductDetails = () => {
                   <AccordionTrigger className=' hover:no-underline font-normal'>
                     Exchange Policy
                   </AccordionTrigger>
+
+                  <AccordionContent className='text-sm'>
+                    At Reposition, we’re committed to delivering exceptional
+                    luxury fashion and ensuring you’re completely satisfied with
+                    your purchase. We understand that sometimes an exchange may
+                    be necessary, and we’re here to make that process as smooth
+                    as possible. <br /> <br />
+                    <p className='font-medium'>1. Eligibility</p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Items must be returned within 14 days of delivery.
+                      </li>
+                      <li>
+                        Products must be new, unworn, unwashed, and in their
+                        original condition with all tags and packaging intact.
+                      </li>
+                      <li>
+                        Items showing signs of wear, damage, or missing tags are
+                        not eligible.
+                      </li>
+                      <li>Final Sale items cannot be exchanged.</li>
+                    </ul>
+                    <p className='font-medium mt-2'>2. How to Exchange</p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Contact Us – Email our Customer Service team at
+                        <a
+                          href='mailto:welcome@re-position.co'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-blue-800 underline mx-1'
+                        >
+                          welcome@re-position.co
+                        </a>
+                        with your order number and details of the item you wish
+                        to exchange.
+                      </li>
+                      <li>
+                        Approval & Instructions – Once approved, you’ll receive
+                        return instructions. Please package items securely to
+                        prevent damage in transit.
+                      </li>
+                      <li>
+                        Shipping Costs – Return shipping is covered by the
+                        customer, except if the item is incorrect or defective
+                        upon arrival.
+                      </li>
+                      <li>
+                        Quality Check – Once received, our Quality Control team
+                        will inspect your item. If approved, we’ll dispatch your
+                        exchange within 5–7 business days. Items failing
+                        inspection will be returned to you.
+                      </li>
+                    </ul>
+                    <p className='font-medium mt-2'>3. Size or Style Changes</p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        To request a different size or style, specify your
+                        preference in your exchange request.
+                      </li>
+                      <li>
+                        {' '}
+                        Availability will be confirmed before finalizing the
+                        exchange.
+                      </li>
+                      <li>
+                        If the requested item is unavailable, we’ll offer
+                        alternatives or a refund.
+                      </li>
+                    </ul>
+                    <p className='font-medium mt-2'>
+                      4. International Exchanges
+                    </p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Additional shipping fees and longer delivery times may
+                        apply.
+                      </li>
+                      <li>
+                        Any applicable customs duties are the customer’s
+                        responsibility.
+                      </li>
+                    </ul>
+                  </AccordionContent>
                 </AccordionItem>
               </Accordion>
 
@@ -396,6 +471,80 @@ const ProductDetails = () => {
                   <AccordionTrigger className=' hover:no-underline font-normal'>
                     Return Policy
                   </AccordionTrigger>
+
+                  <AccordionContent className='text-sm'>
+                    At Reposition, we want you to shop with confidence. If your
+                    purchase isn’t right, our team is here to help.
+                    <br /> <br />
+                    <p className='font-medium'>1. Refund Eligibility</p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Items must meet our return standards and pass inspection
+                        to qualify for a refund.
+                      </li>
+                      <li>
+                        pection to qualify for a refund. Refunds are issued to
+                        the original payment method.
+                      </li>
+                      <li>
+                        Items that don’t meet the conditions will be returned to
+                        you.
+                      </li>
+                    </ul>
+                    <p className='font-medium mt-2'>
+                      2. How Refunds Are Processed
+                    </p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Inspection – Once we receive your item, our Quality
+                        Control team will verify its condition.
+                      </li>
+                      <li>
+                        Timeline – Approved refunds are processed within 5–7
+                        business days; banks may take an additional 7–10 days to
+                        post funds.
+                      </li>
+                      <li>
+                        You’ll receive a confirmation email once your refund is
+                        issued.
+                      </li>
+                    </ul>
+                    <p className='font-medium mt-2'>3. Non-Refundable Items</p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>Shipping fees, customs duties, and local taxes.</li>
+                      <li>
+                        Gift cards, Final Sale items, and personalized products.
+                      </li>
+                    </ul>
+                    <p className='font-medium mt-2'>
+                      4. Faulty or Incorrect Items
+                    </p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Notify us within 48 hours at
+                        <a
+                          href='mailto:welcome@re-position.co'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-blue-800 underline mx-1'
+                        >
+                          welcome@re-position.co
+                        </a>
+                        with photos and details.
+                      </li>
+                      <li>
+                        Approved cases receive a full refund, including original
+                        shipping costs.
+                      </li>
+                    </ul>
+                    <p className='font-medium mt-2'>5. Cancellations</p>
+                    <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
+                      <li>
+                        Orders can be canceled within 24 hours for a full
+                        refund.
+                      </li>
+                    </ul>
+                  </AccordionContent>
                 </AccordionItem>
               </Accordion>
             </div>

@@ -25,6 +25,7 @@ import PaymentReceipt from '../../components/receipt/page';
 import { useProductContext } from '@/context/product-context';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { IoAdd, IoRemove } from 'react-icons/io5';
+import DonationModal from '@/components/donation-modal/page';
 
 type FormDataType = {
   quantity: string;
@@ -50,6 +51,7 @@ const Bag = () => {
   const [finalTotal, setFinalTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderNumber, setOrderNumber] = useState<number | null>(null);
+  const [showDonationModal, setShowDonationModal] = useState(false);
 
   const exchangeRateApiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE_KEY;
   const deliveryDetailsRef = useRef<HTMLDivElement>(null);
@@ -389,7 +391,17 @@ const Bag = () => {
     },
   } as any;
 
-  const initializePayment: any = usePaystackPayment(config);
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePayment = () => {
+    setShowDonationModal(true);
+
+    // Show donation modal for 4 seconds, then start payment
+    setTimeout(() => {
+      setShowDonationModal(false);
+      initializePayment({ onSuccess, onClose });
+    }, 4000);
+  };
 
   const onSuccess = (reference: any) => {
     if (reference.message === 'Approved') {
@@ -595,9 +607,9 @@ const Bag = () => {
                       onClick={() => router.push(`product/${item.id}`)}
                     />
                     <p className='mt-2 mb-1 font-semibold '>{item.name}</p>
-                    <p className=' mb-1 '>
+                    {/* <p className=' mb-1 '>
                       ₦ {Number(item.price).toLocaleString()}
-                    </p>
+                    </p> */}
                     <button
                       onClick={() => router.push(`product/${item.id}`)}
                       className='   border border-[#38271c] border-solid rounded-[4px] hover:bg-[#fafafa56] text-[#3f2a16] p-2 w-[200px] h-[30px] flex items-center justify-center cursor-pointer text-sm'
@@ -827,8 +839,7 @@ const Bag = () => {
                         <p>
                           Delivery takes up to 10-16 business days for products
                           marked &apos;made-to-order&apos; or
-                          &apos;pre-order&apos;. Estimated delivery time once
-                          the order has shipped.
+                          &apos;pre-order&apos;.
                         </p>
                       </div>
                     </div>
@@ -887,25 +898,37 @@ const Bag = () => {
                     <h2 className='border-b border-[#a1a1a19c] w-full mt-3 py-3 text-sm'>
                       Payment Options
                     </h2>
-                    <div className='my-3 flex items-center gap-2 pb-3 border-b border-[#a1a1a19c]'>
+                    <div className='my-3 flex items-center gap-3 pb-3 border-b border-[#a1a1a19c]'>
                       <Image
                         alt='master-card'
                         src={'/master-card-icon.svg'}
-                        width={50}
-                        height={50}
+                        width={40}
+                        height={40}
                       />
                       <Image
                         alt='visa-card'
                         src={'/visa-icon.svg'}
-                        width={50}
-                        height={50}
+                        width={40}
+                        height={40}
                       />
 
                       <Image
-                        alt='bank-transfer'
-                        src={'/bank-transfer-icon.svg'}
+                        alt='verve-icon'
+                        src={'/verve.svg'}
                         width={40}
                         height={40}
+                      />
+                      <Image
+                        alt='american-express-icon'
+                        src={'/american-express.svg'}
+                        width={30}
+                        height={30}
+                      />
+                      <Image
+                        alt='bank-transfer-icon'
+                        src={'/bank-transfer-icon.svg'}
+                        width={30}
+                        height={30}
                       />
                     </div>
                     <p className='mt-2 text-[#644120] italic text-sm'>
@@ -913,8 +936,8 @@ const Bag = () => {
                       checkout
                     </p>
                     <p className='mt-2 text-[#644120] italic text-sm'>
-                      If you have any issues ordering or with your order
-                      payment, please contact us at {''}
+                      If you have issues with your order, please send us a quick
+                      mail at {''}
                       <span className='font-semibold'>
                         welcome@re-position.co
                       </span>
@@ -935,7 +958,7 @@ const Bag = () => {
                 ) {
                   return;
                 }
-                initializePayment({ onSuccess, onClose });
+                handlePayment();
               }}
               className=' cursor-pointer bg-[#38271c] text-[#F5F5DC] w-full sm:w-[300px] p-2 text-xs md:text-sm mx-3 rounded-[4px] hover:bg-[#38271cb6] transition-all duration-300'
             >
@@ -944,7 +967,12 @@ const Bag = () => {
           </div>
         )}
       </div>
-
+      {showDonationModal && (
+        <DonationModal
+          show={showDonationModal}
+          onClose={() => setShowDonationModal(false)}
+        />
+      )}
       {showErrorModal && (
         <ErrorModal
           show={showErrorModal}
