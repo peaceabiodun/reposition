@@ -217,7 +217,7 @@ const ProductDetails = () => {
                 </div>
               ))}
             </div>
-            <div className='flex items-center justify-between text-[#3f2a16b6] absolute md:top-1/2 -translate-y-1/2 left-0 right-0 w-[100vw] md:w-[50vw] px-6 '>
+            <div className='flex items-center justify-between text-[#3f2a1659] absolute md:top-1/2 -translate-y-1/2 left-0 right-0 w-[100vw] md:w-[50vw] px-6 '>
               <IoIosArrowDropleftCircle
                 size={25}
                 className='cursor-pointer'
@@ -242,7 +242,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className=' mt-5 md:mt-0 flex flex-col items-center justify-center text-sm overflow-y-scroll scroll-smooth scrollable-div md:h-[80vh] px-8 '>
+          <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth scrollable-div md:h-[80vh] px-8 '>
             <div className='flex flex-col space-y-4 w-full max-w-[600px]'>
               <div>
                 <h1 className='uppercase font-medium text-lg'>
@@ -323,74 +323,9 @@ const ProductDetails = () => {
                 </AccordionItem>
               </Accordion>
 
-              {/* <Accordion type='single' collapsible className='w-full '>
-                <AccordionItem
-                  value='product-details'
-                  className='border-b-[#a1a1a19c]'
-                >
-                  <AccordionTrigger className=' hover:no-underline font-normal'>
-                    Select Size
-                  </AccordionTrigger>
-                  <AccordionContent className='flex flex-col space-y-4'>
-                    <div>
-                      Follows standard US mens sizing. If between sizes, size
-                      down. We have a size chart available at the top of the
-                      page for reference.
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                      {productDetails?.sizes.map((item, index) => (
-                        <div
-                          key={index}
-                          onClick={() => setSelectedSize(item)}
-                          className={`${
-                            selectedSize === item
-                              ? ' bg-[#523f3f79]'
-                              : 'bg-[#c7c5c5a1]'
-                          }  shadow-sm py-2 px-4 rounded-sm cursor-pointer hover:bg-[#523f3f79]`}
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion> */}
-
-              {/* <Accordion type='single' collapsible className='w-full '>
-                <AccordionItem
-                  value='product-details'
-                  className='border-b-[#a1a1a19c]'
-                >
-                  <AccordionTrigger className=' hover:no-underline font-normal'>
-                    Select Colors
-                  </AccordionTrigger>
-                  <AccordionContent className='flex flex-col space-y-4'>
-                    <div>
-                      These are the available colors for this product. Please
-                      reach out to us if you want a customized color.
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                      {productDetails?.colors.map((item, index) => (
-                        <div
-                          key={index}
-                          onClick={() => setSelectedColor(item)}
-                          className={`${
-                            selectedColor === item
-                              ? ' bg-[#523f3f79]'
-                              : 'bg-[#c7c5c5a1]'
-                          }   shadow-sm py-2 px-4 rounded-sm cursor-pointer hover:bg-[#523f3f79]`}
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion> */}
-
               <Accordion type='single' collapsible className='w-full '>
                 <AccordionItem
-                  value='product-details'
+                  value='shipping-delivery'
                   className='border-b-[#a1a1a19c]'
                 >
                   <AccordionTrigger className=' hover:no-underline font-normal'>
@@ -398,18 +333,21 @@ const ProductDetails = () => {
                   </AccordionTrigger>
                   <AccordionContent>
                     All domestic and international orders are shipped via DHL.
-                    Order processing may take up to 7 days. An email containing
-                    the tracking number will be sent to you when the order
-                    ships. All packages are trackable. Please note, our standard
-                    delivery & return policies do not apply to made-to-order
-                    products or items marked as Final Sale. You may be required
-                    to pay duties at point of collection depending on your
-                    country of residence policy. Shipping subcharges may be
-                    applied on orders requiring multiple deliveries. If we
-                    anticipate longer delivery times for a specific product,
-                    that information will be listed above as well as in checkout
-                    and in the order confirmation email. For more information,
-                    email:
+                    Order processing may take up to 7 days. <br />
+                    An email containing the tracking number will be sent to you
+                    when the order ships. All packages are trackable. <br />{' '}
+                    <br /> Please note, our standard delivery & return policies
+                    do not apply to made-to-order products or items marked as
+                    Final Sale. You may be required to pay duties at point of
+                    collection depending on your country of residence policy.
+                    <br />
+                    <br />
+                    Shipping subcharges may be applied on orders requiring
+                    multiple deliveries. If we anticipate longer delivery times
+                    for a specific product, that information will be listed
+                    above as well as in checkout and in the order confirmation
+                    email.
+                    <br /> For more information, email:
                     <a
                       href='mailto:nowreposition@gmail.com'
                       target='_blank'
@@ -436,6 +374,28 @@ const ProductDetails = () => {
                       free.{' '}
                     </div>
                   </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <Accordion type='single' collapsible className='w-full '>
+                <AccordionItem
+                  value='exchange-policy'
+                  className='border-b-[#a1a1a19c]'
+                >
+                  <AccordionTrigger className=' hover:no-underline font-normal'>
+                    Exchange Policy
+                  </AccordionTrigger>
+                </AccordionItem>
+              </Accordion>
+
+              <Accordion type='single' collapsible className='w-full '>
+                <AccordionItem
+                  value='return-policy'
+                  className='border-b-[#a1a1a19c]'
+                >
+                  <AccordionTrigger className=' hover:no-underline font-normal'>
+                    Return Policy
+                  </AccordionTrigger>
                 </AccordionItem>
               </Accordion>
             </div>
