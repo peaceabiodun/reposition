@@ -254,7 +254,7 @@ const ProductDetails = () => {
               </div>
 
               <div>
-                <p className='text-sm mb-2'>Color</p>
+                <p className='text-sm mb-2 font-semibold'>Color</p>
                 <div className='flex flex-wrap gap-2'>
                   {productDetails?.colors.map((item, index) => (
                     <div
@@ -273,7 +273,7 @@ const ProductDetails = () => {
               </div>
 
               <div>
-                <p className='text-sm mb-2'>Size</p>
+                <p className='text-sm mb-2 font-semibold'>Size</p>
                 <div className='flex flex-wrap gap-2'>
                   {productDetails?.sizes.map((item, index) => (
                     <div
@@ -292,7 +292,7 @@ const ProductDetails = () => {
 
                 <p
                   onClick={() => router.push('/size-chart')}
-                  className='text-xs mt-2 underline underline-offset-2 cursor-pointer'
+                  className='text-xs mt-2 underline underline-offset-2 cursor-pointer font-medium'
                 >
                   Open size chart
                 </p>
@@ -307,7 +307,7 @@ const ProductDetails = () => {
                   value='product-details'
                   className='border-b-[#a1a1a19c] w-full'
                 >
-                  <AccordionTrigger className=' hover:no-underline font-normal'>
+                  <AccordionTrigger className=' hover:no-underline font-semibold'>
                     Creator&apos;s Note
                   </AccordionTrigger>
                   <AccordionContent className='text-sm font-medium'>
@@ -328,26 +328,36 @@ const ProductDetails = () => {
                   value='shipping-delivery'
                   className='border-b-[#a1a1a19c]'
                 >
-                  <AccordionTrigger className=' hover:no-underline font-normal'>
+                  <AccordionTrigger className=' hover:no-underline font-semibold'>
                     Shipping and Delivery
                   </AccordionTrigger>
                   <AccordionContent>
-                    All domestic and international orders are shipped via DHL.
-                    Order processing may take up to 7 days. <br />
-                    An email containing the tracking number will be sent to you
-                    when the order ships. All packages are trackable. <br />{' '}
-                    <br /> Please note, our standard delivery & return policies
+                    Reposition wants to guarantee professional handling of your
+                    purchase. So we ship via DHL for all our international
+                    orders. <br />
+                    <br />
+                    Domestic shipping will be handled by reliable last-mile
+                    delivery partners.
+                    <br /> Order processing may take up to 7 days. You will
+                    receive a delivery email from our verified email containing
+                    your tracking number when your order is shipped.
+                    <br /> <br /> Your package will be trackable in real time.
+                    <br />
+                    Please kindly note, our standard delivery & return policies
                     do not apply to made-to-order products or items marked as
-                    Final Sale. You may be required to pay duties at point of
-                    collection depending on your country of residence policy.
+                    Final Sale.
                     <br />
+                    <br /> You may be required to pay duties at point of
+                    collection depending on your country’s policy where you are
+                    residence.
                     <br />
-                    Shipping subcharges may be applied on orders requiring
-                    multiple deliveries. If we anticipate longer delivery times
-                    for a specific product, that information will be listed
-                    above as well as in checkout and in the order confirmation
-                    email.
-                    <br /> For more information, email:
+                    <br /> Shipping subcharges may be applied on orders
+                    requiring multiple deliveries. If we anticipate longer
+                    delivery times for a specific product, we will notify you in
+                    good time via email.
+                    <br />
+                    <br /> For more information,
+                    <br /> email:
                     <a
                       href='mailto:welcome@re-position.co'
                       target='_blank'
@@ -355,15 +365,13 @@ const ProductDetails = () => {
                       className='text-blue-800 underline ml-1'
                     >
                       welcome@re-position.co
-                    </a>
-                    <div className='my-2 text-sm'>
-                      For orders above ₦700,000 delivery is free for US, UK and
-                      Canada.{' '}
-                    </div>
-                    <div className=' text-sm '>
-                      For orders above ₦400,000 within Nigeria, delivery is also
-                      free.{' '}
-                    </div>
+                    </a>{' '}
+                    <br />
+                    <br />
+                    For orders above $950 delivery is free for US, UK and Canada
+                    for Assemble Members.
+                    <br /> For orders above $450 within West Africa, delivery is
+                    also free for Assemble Members.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -373,23 +381,24 @@ const ProductDetails = () => {
                   value='exchange-policy'
                   className='border-b-[#a1a1a19c]'
                 >
-                  <AccordionTrigger className=' hover:no-underline font-normal'>
+                  <AccordionTrigger className=' hover:no-underline font-semibold'>
                     Exchange Policy
                   </AccordionTrigger>
 
                   <AccordionContent className='text-sm'>
-                    At Reposition, we’re committed to delivering exceptional
-                    luxury fashion and ensuring you’re completely satisfied with
-                    your purchase. We understand that sometimes an exchange may
-                    be necessary, and we’re here to make that process as smooth
-                    as possible. <br /> <br />
+                    Reposition is committed to delivering exceptional tailored
+                    experience, we do this by ensuring you’re completely
+                    satisfied with your purchase.
+                    <br /> We are aware that sometimes an exchange may be
+                    necessary, and we’re here to make the process smooth for
+                    you. <br /> <br />
                     <p className='font-medium'>1. Eligibility</p>
                     <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
                       <li>
-                        Items must be returned within 14 days of delivery.
+                        Items should be returned within 14 days of delivery.
                       </li>
                       <li>
-                        Products must be new, unworn, unwashed, and in their
+                        Products should be new, unworn, unwashed, and in their
                         original condition with all tags and packaging intact.
                       </li>
                       <li>
@@ -401,7 +410,7 @@ const ProductDetails = () => {
                     <p className='font-medium mt-2'>2. How to Exchange</p>
                     <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
                       <li>
-                        Contact Us – Email our Customer Service team at
+                        Email customer relations team at
                         <a
                           href='mailto:welcome@re-position.co'
                           target='_blank'
@@ -415,11 +424,11 @@ const ProductDetails = () => {
                       </li>
                       <li>
                         Approval & Instructions – Once approved, you’ll receive
-                        return instructions. Please package items securely to
+                        return instructions. Please pack items securely to
                         prevent damage in transit.
                       </li>
                       <li>
-                        Shipping Costs – Return shipping is covered by the
+                        Shipping Costs – Return shipping will be covered by the
                         customer, except if the item is incorrect or defective
                         upon arrival.
                       </li>
@@ -433,13 +442,12 @@ const ProductDetails = () => {
                     <p className='font-medium mt-2'>3. Size or Style Changes</p>
                     <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>
                       <li>
-                        To request a different size or style, specify your
-                        preference in your exchange request.
+                        To request a different size or style, kindly specify
+                        your preference in your exchange request.
                       </li>
                       <li>
-                        {' '}
-                        Availability will be confirmed before finalizing the
-                        exchange.
+                        Size or Style availability will be confirmed before
+                        finalizing the exchange.
                       </li>
                       <li>
                         If the requested item is unavailable, we’ll offer
@@ -468,13 +476,14 @@ const ProductDetails = () => {
                   value='return-policy'
                   className='border-b-[#a1a1a19c]'
                 >
-                  <AccordionTrigger className=' hover:no-underline font-normal'>
+                  <AccordionTrigger className=' hover:no-underline font-semibold'>
                     Return Policy
                   </AccordionTrigger>
 
                   <AccordionContent className='text-sm'>
-                    At Reposition, we want you to shop with confidence. If your
-                    purchase isn’t right, our team is here to help.
+                    We want you to be at ease, therefore we are by our phones
+                    just incase you need help, even when you make a mistake with
+                    your purchase.
                     <br /> <br />
                     <p className='font-medium'>1. Refund Eligibility</p>
                     <ul className='list-disc list-inside mt-1 space-y-1 ml-3'>

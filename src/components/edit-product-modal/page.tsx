@@ -21,6 +21,7 @@ type EditFormDataType = {
   name: string;
   price: string;
   description: string[];
+  sub_description: string;
   weight: number | null;
   images: string[];
   sizes: string[];
@@ -73,6 +74,7 @@ const EditProductModal = ({
         name: selectedProduct?.name,
         price: selectedProduct?.price,
         description: selectedProduct?.product_details,
+        sub_description: selectedProduct?.sub_description,
         weight: selectedProduct?.weight,
         images: selectedProduct?.images,
         sizes: selectedProduct?.sizes,
@@ -124,6 +126,7 @@ const EditProductModal = ({
       name: formData?.name,
       price: formData?.price,
       product_details: formData?.description,
+      sub_description: formData?.sub_description,
       weight: formData?.weight,
       images: formData?.images,
       sizes: formData?.sizes,
@@ -209,6 +212,17 @@ const EditProductModal = ({
             ))}
           </div>
         </div>
+
+        <p className='mt-2'>Product Sub-Description</p>
+        <input
+          type='text'
+          className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+          placeholder="e.g Men's wear"
+          value={formData?.sub_description}
+          onChange={(e) =>
+            setFormData({ ...formData, sub_description: e.target.value })
+          }
+        />
 
         <div className='w-full mb-2 relative '>
           <p className=''>Product Category</p>

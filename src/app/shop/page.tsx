@@ -139,9 +139,12 @@ const Shop = () => {
                   </div>
 
                   <div className=' text-[#3f2a16]'>
-                    <div className='flex flex-col sm:flex-row sm:items-center sm:gap-2 font-light mt-2'>
+                    <div className=' mt-2'>
                       <p className=' text-sm uppercase font-semibold'>
                         {item.name}
+                      </p>
+                      <p className='text-[11px] uppercase mt-[1px]'>
+                        {item.sub_description}
                       </p>
                     </div>
                     {/* <p className='text-sm  '>

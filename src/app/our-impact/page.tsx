@@ -52,7 +52,7 @@ const OurImpact = () => {
 
             <div className='w-full h-[400px] sm:h-[600px] md:h-[750px] px-4'>
               <img
-                src='/children.png'
+                src='/impact.png'
                 alt='our-story'
                 className='w-full h-full object-cover'
               />

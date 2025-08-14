@@ -78,7 +78,7 @@ const ManageProducts = () => {
     <div className='w-full min-h-screen bg-[#C4BAAF] p-3 xs:p-4'>
       <div className='max-w-[1500px] mx-auto'>
         <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
-          <div onClick={() => router.back()} className='flex gap-1'>
+          <div onClick={() => router.push('/')} className='flex gap-1'>
             <MdOutlineArrowBackIosNew size={20} />
             Back
           </div>
