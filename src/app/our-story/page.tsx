@@ -44,7 +44,7 @@ const OurStory = () => {
 
             <div className='w-full h-[400px] sm:h-[600px] md:h-[750px] px-4'>
               <img
-                src='/img3.png'
+                src='/img6.png'
                 alt='our-story'
                 className='w-full h-full object-cover'
               />
@@ -63,7 +63,7 @@ const OurStory = () => {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full '>
             <div className='w-full h-[400px] sm:h-[600px] md:h-[750px] px-4 md:order-2'>
               <img
-                src='/img4.png'
+                src='/img7.png'
                 alt='our-story'
                 className='w-full h-full object-cover'
               />
@@ -93,7 +93,7 @@ const OurStory = () => {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full '>
             <div className='w-full h-[400px] sm:h-[600px] md:h-[750px] px-4 '>
               <img
-                src='/img5.png'
+                src='/img8.png'
                 alt='our-story'
                 className='w-full h-full object-cover'
               />

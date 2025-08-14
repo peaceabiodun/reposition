@@ -547,16 +547,21 @@ const Home = () => {
                           </p>
                         </div>
                       )}
+                      {item.pre_order && (
+                        <p className='text-xs absolute top-3 right-3 text-[#3f2a16] font-medium'>
+                          [Pre-Order]
+                        </p>
+                      )}
                     </div>
 
                     <div className=' text-[#3f2a16] '>
-                      <div className='flex items-center gap-2 mt-2'>
+                      <div className=' mt-2'>
                         <p className=' text-sm uppercase font-semibold'>
                           {item.name}
                         </p>
-                        {item.pre_order ? (
-                          <p className='text-xs'>[Pre-Order]</p>
-                        ) : null}
+                        <p className='text-[11px] uppercase mt-[1px]'>
+                          {item.sub_description}
+                        </p>
                       </div>
 
                       {/* <p className='text-sm md:text-base '>
@@ -609,23 +614,21 @@ const Home = () => {
                 className='w-full h-full object-cover'
               />
               <div className='flex items-center justify-center'>
-                <div className='absolute top-3 backdrop-blur-[2px] p-2'>
+                <div className='absolute top-3  p-2'>
                   <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4 text-center font-semibold '>
                     Step into Assemble <br />
-                    To experience special offers, <br />
-                    early access to releases, event access,
-                    <br />
-                    free delivery and more!
+                    To experience special offers, early access to releases,
+                    <br /> event access, free delivery and more!
                   </h4>
                 </div>
               </div>
               <div className='w-full absolute bottom-3 flex items-center justify-center'>
-                <div className=' backdrop-blur-[2px] p-2 '>
+                <div className=' p-2 '>
                   <div
                     onClick={() => router.push('/theassemble')}
-                    className=' text-sm font-medium flex  items-center justify-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] h-[36px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
+                    className=' text-sm font-medium flex  items-center justify-center gap-2 mt-3 border border-white border-solid rounded-[4px] p-2 w-[200px] h-[36px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
                   >
-                    Join Assemble
+                    ENTER
                   </div>
                 </div>
               </div>

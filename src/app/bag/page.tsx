@@ -814,8 +814,7 @@ const Bag = () => {
                         <p>
                           Delivery takes up to 10-16 business days for products
                           marked &apos;made-to-order&apos; or
-                          &apos;pre-order&apos;. Estimated delivery time once
-                          the order has shipped.
+                          &apos;pre-order&apos;.
                         </p>
                       </div>
                     </div>
@@ -872,7 +871,7 @@ const Bag = () => {
                       </p>
                     </div>
                     <div className='flex gap-3 items-center justify-between'>
-                      <p>Discount Code</p>
+                      <p>Special Code</p>
                       <input
                         type='text'
                         value={discountCode}
@@ -881,7 +880,7 @@ const Bag = () => {
                       />
                     </div>
                     <div className='flex gap-3 justify-between'>
-                      <p>Discount Fee</p>
+                      <p>Special Fee</p>
                       <p>₦ {discountAmount.toLocaleString()}</p>
                     </div>
                     <div className='flex gap-3 justify-between'>
@@ -931,10 +930,7 @@ const Bag = () => {
                         height={30}
                       />
                     </div>
-                    <p className='mt-2 text-[#644120] italic text-sm'>
-                      please note that transcation fees will be added at
-                      checkout
-                    </p>
+
                     <p className='mt-2 text-[#644120] italic text-sm'>
                       If you have issues with your order, please send us a quick
                       mail at {''}

@@ -13,6 +13,7 @@ export type ProductFormDataType = {
   sizes: string[];
   colors: string[];
   category: string;
+  sub_description: string;
 };
 
 export type ProductDetailType = {
@@ -22,6 +23,7 @@ export type ProductDetailType = {
   price: string;
   description: string;
   product_details: string[];
+  sub_description: string;
   images: string[];
   sizes: string[];
   colors: string[];

@@ -23,6 +23,7 @@ const AddNewProduct = () => {
     name: '',
     price: '',
     description: [],
+    sub_description: '',
     weight: 0,
     images: [],
     sizes: [],
@@ -96,6 +97,7 @@ const AddNewProduct = () => {
       name: productFormData.name,
       price: productFormData.price,
       product_details: productFormData.description,
+      sub_description: productFormData.sub_description,
       images: productFormData.images,
       sizes: productFormData.sizes,
       colors: productFormData.colors,
@@ -114,6 +116,7 @@ const AddNewProduct = () => {
           name: '',
           price: '',
           description: [],
+          sub_description: '',
           weight: 0,
           images: [],
           sizes: [],
@@ -217,6 +220,22 @@ const AddNewProduct = () => {
               ))}
             </div>
           </div>
+        </div>
+
+        <div>
+          <p className='mt-4'>Product Sub-Description</p>
+          <input
+            type='text'
+            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+            placeholder="e.g Men's wear"
+            value={productFormData.sub_description}
+            onChange={(e) =>
+              setProductFormData({
+                ...productFormData,
+                sub_description: e.target.value,
+              })
+            }
+          />
         </div>
         <div className='my-4 text-sm w-full flex flex-col sm:flex-row gap-4 sm:gap-6'>
           <div className='w-full'>

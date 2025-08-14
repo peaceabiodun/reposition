@@ -154,18 +154,12 @@ const TheAssemble = () => {
     <div className='min-h-[100vh] bg-[#C4BAAF]  '>
       <div className='blur-bg p-4'>
         <header>
-          <div
-            onClick={() => router.push('/')}
-            className='flex gap-1 cursor-pointer'
-          >
-            <h2 className='font-bold text-sm sm:text-lg daikon '>
-              REPOSITION{' '}
-            </h2>
+          <div className='flex items-center justify-center cursor-pointer '>
             <Image
-              src={'/logo.svg'}
+              src={'/assemble-logo.png'}
               alt='logo'
-              width={30}
-              height={30}
+              width={80}
+              height={80}
               className='object-cover '
             />
           </div>
@@ -181,15 +175,14 @@ const TheAssemble = () => {
           </div>
 
           <h2 className='text-lg sm:text-2xl font-bold text-center mt-6'>
-            ASSEMBLE
+            REPOSITION ASSEMBLE
           </h2>
-          <p className='text-sm text-center mt-2 font-medium'>
-            MEMBERSHIP FORM
-          </p>
+
+          <p className='text-sm text-center mt-2 font-medium'>MEMBERSHIP</p>
           {/* <CountdownTimer /> */}
           <div className='mt-6 flex flex-col m-auto w-full max-w-[1200px] '>
             <div className='flex gap-2'>
-              <p className='text-base'>Personal Information</p>
+              <p className='text-base'>Your Details</p>
               <p className='text-red-500'>*</p>
             </div>
 
@@ -239,11 +232,11 @@ const TheAssemble = () => {
             </div>
 
             <div className='flex gap-2 mt-6'>
-              <p className='text-base'>Package Options</p>
+              <p className='text-base'>Membership Options</p>
               <p className='text-red-500'>*</p>
             </div>
             <p className='mt-1 text-xs'>
-              Note: Tick the radio button to select the package
+              Note: Tick the radio button to select membership pack
             </p>
 
             <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2 text-sm'>
