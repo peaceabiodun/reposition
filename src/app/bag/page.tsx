@@ -493,7 +493,9 @@ const Bag = () => {
                     <p className='text-base sm:text-lg font-semibold'>
                       {item.name}
                     </p>
+
                     <p className='text-sm'>[{item.color}]</p>
+
                     <p>₦ {Number(item.price).toLocaleString()}</p>
                     <p>Size: {item.size}</p>
                   </div>

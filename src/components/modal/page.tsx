@@ -59,6 +59,7 @@ const LocalModal = ({
         style={customStyles}
         ariaHideApp={false}
         {...modalProps}
+        shouldCloseOnOverlayClick={false}
         appElement={document.getElementById('__next') as HTMLElement}
         className={`${
           backgroundColor ? `${backgroundColor}` : 'bg-transparent'

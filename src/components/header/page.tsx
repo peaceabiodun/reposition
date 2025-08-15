@@ -125,7 +125,7 @@ const Header = () => {
             </p>
             <p
               className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
-              onClick={() => router.push('/theassemble')}
+              onClick={() => router.push('/assemble')}
             >
               Join Assemble
             </p>

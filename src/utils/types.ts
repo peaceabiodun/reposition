@@ -14,6 +14,7 @@ export type ProductFormDataType = {
   colors: string[];
   category: string;
   sub_description: string;
+  color_blocks: string[];
 };
 
 export type ProductDetailType = {
@@ -32,6 +33,7 @@ export type ProductDetailType = {
   category: string;
   frequently_bought?: boolean;
   pre_order?: boolean;
+  color_blocks: string[];
 };
 
 export type ShoppingBagType = {
@@ -45,6 +47,8 @@ export type ShoppingBagType = {
   weight: number;
   user_email: string;
   user_id: string;
+  color_blocks: string[];
+  sub_description: string;
 };
 
 export type DeliveryDetailsType = {

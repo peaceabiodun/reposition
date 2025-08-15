@@ -64,7 +64,6 @@ const Home = () => {
       setShowTeaCoffeeModal(!beverage);
     }
   }, []);
-
   // useEffect(() => {
   //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
   //   if (hasSeenCampaign) {
@@ -366,7 +365,7 @@ const Home = () => {
 
                   <p
                     className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
-                    onClick={() => router.push('/theassemble')}
+                    onClick={() => router.push('/assemble')}
                   >
                     Join Assemble
                   </p>
@@ -562,6 +561,15 @@ const Home = () => {
                         <p className='text-[11px] uppercase mt-[1px]'>
                           {item.sub_description}
                         </p>
+                        <div className='flex items-center gap-1'>
+                          {item?.color_blocks?.map((color, index) => (
+                            <div
+                              key={index}
+                              className='w-3 h-3 rounded-full'
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
+                        </div>
                       </div>
 
                       {/* <p className='text-sm md:text-base '>
@@ -607,7 +615,7 @@ const Home = () => {
             </div>
           )}
           <div className=' grid grid-cols-1 lg:grid-cols-2 mt-16 mb-8'>
-            <div className='w-full h-[400px] md:h-[600px] relative'>
+            <div className='w-full h-[500px] md:h-[600px] relative'>
               <img
                 src='/img2.png'
                 alt='assemble'
@@ -615,25 +623,23 @@ const Home = () => {
               />
               <div className='flex items-center justify-center'>
                 <div className='absolute top-3  p-2'>
-                  <h4 className=' text-sm md:text-lg max-w-[450px] text-white mb-4 text-center font-semibold '>
+                  <h4 className=' text-sm  max-w-[450px] text-white mb-4 text-center font-semibold '>
                     Step into Assemble <br />
                     To experience special offers, early access to releases,
                     <br /> event access, free delivery and more!
                   </h4>
                 </div>
               </div>
-              <div className='w-full absolute bottom-3 flex items-center justify-center'>
-                <div className=' p-2 '>
-                  <div
-                    onClick={() => router.push('/theassemble')}
-                    className=' text-sm font-medium flex  items-center justify-center gap-2 mt-3 border border-white border-solid rounded-[4px] p-2 w-[200px] h-[36px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
-                  >
-                    ENTER
-                  </div>
+              <div className='w-full absolute bottom-2 flex items-center justify-center mt-4 p-2'>
+                <div
+                  onClick={() => router.push('/assemble')}
+                  className=' text-sm font-medium flex  items-center justify-center  border border-white border-solid rounded-[4px] p-2 w-[200px] h-[34px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
+                >
+                  ENTER
                 </div>
               </div>
             </div>
-            <div className='w-full h-[400px] md:h-[600px]'>
+            <div className='w-full h-[500px] md:h-[600px]'>
               {/* <img
                 src='/img1.png'
                 alt='assemble'

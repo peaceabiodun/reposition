@@ -73,7 +73,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
     },
     {
       title: 'Join Assemble',
-      onClick: () => router.push('/theassemble'),
+      onClick: () => router.push('/assemble'),
     },
     {
       title: 'Our Impact',
