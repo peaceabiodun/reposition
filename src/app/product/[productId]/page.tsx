@@ -105,6 +105,8 @@ const ProductDetails = () => {
       color: selectedColor,
       size: selectedSize,
       weight: productDetails?.weight,
+      color_blocks: productDetails?.color_blocks,
+      sub_description: productDetails?.sub_description,
     };
     const existingBagItemsJSON = localStorage.getItem(STORAGE_KEYS.BAG_ITEMS);
     let existingBagItems = [];
@@ -245,9 +247,21 @@ const ProductDetails = () => {
           <div className=' mt-5 md:mt-0 flex flex-col items-center text-sm overflow-y-scroll scroll-smooth scrollable-div md:h-[80vh] px-8 '>
             <div className='flex flex-col space-y-4 w-full max-w-[600px]'>
               <div>
-                <h1 className='uppercase font-medium text-lg'>
+                <h2 className='uppercase font-medium text-lg'>
                   {productDetails?.name}
-                </h1>
+                </h2>
+                <p className='text-[11px] uppercase mt-[1px]'>
+                  {productDetails?.sub_description}
+                </p>
+                <div className='flex items-center gap-1'>
+                  {productDetails?.color_blocks?.map((color, index) => (
+                    <div
+                      key={index}
+                      className='w-3 h-3 rounded-full'
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
                 <h3 className='font-semibold mt-1'>
                   ₦ {Number(productDetails?.price).toLocaleString()}
                 </h3>
@@ -492,8 +506,7 @@ const ProductDetails = () => {
                         to qualify for a refund.
                       </li>
                       <li>
-                        pection to qualify for a refund. Refunds are issued to
-                        the original payment method.
+                        Refunds are issued to the original payment method.
                       </li>
                       <li>
                         Items that don’t meet the conditions will be returned to

@@ -9,6 +9,7 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import ErrorModal from '../error-modal/page';
+import { HexColorPicker } from 'react-colorful';
 
 type EditModalProps = {
   show: boolean;
@@ -30,6 +31,7 @@ type EditFormDataType = {
   frequently_bought?: boolean;
   category: string;
   pre_order?: boolean;
+  color_blocks: string[];
 };
 
 const EditProductModal = ({
@@ -46,6 +48,9 @@ const EditProductModal = ({
   const [description, setDescription] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [currentColor, setCurrentColor] = useState('#38271c');
 
   const categoryOptions = [
     { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
@@ -82,6 +87,7 @@ const EditProductModal = ({
         sold_out: selectedProduct?.sold_out,
         category: selectedProduct?.category,
         frequently_bought: selectedProduct?.frequently_bought,
+        color_blocks: selectedProduct?.color_blocks,
       });
     }
   }, [selectedProduct]);
@@ -103,6 +109,21 @@ const EditProductModal = ({
     const descriptions = [...formData.description, description];
     setFormData((data) => ({ ...data, description: descriptions }));
     setDescription('');
+  };
+
+  const addSelectedColor = () => {
+    if (currentColor && !selectedColors.includes(currentColor)) {
+      const newColors = [...selectedColors, currentColor];
+      setSelectedColors(newColors);
+      setFormData((data) => ({ ...data, color_blocks: newColors }));
+      setShowColorPicker(false);
+    }
+  };
+
+  const removeSelectedColor = (colorToRemove: string) => {
+    const newColors = selectedColors.filter((c) => c !== colorToRemove);
+    setSelectedColors(newColors);
+    setFormData((data) => ({ ...data, color_blocks: newColors }));
   };
 
   const handleRemoveSize = (index: number) => {
@@ -136,6 +157,7 @@ const EditProductModal = ({
       category: selectedCategory ? selectedCategory : formData.category,
       frequently_bought: formData?.frequently_bought,
       pre_order: formData?.pre_order,
+      color_blocks: formData?.color_blocks,
     };
     try {
       const { data, error } = await supabase
@@ -168,7 +190,7 @@ const EditProductModal = ({
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
 
-        <label className=''>Product Price (NGN)</label>
+        <p className='mt-2'>Product Price (NGN)</p>
         <input
           type='text'
           className='border border-[#38271c] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
@@ -177,7 +199,7 @@ const EditProductModal = ({
           onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         />
 
-        <p className=''>Product Description</p>
+        <p className='mt-4'>Product Description</p>
         <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 h-[200px] overflow-y-scroll scrollable-div'>
           <p className=''>+ Add Descriptions one after another</p>
           <div className='flex items-center justify-between gap-3'>
@@ -213,7 +235,7 @@ const EditProductModal = ({
           </div>
         </div>
 
-        <p className='mt-2'>Product Sub-Description</p>
+        <p className='mt-4'>Product Sub-Description</p>
         <input
           type='text'
           className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
@@ -225,7 +247,7 @@ const EditProductModal = ({
         />
 
         <div className='w-full mb-2 relative '>
-          <p className=''>Product Category</p>
+          <p className='mt-4'>Product Category</p>
           <div
             onClick={() => {
               console.log('hhjh');
@@ -260,7 +282,7 @@ const EditProductModal = ({
           )}
         </div>
         <div className='w-full'>
-          <label className=''>Product Weight</label>
+          <label className='mt-4'>Product Weight</label>
           <div className='flex w-full items-center'>
             <input
               type='tel'
@@ -282,7 +304,7 @@ const EditProductModal = ({
             </div>
           </div>
         </div>
-        <p className='mb-2'>Product Image</p>
+        <p className='mt-4 mb-2'>Product Image</p>
         <div className='flex flex-col gap-3'>
           {formData?.images?.map((item, index) => (
             <FileUploader
@@ -334,7 +356,7 @@ const EditProductModal = ({
           <p className='font-semibold '>Mark Product for Pre-Order</p>
         </div>
 
-        <p>Product Sizes</p>
+        <p className='mt-4'>Product Sizes</p>
         <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll scrollable-div'>
           <p className=''>+ Add Sizes</p>
           <div className='flex items-center justify-between gap-3'>
@@ -369,7 +391,80 @@ const EditProductModal = ({
           </div>
         </div>
 
-        <p>Product Colors</p>
+        <div>
+          <p className='mt-4'>Product Color Blocks</p>
+          <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 min-h-[120px] text-sm'>
+            <div className='flex items-center justify-between mb-3'>
+              <p className='font-medium'>Selected Colors</p>
+              <button
+                onClick={() => setShowColorPicker(!showColorPicker)}
+                className='px-3 py-1 text-xs border border-[#38271c] rounded-sm hover:bg-[#38271c] hover:text-white transition-colors'
+              >
+                {showColorPicker ? 'Cancel' : 'Add Color'}
+              </button>
+            </div>
+
+            {showColorPicker && (
+              <div className='mb-4 p-3 border border-[#38271c] rounded-sm bg-gray-50'>
+                <div className='flex items-center gap-3 mb-3'>
+                  <HexColorPicker
+                    color={currentColor}
+                    onChange={setCurrentColor}
+                    className='w-32 h-32'
+                  />
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex items-center gap-2'>
+                      <div
+                        className='w-8 h-8 rounded border border-gray-300'
+                        style={{ backgroundColor: currentColor }}
+                      />
+                      <input
+                        type='text'
+                        value={currentColor}
+                        onChange={(e) => setCurrentColor(e.target.value)}
+                        className='border border-gray-300 rounded px-2 py-1 text-xs w-20'
+                        placeholder='#000000'
+                      />
+                    </div>
+                    <button
+                      onClick={addSelectedColor}
+                      className='px-3 py-1 text-xs bg-[#38271c] text-white rounded-sm hover:bg-[#5a3d2e] transition-colors'
+                    >
+                      Add Color
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {selectedColors.length > 0 ? (
+              <div className='flex flex-wrap gap-2'>
+                {formData?.color_blocks?.map((color, index) => (
+                  <div
+                    key={index}
+                    className='flex items-center gap-2 rounded-full '
+                  >
+                    <div
+                      className='w-4 h-4 rounded-full border border-[#fcd7bf]'
+                      style={{ backgroundColor: color }}
+                    />
+
+                    <button
+                      onClick={() => removeSelectedColor(color)}
+                      className='ml-1 text-gray-500 hover:text-red-500 transition-colors'
+                    >
+                      <AiOutlineDelete size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className=' text-center py-4'>No colors selected yet</p>
+            )}
+          </div>
+        </div>
+
+        <p className='mt-4'>Product Colors</p>
         <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 h-[160px] overflow-y-scroll scrollable-div'>
           <p className=''>+ Add Colors</p>
           <div className='flex items-center justify-between gap-3'>

@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import SuccessModal from '@/components/success-modal/page';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
+import { HexColorPicker } from 'react-colorful';
 
 const AddNewProduct = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const AddNewProduct = () => {
     sizes: [],
     colors: [],
     category: '',
+    color_blocks: [],
   });
 
   const [size, setSize] = useState('');
@@ -39,6 +41,9 @@ const AddNewProduct = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [currentColor, setCurrentColor] = useState('#38271c');
 
   const userEmail =
     typeof window !== 'undefined'
@@ -77,6 +82,20 @@ const AddNewProduct = () => {
     setProductFormData((data) => ({ ...data, description: descriptions }));
   };
 
+  const addSelectedColor = () => {
+    if (currentColor && !selectedColors.includes(currentColor)) {
+      const newColors = [...selectedColors, currentColor];
+      setSelectedColors(newColors);
+      setProductFormData((data) => ({ ...data, color_blocks: newColors }));
+      setShowColorPicker(false);
+    }
+  };
+
+  const removeSelectedColor = (colorToRemove: string) => {
+    const newColors = selectedColors.filter((c) => c !== colorToRemove);
+    setSelectedColors(newColors);
+    setProductFormData((data) => ({ ...data, color_blocks: newColors }));
+  };
   const categoryOptions = [
     { name: ENUM_PRODUCT_FILTER_LIST.SHIRTS },
     { name: ENUM_PRODUCT_FILTER_LIST.SHORTS },
@@ -104,6 +123,7 @@ const AddNewProduct = () => {
       weight: productFormData.weight,
       category: selectedCategory,
       user_email: userEmail,
+      color_blocks: selectedColors,
     };
     setLoading(true);
     try {
@@ -122,6 +142,7 @@ const AddNewProduct = () => {
           sizes: [],
           colors: [],
           category: '',
+          color_blocks: [],
         });
       }
     } catch (err: any) {
@@ -390,6 +411,78 @@ const AddNewProduct = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+        <div>
+          <p className='mt-4'>Product Color Blocks</p>
+          <div className='border border-[#38271c] rounded-sm w-full p-3 my-2 min-h-[120px] text-sm'>
+            <div className='flex items-center justify-between mb-3'>
+              <p className='font-medium'>Selected Colors</p>
+              <button
+                onClick={() => setShowColorPicker(!showColorPicker)}
+                className='px-3 py-1 text-xs border border-[#38271c] rounded-sm hover:bg-[#38271c] hover:text-white transition-colors'
+              >
+                {showColorPicker ? 'Cancel' : 'Add Color'}
+              </button>
+            </div>
+
+            {showColorPicker && (
+              <div className='mb-4 p-3 border border-[#38271c] rounded-sm bg-gray-50'>
+                <div className='flex items-center gap-3 mb-3'>
+                  <HexColorPicker
+                    color={currentColor}
+                    onChange={setCurrentColor}
+                    className='w-32 h-32'
+                  />
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex items-center gap-2'>
+                      <div
+                        className='w-8 h-8 rounded border border-gray-300'
+                        style={{ backgroundColor: currentColor }}
+                      />
+                      <input
+                        type='text'
+                        value={currentColor}
+                        onChange={(e) => setCurrentColor(e.target.value)}
+                        className='border border-gray-300 rounded px-2 py-1 text-xs w-20'
+                        placeholder='#000000'
+                      />
+                    </div>
+                    <button
+                      onClick={addSelectedColor}
+                      className='px-3 py-1 text-xs bg-[#38271c] text-white rounded-sm hover:bg-[#5a3d2e] transition-colors'
+                    >
+                      Add Color
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {selectedColors.length > 0 ? (
+              <div className='flex flex-wrap gap-2'>
+                {productFormData?.color_blocks?.map((color, index) => (
+                  <div
+                    key={index}
+                    className='flex items-center gap-2 rounded-full '
+                  >
+                    <div
+                      className='w-4 h-4 rounded-full border border-[#fcd7bf]'
+                      style={{ backgroundColor: color }}
+                    />
+
+                    <button
+                      onClick={() => removeSelectedColor(color)}
+                      className='ml-1 text-gray-500 hover:text-red-500 transition-colors'
+                    >
+                      <AiOutlineDelete size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className=' text-center py-4'>No colors selected yet</p>
+            )}
           </div>
         </div>
         {disableButton && (

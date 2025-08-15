@@ -141,17 +141,27 @@ const Shop = () => {
                   <div className=' text-[#3f2a16]'>
                     <div className=' mt-2'>
                       <p className=' text-sm uppercase font-semibold'>
-                        {item.name}
+                        {item?.name}
                       </p>
+
                       <p className='text-[11px] uppercase mt-[1px]'>
-                        {item.sub_description}
+                        {item?.sub_description}
                       </p>
+                      <div className='flex items-center gap-1'>
+                        {item?.color_blocks?.map((color, index) => (
+                          <div
+                            key={index}
+                            className='w-3 h-3 rounded-full'
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
+                      </div>
                     </div>
                     {/* <p className='text-sm  '>
                       ₦ {Number(item.price).toLocaleString()}
                     </p> */}
                     <button
-                      onClick={() => router.push(`product/${item.id}`)}
+                      onClick={() => router.push(`product/${item?.id}`)}
                       className='text-xs flex flex-col items-center justify-center mt-2 border border-[#38271c] border-solid rounded-[4px] p-2 h-[30px] hover:bg-[#fafafa56] text-[#3f2a16] transition-all duration-300 cursor-pointer z-[999]'
                     >
                       SELECT
