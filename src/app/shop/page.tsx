@@ -151,7 +151,7 @@ const Shop = () => {
                         {item?.color_blocks?.map((color, index) => (
                           <div
                             key={index}
-                            className='w-3 h-3 rounded-full'
+                            className='w-3 h-3 rounded-[2px]'
                             style={{ backgroundColor: color }}
                           />
                         ))}

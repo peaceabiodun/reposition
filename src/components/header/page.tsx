@@ -109,7 +109,7 @@ const Header = () => {
       <div
         className={`absoluteleft-0 top-0 w-full h-[45px] backdrop-blur-md z-[999]`}
       >
-        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] py-6 relative text-[#3f2a16]'>
+        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative text-[#3f2a16]'>
           <div className='gap-8 hidden lg:flex'>
             <p
               className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
