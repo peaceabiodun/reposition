@@ -12,7 +12,7 @@ import UpdatePasswordModal from '../update-password-modal/page';
 import { BsCart2, BsHandbag } from 'react-icons/bs';
 import LanguageSelector from '../language-dropdown/page';
 import { CgMenuRight } from 'react-icons/cg';
-import { MdOutlineInventory } from 'react-icons/md';
+import { MdClose, MdOutlineInventory } from 'react-icons/md';
 
 const Header = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -109,7 +109,7 @@ const Header = () => {
       <div
         className={`absoluteleft-0 top-0 w-full h-[45px] backdrop-blur-md z-[999]`}
       >
-        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative text-[#3f2a16]'>
+        <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] py-6 relative text-[#3f2a16]'>
           <div className='gap-8 hidden lg:flex'>
             <p
               className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
@@ -186,11 +186,29 @@ const Header = () => {
               </span>
             </div>
             <LanguageSelector />
-            <CgMenuRight
-              size={20}
-              className='cursor-pointer lg:hidden'
-              onClick={() => setShowMobileMenu(true)}
-            />
+            <button
+              aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
+              aria-pressed={showMobileMenu}
+              onClick={() => setShowMobileMenu((prev) => !prev)}
+              className='relative w-6 h-6 lg:hidden'
+            >
+              <CgMenuRight
+                size={20}
+                className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                  showMobileMenu
+                    ? 'opacity-0 rotate-90 scale-75'
+                    : 'opacity-100 rotate-0 scale-100'
+                }`}
+              />
+              <MdClose
+                size={20}
+                className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                  showMobileMenu
+                    ? 'opacity-100 rotate-0 scale-100'
+                    : 'opacity-0 -rotate-90 scale-75'
+                }`}
+              />
+            </button>
           </div>
           {showDropdown && (
             <div className='bg-[#ecebeb] rounded-sm p-2 absolute right-2 top-12 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
@@ -216,7 +234,7 @@ const Header = () => {
         id={`${scroll ? 'sticky' : ''}`}
         className={` ${
           scroll
-            ? 'flex items-center justify-between gap-4 p-4 md:p-8 hover:bg-[#fafafa41] text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
+            ? 'flex items-center justify-between gap-4 p-4 md:p-8 text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
             : ' hidden '
         } `}
       >
@@ -238,12 +256,31 @@ const Header = () => {
         <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
           REPOSITION
         </h2>
+
         <div>
-          <CgMenuRight
-            size={20}
-            className='cursor-pointer'
-            onClick={() => setShowMobileMenu(true)}
-          />
+          <button
+            aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
+            aria-pressed={showMobileMenu}
+            onClick={() => setShowMobileMenu((prev) => !prev)}
+            className='relative w-6 h-6'
+          >
+            <CgMenuRight
+              size={20}
+              className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                showMobileMenu
+                  ? 'opacity-0 rotate-90 scale-75'
+                  : 'opacity-100 rotate-0 scale-100'
+              }`}
+            />
+            <MdClose
+              size={20}
+              className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                showMobileMenu
+                  ? 'opacity-100 rotate-0 scale-100'
+                  : 'opacity-0 -rotate-90 scale-75'
+              }`}
+            />
+          </button>
         </div>
       </div>
       {showUpdatePasswordModal && (

@@ -16,6 +16,7 @@ import { BsCart2, BsHandbag } from 'react-icons/bs';
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
+  MdClose,
   MdOutlineInventory,
 } from 'react-icons/md';
 import { CgMenuRight } from 'react-icons/cg';
@@ -418,11 +419,29 @@ const Home = () => {
                     </span>
                   </div>
                   <LanguageSelector />
-                  <CgMenuRight
-                    size={20}
-                    className='cursor-pointer lg:hidden'
-                    onClick={() => setShowMobileMenu(true)}
-                  />
+                  <button
+                    aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
+                    aria-pressed={showMobileMenu}
+                    onClick={() => setShowMobileMenu((prev) => !prev)}
+                    className='relative w-6 h-6 lg:hidden'
+                  >
+                    <CgMenuRight
+                      size={20}
+                      className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                        showMobileMenu
+                          ? 'opacity-0 rotate-90 scale-75'
+                          : 'opacity-100 rotate-0 scale-100'
+                      }`}
+                    />
+                    <MdClose
+                      size={20}
+                      className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                        showMobileMenu
+                          ? 'opacity-100 rotate-0 scale-100'
+                          : 'opacity-0 -rotate-90 scale-75'
+                      }`}
+                    />
+                  </button>
                 </div>
                 {showDropdown && (
                   <div className='backdrop-blur-md rounded-sm p-2 absolute right-2 top-16 shadow-md text-xs sm:text-sm flex flex-col gap-2 z-[999]'>
@@ -447,7 +466,7 @@ const Home = () => {
                 id={`${scroll ? 'sticky' : ''}`}
                 className={` ${
                   scroll
-                    ? 'flex items-center justify-between gap-4 p-4 md:p-8 hover:bg-[#fafafa41] text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
+                    ? 'flex items-center justify-between gap-4 p-4 md:p-8 text-[#3f2a16] transition-all slide-in-from-top duration-500 cursor-pointer backdrop-blur-sm fixed left-0 top-0 w-full z-[999]'
                     : ' hidden '
                 } `}
               >
@@ -470,11 +489,29 @@ const Home = () => {
                   REPOSITION
                 </h2>
                 <div>
-                  <CgMenuRight
-                    size={20}
-                    className='cursor-pointer'
-                    onClick={() => setShowMobileMenu(true)}
-                  />
+                  <button
+                    aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
+                    aria-pressed={showMobileMenu}
+                    onClick={() => setShowMobileMenu((prev) => !prev)}
+                    className='relative w-6 h-6'
+                  >
+                    <CgMenuRight
+                      size={20}
+                      className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                        showMobileMenu
+                          ? 'opacity-0 rotate-90 scale-75'
+                          : 'opacity-100 rotate-0 scale-100'
+                      }`}
+                    />
+                    <MdClose
+                      size={20}
+                      className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+                        showMobileMenu
+                          ? 'opacity-100 rotate-0 scale-100'
+                          : 'opacity-0 -rotate-90 scale-75'
+                      }`}
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -486,6 +523,9 @@ const Home = () => {
                 src='/home-img.png'
                 alt='home-img'
                 className='w-full sm:w-[50%] h-full object-cover'
+                onClick={() =>
+                  router.push('/product/e0983685-5b86-4666-bae9-7a90e48e156c')
+                }
               />
               <img
                 src='/home-img1.png'
@@ -565,7 +605,7 @@ const Home = () => {
                           {item?.color_blocks?.map((color, index) => (
                             <div
                               key={index}
-                              className='w-3 h-3 rounded-full'
+                              className='w-3 h-3 rounded-[2px]'
                               style={{ backgroundColor: color }}
                             />
                           ))}

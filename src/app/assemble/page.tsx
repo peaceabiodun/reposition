@@ -251,7 +251,7 @@ const TheAssemble = () => {
                 <p className='text-base font-bold mb-1'>RESPECT [10,000PTS]</p>
                 <ul className='list-disc list-inside space-y-1 text-sm'>
                   <li> One-time monthly discount at Assemble partner venues</li>
-                  <li>45mins early access on Reposition collection drops</li>
+                  <li>24 hours early access on Reposition collection drops</li>
                   <li>
                     Special codes to redeem discounts on Select Reposition
                     purchases
@@ -304,7 +304,7 @@ const TheAssemble = () => {
                   <li>
                     Three-time monthly discounts at Assemble partner venues
                   </li>
-                  <li>60min early access on Reposition collection drops</li>
+                  <li>72 hours early access on Reposition collection drops</li>
                   <li>
                     Special codes to redeem discounts on Reposition purchases
                   </li>
