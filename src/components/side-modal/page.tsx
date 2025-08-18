@@ -41,7 +41,7 @@ const LocalSideModal = ({
       left: 'auto',
       right: '0%',
       bottom: 'auto',
-      backgroundColor: backgroundColor ? backgroundColor : '#C4BAAF',
+      backgroundColor: backgroundColor ? backgroundColor : '#eee1d3',
       backdropFilter: backgroundColor ? 'blur(4px)' : 'none',
       border: '1px',
       borderColor: '#000000',

@@ -70,7 +70,7 @@ const Shop = () => {
 
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#C4BAAF] '>
+      <div className='w-full relative min-h-[100vh] bg-[#eee1d3] '>
         <div className='max-w-[1700px] mx-auto px-4 md:px-8'>
           <Header />
           <div className='py-4 flex items-center gap-5 2xl:justify-center w-full overflow-x-auto no-scrollbar mt-5'>

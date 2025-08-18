@@ -151,7 +151,7 @@ const TheAssemble = () => {
   };
 
   return (
-    <div className='min-h-[100vh] bg-[#C4BAAF]  '>
+    <div className='min-h-[100vh] bg-[#eee1d3]  '>
       <div className='blur-bg p-4'>
         <header>
           <div className='flex items-center justify-center cursor-pointer '>

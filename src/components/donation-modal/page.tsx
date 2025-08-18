@@ -16,8 +16,9 @@ const DonationModal = ({ show, onClose }: Props) => {
           height={150}
         />
       </div>
-      <p className='text-sm italic text-[#38271c] text-center mt-3'>
-        $5 dollars goes to a creative special needs child in Africa.
+      <p className='text-bsm font-medium text-[#38271c] text-center mt-3'>
+        Thank you. We have made a $5 contribution on your behalf <br />
+        to a special needs child in Africa. Please check your email.
       </p>
     </LocalModal>
   );

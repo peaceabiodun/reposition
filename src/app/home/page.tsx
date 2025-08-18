@@ -151,7 +151,7 @@ const Home = () => {
   // };
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#C4BAAF]font-light '>
+      <div className='w-full relative min-h-[100vh] bg-[#eee1d3]font-light '>
         <Header />
         <div className='flex flex-col items-center  w-full p-4'>
           {campaignLoading ? (

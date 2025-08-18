@@ -174,7 +174,7 @@ const AuthPage = () => {
     }
   };
   return (
-    <div className='w-full min-h-screen login_bg bg-[#C4BAAF] text-sm'>
+    <div className='w-full min-h-screen login_bg bg-[#eee1d3] text-sm'>
       <div className='blur-bg p-3 xs:p-4 text-[#e4e0e0] '>
         {/* <Link
           href='/'
