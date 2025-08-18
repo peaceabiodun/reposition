@@ -9,7 +9,7 @@ import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 const OurImpact = () => {
   const router = useRouter();
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#C4BAAF] pb-10'>
+    <div className='w-full h-full min-h-[100vh] bg-[#eee1d3] pb-10'>
       <div className='max-w-[1700px] mx-auto px-4 md:px-8'>
         <Header />
 

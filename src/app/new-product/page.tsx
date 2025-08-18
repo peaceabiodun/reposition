@@ -160,7 +160,7 @@ const AddNewProduct = () => {
     productFormData.sizes.length <= 0;
 
   return (
-    <div className='w-full min-h-screen bg-[#C4BAAF] p-3 xs:p-4'>
+    <div className='w-full min-h-screen bg-[#eee1d3] p-3 xs:p-4'>
       <div className='max-w-[1500px] mx-auto'>
         <Link href='/manage-products' className='flex gap-1 mt-4 text-sm'>
           <MdOutlineArrowBackIosNew size={20} />

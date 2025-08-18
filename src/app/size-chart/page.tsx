@@ -80,7 +80,7 @@ const SizeChart = () => {
     },
   ];
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#C4BAAF]'>
+    <div className='w-full h-full min-h-[100vh] bg-[#eee1d3]'>
       <div className='max-w-[1700px] mx-auto px-4 md:px-8 pb-10'>
         <Header />
         <div

@@ -75,7 +75,7 @@ const ManageProducts = () => {
     }
   };
   return (
-    <div className='w-full min-h-screen bg-[#C4BAAF] p-3 xs:p-4'>
+    <div className='w-full min-h-screen bg-[#eee1d3] p-3 xs:p-4'>
       <div className='max-w-[1500px] mx-auto'>
         <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
           <div

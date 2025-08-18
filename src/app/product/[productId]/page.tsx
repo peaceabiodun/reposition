@@ -174,7 +174,7 @@ const ProductDetails = () => {
   }, [currentIndex]);
 
   return (
-    <div className='w-full h-full min-h-[100vh] bg-[#C4BAAF] pb-12'>
+    <div className='w-full h-full min-h-[100vh] bg-[#eee1d3] pb-12'>
       <Header />
       <div className=' w-full  p-4 mb-4 max-w-[1700px] mx-auto'>
         <div

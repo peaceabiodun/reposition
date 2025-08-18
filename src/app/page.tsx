@@ -297,7 +297,7 @@ const Home = () => {
   // };
   return (
     <Fragment>
-      <div className='w-full relative min-h-[100vh] bg-[#C4BAAF] pb-10'>
+      <div className='w-full relative min-h-[100vh] bg-[#eee1d3] pb-10'>
         <div className=''>
           <div className='flex flex-col items-center  w-full'>
             <div className='relative w-full'>
@@ -348,7 +348,7 @@ const Home = () => {
               </div>
 
               <nav
-                className={`absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white hover:bg-[#fafafa41] hover:text-[#3f2a16] cursor-pointer `}
+                className={`absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white  hover:text-[#3f2a16] cursor-pointer `}
               >
                 <div className='gap-5 hidden lg:flex'>
                   <p
