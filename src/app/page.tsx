@@ -12,7 +12,7 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType, ShoppingBagType } from '@/utils/types';
-import { BsCart2, BsHandbag } from 'react-icons/bs';
+import { BsHandbag } from 'react-icons/bs';
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
@@ -20,7 +20,6 @@ import {
   MdOutlineInventory,
 } from 'react-icons/md';
 import { CgMenuRight } from 'react-icons/cg';
-import { TbShirt, TbWorld } from 'react-icons/tb';
 import { GoPerson } from 'react-icons/go';
 import UpdatePasswordModal from '@/components/update-password-modal/page';
 import SuccessModal from '@/components/success-modal/page';
@@ -28,7 +27,7 @@ import MobileMenu from '@/components/mobile-menu/page';
 import TeaCoffeeModal from '@/components/tea-coffee-modal/page';
 import LanguageSelector from '@/components/language-dropdown/page';
 import BeverageConfirmationModal from '@/components/beverage-confirmation-modal/page';
-import BottomNav from '@/components/bottom-nav/page';
+
 
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);

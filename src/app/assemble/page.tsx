@@ -62,6 +62,30 @@ const TheAssemble = () => {
     });
   };
 
+  const sendAssembleMail = async () => {
+    try {
+      const response = await fetch('/api/send-assemble-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          fullName: formData.firstName,
+          phoneNumber: formData.phoneNumber,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      console.log('Emails sent successfully');
+    } catch (error) {
+      console.error('Error sending emails:', error);
+    }
+  };
+
   const signUpForTheassemble = async () => {
     if (!formData.firstName || !formData.email || !formData.phoneNumber) {
       return;
@@ -83,6 +107,7 @@ const TheAssemble = () => {
       if (error !== null) {
         setShowErrorMessage(true);
       } else {
+        await sendAssembleMail();
         setShowSuccessMessage(true);
         setFormData({
           firstName: '',
@@ -231,41 +256,48 @@ const TheAssemble = () => {
               </div>
             </div>
 
-            <div className='flex gap-2 mt-6'>
-              <p className='text-base'>Membership Options</p>
-              <p className='text-red-500'>*</p>
-            </div>
-            <p className='mt-1 text-xs'>
-              Note: Tick the radio button to select membership pack
-            </p>
-
-            <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2 text-sm'>
-              <input
-                type='radio'
-                name='package'
-                checked={formData.selectedPackage === 'revere'}
-                onChange={() => handlePackageChange('revere')}
-                className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
-              />
-              <div>
-                <p className='text-base font-bold mb-1'>RESPECT [10,000PTS]</p>
-                <ul className='list-disc list-inside space-y-1 text-sm'>
-                  <li> One-time monthly discount at Assemble partner venues</li>
-                  <li>24 hours early access on Reposition collection drops</li>
-                  <li>
-                    Special codes to redeem discounts on Select Reposition
-                    purchases
-                  </li>
-                  <li>
-                    Access to personalized event content and first-reserve
-                    access for next event
-                  </li>
-                  <li>Lifetime-care [T&C applies]</li>
-                </ul>
-                <p className='text-sm mt-1'>
-                  For every 10 Reposition Item purchase or $1550 spent
-                </p>
-                {/* <p className='mt-1 font-bold text-lg'>10,000 NGN</p>
+            <div className='relative mt-6'>
+              <div className='flex gap-2 '>
+                <p className='text-base'>Membership Options</p>
+                <p className='text-red-500'>*</p>
+              </div>
+              <p className='mt-1 text-xs'>
+                Note: Tick the radio button to select membership pack
+              </p>
+              <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2 text-sm'>
+                <input
+                  type='radio'
+                  name='package'
+                  checked={formData.selectedPackage === 'revere'}
+                  onChange={() => handlePackageChange('revere')}
+                  className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
+                />
+                <div>
+                  <p className='text-base font-bold mb-1'>
+                    RESPECT [10,000PTS]
+                  </p>
+                  <ul className='list-disc list-inside space-y-1 text-sm'>
+                    <li>
+                      {' '}
+                      One-time monthly discount at Assemble partner venues
+                    </li>
+                    <li>
+                      24 hours early access on Reposition collection drops
+                    </li>
+                    <li>
+                      Special codes to redeem discounts on Select Reposition
+                      purchases
+                    </li>
+                    <li>
+                      Access to personalized event content and first-reserve
+                      access for next event
+                    </li>
+                    <li>Lifetime-care [T&C applies]</li>
+                  </ul>
+                  <p className='text-sm mt-1'>
+                    For every 10 Reposition Item purchase or $1550 spent
+                  </p>
+                  {/* <p className='mt-1 font-bold text-lg'>10,000 NGN</p>
                 <div className='flex gap-2 items-center'>
                   <p className='mt-2'>Quantity</p>
                   <input
@@ -287,53 +319,56 @@ const TheAssemble = () => {
                 <p className='mt-2 text-lg'>
                   Total Items: {formatPrice(reverePackagePrice)}
                 </p> */}
+                </div>
               </div>
-            </div>
-
-            <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
-              <input
-                type='radio'
-                name='package'
-                checked={formData.selectedPackage === 'prive'}
-                onChange={() => handlePackageChange('prive')}
-                className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
-              />
-              <label>
-                <p className='text-base font-bold mb-1'>PRIVATE [30,000PTS]</p>
-                <ul className='list-disc list-inside space-y-1 text-sm'>
-                  <li>
-                    Three-time monthly discounts at Assemble partner venues
-                  </li>
-                  <li>72 hours early access on Reposition collection drops</li>
-                  <li>
-                    Special codes to redeem discounts on Reposition purchases
-                  </li>
-                  <li>
-                    Access to request removal of publicly displayed personal
-                    content, or email personalized event content, and
-                    first-reserve access for next event
-                  </li>
-                  {/* <p className='text-lg font-bold'>FOR YOU [30,000PTS]</p> */}
-                  <li>Privilege christmas gifting</li>
-                  <li className=''>
-                    Exclusive invitation to attend private retreats and jazz
-                    events
-                  </li>
-                  <li className=''>
-                    Name customization for Reposition purchase
-                  </li>
-                  <li className=''>
-                    Request name customization for Reposition purchase
-                  </li>
-                  <li className=''>
-                    Invitation to support an annual outreach initiatives
-                  </li>
-                  <li className=''>Personalized style DNA profile</li>
-                </ul>
-                <p className='text-sm mt-1'>
-                  For every 30 Reposition item purchase or $4650 spent
-                </p>
-                {/* <p className='mt-1 font-bold text-lg text-white lg:text-[#000000]'>
+              <div className='flex gap-4 mt-4 border border-[#3d3e3f] rounded-sm p-2'>
+                <input
+                  type='radio'
+                  name='package'
+                  checked={formData.selectedPackage === 'prive'}
+                  onChange={() => handlePackageChange('prive')}
+                  className='w-5 h-5 bg-transparent accent-black mt-1 cursor-pointer'
+                />
+                <label>
+                  <p className='text-base font-bold mb-1'>
+                    PRIVATE [30,000PTS]
+                  </p>
+                  <ul className='list-disc list-inside space-y-1 text-sm'>
+                    <li>
+                      Three-time monthly discounts at Assemble partner venues
+                    </li>
+                    <li>
+                      72 hours early access on Reposition collection drops
+                    </li>
+                    <li>
+                      Special codes to redeem discounts on Reposition purchases
+                    </li>
+                    <li>
+                      Access to request removal of publicly displayed personal
+                      content, or email personalized event content, and
+                      first-reserve access for next event
+                    </li>
+                    {/* <p className='text-lg font-bold'>FOR YOU [30,000PTS]</p> */}
+                    <li>Privilege christmas gifting</li>
+                    <li className=''>
+                      Exclusive invitation to attend private retreats and jazz
+                      events
+                    </li>
+                    <li className=''>
+                      Name customization for Reposition purchase
+                    </li>
+                    <li className=''>
+                      Request name customization for Reposition purchase
+                    </li>
+                    <li className=''>
+                      Invitation to support an annual outreach initiatives
+                    </li>
+                    <li className=''>Personalized style DNA profile</li>
+                  </ul>
+                  <p className='text-sm mt-1'>
+                    For every 30 Reposition item purchase or $4650 spent
+                  </p>
+                  {/* <p className='mt-1 font-bold text-lg text-white lg:text-[#000000]'>
                   30,000 NGN
                 </p>
                 <div className='flex gap-2 items-center'>
@@ -357,14 +392,12 @@ const TheAssemble = () => {
                 <p className='mt-2 text-lg text-white lg:text-[#000000]'>
                   Total Items: {formatPrice(privePackagePrice)}
                 </p> */}
-              </label>
-            </div>
-
-            {/* <div className='mt-4 text-lg font-bold text-[#ffffff] lg:text-[#000000]'>
+                </label>
+              </div>
+              {/* <div className='mt-4 text-lg font-bold text-[#ffffff] lg:text-[#000000]'>
               Total : {formatPrice(reverePackagePrice + privePackagePrice)}
             </div> */}
-
-            {/* <div className='mt-4 text-white font-bold'>
+              {/* <div className='mt-4 text-white font-bold'>
               <button
                 // onClick={handlePaystackPayment}
                 // disabled={!formData.email || calculateTotalPrice() <= 0}
@@ -400,10 +433,16 @@ const TheAssemble = () => {
             </div>
             <p className='mt-2 text-white text-xs'>Transcation fees apply</p> */}
 
+              <div className='absolute top-0 left-0 w-full h-full bg-[#523f3f93] flex items-center justify-center p-3'>
+                <p className='text-white  text-sm md:text-base bg-[#523f3f] p-2 rounded-sm'>
+                  Membership tiers Unavailable
+                </p>
+              </div>
+            </div>
             <button
               disabled={loading}
               onClick={signUpForTheassemble}
-              className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-6'
+              className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-8'
             >
               {loading ? 'Loading...' : 'Join'}
             </button>
