@@ -1,22 +1,49 @@
 import type { Metadata } from 'next';
-import { Archivo } from 'next/font/google';
+import { Tenali_Ramakrishna, Tenor_Sans } from 'next/font/google';
 import './globals.css';
+import { ProductProvider } from '@/context/product-context';
+import { PostHogProvider } from './provider';
 
-const archivo = Archivo({ subsets: ['latin'] });
+// const archivo = Archivo({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Reposition',
-  description: 'Official online reposition store',
+  description: 'Official reposition store',
 };
 
+const tenali = Tenali_Ramakrishna({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+  variable: '--font-tenali',
+});
+
+const tenor = Tenor_Sans({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+  variable: '--font-tenor',
+});
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={archivo.className}>{children}</body>
-    </html>
+    <PostHogProvider>
+      <ProductProvider>
+        <html lang='en' suppressHydrationWarning={true}>
+          {/* <head>
+            <script
+              src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+              defer
+            ></script>
+          </head> */}
+          <body className={`${tenali.variable} ${tenor.variable}`}>
+            {children}
+          </body>
+        </html>
+      </ProductProvider>
+    </PostHogProvider>
   );
 }

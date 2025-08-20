@@ -1,0 +1,16 @@
+export const STORAGE_KEYS = {
+  AUTH_TOKEN: 'token',
+  USER_EMAIL: 'user_email',
+  CART_LENGTH: 'cart_length',
+  USER_ROLE: 'user_role',
+  USER_ID: 'user_id',
+  BAG_ITEMS: 'bag_items',
+  SEEN_CAMPAIGN: 'seen_campaign',
+  TEN_PERCENT_DISCOUNT: 'RPxForMyFriend',
+  DISCOUNT_CODE_ONE: 'UGXGA',
+  DISCOUNT_CODE_TWO: 'RPsidijnr',
+  DISCOUNT_CODE_THREE: 'RPxUmaru',
+  DISCOUNT_CODE_FOUR: 'RPxCajii',
+  DISCOUNT_CODE_FIVE: 'RSxSbala',
+  BEVERAGE_SELECTED: 'beverage_selected',
+};

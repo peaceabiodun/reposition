@@ -4,21 +4,20 @@ import React, {
   useState,
   useEffect,
   ChangeEvent,
-  useMemo,
   ReactNode,
   Fragment,
 } from 'react';
-import { LuUploadCloud } from 'react-icons/lu';
+import { GrCloudUpload } from "react-icons/gr";
 import { AiOutlineDelete } from 'react-icons/ai';
+import ErrorModal from '../error-modal/page';
 
 type ActionType = 'create' | 'edit';
 export type FileUploaderProps = {
   label?: ReactNode;
   setFileUrls: (files: string[]) => void;
   fileUrls: string[];
-  fileType?: 'image' | 'document';
+  fileType?: 'image' | 'document' | 'video';
   disabled?: boolean;
-  token: string;
   isMultiple?: boolean;
   className?: string;
   loading?: boolean;
@@ -43,7 +42,6 @@ export function FileUploader({
   label,
   setFileUrls,
   disabled,
-  token,
   isMultiple,
   className = '',
   loading,
@@ -53,8 +51,8 @@ export function FileUploader({
   const [allowDrop, setAllowDrop] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState<File[] | null>(null);
-  const [filesToUpload, setFilesToUpload] = useState<File[] | null>(null);
   const [type, setType] = useState<ActionType>('create');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     if (!loading && fileUrls?.length) {
@@ -62,7 +60,7 @@ export function FileUploader({
     }
   }, [loading]);
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files: inputFiles } = e.target;
     if (inputFiles?.length) {
       setHasUploaded(false);
@@ -70,15 +68,15 @@ export function FileUploader({
         const newFiles = Array.from(inputFiles);
         const allFiles = files ? [...files, ...newFiles] : newFiles;
         setFiles(allFiles);
-        setFilesToUpload(newFiles);
+        await uploadImg(newFiles);
       } else {
         setFiles([inputFiles[0]]);
-        setFilesToUpload([inputFiles[0]]);
+        await uploadImg([inputFiles[0]]); // Uploading the single file
       }
     }
   };
 
-  const handleFileDrop = (e: any) => {
+  const handleFileDrop = async (e: any) => {
     if (allowDrop && !uploading && !loading) {
       e.preventDefault();
       const inputFiles: File[] = e.dataTransfer.files;
@@ -88,12 +86,13 @@ export function FileUploader({
           const newFiles = Array.from(inputFiles);
           const allFiles = files ? [...files, ...newFiles] : newFiles;
           setFiles(allFiles);
+          await uploadImg(newFiles); // Uploading the new files
         } else {
           if (inputFiles.length > 1) {
             alert('Only the first file was uploaded!');
           }
           setFiles([inputFiles[0]]);
-          setFilesToUpload([inputFiles[0]]);
+          await uploadImg([inputFiles[0]]); // Uploading the single file
         }
       }
     }
@@ -104,72 +103,59 @@ export function FileUploader({
   };
   const fileUploadRef = useRef<HTMLInputElement | null>(null);
 
-  const uploadSingleFile = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const numberOfFiles = filesToUpload?.length ?? 1;
-      const formData = new FormData();
-      formData.append('file', file);
+  const uploadSingleFile = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append(
+      'upload_preset',
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+    );
 
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '');
-      xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-
-      // TODO :: refactor progress
-      xhr.upload.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const progress = Math.round(
-            (event.loaded * (100 / numberOfFiles)) / event.total
-          );
-          setPercent(progress);
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env
+          .NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!}/upload`,
+        {
+          method: 'POST',
+          body: formData,
         }
-      };
-
-      xhr.onload = async () => {
-        const data = JSON.parse(xhr.responseText);
-        if (data) {
-          resolve(data.url);
-        }
-      };
-
-      xhr.onerror = () => {
-        reject(Error('Problem uploading image. Contact tech support'));
-      };
-
-      xhr.send(formData);
-    });
-  };
-  const uploadImg = async () => {
-    setUploading(true);
-    if (filesToUpload) {
-      let uploadedFiles: string[] = [];
-      try {
-        const requests = filesToUpload.map((f) => uploadSingleFile(f));
-        uploadedFiles = await Promise.all(requests);
-        setHasUploaded(true);
-        setPercent(100);
-      } catch (error: any) {
-        setFiles([]);
-        uploadedFiles = [];
-        alert(error);
-      } finally {
-        setFileUrls(uploadedFiles);
-        setFilesToUpload([]);
+      );
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error.message);
       }
+      return data.secure_url;
+    } catch (error: any) {
+      console.error('Error uploading file:', error.message);
+      setShowErrorMessage(true);
+      throw error;
     }
   };
 
-  const getImgSrc = useMemo(() => {
-    if (files?.length) {
-      setUploading(true);
-      uploadImg();
-      return URL.createObjectURL(files?.[0]);
-    }
-    return '';
-  }, [files]);
+  const uploadImg = async (filesToUpload: File[]) => {
+    if (!filesToUpload) return;
+    setUploading(true);
+    setPercent(0);
 
-  const removeImage = () => {
+    let uploadedFiles: string[] = [];
+    try {
+      const requests = filesToUpload.map((f) => uploadSingleFile(f));
+      uploadedFiles = await Promise.all(requests);
+      setHasUploaded(true);
+      setFileUrls([...(fileUrls ?? []), ...uploadedFiles]);
+      setPercent(100);
+    } catch (error: any) {
+      setFiles([]);
+      uploadedFiles = [];
+      alert(error);
+    }
+  };
+
+  const removeImage = async () => {
     setFiles([]);
     setFileUrls([]);
+    setHasUploaded(false);
+    setUploading(false);
   };
 
   useEffect(() => {
@@ -188,13 +174,13 @@ export function FileUploader({
   }, [percent, uploading]);
 
   return (
-    <>
+    <Fragment>
       {type !== 'edit' ? (
         <div className={`${className} file-uploader`}>
           {label}
           <div
             className={`file-uploader_body ${
-              (uploading || loading) && 'file-uploader_body_not_uploading '
+              (uploading ?? loading) && 'file-uploader_body_not_uploading '
             }`}
             onDrop={handleFileDrop}
             onDragOver={handleDragOver}
@@ -206,7 +192,7 @@ export function FileUploader({
               <div className='body_text'>Loading image...</div>
             ) : (
               <Fragment>
-                <LuUploadCloud size={20} />
+                <GrCloudUpload  size={20} />
                 <div className='body_text'>
                   <p className='text'> Drop your images here... or </p>
                   <button
@@ -232,7 +218,9 @@ export function FileUploader({
                     <div
                       style={{
                         backgroundImage:
-                          fileType === 'image' ? `url(${getImgSrc})` : 'none',
+                          fileType === 'image'
+                            ? `url(${URL.createObjectURL(files[0])})`
+                            : 'none',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }}
@@ -316,12 +304,12 @@ export function FileUploader({
           }}
           className={`${className} file-uploader_edit`}
         >
-          <p>
+          {/* <p>
             {uploading
               ? 'Loading...'
-              : `Update ${fileType} 
+              : ` ${fileType} 
              `}
-          </p>
+          </p> */}
           {fileType !== 'image' && <span style={{ fontSize: '2rem' }}>📄</span>}
         </div>
       )}
@@ -331,14 +319,24 @@ export function FileUploader({
         type='file'
         hidden
         multiple={isMultiple}
-        accept={
-          fileType === 'image'
-            ? 'image/*'
-            : 'application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
-        }
+        accept='image/*,video/mp4,video/x-m4v,video/*,application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
+        // accept={
+        //   fileType === 'image'
+        //     ? 'image/*'
+        //     : fileType === 'video'
+        //     ? 'video/*'
+        //     : 'application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
+        // }
         onChange={onFileChange}
         disabled={disabled}
       />
-    </>
+      {showErrorMessage && (
+        <ErrorModal
+          show={showErrorMessage}
+          onClose={() => setShowErrorMessage(false)}
+          description='Error uploading file:The image already exists'
+        />
+      )}
+    </Fragment>
   );
 }

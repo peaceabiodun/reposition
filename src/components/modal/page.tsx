@@ -13,6 +13,8 @@ export type LocalModalProps = Props & {
   footer?: JSX.Element;
   children?: ReactNode;
   contentClassName?: string;
+  backgroundColor?: string;
+  hasCancelIcon?: boolean;
 };
 
 const customStyles = {
@@ -23,16 +25,17 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-
-    backgroundColor: '#ece8e3',
-    border: 'none',
+    borderColor: 'transparent',
+    // backgroundColor: '#ece8e3',
+    border: '0px',
     padding: '0px',
     overflow: 'unset',
   },
   overlay: {
     background: 'rgba(0, 0, 0, 0.4)',
-    backdropFilter: 'blur(3px)',
+    backdropFilter: 'blur(6px)',
     zIndex: 10000,
+    border: '0px',
   },
 };
 const LocalModal = ({
@@ -44,6 +47,8 @@ const LocalModal = ({
   onBackButton,
   footer,
   contentClassName,
+  backgroundColor,
+  hasCancelIcon = true,
   ...modalProps
 }: LocalModalProps) => {
   if (typeof window === 'undefined') return null;
@@ -54,26 +59,28 @@ const LocalModal = ({
         style={customStyles}
         ariaHideApp={false}
         {...modalProps}
+        shouldCloseOnOverlayClick={false}
         appElement={document.getElementById('__next') as HTMLElement}
+        className={`${
+          backgroundColor ? `${backgroundColor}` : 'bg-transparent'
+        } fixed inset-0 !border-transparent w-auto h-auto !border-none`}
       >
-        <div className={`l-modal__content relative ${contentClassName}`}>
+        <div className={`p-5 w-full h-full relative ${contentClassName}`}>
           <div className=''>
-            <div
-              className={`${'l-modal__no_icons'} pb-3 pt-4 ${
-                title && 'border-b-[0.8px] border-[#EFF0F0]'
-              }`}
-            >
+            <div className={` ${title && 'border-b-[0.8px] border-[#EFF0F0]'}`}>
               <div className='text-lg font-medium mx-auto text-[#2E3031]'>
                 <h3>{title}</h3>
                 {titleCta}
               </div>
 
-              <MdClose
-                size={18}
-                className='sm:absolute mr-2 right-[-40px] top-[-8px]'
-                role='button'
-                onClick={modalProps.onRequestClose}
-              />
+              {hasCancelIcon && (
+                <MdClose
+                  size={18}
+                  className='sm:absolute ml-2 right-[-40px] top-[-8px] text-white'
+                  role='button'
+                  onClick={modalProps.onRequestClose}
+                />
+              )}
             </div>
             {hasBackButton && (
               <div
