@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const verifyTransaction = async (reference: string) => {
-  const paystackKey = process.env.NEXT_PUBLIC_PAYSTACK_SECRET_KEY;
+  const paystackKey = process.env.PAYSTACK_SECRET_KEY;
   try {
     const response = await axios({
       method: 'get',

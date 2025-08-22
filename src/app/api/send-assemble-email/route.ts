@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('Send assemble email API route called');
-
     const body = await request.json();
-    console.log('Request body:', body);
 
     const { email, fullName } = body;
 
@@ -16,12 +13,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    console.log(
-      'Environment check - LOOPS_API_KEY exists:',
-      !!process.env.LOOPS_API_KEY
-    );
-    console.log('Preparing to send email to:', email);
 
     // Send welcome email to the new member
     const memberEmailResponse = await fetch(
@@ -41,8 +32,6 @@ export async function POST(request: NextRequest) {
         }),
       }
     );
-
-    console.log('Member email response status:', memberEmailResponse.status);
 
     if (!memberEmailResponse.ok) {
       const errorText = await memberEmailResponse.text();
@@ -76,8 +65,6 @@ export async function POST(request: NextRequest) {
         }),
       }
     );
-
-    console.log('Admin email response status:', adminEmailResponse.status);
 
     if (!adminEmailResponse.ok) {
       const errorText = await adminEmailResponse.text();

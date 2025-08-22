@@ -21,11 +21,11 @@ const SuccessModal = ({
   return (
     <LocalModal isOpen={show} onRequestClose={onClose}>
       <div className=' text-sm space-y-3 flex flex-col items-center justify-center'>
-        <div className='font-semibold text-[#382215]'>{title}</div>
-        <div className='text-[#5a3622]'>{description}</div>
+        <div className='font-semibold text-[#fcf7f4]'>{title}</div>
+        <div className='text-[#f8f7f6]'>{description}</div>
         {buttonText && buttonClick && (
           <button
-            className='border border-[#38271c] text-[#38271c] p-2 text-sm w-[150px] h-[40px] hover:bg-[#7e5d5d54] rounded-[4px] '
+            className='border border-[#fdfaf7] text-[#faf7f5] p-2 text-sm w-[150px] h-[40px] hover:bg-[#7e5d5d54] rounded-[4px] '
             onClick={buttonClick}
           >
             {buttonText}

@@ -403,11 +403,34 @@ const Bag = () => {
     }, 4000);
   };
 
-  const onSuccess = (reference: any) => {
-    if (reference.message === 'Approved') {
-      orderConfirmationDetails(reference.reference);
-      localStorage.removeItem(STORAGE_KEYS.BEVERAGE_SELECTED);
-    }
+  // const onSuccess = (reference: any) => {
+  //   if (reference.message === 'Approved') {
+  //     orderConfirmationDetails(reference.reference);
+  //     localStorage.removeItem(STORAGE_KEYS.BEVERAGE_SELECTED);
+  //   }
+  // };
+
+  const onSuccess = (ref: any) => {
+    const approved =
+      ref?.status === 'success' ||
+      ref?.response === 'Approved' ||
+      ref?.message === 'Success';
+
+    if (!approved) return;
+
+    // Fire-and-forget — do NOT await
+    fetch('/api/payments/verify-and-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        reference: ref.reference,
+        orderPayload, // your existing object
+      }),
+    }).catch((e) => console.error('verify-and-email failed:', e));
+
+    // Your existing flow
+    orderConfirmationDetails(ref.reference);
+    localStorage.removeItem(STORAGE_KEYS.BEVERAGE_SELECTED);
   };
 
   const onClose = () => {
