@@ -9,6 +9,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import { useProductContext } from '@/context/product-context';
+import CurrencyDisplay from '@/components/currency-display/page';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import SortInput from '@/components/sort/page';
@@ -246,7 +247,7 @@ const Home = () => {
                 <p className='my-2 font-light text-[16px]'>{item.name}</p>
                 <div className='flex gap-2 font-light'>
                   <p className='text-sm'>
-                    ₦ {Number(item.price).toLocaleString()}
+                    <CurrencyDisplay priceInNaira={Number(item.price)} />
                   </p>
                   {item.pre_order ? (
                     <p className='text-sm'>[Pre-Order]</p>

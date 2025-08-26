@@ -23,6 +23,7 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import { validateEmail } from '@/utils/functions';
 import PaymentReceipt from '../../components/receipt/page';
 import { useProductContext } from '@/context/product-context';
+import CurrencyDisplay from '@/components/currency-display/page';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { IoAdd, IoRemove } from 'react-icons/io5';
 import DonationModal from '@/components/donation-modal/page';
@@ -519,7 +520,9 @@ const Bag = () => {
 
                     <p className='text-sm'>[{item.color}]</p>
 
-                    <p>₦ {Number(item.price).toLocaleString()}</p>
+                    <p>
+                      <CurrencyDisplay priceInNaira={Number(item.price)} />
+                    </p>
                     <p>Size: {item.size}</p>
                   </div>
 
@@ -564,11 +567,11 @@ const Bag = () => {
                 <span className=' mr-1 text-sm'> {bagItems.length}</span>
                 Item(s)
               </p>
-              <p>
+              <p className='flex items-center gap-1'>
                 Total:
                 <span className='font-medium'>
                   {' '}
-                  ₦ {Number(totalPrice).toLocaleString()}
+                  <CurrencyDisplay priceInNaira={Number(totalPrice)} />
                 </span>
               </p>
             </div>
@@ -874,7 +877,9 @@ const Bag = () => {
                   <div className='space-y-3 mt-3'>
                     <div className='flex gap-3 justify-between'>
                       <p>Item total</p>
-                      <p>₦ {totalPrice.toLocaleString()}</p>
+                      <p>
+                        <CurrencyDisplay priceInNaira={totalPrice} />
+                      </p>
                     </div>
                     <div className='flex gap-3 justify-between'>
                       <div className=''>
@@ -890,9 +895,12 @@ const Bag = () => {
                       <p>
                         {(totalPrice >= 600000 &&
                           selectedCountry !== 'Nigeria') ||
-                        (totalPrice >= 300000 && selectedCountry === 'Nigeria')
-                          ? 'Free Delivery'
-                          : `₦${shippingFee.toLocaleString()}`}{' '}
+                        (totalPrice >= 300000 &&
+                          selectedCountry === 'Nigeria') ? (
+                          'Free Delivery'
+                        ) : (
+                          <CurrencyDisplay priceInNaira={shippingFee} />
+                        )}{' '}
                       </p>
                     </div>
                     <div className='flex gap-3 items-center justify-between'>
@@ -906,7 +914,9 @@ const Bag = () => {
                     </div>
                     <div className='flex gap-3 justify-between'>
                       <p>Special Fee</p>
-                      <p>₦ {discountAmount.toLocaleString()}</p>
+                      <p>
+                        <CurrencyDisplay priceInNaira={discountAmount} />
+                      </p>
                     </div>
                     <div className='flex gap-3 justify-between'>
                       <p>Duties, taxes & fees</p>
@@ -914,7 +924,9 @@ const Bag = () => {
                     </div>
                     <div className='flex gap-3 justify-between font-light'>
                       <p className=''>Total</p>
-                      <p>₦ {finalTotal.toLocaleString()}</p>
+                      <p>
+                        <CurrencyDisplay priceInNaira={finalTotal} />
+                      </p>
                     </div>
                   </div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Tenali_Ramakrishna, Tenor_Sans } from 'next/font/google';
 import './globals.css';
 import { ProductProvider } from '@/context/product-context';
+import { CurrencyProvider } from '@/context/currency-context';
 import { PostHogProvider } from './provider';
 
 // const archivo = Archivo({ subsets: ['latin'] });
@@ -32,17 +33,19 @@ export default function RootLayout({
   return (
     <PostHogProvider>
       <ProductProvider>
-        <html lang='en' suppressHydrationWarning={true}>
-          {/* <head>
-            <script
-              src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
-              defer
-            ></script>
-          </head> */}
-          <body className={`${tenali.variable} ${tenor.variable}`}>
-            {children}
-          </body>
-        </html>
+        <CurrencyProvider>
+          <html lang='en' suppressHydrationWarning={true}>
+            {/* <head>
+              <script
+                src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+                defer
+              ></script>
+            </head> */}
+            <body className={`${tenali.variable} ${tenor.variable}`}>
+              {children}
+            </body>
+          </html>
+        </CurrencyProvider>
       </ProductProvider>
     </PostHogProvider>
   );

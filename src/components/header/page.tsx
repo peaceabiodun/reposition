@@ -11,6 +11,7 @@ import MobileMenu from '../mobile-menu/page';
 import UpdatePasswordModal from '../update-password-modal/page';
 import { BsCart2, BsHandbag } from 'react-icons/bs';
 import LanguageSelector from '../language-dropdown/page';
+import CurrencySelector from '../currency-selector/page';
 import { CgMenuRight } from 'react-icons/cg';
 import { MdClose, MdOutlineInventory } from 'react-icons/md';
 
@@ -185,7 +186,9 @@ const Header = () => {
                 {bagItems.length ?? '0'}
               </span>
             </div>
+
             <LanguageSelector />
+            <CurrencySelector />
             <button
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-pressed={showMobileMenu}

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import Header from '@/components/header/page';
+import CurrencyDisplay from '@/components/currency-display/page';
 
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -263,7 +264,10 @@ const ProductDetails = () => {
                   ))}
                 </div>
                 <h3 className='font-semibold mt-1'>
-                  ₦ {Number(productDetails?.price).toLocaleString()}
+                  <CurrencyDisplay
+                    priceInNaira={Number(productDetails?.price)}
+                    className='font-semibold'
+                  />
                 </h3>
               </div>
 
