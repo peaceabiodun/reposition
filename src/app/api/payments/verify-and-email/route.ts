@@ -37,7 +37,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2) Build Loops dataVariables (rename keys to match your Loops template)
     const items = orderPayload?.product_details ?? [];
     const customerEmail = orderPayload?.user_email;
     const productDetailsText = items
@@ -65,6 +64,7 @@ export async function POST(req: Request) {
       order_reference: reference,
       amount_paid: orderPayload?.amount_paid,
       product_details: productDetailsText,
+      beverage: orderPayload?.beverage,
     };
 
     try {

@@ -308,7 +308,7 @@ export default function LanguageSelector({
           <div
             className={`absolute ${
               position === 'top' ? 'bottom-full right-0 mb-2' : 'top-10 right-0'
-            } bg-[#eee1d385] shadow-lg py-3 z-[1000] w-[106px] rounded-lg `}
+            } bg-[#eee1d398] shadow-lg py-3 z-[1000] w-[106px] rounded-lg `}
           >
             <ul className='flex flex-col w-full'>
               {languages.map((language) => (

@@ -27,7 +27,7 @@ import MobileMenu from '@/components/mobile-menu/page';
 import TeaCoffeeModal from '@/components/tea-coffee-modal/page';
 import LanguageSelector from '@/components/language-dropdown/page';
 import BeverageConfirmationModal from '@/components/beverage-confirmation-modal/page';
-
+import CurrencySelector from '@/components/currency-selector/page';
 
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -418,6 +418,7 @@ const Home = () => {
                     </span>
                   </div>
                   <LanguageSelector />
+                  <CurrencySelector />
                   <button
                     aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
                     aria-pressed={showMobileMenu}
