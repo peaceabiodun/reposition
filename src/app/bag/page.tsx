@@ -353,6 +353,7 @@ const Bag = () => {
     shipping_fee: shippingFee,
     order_id: getOrderNumber(),
     status: 'processing',
+    beverage: userBeverage,
   };
   const orderConfirmationDetails = async (orderReference: string) => {
     try {
@@ -389,6 +390,7 @@ const Bag = () => {
       phone_number: deliveryDetails.phone_number,
       country: selectedCountry,
       address: deliveryDetails.address,
+      beverage: userBeverage,
     },
   } as any;
 
