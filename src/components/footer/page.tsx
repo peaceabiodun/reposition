@@ -11,7 +11,6 @@ const Footer = () => {
     <div className='p-2 text-black w-full relative'>
       <div className='flex flex-col items-center justify-center text-xs '>
         <div className='mt-6 mb-10'>
-          <p className='text-center'>Available payment methods</p>
           <div className='flex flex-wrap items-center gap-3'>
             <Image
               alt='master-card'
