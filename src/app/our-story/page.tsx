@@ -25,21 +25,34 @@ const OurStory = () => {
         <div className='mt-8'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full'>
             <div className='flex flex-col items-center justify-center md:order-2'>
-              <h4 className='text-sm md:text-lg text-center mb-4'>OUR STORY</h4>
+              <h4 className='text-sm md:text-lg text-center mb-4'>
+                NOTE FROM OUR FOUNDER
+              </h4>
               <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
               <p className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
-                Reposition is a brand cultured with love for elevated
-                contemporary classics; A symbol of sustained heritage and
-                generational craftsmanship, designed for a discerning few.{' '}
+                Men want to live right, do right and connect with their purpose,
+                this inspired me to create products and experiences that gives
+                access to men who wants to live a rich, intentional and
+                purposeful life through style. <br />
+                <br />
+                Reposition is dedicated to crafting intentional products that
+                celebrates the journey of men and raising the standards for an
+                impact-driven life. <br />
+                Beyond clothes, I want men to collaborate - to be honored and
+                their presence felt, as they leave their footprints behind for
+                those coming after them. You should be remembered.
                 <br />
                 <br />
-                According to our founder Ugo Solomon, “Your clothes and personal
-                style are a reflection of your life’s mission”. <br /> <br />
-                Driven by our desire to help you position better in life towards
-                fulfilling purpose, while doing so with faith, love and
-                friendship in fellowship
+                For me, it’s simple. I want to see you win. To help you deliver
+                your purpose in life in clothes that represents you.
               </p>
+
+              <img
+                src='/signature.png'
+                alt='signature'
+                className='w-[120px] object-fit '
+              />
             </div>
 
             <div className='w-full h-[400px] sm:h-[600px] md:h-[750px] px-4'>
@@ -85,8 +98,9 @@ const OurStory = () => {
             <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
             <p className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
-              To drive transformation through well crafted, tastefully finished
-              menswear, together with experiences that leaves a legacy.
+              We drive transformation through well crafted menswear, together
+              with experiences that brings creative entrepreneurs out of chaotic
+              lifestyle.
             </p>
           </div>
 
@@ -137,10 +151,6 @@ const OurStory = () => {
               </ul>
             </div>
           </div>
-        </div>
-
-        <div className='fixed bottom-0 left-0 right-0'>
-          <Footer />
         </div>
       </div>
     </div>
