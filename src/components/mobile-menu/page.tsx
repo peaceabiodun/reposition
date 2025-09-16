@@ -127,7 +127,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
       <div className='text-center font-semibold'>
         <h3 className='text-lg daikon text-[#3f2a16] '>REPOSITION</h3>
       </div>
-      <div className='flex flex-col gap-2 w-full h-full  justify-center text-[#3f2a16]'>
+      <div className='flex flex-col gap-2 w-full h-full  justify-center text-[#160f07]'>
         {menuInfo?.map((item, index) => (
           <div
             key={index}
