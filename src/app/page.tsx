@@ -349,7 +349,7 @@ const Home = () => {
               <nav
                 className={`absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white  hover:text-[#3f2a16] cursor-pointer `}
               >
-                <div className='gap-5 hidden lg:flex'>
+                {/* <div className='gap-5 hidden lg:flex'>
                   <p
                     className='text-[16px] md:text-lg font-semibold cursor-pointer hidden lg:flex'
                     onClick={() => router.push('/shop')}
@@ -375,23 +375,23 @@ const Home = () => {
                   >
                     Our Impact
                   </p>
-                </div>
+                </div> */}
 
-                <div className='lg:mr-20 '>
-                  <h2 className='font-bold text-sm sm:text-lg md:text-xl daikon '>
+                <div className='mr-2 '>
+                  <h2 className='font-bold text-sm sm:text-xl md:text-3xl daikon '>
                     REPOSITION{' '}
                   </h2>
                 </div>
 
                 <div className='flex gap-3'>
-                  {userRole === 'ADMIN' && (
+                  {/* {userRole === 'ADMIN' && (
                     <MdOutlineInventory
                       size={24}
                       onClick={() => router.push('/manage-products')}
                       className='cursor-pointer hidden lg:flex'
                     />
-                  )}
-                  <GoPerson
+                  )} */}
+                  {/* <GoPerson
                     size={26}
                     onClick={() => {
                       if (token) {
@@ -401,18 +401,18 @@ const Home = () => {
                       }
                     }}
                     className='cursor-pointer hidden lg:flex'
-                  />
+                  /> */}
                   <div className='relative'>
                     <BsHandbag
-                      size={23}
+                      size={20}
                       onClick={() => router.push('/bag')}
                       className='cursor-pointer '
                     />
                     <span
                       onClick={() => router.push('/bag')}
-                      className={`text-[10px] absolute top-[8px] ${
+                      className={`text-[9px] absolute top-[7px] ${
                         scroll ? ' ' : ' '
-                      }  right-[4px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
+                      }  right-[2px]  rounded-full p-2 w-4 h-4  flex items-center justify-center cursor-pointer`}
                     >
                       {bagItems.length ?? '0'}
                     </span>
@@ -423,7 +423,7 @@ const Home = () => {
                     aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
                     aria-pressed={showMobileMenu}
                     onClick={() => setShowMobileMenu((prev) => !prev)}
-                    className='relative w-6 h-6 lg:hidden'
+                    className='relative w-6 h-6 '
                   >
                     <CgMenuRight
                       size={20}

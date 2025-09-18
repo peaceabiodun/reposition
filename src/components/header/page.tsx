@@ -111,7 +111,7 @@ const Header = () => {
         className={`absoluteleft-0 top-0 w-full h-[45px] backdrop-blur-md z-[999]`}
       >
         <div className='max-w-[1700px] mx-auto flex justify-between gap-4 items-center h-[45px] px-4 py-6 relative text-[#3f2a16]'>
-          <div className='gap-8 hidden lg:flex'>
+          {/* <div className='gap-8 hidden lg:flex'>
             <p
               className='text-[16px] md:text-lg  cursor-pointer hidden lg:flex'
               onClick={() => router.push('/shop')}
@@ -136,12 +136,12 @@ const Header = () => {
             >
               Our Impact
             </p>
-          </div>
+          </div> */}
           <div
             onClick={() => router.push('/')}
             className='flex  cursor-pointer mr-16'
           >
-            <h2 className='font-bold text-sm sm:text-lg daikon text-[#3f2a16]'>
+            <h2 className='font-bold text-sm sm:text-xl md:text-3xl daikon text-[#3f2a16]'>
               REPOSITION{' '}
             </h2>
             {/* <Image
@@ -153,14 +153,14 @@ const Header = () => {
             /> */}
           </div>
           <div className='flex gap-3'>
-            {userRole === 'ADMIN' && (
+            {/* {userRole === 'ADMIN' && (
               <MdOutlineInventory
                 size={24}
                 onClick={() => router.push('/manage-products')}
                 className='cursor-pointer hidden lg:flex'
               />
-            )}
-            <GoPerson
+            )} */}
+            {/* <GoPerson
               size={22}
               onClick={() => {
                 if (token) {
@@ -170,18 +170,18 @@ const Header = () => {
                 }
               }}
               className='cursor-pointer hidden lg:flex'
-            />
+            /> */}
             <div className='relative'>
               <BsHandbag
-                size={23}
+                size={20}
                 onClick={() => router.push('/bag')}
                 className='cursor-pointer '
               />
               <span
                 onClick={() => router.push('/bag')}
-                className={`text-[10px] absolute text-[#3f2a16] top-[8px] ${
+                className={`text-[9px] absolute text-[#3f2a16] top-[7px] ${
                   scroll ? ' ' : ' '
-                }  right-[4px] rounded-full p-2 w-4 h-4  flex items-center justify-center font-light cursor-pointer`}
+                }  right-[2px] rounded-full p-2 w-4 h-4  flex items-center justify-center font-light cursor-pointer`}
               >
                 {bagItems.length ?? '0'}
               </span>
@@ -193,7 +193,7 @@ const Header = () => {
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-pressed={showMobileMenu}
               onClick={() => setShowMobileMenu((prev) => !prev)}
-              className='relative w-6 h-6 lg:hidden'
+              className='relative w-6 h-6 '
             >
               <CgMenuRight
                 size={20}

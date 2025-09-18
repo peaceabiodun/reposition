@@ -31,14 +31,14 @@ const OurStory = () => {
               <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
               <p className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
-                Men want to live right, do right and connect with their purpose,
-                this inspired me to create products and experiences that gives
-                access to men who wants to live a rich, intentional and
-                purposeful life through style. <br />
+                I observed that us Men want to live right, do right and connect
+                with our purpose, this inspired me to create products and
+                experiences that gives access to men who wants to live a rich,
+                intentional and purposeful life through style. <br />
                 <br />
                 Reposition is dedicated to crafting intentional products that
                 celebrates the journey of men and raising the standards for an
-                impact-driven life. <br />
+                impact-driven life. <br /> <br />
                 Beyond clothes, I want men to collaborate - to be honored and
                 their presence felt, as they leave their footprints behind for
                 those coming after them. You should be remembered.
