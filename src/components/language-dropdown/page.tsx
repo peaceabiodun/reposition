@@ -301,7 +301,7 @@ export default function LanguageSelector({
           aria-expanded={isDropdownOpen}
           aria-label='Select language'
         >
-          <GiWorld size={24} />
+          <GiWorld size={20} />
         </button>
 
         {isDropdownOpen && (
