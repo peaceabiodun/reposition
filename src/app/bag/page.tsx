@@ -618,7 +618,7 @@ const Bag = () => {
                 }}
                 className='border border-[#523f3fab] bg-[#38271c] text-[#F5F5DC] p-2 text-sm flex items-center justify-between gap-2 w-full sm:w-[350px] font-semibold shadow-md hover:scale-105 transition-all duration-300 my-4 rounded-[4px]'
               >
-                CHECKOUT SECURELY
+                CONFIRM
                 <HiArrowLongRight size={20} />
               </button>
             )}
@@ -627,15 +627,27 @@ const Bag = () => {
 
               <div className='mt-5 text-xs md:text-sm w-full flex gap-4 sm:gap-6 overflow-x-scroll scroll-smooth scrollable-div pb-2'>
                 {frequentlyBoughtItems.map((item, index) => (
-                  <div key={index} className='min-w-[200px]'>
-                    <Image
-                      src={item?.images[0]}
-                      alt='product-img'
-                      width={200}
-                      height={200}
-                      className='w-[200px] h-[200px] object-cover rounded-lg shadow-lg'
-                      onClick={() => router.push(`product/${item.id}`)}
-                    />
+                  <div key={index} className='min-w-[200px] group'>
+                    <div className='relative w-[200px] h-[200px]'>
+                      <Image
+                        src={item?.images?.[0] ?? '/placeholder.png'}
+                        alt='product-img'
+                        fill
+                        className='w-[200px] h-[200px] object-cover rounded-lg shadow-lg transition-opacity duration-300 group-hover:opacity-0'
+                        onClick={() => router.push(`product/${item.id}`)}
+                      />
+                      <Image
+                        src={
+                          item?.images?.[1] ??
+                          item?.images?.[0] ??
+                          '/placeholder.png'
+                        }
+                        alt='product-img-hover'
+                        fill
+                        className='w-[200px] h-[200px] object-cover rounded-lg shadow-lg transition-opacity duration-300 opacity-0 group-hover:opacity-100'
+                        onClick={() => router.push(`product/${item.id}`)}
+                      />
+                    </div>
                     <p className='mt-2 mb-1 font-semibold '>{item.name}</p>
                     {/* <p className=' mb-1 '>
                       ₦ {Number(item.price).toLocaleString()}

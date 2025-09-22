@@ -81,9 +81,9 @@ const Shop = () => {
                   setFilterValue?.(item.name);
                   setSelectedFilter(item.name);
                 }}
-                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#5e3f225b] hover:text-white transition-all duration-300 text-nowrap text-sm rounded-[4px] shadow-md ${
+                className={`  py-2 px-4 h-[30px] cursor-pointer flex items-center justify-center hover:bg-[#38271c] hover:text-white transition-all duration-300 text-nowrap text-sm rounded-[4px] shadow-md ${
                   selectedFilter === item.name
-                    ? 'bg-[#5e3f225b] text-white '
+                    ? 'bg-[#38271c] text-white '
                     : 'border border-[#38271c] border-solid'
                 }`}
               >
@@ -108,21 +108,33 @@ const Shop = () => {
               No Products Available
             </div>
           ) : (
-            <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-5 grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 '>
+            <div className='product_grid w-full min-h-[85vh] md:min-h-full mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 '>
               {products?.map((item) => (
                 <Link
                   href={`product/${item.id}`}
                   key={item.id}
-                  className='mb-6 relative'
+                  className='mb-6 relative group'
                 >
-                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] hover:scale-105 transition-all duration-300 shadow-md rounded-lg '>
+                  <div className='relative min-h-[400px] lg:min-h-[500px] xl:min-h-[650px] w-[100%] shadow-md rounded-lg '>
                     <Image
-                      src={item?.images[0] ?? '/placeholder.png'}
+                      src={item?.images?.[0] ?? '/placeholder.png'}
                       alt='product_image'
                       fill
-                      className={` min-h-[400px] h-[400px] home_img object-cover shadow-md rounded-lg ${
+                      className={` min-h-[400px] h-[400px] home_img object-cover shadow-md rounded-lg transition-opacity duration-300 ${
                         item.sold_out ? 'brightness-50' : ''
-                      } `}
+                      } group-hover:opacity-0`}
+                    />
+                    <Image
+                      src={
+                        item?.images?.[1] ??
+                        item?.images?.[0] ??
+                        '/placeholder.png'
+                      }
+                      alt='product_image_hover'
+                      fill
+                      className={` min-h-[400px] h-[400px] home_img object-cover shadow-md rounded-lg transition-opacity duration-300 opacity-0 ${
+                        item.sold_out ? 'brightness-50' : ''
+                      } group-hover:opacity-100`}
                     />
                     {item.sold_out && (
                       <div className='home_img w-[200px] absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>

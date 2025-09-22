@@ -347,7 +347,7 @@ const Home = () => {
               </div>
 
               <nav
-                className={`absolute top-0 flex items-center justify-between w-full p-4 md:p-8 text-white  hover:text-[#3f2a16] cursor-pointer `}
+                className={`absolute top-0 flex items-center justify-between w-full p-4 md:px-8 text-white  hover:text-[#3f2a16] cursor-pointer bg-[#3f2a162f]`}
               >
                 {/* <div className='gap-5 hidden lg:flex'>
                   <p
@@ -567,17 +567,29 @@ const Home = () => {
                   <Link
                     href={`product/${item.id}`}
                     key={item.id}
-                    className='lg:pl-4 relative'
+                    className='lg:pl-4 relative group'
                     style={{ scrollSnapAlign: 'start' }}
                   >
                     <div className='relative w-[330px] h-[500px] md:w-[500px] md:h-[650px]'>
                       <Image
-                        src={item?.images[0] ?? '/placeholder.png'}
+                        src={item?.images?.[0] ?? '/placeholder.png'}
                         alt='product_image'
                         fill
-                        className={` object-cover shadow-lg rounded-lg ${
+                        className={` object-cover shadow-lg rounded-lg transition-opacity duration-300 ${
                           item.sold_out ? 'brightness-50' : ''
-                        } `}
+                        } group-hover:opacity-0`}
+                      />
+                      <Image
+                        src={
+                          item?.images?.[1] ??
+                          item?.images?.[0] ??
+                          '/placeholder.png'
+                        }
+                        alt='product_image_hover'
+                        fill
+                        className={` object-cover shadow-lg rounded-lg transition-opacity duration-300 opacity-0 ${
+                          item.sold_out ? 'brightness-50' : ''
+                        } group-hover:opacity-100`}
                       />
                       {item.sold_out && (
                         <div className='home_img w-[200px] absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center'>
@@ -644,23 +656,72 @@ const Home = () => {
                   />
                 </button>
               </div>
-              {/* <div className='flex items-center justify-center mt-4'>
+              <div className='flex items-center justify-center mt-4 mb-8'>
                 <button
                   onClick={() => router.push('/shop')}
-                  className='cursor-pointer hover:bg-[#3f2a164d] text-[#3f2a16ef] px-4 py-2 w-[300px] border border-solid border-[#3f2a16]'
+                  className='cursor-pointer text-sm hover:text-xs transition-all duration-300 bg-[#38271c] text-[#F5F5DC] hover:bg-[#38271cbe] px-4 py-2 w-[300px] border border-solid border-[#3f2a16] rounded-[4px]'
                 >
-                  Shop The Collection
+                  SELECT ALL
                 </button>
-              </div> */}
+              </div>
             </div>
           )}
+
+          <div className='max-w-[1700px] mx-auto px-4'>
+            <h3 className='mdLg:text-lg text-base font-semibold mb-4'>
+              Reposition Ùdó Private Viewing
+            </h3>
+            <div className='text-sm'>
+              <p>
+                In honoring our Assemble community, we made our first appearance
+                in Lagos and staged a 360° experience, our way of bringing the
+                Ùdó Collection to life. More specifically, we created a space
+                where men, without alcohol or loud music, could exist in a
+                peaceful and intentional way. <br />
+                <br />
+                As Reposition’s Lagos debut, Ùdó was presented as a private
+                experience in collaboration with our friends Socialiaise Studio,
+                Okunriin, Daniel Uwaga, and Happy Coffee. We offered a live Ùdó
+                try-on and photo experience, a self-care bay, and thoughtfully
+                curated food, drinks, and music. We were warmly welcomed by our
+                Lagos team, and there was no better venue than the Japandi,
+                family-inspired Socialiaise Studio in Ikoyi, Lagos.
+                <br />
+                <br />
+                We opened with music from DJ Sketch and networking games hosted
+                by Xara to make sure our Lagos guests settled in, connected, and
+                enjoyed their time together.
+                <br />
+                <br />
+                Planning this was rewarding. We plan to explore more cities, and
+                hope to return to Lagos in the coming months to deepen
+                conversations, collaborations, and tradition.
+              </p>
+            </div>
+          </div>
+
           <div className=' grid grid-cols-1 lg:grid-cols-2 mt-16 mb-8'>
-            <div className='w-full h-[500px] md:h-[600px] relative'>
-              <img
-                src='/img2.png'
-                alt='assemble'
-                className='w-full h-full object-cover'
+            <div className='w-full h-[500px] md:h-[900px] relative'>
+              <video
+                src='/videos/assemble1.mp4'
+                controls={false}
+                loop={true}
+                autoPlay={true}
+                muted={true}
+                playsInline={true}
+                disablePictureInPicture={true}
+                disableRemotePlayback={true}
+                className='w-full h-full object-cover z-[-1] pointer-events-none'
+                poster='/assemble-poster1.png'
+                style={{
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  userSelect: 'none',
+                  touchAction: 'none',
+                }}
               />
+              <source src='/videos/assemble1.mp4' type='video/mp4' />
               <div className='flex items-center justify-center'>
                 <div className='absolute top-3  p-2'>
                   <h4 className=' text-sm  max-w-[450px] text-white mb-4 text-center font-semibold '>
@@ -679,14 +740,9 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className='w-full h-[500px] md:h-[600px]'>
-              {/* <img
-                src='/img1.png'
-                alt='assemble'
-                className='w-full h-full object-cover'
-              /> */}
+            <div className='w-full h-[500px] md:h-[900px]'>
               <video
-                src='https://res.cloudinary.com/dggsagtrj/video/upload/v1755071138/Joy_om9xhm.mp4'
+                src='/videos/assemble2.mp4'
                 controls={false}
                 loop={true}
                 autoPlay={true}
@@ -695,7 +751,7 @@ const Home = () => {
                 disablePictureInPicture={true}
                 disableRemotePlayback={true}
                 className='w-full h-full object-cover z-[-1] pointer-events-none'
-                poster='/assemble-poster.png'
+                poster='/assemble-poster2.png'
                 style={{
                   WebkitUserSelect: 'none',
                   WebkitTouchCallout: 'none',
@@ -704,10 +760,7 @@ const Home = () => {
                   touchAction: 'none',
                 }}
               />
-              <source
-                src='https://res.cloudinary.com/dggsagtrj/video/upload/v1755071138/Joy_om9xhm.mp4'
-                type='video/mp4'
-              />
+              <source src='/videos/assemble2.mp4' type='video/mp4' />
             </div>
           </div>
 
