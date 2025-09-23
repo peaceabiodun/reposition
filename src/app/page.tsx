@@ -638,7 +638,7 @@ const Home = () => {
                 ))}
               </div>
 
-              <div className='flex items-center justify-end gap-2 mt-4'>
+              {/* <div className='flex items-center justify-end gap-2 mt-4'>
                 <button disabled={isStartDisabled} className='cursor-pointer'>
                   <MdArrowCircleLeft
                     size={30}
@@ -655,11 +655,11 @@ const Home = () => {
                     className='text-[#3f2a1680]'
                   />
                 </button>
-              </div>
+              </div> */}
               <div className='flex items-center justify-center mt-4 mb-8'>
                 <button
                   onClick={() => router.push('/shop')}
-                  className='cursor-pointer text-sm hover:text-xs transition-all duration-300 bg-[#38271c] text-[#F5F5DC] hover:bg-[#38271cbe] px-4 py-2 w-[300px] border border-solid border-[#3f2a16] rounded-[4px]'
+                  className='cursor-pointer text-xs transition-all duration-300 bg-[#38271c] text-[#F5F5DC] hover:bg-[#38271cbe] px-4 py-2 w-[180px] border border-solid border-[#3f2a16] rounded-[4px]'
                 >
                   SELECT ALL
                 </button>
@@ -668,7 +668,7 @@ const Home = () => {
           )}
 
           <div className='max-w-[1700px] mx-auto px-4'>
-            <h3 className='mdLg:text-lg text-base font-semibold mb-4'>
+            <h3 className='mdLg:text-base text-sm font-semibold mb-4'>
               Reposition Ùdó Private Viewing
             </h3>
             <div className='text-sm'>
@@ -722,7 +722,7 @@ const Home = () => {
                 }}
               />
               <source src='/videos/assemble1.mp4' type='video/mp4' />
-              <div className='flex items-center justify-center'>
+              {/* <div className='flex items-center justify-center'>
                 <div className='absolute top-3  p-2'>
                   <h4 className=' text-sm  max-w-[450px] text-white mb-4 text-center font-semibold '>
                     Step into Assemble <br />
@@ -730,7 +730,7 @@ const Home = () => {
                     <br /> event access, free delivery and more!
                   </h4>
                 </div>
-              </div>
+              </div> */}
               <div className='w-full absolute bottom-2 flex items-center justify-center mt-4 p-2'>
                 <div
                   onClick={() => router.push('/assemble')}
