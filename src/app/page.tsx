@@ -669,7 +669,7 @@ const Home = () => {
 
           <div className='max-w-[1700px] mx-auto px-4'>
             <h3 className='mdLg:text-base text-sm font-semibold mb-4'>
-              Reposition Ùdó Private Viewing
+              ÙDÓ: Private Viewing Experience
             </h3>
             <div className='text-sm'>
               <p>

@@ -432,12 +432,12 @@ const TheAssemble = () => {
               </button>
             </div>
             <p className='mt-2 text-white text-xs'>Transcation fees apply</p> */}
-
+              {/* 
               <div className='absolute top-0 left-0 w-full h-full bg-[#523f3f93] flex items-center justify-center p-3'>
                 <p className='text-white  text-sm md:text-base bg-[#523f3f] p-2 rounded-sm'>
                   Membership tiers Unavailable
                 </p>
-              </div>
+              </div> */}
             </div>
             <button
               disabled={loading}

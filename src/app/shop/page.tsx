@@ -11,6 +11,8 @@ import ErrorModal from '@/components/error-modal/page';
 import Header from '@/components/header/page';
 import Footer from '@/components/footer/page';
 import { useRouter } from 'next/navigation';
+import Marquee from 'react-fast-marquee';
+import { GoDotFill } from 'react-icons/go';
 
 const Shop = () => {
   const [loading, setLoading] = useState(false);
@@ -73,6 +75,24 @@ const Shop = () => {
       <div className='w-full relative min-h-[100vh] bg-[#eee1d3] '>
         <div className='max-w-[1700px] mx-auto px-4 md:px-8'>
           <Header />
+        </div>
+
+        <div
+          onClick={() => router.push('/assemble')}
+          className='w-full h-[36px] p-2 bg-[#c2a18b4b] my-4'
+        >
+          <Marquee speed={100}>
+            <div className='flex items-center text-xs sm:text-sm gap-2'>
+              <p className='mx-2'>Join Assemble </p>
+              <GoDotFill size={10} />
+              <p className='mx-2'>
+                members in US, UK and Canada to enjoy free delivery for orders
+                above $950
+              </p>
+            </div>
+          </Marquee>
+        </div>
+        <div className='max-w-[1700px] mx-auto px-4 md:px-8'>
           <div className='py-4 flex items-center gap-5 2xl:justify-center w-full overflow-x-auto no-scrollbar mt-5'>
             {options.map((item, index) => (
               <div
@@ -183,8 +203,8 @@ const Shop = () => {
               ))}
             </div>
           )}
+          <Footer />
         </div>
-        <Footer />
       </div>
       {showErrorModal && (
         <ErrorModal
