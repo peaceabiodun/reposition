@@ -1,6 +1,7 @@
 'use client';
 
 import { useProductContext } from '@/context/product-context';
+import { useCurrency } from '@/context/currency-context';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
@@ -13,10 +14,12 @@ import Footer from '@/components/footer/page';
 import { useRouter } from 'next/navigation';
 import Marquee from 'react-fast-marquee';
 import { GoDotFill } from 'react-icons/go';
+import { isWestAfricanCountry } from '@/utils/helpers';
 
 const Shop = () => {
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
+  const { userCountry } = useCurrency();
   const router = useRouter();
   const [filterValue, setFilterValue] = useState<string>(
     ENUM_PRODUCT_FILTER_LIST.ALL
@@ -26,6 +29,9 @@ const Shop = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>(
     ENUM_PRODUCT_FILTER_LIST.ALL
   );
+
+  // Check if user is from West Africa
+  const isFromWestAfrica = isWestAfricanCountry(userCountry);
 
   const options = [
     { name: ENUM_PRODUCT_FILTER_LIST.ALL },
@@ -79,17 +85,35 @@ const Shop = () => {
 
         <div
           onClick={() => router.push('/assemble')}
-          className='w-full h-[36px] p-2 bg-[#c2a18b4b] my-4'
+          className='w-full h-[36px] p-2 bg-[#c2a18b4b] my-4 cursor-pointer'
         >
           <Marquee speed={100}>
-            <div className='flex items-center text-xs sm:text-sm gap-2'>
-              <p className='mx-2'>Join Assemble </p>
-              <GoDotFill size={10} />
-              <p className='mx-2'>
-                members in US, UK and Canada to enjoy free delivery for orders
-                above $950
-              </p>
-            </div>
+            {isFromWestAfrica ? (
+              // Marquee for West African users (including Nigeria)
+              <div className='flex items-center text-xs sm:text-sm gap-2'>
+                <p className='mx-2'>Join Assemble </p>
+                <GoDotFill size={10} />
+                <p className='mx-2'>
+                  Get exclusive access to local events and early product drops
+                </p>
+                <GoDotFill size={10} />
+                <p className='mx-2'>
+                  {' '}
+                  Members in west africa to enjoy free delivery for orders above
+                  950,000 Naira
+                </p>
+              </div>
+            ) : (
+              // Marquee for international users (outside West Africa)
+              <div className='flex items-center text-xs sm:text-sm gap-2'>
+                <p className='mx-2'>Join Assemble </p>
+                <GoDotFill size={10} />
+                <p className='mx-2'>
+                  Members in US, UK and Canada to enjoy free delivery for orders
+                  above $950
+                </p>
+              </div>
+            )}
           </Marquee>
         </div>
         <div className='max-w-[1700px] mx-auto px-4 md:px-8'>

@@ -22,7 +22,9 @@ import { STORAGE_KEYS } from '@/utils/constants';
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
+  IoIosStarOutline,
 } from 'react-icons/io';
+import { IoStar } from 'react-icons/io5';
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -269,6 +271,33 @@ const ProductDetails = () => {
                     className='font-semibold'
                   />
                 </h3>
+
+                <div className='flex items-center gap-2 mt-1'>
+                  <p className='text-xs'>
+                    RATED {productDetails?.product_rating}/5
+                  </p>
+
+                  <div className='flex items-center gap-1'>
+                    {Array.from({ length: 5 }, (_, index) => {
+                      const rating = productDetails?.product_rating || 0;
+                      const isFilled = index < rating;
+
+                      return isFilled ? (
+                        <IoStar
+                          key={index}
+                          size={18}
+                          className='text-yellow-400'
+                        />
+                      ) : (
+                        <IoIosStarOutline
+                          key={index}
+                          size={18}
+                          className='text-gray-300'
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               <div>

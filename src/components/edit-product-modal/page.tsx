@@ -32,6 +32,7 @@ type EditFormDataType = {
   category: string;
   pre_order?: boolean;
   color_blocks: string[];
+  product_rating: number;
 };
 
 const EditProductModal = ({
@@ -88,7 +89,9 @@ const EditProductModal = ({
         category: selectedProduct?.category,
         frequently_bought: selectedProduct?.frequently_bought,
         color_blocks: selectedProduct?.color_blocks,
+        product_rating: selectedProduct?.product_rating,
       });
+      setSelectedColors(selectedProduct?.color_blocks || []);
     }
   }, [selectedProduct]);
 
@@ -158,6 +161,7 @@ const EditProductModal = ({
       frequently_bought: formData?.frequently_bought,
       pre_order: formData?.pre_order,
       color_blocks: formData?.color_blocks,
+      product_rating: formData?.product_rating,
     };
     try {
       const { data, error } = await supabase
@@ -303,6 +307,27 @@ const EditProductModal = ({
               Kg
             </div>
           </div>
+        </div>
+
+        <div>
+          <label className=''>Product Rating</label>
+          <input
+            type='number'
+            className='border border-[#3d3e3f] rounded-sm w-full p-2 my-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+            placeholder='5'
+            value={formData?.product_rating}
+            onChange={(e) => {
+              const value = Number(e.target.value);
+              if (value >= 1 && value <= 5) {
+                setFormData({
+                  ...formData,
+                  product_rating: value,
+                });
+              }
+            }}
+            max={5}
+            min={0}
+          />
         </div>
         <p className='mt-4 mb-2'>Product Image</p>
         <div className='flex flex-col gap-3'>

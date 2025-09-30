@@ -31,6 +31,7 @@ const AddNewProduct = () => {
     colors: [],
     category: '',
     color_blocks: [],
+    product_rating: 0,
   });
 
   const [size, setSize] = useState('');
@@ -124,6 +125,7 @@ const AddNewProduct = () => {
       category: selectedCategory,
       user_email: userEmail,
       color_blocks: selectedColors,
+      product_rating: productFormData.product_rating,
     };
     setLoading(true);
     try {
@@ -143,6 +145,7 @@ const AddNewProduct = () => {
           colors: [],
           category: '',
           color_blocks: [],
+          product_rating: 0,
         });
       }
     } catch (err: any) {
@@ -243,20 +246,42 @@ const AddNewProduct = () => {
           </div>
         </div>
 
-        <div>
-          <p className='mt-4'>Product Sub-Description</p>
-          <input
-            type='text'
-            className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
-            placeholder="e.g Men's wear"
-            value={productFormData.sub_description}
-            onChange={(e) =>
-              setProductFormData({
-                ...productFormData,
-                sub_description: e.target.value,
-              })
-            }
-          />
+        <div className='mt-4 text-sm w-full flex flex-col sm:flex-row gap-4 sm:gap-6'>
+          <div className='w-full'>
+            <p className='text-sm'>Product Sub-Description</p>
+            <input
+              type='text'
+              className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3] '
+              placeholder="e.g Men's wear"
+              value={productFormData.sub_description}
+              onChange={(e) =>
+                setProductFormData({
+                  ...productFormData,
+                  sub_description: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className='w-full'>
+            <p className=' text-sm'>Product Rating</p>
+            <input
+              type='number'
+              className='border border-[#3d3e3f] rounded-sm w-full p-2 mt-2 outline-none bg-transparent placeholder:text-[#9fa1a3]'
+              placeholder='5'
+              value={productFormData.product_rating}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (value >= 1 && value <= 5) {
+                  setProductFormData({
+                    ...productFormData,
+                    product_rating: value,
+                  });
+                }
+              }}
+              min={1}
+              max={5}
+            />
+          </div>
         </div>
         <div className='my-4 text-sm w-full flex flex-col sm:flex-row gap-4 sm:gap-6'>
           <div className='w-full'>

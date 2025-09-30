@@ -13,14 +13,8 @@ import { ENUM_PRODUCT_FILTER_LIST } from '@/utils/enum';
 import { useRouter } from 'next/navigation';
 import { CampaignDetailsType, ShoppingBagType } from '@/utils/types';
 import { BsHandbag } from 'react-icons/bs';
-import {
-  MdArrowCircleLeft,
-  MdArrowCircleRight,
-  MdClose,
-  MdOutlineInventory,
-} from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import { CgMenuRight } from 'react-icons/cg';
-import { GoPerson } from 'react-icons/go';
 import UpdatePasswordModal from '@/components/update-password-modal/page';
 import SuccessModal from '@/components/success-modal/page';
 import MobileMenu from '@/components/mobile-menu/page';
@@ -32,16 +26,13 @@ import CurrencySelector from '@/components/currency-selector/page';
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
-  // const [campaignLoading, setCampaignLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   const [showErrorModal, setShowErrorModal] = useState(false);
-  //const [showCampaign, setShowCampaign] = useState(true);
   const [filterValue, setFilterValue] = useState<string>(
     ENUM_PRODUCT_FILTER_LIST.ALL
   );
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [campaignDetails, setCampaignDetails] = useState<CampaignDetailsType>();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [token, setToken] = useState('');
   const [scroll, setScroll] = useState(false);
@@ -54,22 +45,26 @@ const Home = () => {
   const [isEndDisabled, setIsEndDisabled] = useState(false);
   const [activeButton, setActiveButton] = useState<'left' | 'right'>('right');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showTeaCoffeeModal, setShowTeaCoffeeModal] = useState(true);
+  const [showTeaCoffeeModal, setShowTeaCoffeeModal] = useState(false);
   const [showBeverageConfirmationModal, setShowBeverageConfirmationModal] =
     useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
-      setShowTeaCoffeeModal(!beverage);
+
+      // Only show modal if user hasn't selected a beverage preference
+      if (!beverage) {
+        // Show modal after 7 seconds
+        const timer = setTimeout(() => {
+          setShowTeaCoffeeModal(true);
+        }, 7000);
+
+        // Cleanup timer on component unmount
+        return () => clearTimeout(timer);
+      }
     }
   }, []);
-  // useEffect(() => {
-  //   const hasSeenCampaign = localStorage.getItem(STORAGE_KEYS.SEEN_CAMPAIGN);
-  //   if (hasSeenCampaign) {
-  //     setShowCampaign(false);
-  //   }
-  // }, []);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -523,9 +518,9 @@ const Home = () => {
                 src='/home-img.png'
                 alt='home-img'
                 className='w-full sm:w-[50%] h-full object-cover'
-                onClick={() =>
-                  router.push('/product/e0983685-5b86-4666-bae9-7a90e48e156c')
-                }
+                // onClick={() =>
+                //   router.push('/product/e0983685-5b86-4666-bae9-7a90e48e156c')
+                // }
               />
               <img
                 src='/home-img1.png'
