@@ -94,13 +94,9 @@ const Shop = () => {
                 <p className='mx-2'>Join Assemble </p>
                 <GoDotFill size={10} />
                 <p className='mx-2'>
-                  Get exclusive access to local events and early product drops
-                </p>
-                <GoDotFill size={10} />
-                <p className='mx-2'>
                   {' '}
-                  Members in west africa to enjoy free delivery for orders above
-                  950,000 Naira
+                  members in West Africa to enjoy free delivery for orders above
+                  $450
                 </p>
               </div>
             ) : (

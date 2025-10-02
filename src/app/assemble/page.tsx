@@ -274,7 +274,7 @@ const TheAssemble = () => {
                 />
                 <div>
                   <p className='text-base font-bold mb-1'>
-                    RESPECT [10,000PTS]
+                    Chief Creator [10,000PTS]
                   </p>
                   <ul className='list-disc list-inside space-y-1 text-sm'>
                     <li>
@@ -331,7 +331,7 @@ const TheAssemble = () => {
                 />
                 <label>
                   <p className='text-base font-bold mb-1'>
-                    PRIVATE [30,000PTS]
+                    Chief Entrepreneur [30,000PTS]
                   </p>
                   <ul className='list-disc list-inside space-y-1 text-sm'>
                     <li>
@@ -432,12 +432,12 @@ const TheAssemble = () => {
               </button>
             </div>
             <p className='mt-2 text-white text-xs'>Transcation fees apply</p> */}
-              {/* 
+
               <div className='absolute top-0 left-0 w-full h-full bg-[#523f3f93] flex items-center justify-center p-3'>
                 <p className='text-white  text-sm md:text-base bg-[#523f3f] p-2 rounded-sm'>
                   Membership tiers Unavailable
                 </p>
-              </div> */}
+              </div>
             </div>
             <button
               disabled={loading}

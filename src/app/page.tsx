@@ -330,7 +330,7 @@ const Home = () => {
 
                 <div className='absolute bottom-0 p-8 text-white '>
                   <h2 className='text-xl sm:text-3xl mt-6'>
-                    Experience Freedom
+                    Experience Ùdó-Peace
                   </h2>
                   <div
                     onClick={() => router.push('/shop')}
