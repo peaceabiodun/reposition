@@ -300,9 +300,7 @@ const Home = () => {
                   <video
                     width='100%'
                     height='100%'
-                    src={
-                      'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
-                    }
+                    src={'/videos/udo.mp4'}
                     controls={false}
                     loop={true}
                     autoPlay={true}
@@ -311,7 +309,7 @@ const Home = () => {
                     disablePictureInPicture={true}
                     disableRemotePlayback={true}
                     className='w-full h-full object-cover z-[-1] pointer-events-none'
-                    poster='/poster-img.png'
+                    //  poster='/poster-img.png'
                     style={{
                       WebkitUserSelect: 'none',
                       WebkitTouchCallout: 'none',
@@ -320,12 +318,7 @@ const Home = () => {
                       touchAction: 'none',
                     }}
                   />
-                  <source
-                    src={
-                      'https://res.cloudinary.com/dggsagtrj/video/upload/v1754081413/Reposition_see_eir8dp.mp4'
-                    }
-                    type='video/mp4'
-                  />
+                  <source src={'/videos/udo.mp4'} type='video/mp4' />
                 </div>
 
                 <div className='absolute bottom-0 p-8 text-white '>
