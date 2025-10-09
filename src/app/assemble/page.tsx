@@ -439,10 +439,11 @@ const TheAssemble = () => {
                 </p>
               </div>
             </div>
+
             <button
               disabled={loading}
               onClick={signUpForTheassemble}
-              className='border border-[#909192] cursor-pointer bg-[#523f3fab] text-[#e4e0e0] w-full sm:w-[300px] p-2 text-sm mt-8'
+              className=' cursor-pointer bg-[#38271c] text-[#F5F5DC]  w-full sm:w-[300px] p-2 text-sm mt-8'
             >
               {loading ? 'Loading...' : 'Join'}
             </button>
@@ -453,6 +454,105 @@ const TheAssemble = () => {
                   Please fill all required fields
                 </p>
               ))}
+          </div>
+        </section>
+
+        <section>
+          <div className='max-w-[1200px] mx-auto mt-10'>
+            <h3 className='mdLg:text-base text-sm font-semibold mb-4'>
+              ÙDÓ: Private Viewing Experience
+            </h3>
+            <div className='text-sm'>
+              <p>
+                In honoring our Assemble community, we made our first appearance
+                in Lagos and staged a 360° experience, our way of bringing the
+                Ùdó Collection to life. More specifically, we created a space
+                where men, without alcohol or loud music, could exist in a
+                peaceful and intentional way. <br />
+                <br />
+                As Reposition’s Lagos debut, Ùdó was presented as a private
+                experience in collaboration with our friends Socialiaise Studio,
+                Okunriin, Daniel Uwaga, and Happy Coffee. We offered a live Ùdó
+                try-on and photo experience, a self-care bay, and thoughtfully
+                curated food, drinks, and music. We were warmly welcomed by our
+                Lagos team, and there was no better venue than the Japandi,
+                family-inspired Socialiaise Studio in Ikoyi, Lagos.
+                <br />
+                <br />
+                We opened with music from DJ Sketch and networking games hosted
+                by Xara to make sure our Lagos guests settled in, connected, and
+                enjoyed their time together.
+                <br />
+                <br />
+                Planning this was rewarding. We plan to explore more cities, and
+                hope to return to Lagos in the coming months to deepen
+                conversations, collaborations, and tradition.
+              </p>
+            </div>
+          </div>
+
+          <div className=' grid grid-cols-1 lg:grid-cols-2 mt-16 mb-8'>
+            <div className='w-full h-[500px] md:h-[900px] relative'>
+              <video
+                src='/videos/assemble1.mp4'
+                controls={false}
+                loop={true}
+                autoPlay={true}
+                muted={true}
+                playsInline={true}
+                disablePictureInPicture={true}
+                disableRemotePlayback={true}
+                className='w-full h-full object-cover z-[-1] pointer-events-none'
+                poster='/assemble-poster1.png'
+                style={{
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  userSelect: 'none',
+                  touchAction: 'none',
+                }}
+              />
+              <source src='/videos/assemble1.mp4' type='video/mp4' />
+              {/* <div className='flex items-center justify-center'>
+                <div className='absolute top-3  p-2'>
+                  <h4 className=' text-sm  max-w-[450px] text-white mb-4 text-center font-semibold '>
+                    Step into Assemble <br />
+                    To experience special offers, early access to releases,
+                    <br /> event access, free delivery and more!
+                  </h4>
+                </div>
+              </div> */}
+              {/* <div className='w-full absolute bottom-2 flex items-center justify-center mt-4 p-2'>
+                <div
+                  onClick={() => router.push('/assemble')}
+                  className=' text-sm font-medium flex  items-center justify-center  border border-white border-solid rounded-[4px] p-2 w-[200px] h-[34px] hover:bg-[#fafafa56] hover:text-[#3f2a16] text-white transition-all duration-300 cursor-pointer '
+                >
+                  ENTER
+                </div>
+              </div> */}
+            </div>
+            <div className='w-full h-[500px] md:h-[900px]'>
+              <video
+                src='/videos/assemble2.mp4'
+                controls={false}
+                loop={true}
+                autoPlay={true}
+                muted={true}
+                playsInline={true}
+                disablePictureInPicture={true}
+                disableRemotePlayback={true}
+                className='w-full h-full object-cover z-[-1] pointer-events-none'
+                poster='/assemble-poster2.png'
+                style={{
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  userSelect: 'none',
+                  touchAction: 'none',
+                }}
+              />
+              <source src='/videos/assemble2.mp4' type='video/mp4' />
+            </div>
           </div>
         </section>
       </div>

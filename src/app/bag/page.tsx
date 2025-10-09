@@ -466,7 +466,7 @@ const Bag = () => {
   }, [discountCode, totalPrice, shippingFee]);
 
   return (
-    <div className='w-full min-h-screen bg-[#eee1d3] pb-10 '>
+    <div className='w-full min-h-screen bg-[#e4e2df] pb-10 '>
       <div className='max-w-[1500px] mx-auto'>
         <Header />
         <div
