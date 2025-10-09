@@ -335,7 +335,7 @@ const Home = () => {
               </div>
 
               <nav
-                className={`absolute top-0 flex items-center justify-between w-full p-4 md:px-8 text-white  hover:text-[#3f2a16] cursor-pointer bg-[#3f2a162f]`}
+                className={`absolute top-0 flex items-center justify-between w-full p-4 md:px-8 text-white cursor-pointer bg-[#3f2a162f]`}
               >
                 {/* <div className='gap-5 hidden lg:flex'>
                   <p

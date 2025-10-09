@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import LocalSideModal from '../side-modal/page';
 import { useState } from 'react';
 import UpdatePasswordModal from '../update-password-modal/page';
@@ -17,6 +17,7 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
   const router = useRouter();
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const pathname = usePathname();
 
   const userRole =
     typeof window !== 'undefined'
@@ -125,14 +126,26 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
       hasCloseButton={false}
     >
       <div className='text-center font-semibold'>
-        <h3 className='text-lg daikon text-[#3f2a16] '>REPOSITION</h3>
+        <h3
+          className={`text-lg daikon  ${
+            pathname !== '/' ? 'text-[#3f2a16]' : 'text-[#f8ebe1]'
+          }`}
+        >
+          REPOSITION
+        </h3>
       </div>
-      <div className='flex flex-col gap-2 w-full h-full  justify-center text-[#160f07]'>
+      <div
+        className={`flex flex-col gap-2 w-full h-full  justify-center ${
+          pathname !== '/' ? 'text-[#3f2a16]' : 'text-[#f8ebe1]'
+        }`}
+      >
         {menuInfo?.map((item, index) => (
           <div
             key={index}
             onClick={item?.onClick}
-            className='p-2 hover:bg-[#412e1c21] hover:font-semibold hover:text-[#fafafa] text-sm mt-2 border-b-[0.2px] border-[#3f2a16] uppercase'
+            className={`p-2 hover:bg-[#412e1c21] hover:font-semibold text-sm mt-2 border-b-[0.2px]  uppercase ${
+              pathname !== '/' ? 'border-[#3f2a16]' : 'border-[#f8ebe1]'
+            }`}
           >
             {item?.title}
           </div>
