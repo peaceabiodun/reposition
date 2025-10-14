@@ -122,30 +122,20 @@ const MobileMenu = ({ show, onClose }: ModalProps) => {
     <LocalSideModal
       isOpen={show}
       onRequestClose={onClose}
-      backgroundColor='transparent'
+      backgroundColor='#2c1e0e7e'
       hasCloseButton={false}
     >
       <div className='text-center font-semibold'>
-        <h3
-          className={`text-lg daikon  ${
-            pathname !== '/' ? 'text-[#3f2a16]' : 'text-[#f8ebe1]'
-          }`}
-        >
-          REPOSITION
-        </h3>
+        <h3 className={`text-lg daikon  text-[#f8ebe1]`}>REPOSITION</h3>
       </div>
       <div
-        className={`flex flex-col gap-2 w-full h-full  justify-center ${
-          pathname !== '/' ? 'text-[#3f2a16]' : 'text-[#f8ebe1]'
-        }`}
+        className={`flex flex-col gap-2 w-full h-full  justify-center text-[#f8ebe1]`}
       >
         {menuInfo?.map((item, index) => (
           <div
             key={index}
             onClick={item?.onClick}
-            className={`p-2 hover:bg-[#412e1c21] hover:font-semibold text-sm mt-2 border-b-[0.2px]  uppercase ${
-              pathname !== '/' ? 'border-[#3f2a16]' : 'border-[#f8ebe1]'
-            }`}
+            className={`p-2 hover:bg-[#412e1c21] hover:font-semibold text-sm mt-2 border-b-[0.2px]  uppercase border-[#f8ebe1]`}
           >
             {item?.title}
           </div>

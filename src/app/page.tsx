@@ -335,7 +335,7 @@ const Home = () => {
               </div>
 
               <nav
-                className={`absolute top-0 flex items-center justify-between w-full p-4 md:px-8 text-white cursor-pointer bg-[#3f2a162f]`}
+                className={`h-[96px] absolute top-0 flex items-center justify-between w-full p-4 md:px-8 text-white cursor-pointer bg-[#3f2a162f]`}
               >
                 {/* <div className='gap-5 hidden lg:flex'>
                   <p
@@ -510,15 +510,18 @@ const Home = () => {
               <img
                 src='/home-img.png'
                 alt='home-img'
-                className='w-full sm:w-[50%] h-full object-cover'
-                // onClick={() =>
-                //   router.push('/product/e0983685-5b86-4666-bae9-7a90e48e156c')
-                // }
+                className='w-full sm:w-[50%] h-full object-cover cursor-pointer'
+                onClick={() =>
+                  router.push('/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe')
+                }
               />
               <img
                 src='/home-img1.png'
                 alt='home-img'
-                className='w-full sm:w-[50%] h-full object-cover'
+                className='w-full sm:w-[50%] h-full object-cover cursor-pointer'
+                onClick={() =>
+                  router.push('/product/1a828f0f-a4b5-4513-811b-23d57f893b8f')
+                }
               />
             </div>
           </div>
