@@ -41,7 +41,7 @@ const ResetPassword = () => {
     }
   };
   return (
-    <div className='w-full min-h-screen bg-[#eee1d3] p-3 xs:p-4 text-sm  '>
+    <div className='w-full min-h-screen bg-[#e4e2df] p-3 xs:p-4 text-sm  '>
       <Link href='/' className='mt-4 gap-1 flex text-sm items-center'>
         <MdOutlineArrowBackIosNew size={20} />
         Back

@@ -12,6 +12,7 @@ import EditProductModal from '@/components/edit-product-modal/page';
 import { supabase } from '@/lib/supabase';
 import ErrorModal from '@/components/error-modal/page';
 import { ThreeCircles } from 'react-loader-spinner';
+import { STORAGE_KEYS } from '@/utils/constants';
 
 const ManageProducts = () => {
   const dropDownLinks = [
@@ -36,6 +37,14 @@ const ManageProducts = () => {
     setSelectedProduct(product);
   };
   const router = useRouter();
+
+  // Protect route - redirect if not admin
+  useEffect(() => {
+    const userRole = localStorage.getItem(STORAGE_KEYS.USER_ROLE);
+    if (userRole !== 'ADMIN') {
+      router.push('/');
+    }
+  }, [router]);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -75,7 +84,7 @@ const ManageProducts = () => {
     }
   };
   return (
-    <div className='w-full min-h-screen bg-[#eee1d3] p-3 xs:p-4'>
+    <div className='w-full min-h-screen bg-[#e4e2df] p-3 xs:p-4'>
       <div className='max-w-[1500px] mx-auto'>
         <div className='mt-4 gap-1 flex justify-between text-sm items-center'>
           <div
