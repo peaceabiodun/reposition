@@ -25,6 +25,7 @@ import CurrencySelector from '@/components/currency-selector/page';
 
 const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const { products, setProducts } = useProductContext();
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -49,6 +50,10 @@ const Home = () => {
   const [showBeverageConfirmationModal, setShowBeverageConfirmationModal] =
     useState(false);
 
+  // Swipe functionality state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const beverage = localStorage.getItem(STORAGE_KEYS.BEVERAGE_SELECTED);
@@ -66,6 +71,37 @@ const Home = () => {
     }
   }, []);
 
+  // Function to prioritize specific products in the slider
+  const prioritizeProducts = (products: any[]) => {
+    const priorityIds = [
+      'e6c376c4-d25f-438e-80bf-5501483b79cd',
+      '1a828f0f-a4b5-4513-811b-23d57f893b8f',
+      '07bd1151-b0c6-4992-8acc-ce8c47c22bbe',
+    ];
+
+    const priorityProducts: any[] = [];
+    const otherProducts: any[] = [];
+
+    // Separate priority products from others
+    products.forEach((product) => {
+      if (priorityIds.includes(product.id)) {
+        priorityProducts.push(product);
+      } else {
+        otherProducts.push(product);
+      }
+    });
+
+    // Sort priority products by the order specified in priorityIds
+    priorityProducts.sort((a, b) => {
+      const indexA = priorityIds.indexOf(a.id);
+      const indexB = priorityIds.indexOf(b.id);
+      return indexA - indexB;
+    });
+
+    // Return priority products first, then others
+    return [...priorityProducts, ...otherProducts];
+  };
+
   const fetchProducts = async () => {
     setLoading(true);
     try {
@@ -79,7 +115,9 @@ const Home = () => {
             (product: any) => product.category === filterValue
           );
         }
-        setProducts(data ?? []);
+        // Apply product prioritization
+        const prioritizedProducts = prioritizeProducts(data ?? []);
+        setProducts(prioritizedProducts);
       }
 
       if (error) {
@@ -261,6 +299,52 @@ const Home = () => {
     container.addEventListener('scroll', handleScrollEvent);
     return () => container.removeEventListener('scroll', handleScrollEvent);
   }, [products.length, currentIndex]);
+
+  // Swipe functionality for video carousel
+  const minSwipeDistance = 50; // Minimum distance for a swipe
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe || isRightSwipe) {
+      const videoContainer = videoContainerRef.current;
+      if (!videoContainer) return;
+
+      const containerWidth = videoContainer.offsetWidth;
+      const scrollPosition = videoContainer.scrollLeft;
+
+      // Calculate video width based on screen size (responsive)
+      const isMobile = containerWidth < 768;
+      const videoWidth = isMobile ? 330 + 16 : 500 + 16; // video width + gap
+
+      let newScrollPosition;
+      if (isLeftSwipe) {
+        // Swipe left - move to next video
+        newScrollPosition = scrollPosition + videoWidth;
+      } else {
+        // Swipe right - move to previous video
+        newScrollPosition = Math.max(0, scrollPosition - videoWidth);
+      }
+
+      videoContainer.scrollTo({
+        left: newScrollPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
   //check to get the user role and redirect to the appropriate page
   // useEffect(() => {
   //   const checkAuth = async () => {
@@ -289,6 +373,25 @@ const Home = () => {
   //   setShowCampaign(false);
   //   localStorage.setItem(STORAGE_KEYS.SEEN_CAMPAIGN, 'true');
   // };
+
+  const interviewVideos = [
+    {
+      id: 1,
+      poster: '/poster1.png',
+      video: '/videos/interview1.mp4',
+    },
+
+    {
+      id: 2,
+      poster: '/poster2.png',
+      video: '/videos/interview2.mp4',
+    },
+    {
+      id: 3,
+      poster: '/poster3.png',
+      video: '/videos/interview3.mp4',
+    },
+  ];
   return (
     <Fragment>
       <div className='w-full relative min-h-[100vh] bg-[#e4e2df] pb-10'>
@@ -322,12 +425,12 @@ const Home = () => {
                 </div>
 
                 <div className='absolute bottom-0 p-8 text-white '>
-                  <h2 className='text-xl sm:text-3xl mt-6'>
+                  <h2 className='text-2xl md:text-4xl mt-6'>
                     Experience Ùdó-Peace
                   </h2>
                   <div
                     onClick={() => router.push('/shop')}
-                    className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-[#38271c] border-solid rounded-[4px] p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer'
+                    className=' text-base sm:text-lg flex flex-col items-center gap-2 mt-3 border border-[#fafafa] border-solid rounded-[4px] p-2 w-[200px] sm:w-[280px] hover:bg-[#fafafa56] hover:text-[#3f2a16] transition-all duration-300 cursor-pointer font-semibold'
                   >
                     STEP IN
                   </div>
@@ -520,7 +623,7 @@ const Home = () => {
                 alt='home-img'
                 className='w-full sm:w-[50%] h-full object-cover cursor-pointer'
                 onClick={() =>
-                  router.push('/product/1a828f0f-a4b5-4513-811b-23d57f893b8f')
+                  router.push('/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe')
                 }
               />
             </div>
@@ -658,6 +761,53 @@ const Home = () => {
             </div>
           )}
 
+          <div className='max-w-[1700px] mx-auto px-4 my-10'>
+            <h4 className='text-sm md:text-lg mb-4 text-[#3f2a16] text-center'>
+              THE COMMUNITY
+            </h4>
+            <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2 mx-auto' />
+            <div
+              ref={videoContainerRef}
+              className='flex gap-2 mdLg:gap-0 overflow-x-auto no-scrollbar pl-4 pr-4 mt-8'
+              style={{
+                width: '100%',
+                maxWidth: '100%',
+                scrollSnapType: 'x mandatory',
+                scrollBehavior: 'smooth',
+              }}
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
+              {interviewVideos.map((item) => (
+                <div
+                  key={item.id}
+                  className='lg:pl-4 relative group'
+                  style={{ scrollSnapAlign: 'start' }}
+                >
+                  <div className='relative w-[330px] h-[500px] md:w-[500px] md:h-[650px]'>
+                    <video
+                      src={item.video}
+                      controls
+                      className='w-full h-full object-cover shadow-lg rounded-lg'
+                      poster={item.poster}
+                      playsInline={true}
+                      disablePictureInPicture={true}
+                      disableRemotePlayback={true}
+                      style={{
+                        WebkitUserSelect: 'none',
+                        WebkitTouchCallout: 'none',
+                        WebkitTapHighlightColor: 'transparent',
+                        userSelect: 'none',
+                        touchAction: 'none',
+                      }}
+                    />
+                    <source src={item.video} type='video/mp4' />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
           <Footer />
         </div>
         {/* <BottomNav /> */}

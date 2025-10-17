@@ -31,21 +31,22 @@ const OurStory = () => {
               <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
               <p className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
-                I observed that us Men want to live right, do right and connect
-                with our purpose, this inspired me to create products and
-                experiences that gives access to men who wants to live a rich,
-                intentional and purposeful life through style. <br />
+                I observed that us creators/entrepreneurs want to live right, do
+                right and connect with our highest purpose. This inspired, and
+                motivates me daily to create products and experiences that gives
+                us access to live a rich, intentional and purposeful life
+                through style. <br />
                 <br />
-                Reposition is dedicated to crafting intentional products that
-                celebrates the journey of men and raising the standards for an
-                impact-driven life. <br /> <br />
-                Beyond clothes, I want men to collaborate - to be honored and
-                their presence felt, as they leave their footprints behind for
-                those coming after them. You should be remembered.
+                Reposition was born to create timeless products that celebrates
+                and marks the creator/entrepreneur’s journey, while we
+                collaborate together to create impact. <br /> <br />
+                Beyond clothes, I want us to create and live with clarity, to
+                make our presence felt as we work to leave a positive footprint
+                behind.
                 <br />
                 <br />
-                For me, it’s simple. I want to see you win. To help you deliver
-                your purpose in life in clothes that represents you.
+                For me, it’s simple - I want us to win together. Supporting you
+                with tasteful classics that represents you and your purpose.
               </p>
 
               <img
@@ -98,9 +99,9 @@ const OurStory = () => {
             <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2' />
 
             <p className='text-xs sm:text-sm text-center max-w-[550px] mt-6'>
-              We drive transformation through well crafted menswear, together
-              with experiences that brings creative entrepreneurs out of chaotic
-              lifestyle.
+              To support the transformation of the modern creator/entrepreneur
+              through tastefully designed menswear, with experiences that
+              inspires legacy.
             </p>
           </div>
 

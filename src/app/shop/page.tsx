@@ -85,12 +85,12 @@ const Shop = () => {
 
         <div
           onClick={() => router.push('/assemble')}
-          className='w-full h-[36px] p-2 bg-[#c2a18b4b] my-4 cursor-pointer'
+          className='w-full h-[36px] p-2 bg-[#38271c] my-4 cursor-pointer'
         >
           <Marquee speed={100}>
             {isFromWestAfrica ? (
               // Marquee for West African users (including Nigeria)
-              <div className='flex items-center text-xs sm:text-sm gap-2'>
+              <div className='flex items-center text-xs sm:text-sm gap-2 text-white'>
                 <p className='mx-2'>Join Assemble </p>
                 <GoDotFill size={10} />
                 <p className='mx-2'>
@@ -101,7 +101,7 @@ const Shop = () => {
               </div>
             ) : (
               // Marquee for international users (outside West Africa)
-              <div className='flex items-center text-xs sm:text-sm gap-2'>
+              <div className='flex items-center text-xs sm:text-sm gap-2 text-white'>
                 <p className='mx-2'>Join Assemble </p>
                 <GoDotFill size={10} />
                 <p className='mx-2'>
