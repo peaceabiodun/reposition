@@ -610,22 +610,49 @@ const Home = () => {
 
           <div className='relative'>
             <div className='w-full sm:h-[100vh] flex flex-col sm:flex-row'>
-              <img
-                src='/home-img.png'
-                alt='home-img'
-                className='w-full sm:w-[50%] h-full object-cover cursor-pointer'
-                onClick={() =>
-                  router.push('/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe')
-                }
-              />
-              <img
-                src='/home-img1.png'
-                alt='home-img'
-                className='w-full sm:w-[50%] h-full object-cover cursor-pointer'
-                onClick={() =>
-                  router.push('/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe')
-                }
-              />
+              <div className='relative w-full'>
+                <img
+                  src='/home-img.png'
+                  alt='home-img'
+                  className='w-full h-full object-cover cursor-pointer'
+                />
+                <div className='absolute bottom-1/2 px-6 left-0 right-0  text-white'>
+                  <Image src='/cta1.png' alt='cta' width={200} height={200} />
+                  <button
+                    onClick={() =>
+                      router.push(
+                        '/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe'
+                      )
+                    }
+                    className='text-white text-sm md:text-lg font-semibold border border-white rounded-[2px] p-2 h-[36px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
+                  >
+                    Feel It
+                  </button>
+                </div>
+              </div>
+              <div className='relative w-full'>
+                <img
+                  src='/home-img1.png'
+                  alt='home-img'
+                  className='w-full h-full object-cover cursor-pointer'
+                  onClick={() =>
+                    router.push('/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe')
+                  }
+                />
+                <div className='absolute bottom-1/2 px-6 left-0 right-0  text-white'>
+                  <Image src='/cta.png' alt='cta' width={200} height={200} />
+                  <button
+                    onClick={() =>
+                      router.push(
+                        '/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe'
+                      )
+                    }
+                    className='text-white text-sm md:text-lg font-semibold border border-white rounded-[2px] p-2 h-[36px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
+                  >
+                    Become It
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -762,8 +789,8 @@ const Home = () => {
           )}
 
           <div className='max-w-[1700px] mx-auto px-4 my-10'>
-            <h4 className='text-sm md:text-lg mb-4 text-[#3f2a16] text-center'>
-              THE COMMUNITY
+            <h4 className='text-lg md:text-2xl font-semibold mb-4 text-[#3f2a16] text-center'>
+              WHEN MEN SPEAK
             </h4>
             <div className='w-[280px] sm:w-[350px] h-[1px] bg-[#4d3c1dfb] px-2 mx-auto' />
             <div
