@@ -17,8 +17,7 @@ const DonationModal = ({ show, onClose }: Props) => {
         />
       </div>
       <p className='text-bsm font-medium text-[#f8f0ea] text-center mt-3'>
-        Thank you. We have made a $5 contribution on your behalf <br />
-        to a special needs child in Africa. Please check your email.
+        Check our impact section for what $5 from your order will do.
       </p>
     </LocalModal>
   );

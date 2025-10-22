@@ -72,8 +72,8 @@ const BeverageConfirmationModal = ({ show, onClose }: ModalProps) => {
           at checkout
         </p>
         <p className='text-xs italic text-white text-center'>
-          Everytime your beverage gets to you, $5 dollars goes to a creative
-          special needs child in Africa.
+          Let&apos;s see what you get at checkout. No tea cup, no $5 donation
+          here.
         </p>
 
         {showCancelIcon ? (

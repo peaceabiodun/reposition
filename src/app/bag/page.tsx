@@ -580,7 +580,7 @@ const Bag = () => {
 
             <div>
               <div className='flex items-center gap-1 text-xs xs:text-sm '>
-                <p className='text-nowrap'>Your </p>
+                <p className='text-nowrap'>Let&apos;s see if you get</p>
                 {userBeverage === 'Tea' ? (
                   <img
                     src='/tea.png'
@@ -594,9 +594,7 @@ const Bag = () => {
                     className=' w-[80px] h-[60px] hover:scale-105 transition-all duration-300 object-contain object-center'
                   />
                 )}
-                <p>
-                  Will be packaged and delivered with your Order. Thank you.{' '}
-                </p>
+                <p>on delivery.</p>
               </div>
             </div>
 

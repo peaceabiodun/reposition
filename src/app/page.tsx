@@ -616,17 +616,17 @@ const Home = () => {
                   alt='home-img'
                   className='w-full h-full object-cover cursor-pointer'
                 />
-                <div className='absolute bottom-1/2 px-6 left-0 right-0  text-white'>
-                  <Image src='/cta1.png' alt='cta' width={200} height={200} />
+                <div className='absolute bottom-4 px-6 left-0 right-0  text-white'>
+                  <Image src='/cta1.png' alt='cta' width={150} height={150} />
                   <button
                     onClick={() =>
                       router.push(
                         '/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe'
                       )
                     }
-                    className='text-white text-sm md:text-lg font-semibold border border-white rounded-[2px] p-2 h-[36px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
+                    className='text-white text-xs font-semibold border border-white rounded-[2px] p-2 h-[32px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
                   >
-                    Feel It
+                    FEEL IT
                   </button>
                 </div>
               </div>
@@ -640,16 +640,16 @@ const Home = () => {
                   }
                 />
                 <div className='absolute bottom-1/2 px-6 left-0 right-0  text-white'>
-                  <Image src='/cta.png' alt='cta' width={200} height={200} />
+                  <Image src='/cta.png' alt='cta' width={150} height={150} />
                   <button
                     onClick={() =>
                       router.push(
                         '/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe'
                       )
                     }
-                    className='text-white text-sm md:text-lg font-semibold border border-white rounded-[2px] p-2 h-[36px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
+                    className='text-white text-xs font-semibold border border-white rounded-[2px] p-2 h-[32px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
                   >
-                    Become It
+                    BECOME IT
                   </button>
                 </div>
               </div>
