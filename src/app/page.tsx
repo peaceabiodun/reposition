@@ -621,7 +621,7 @@ const Home = () => {
                   <button
                     onClick={() =>
                       router.push(
-                        '/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe'
+                        '/product/ff86d93a-9526-4e0d-9558-a95d07e6d24d'
                       )
                     }
                     className='text-white text-xs font-semibold border border-white rounded-[2px] p-2 h-[32px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
@@ -636,7 +636,7 @@ const Home = () => {
                   alt='home-img'
                   className='w-full h-full object-cover cursor-pointer'
                   onClick={() =>
-                    router.push('/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe')
+                    router.push('/product/ff86d93a-9526-4e0d-9558-a95d07e6d24d')
                   }
                 />
                 <div className='absolute bottom-1/2 px-6 left-0 right-0  text-white'>
@@ -644,7 +644,7 @@ const Home = () => {
                   <button
                     onClick={() =>
                       router.push(
-                        '/product/07bd1151-b0c6-4992-8acc-ce8c47c22bbe'
+                        '/product/ff86d93a-9526-4e0d-9558-a95d07e6d24d'
                       )
                     }
                     className='text-white text-xs font-semibold border border-white rounded-[2px] p-2 h-[32px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
