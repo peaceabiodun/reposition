@@ -615,10 +615,13 @@ const Home = () => {
                   src='/home-img.png'
                   alt='home-img'
                   className='w-full h-full object-cover cursor-pointer'
+                  onClick={() =>
+                    router.push('/product/ff86d93a-9526-4e0d-9558-a95d07e6d24d')
+                  }
                 />
-                <div className='absolute bottom-4 px-6 left-0 right-0  text-white'>
+                <div className='absolute bottom-8 px-6 left-0 right-0  text-white'>
                   <Image src='/cta1.png' alt='cta' width={150} height={150} />
-                  <button
+                  {/* <button
                     onClick={() =>
                       router.push(
                         '/product/ff86d93a-9526-4e0d-9558-a95d07e6d24d'
@@ -627,7 +630,7 @@ const Home = () => {
                     className='text-white text-xs font-semibold border border-white rounded-[2px] p-2 h-[32px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
                   >
                     FEEL IT
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div className='relative w-full'>
@@ -641,7 +644,7 @@ const Home = () => {
                 />
                 <div className='absolute bottom-1/2 px-6 left-0 right-0  text-white'>
                   <Image src='/cta.png' alt='cta' width={150} height={150} />
-                  <button
+                  {/* <button
                     onClick={() =>
                       router.push(
                         '/product/ff86d93a-9526-4e0d-9558-a95d07e6d24d'
@@ -650,7 +653,7 @@ const Home = () => {
                     className='text-white text-xs font-semibold border border-white rounded-[2px] p-2 h-[32px] flex items-center justify-center mt-6 ml-16 hover:bg-[#fafafa46]'
                   >
                     BECOME IT
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
